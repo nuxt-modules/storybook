@@ -7,7 +7,7 @@ const { buildDev } = require('@storybook/core/server')
 const packageJson = require('../package.json')
 
 // Resolve rootDir
-let rootDir
+let rootDir = '.'
 if (fs.existsSync(process.argv[2])) {
   rootDir = process.argv.splice(2, 1)[0]
 }
