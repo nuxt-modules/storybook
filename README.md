@@ -38,12 +38,12 @@ Now you can use `nuxt storybook` to start!
 
 ## Alternative Usage
 
-Alternatively, you can use nuxt-storybook as a preset and use `@storybook/vue` (not recommended)
+Alternatively, you can use this package as a preset and use `@storybook/vue` (not recommended)
 
 ```js
 module.exports = {
   presets: [
-    require.resolve('@nuxt/storybook/lib/preset')
+    require.resolve('@nuxtjs/storybook/lib/preset')
   ]
 }
 ```
