@@ -1,0 +1,42 @@
+{
+  "name": "@nuxtjs/storybook",
+  "version": "0.0.0",
+  "description": "Storybook integration with Nuxt",
+  "repository": "nuxt-community/storybook-module",
+  "license": "MIT",
+  "bin": {
+    "nuxt-storybook": "./bin/nuxt-storybook.js"
+  },
+  "files": [
+    "bin",
+    "lib"
+  ],
+  "main": "lib/module.js",
+  "scripts": {
+    "nuxt-storybook": "./bin/nuxt-storybook.js",
+    "storybook": "yarn nuxt-storybook example",
+    "lint": "eslint --ext .js,.vue .",
+    "release": "yarn test && standard-version && git push --follow-tags && npm publish",
+    "test": "yarn lint && jest"
+  },
+  "dependencies": {
+    "@storybook/vue": "^5.3.18",
+    "babel-preset-vue": "^2.0.2",
+    "defu": "^2.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "latest",
+    "@babel/preset-env": "latest",
+    "@nuxtjs/eslint-config": "latest",
+    "@nuxtjs/module-test-utils": "latest",
+    "babel-eslint": "latest",
+    "babel-jest": "latest",
+    "eslint": "latest",
+    "jest": "latest",
+    "nuxt-edge": "latest",
+    "standard-version": "latest"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
