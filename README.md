@@ -10,34 +10,40 @@
 
 [📖 **Release Notes**](./CHANGELOG.md)
 
-## Setup
+🚧 WIP 🚧
 
-### Install
+## Quick Setup
 
 Yarn:
 
 ```bash
-yarn add @nuxtjs/storybook
+# Using yarn
+yarn add -D @nuxtjs/storybook
+
+# Using npm
+npm install -D @nuxtjs/storybook
 ```
 
-NPM:
+Create `.storybook/main.js`:
 
-```bash
-npm install @nuxtjs/storybook
+```js
+module.exports = {
+  stories: [
+    '../components/*.stories.js'
+  ]
+}
 ```
 
-### Method 1: Using `nuxt storybook`
+Now you can use `nuxt storybook` to start!
 
+## Alternative Usage
 
-
-### Method 2: Using Preset
-
-Edit `.storybook/main.js`:
+Alternatively, you can use nuxt-storybook as a preset and use `@storybook/vue` (not recommended)
 
 ```js
 module.exports = {
   presets: [
-    require.resolve('@nuxt/storybook/preset')
+    require.resolve('@nuxt/storybook/lib/preset')
   ]
 }
 ```
@@ -47,8 +53,8 @@ You can now use `npx start-storybook`
 ## Development
 
 1. Clone this repository
-2. Install dependencies using `yarn install` or `npm install`
-3. Start development server using `npm run dev`
+2. Install dependencies using `yarn install`
+3. Start storybook server using `yarn storybok`
 
 ## License
 
