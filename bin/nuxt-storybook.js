@@ -5,6 +5,7 @@ const path = require('path')
 const vueOptions = require('@storybook/vue/dist/server/options').default
 const { buildDev } = require('@storybook/core/server')
 const { loadNuxt, getBuilder } = require('nuxt-edge')
+const consola = require('consola')
 const packageJson = require('../package.json')
 
 // Resolve rootDir
@@ -18,7 +19,7 @@ rootDir = path.resolve(process.cwd(), rootDir)
 let configDir = path.resolve(rootDir, '.nuxt-storybook', 'storybook')
 if (!fs.existsSync(configDir)) { configDir = undefined }
 
-(async () => {
+async function main () {
   const nuxt = await loadNuxt({
     rootDir,
     srcDir: rootDir,
@@ -49,4 +50,6 @@ if (!fs.existsSync(configDir)) { configDir = undefined }
   }
 
   buildDev(options)
-})()
+}
+
+main().catch(consola.error)
