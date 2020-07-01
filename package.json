@@ -20,21 +20,24 @@
     "test": "yarn lint && jest"
   },
   "dependencies": {
-    "@storybook/vue": "^5.3.18",
+    "@storybook/vue": "^5.3.19",
     "babel-preset-vue": "^2.0.2",
-    "defu": "^2.0.2"
+    "defu": "^2.0.4"
   },
   "devDependencies": {
-    "@babel/core": "latest",
-    "@babel/preset-env": "latest",
-    "@nuxtjs/eslint-config": "latest",
+    "@babel/core": "7.10.4",
+    "@babel/preset-env": "7.10.4",
+    "@nuxt/components": "^1.0.6",
+    "@nuxtjs/eslint-config": "3.0.0",
     "@nuxtjs/module-test-utils": "latest",
+    "@storybook/addon-actions": "^5.3.19",
     "babel-eslint": "latest",
-    "babel-jest": "latest",
-    "eslint": "latest",
-    "jest": "latest",
-    "nuxt-edge": "latest",
-    "standard-version": "latest"
+    "babel-jest": "26.1.0",
+    "core-js": "2",
+    "eslint": "7.3.1",
+    "jest": "26.1.0",
+    "nuxt-edge": "^2.13.3-26558996.1edac29e",
+    "standard-version": "8.0.0"
   },
   "publishConfig": {
     "access": "public"
