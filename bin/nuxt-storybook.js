@@ -22,8 +22,7 @@ if (!fs.existsSync(configDir)) { configDir = undefined }
 async function main () {
   const nuxt = await loadNuxt({
     rootDir,
-    srcDir: rootDir,
-    for: 'dev', // TODO: detect for
+    for: 'build',
 
     // TODO: find better solution to support all versions of Nuxt
     configOverrides: {
@@ -34,7 +33,7 @@ async function main () {
   const builder = await getBuilder(nuxt)
   const { bundleBuilder } = builder
   // Load webpack config for Nuxt
-  const nuxtConfig = await bundleBuilder.getWebpackConfig('client')
+  const nuxtWebpackConfig = await bundleBuilder.getWebpackConfig('client')
 
   await builder.build()
 
@@ -43,7 +42,7 @@ async function main () {
     packageJson,
     rootDir,
     configDir,
-    nuxtConfig,
+    nuxtWebpackConfig,
     frameworkPresets: [
       ...vueOptions.frameworkPresets
     ]
