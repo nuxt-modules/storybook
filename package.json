@@ -5,39 +5,52 @@
   "repository": "nuxt-community/nuxt-storybook",
   "license": "MIT",
   "bin": {
-    "nuxt-storybook": "./bin/nuxt-storybook.js"
+    "nuxt-storybook": "bin/nuxt-storybook.js"
   },
   "files": [
     "bin",
-    "lib"
+    "dist",
+    "storybook"
   ],
-  "main": "lib/module.js",
   "scripts": {
+    "build": "yarn clean && bili --format esm,cjs src/cli.ts,src/presets.ts,src/plugins.ts",
+    "clean": "rimraf dist",
+    "dev": "yarn nuxt-storybook example dev",
     "nuxt-storybook": "./bin/nuxt-storybook.js",
     "storybook": "yarn nuxt-storybook example",
-    "lint": "eslint --ext .js,.vue .",
-    "release": "yarn test && standard-version && git push --follow-tags && npm publish",
-    "test": "yarn lint && jest"
+    "test": "yarn lint && jest",
+    "fixture:build": "nuxt-ts build test/fixture",
+    "fixture:dev": "nuxt-ts test/fixture",
+    "fixture:generate": "nuxt-ts generate test/fixture",
+    "fixture:start": "nuxt-ts start test/fixture",
+    "lint": "eslint --ext .ts,.js,.vue .",
+    "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "dependencies": {
     "@storybook/vue": "^5.3.19",
     "babel-preset-vue": "^2.0.2",
     "consola": "^2.14.0",
-    "defu": "^2.0.4"
+    "jiti": "^0.1.11",
+    "lodash.pick": "^4.4.0"
   },
   "devDependencies": {
-    "@babel/core": "7.10.4",
-    "@babel/preset-env": "7.10.4",
-    "@nuxtjs/eslint-config": "3.0.0",
-    "@nuxtjs/module-test-utils": "latest",
-    "@storybook/addon-actions": "^5.3.19",
+    "@babel/preset-env": "latest",
+    "@nuxt/types": "npm:@nuxt/types-edge",
+    "@nuxt/typescript-build": "latest",
+    "@nuxt/typescript-runtime": "latest",
+    "@nuxtjs/eslint-config-typescript": "latest",
+    "@nuxtjs/proxy": "^2.0.0",
+    "@types/ci-info": "latest",
+    "@types/inquirer": "latest",
     "babel-eslint": "latest",
-    "babel-jest": "26.1.0",
+    "bili": "latest",
     "core-js": "2",
-    "eslint": "7.3.1",
-    "jest": "26.1.0",
-    "nuxt-edge": "^2.13.3-26558996.1edac29e",
-    "standard-version": "8.0.0"
+    "eslint": "latest",
+    "nuxt-edge": "latest",
+    "rimraf": "latest",
+    "rollup-plugin-typescript2": "latest",
+    "standard-version": "latest",
+    "typescript": "latest"
   },
   "publishConfig": {
     "access": "public"
