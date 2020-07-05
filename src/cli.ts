@@ -1,13 +1,6 @@
-// import { resolve } from 'path'
 import path from 'path'
 import arg from 'arg'
-// import destr from 'destr'
-// import * as rc from 'rc9'
-// import c from 'chalk'
 import consola from './utils/log'
-// import jiti from 'jiti'
-// import env from 'std-env'
-// import dotenv from 'dotenv'
 
 import { start } from './storybook'
 

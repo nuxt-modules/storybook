@@ -1,7 +1,7 @@
 export default {
   install (Vue) {
     /**
-     * auto-import and register all components
+     * import and register all components
      */
     try {
       const components = require('~/.nuxt-storybook/components/index.js')

@@ -19,10 +19,6 @@
     "nuxt-storybook": "./bin/nuxt-storybook.js",
     "storybook": "yarn nuxt-storybook example",
     "test": "yarn lint && jest",
-    "fixture:build": "nuxt-ts build test/fixture",
-    "fixture:dev": "nuxt-ts test/fixture",
-    "fixture:generate": "nuxt-ts generate test/fixture",
-    "fixture:start": "nuxt-ts start test/fixture",
     "lint": "eslint --ext .ts,.js,.vue .",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
