@@ -18,7 +18,7 @@
     "dev": "yarn nuxt-storybook example dev",
     "nuxt-storybook": "./bin/nuxt-storybook.js",
     "storybook": "yarn nuxt-storybook example",
-    "test": "yarn lint && jest",
+    "test": "yarn lint",
     "lint": "eslint --ext .ts,.js,.vue .",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
