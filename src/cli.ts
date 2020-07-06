@@ -1,8 +1,8 @@
 import path from 'path'
 import arg from 'arg'
-import consola from './utils/log'
+import { logger } from './utils'
 
-import { start } from './storybook'
+import { start } from './index'
 
 export const usage = 'nuxt storybook [`dir`] [`mode`]'
 
@@ -29,26 +29,7 @@ export function run () {
   try {
     _run()
   } catch (err) {
-    consola.fatal(err)
-    process.exit(1)
-  }
-}
-
-function _resolveRoot () {
-  const args = arg({
-  })
-  const [_dir = '.'] = args._
-  // Resolve dir
-  const rootDir = path.resolve(process.cwd(), _dir)
-
-  return rootDir
-}
-
-export function resolveRoot () {
-  try {
-    return _resolveRoot()
-  } catch (err) {
-    consola.fatal(err)
+    logger.fatal(err)
     process.exit(1)
   }
 }

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES3",
+    "target": "ES6",
+    "module": "CommonJS",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "moduleResolution": "Node",
@@ -10,9 +11,6 @@
     ]
   },
   "include": [
-    "src"
-  ],
-  "exclude": [
-    "src/plugins"
+    "src", " config", "storybook/plugins"
   ]
 }

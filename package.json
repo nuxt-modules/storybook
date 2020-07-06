@@ -13,10 +13,10 @@
     "storybook"
   ],
   "scripts": {
-    "build": "yarn clean && tsc && tsc -p tsconfig.browser.json",
+    "build": "yarn clean && tsc",
     "clean": "rimraf dist",
     "dev": "yarn nuxt-storybook example dev",
-    "nuxt-storybook": "./bin/nuxt-storybook.js",
+    "nuxt-storybook": "ts-node src/cli",
     "storybook": "yarn nuxt-storybook example",
     "test": "yarn lint",
     "lint": "eslint --ext .ts,.js,.vue .",

@@ -1,4 +1,3 @@
-import path from 'path'
 import * as webpack from 'webpack'
 import { WebpackExtras } from './types'
 
@@ -15,9 +14,10 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
   config.resolve.alias = {
     ...extras.nuxtWebpackConfig.resolve.alias,
     ...config.resolve.alias,
-    // TODO: Skip this in production
-    '@nuxtjs/storybook': path.resolve('.')
+    '~storybook': __dirname
   }
+
+  // TODO: transpile __dirname
 
   // Return the altered config
   return config
