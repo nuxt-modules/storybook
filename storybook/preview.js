@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { configure } from '@storybook/vue'
-import { store, components } from './plugins'
+import { store, components } from '~storybook/plugins'
 
 Vue.use(store)
 Vue.use(components)

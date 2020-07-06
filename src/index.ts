@@ -5,8 +5,7 @@ import { requireMaybeEdge } from './utils'
 import { StorybookOptions } from './types'
 
 export async function start (options: StorybookOptions) {
-  // const configDir = path.resolve(option.rootDir, '.nuxt-storybook')
-  const configDir = path.resolve(__dirname, '../storybook')
+  const configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
 
   const {
     // nuxt,
@@ -42,6 +41,19 @@ export async function buildNuxt (options: StorybookOptions) {
     configOverrides: {
       buildDir
     }
+  })
+  const templatesRoot = path.resolve(__dirname, '../storybook')
+
+  // Generate storybook files
+  nuxt.moduleContainer.addTemplate({
+    src: path.resolve(templatesRoot, 'main.js'),
+    fileName: path.join('storybook', 'main.js'),
+    options: {}
+  })
+  nuxt.moduleContainer.addTemplate({
+    src: path.resolve(templatesRoot, 'preview.js'),
+    fileName: path.join('storybook', 'preview.js'),
+    options: {}
   })
 
   // Create new builder

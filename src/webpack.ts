@@ -1,3 +1,4 @@
+import path from 'path'
 import * as webpack from 'webpack'
 import { WebpackExtras } from './types'
 
@@ -14,7 +15,7 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
   config.resolve.alias = {
     ...extras.nuxtWebpackConfig.resolve.alias,
     ...config.resolve.alias,
-    '~storybook': __dirname
+    '~storybook': path.resolve(__dirname, '../storybook')
   }
 
   // TODO: transpile __dirname
