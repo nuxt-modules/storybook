@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import { configure } from '@storybook/vue'
-import { Store, Components } from '@nuxtjs/storybook/dist/plugins.esm'
+import { store, components } from '@nuxtjs/storybook/dist/plugins'
 
-Vue.use(Store)
-Vue.use(Components)
+Vue.use(store)
+Vue.use(components)
 
 // TODO: implement components mock, like `nuxt-link`
 

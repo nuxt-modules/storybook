@@ -13,7 +13,7 @@
     "storybook"
   ],
   "scripts": {
-    "build": "yarn clean && bili --format esm,cjs src/cli.ts,src/presets.ts,src/plugins.ts",
+    "build": "yarn clean && tsc && tsc -p tsconfig.browser.json",
     "clean": "rimraf dist",
     "dev": "yarn nuxt-storybook example dev",
     "nuxt-storybook": "./bin/nuxt-storybook.js",
@@ -26,12 +26,11 @@
     "@storybook/vue": "^5.3.19",
     "babel-preset-vue": "^2.0.2",
     "consola": "^2.14.0",
-    "jiti": "^0.1.11",
-    "lodash.pick": "^4.4.0"
+    "jiti": "^0.1.11"
   },
   "devDependencies": {
     "@babel/preset-env": "latest",
-    "@nuxt/types": "npm:@nuxt/types-edge",
+    "@nuxt/types": "latest",
     "@nuxt/typescript-build": "latest",
     "@nuxt/typescript-runtime": "latest",
     "@nuxtjs/eslint-config-typescript": "latest",
@@ -39,12 +38,10 @@
     "@types/ci-info": "latest",
     "@types/inquirer": "latest",
     "babel-eslint": "latest",
-    "bili": "latest",
     "core-js": "2",
     "eslint": "latest",
     "nuxt-edge": "latest",
     "rimraf": "latest",
-    "rollup-plugin-typescript2": "latest",
     "standard-version": "latest",
     "typescript": "latest"
   },

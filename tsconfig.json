@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES3",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "moduleResolution": "Node",
+    "outDir": "dist",
     "types": [
-      "node",
-      "inquirer"
+      "node"
     ]
   },
   "include": [
-    "src", "storybook"
+    "src"
+  ],
+  "exclude": [
+    "src/plugins"
   ]
 }

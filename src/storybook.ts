@@ -3,7 +3,6 @@ import vueOptions from '@storybook/vue/dist/server/options'
 import { buildDev } from '@storybook/core/server'
 // TODO: universal way to detect nuxt or nuxt-edge
 import { loadNuxt, getBuilder } from 'nuxt-edge'
-import packageJson from '../package.json'
 import { StorybookOptions } from './types'
 
 export async function buildNuxt (options: StorybookOptions) {
@@ -21,7 +20,7 @@ export async function buildNuxt (options: StorybookOptions) {
   // Load webpack config for Nuxt
   const nuxtWebpackConfig = await bundleBuilder.getWebpackConfig('client')
 
-  //
+  // TODO: replace with generateRoutesAndFiles
   await nuxtBuilder.build()
 
   return {
@@ -39,7 +38,6 @@ export async function start (options: StorybookOptions) {
 
   const buildOptions = {
     ...vueOptions,
-    packageJson,
     rootDir: options.rootDir,
     configDir,
     nuxtBuilder,

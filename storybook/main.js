@@ -1,12 +1,15 @@
 
-const jiti = require('jiti')
-const pick = require('lodash.pick')
+const { loadFile } = require('../dist/utils/loadFile')
 
 const cli = require('../dist/cli')
 
 const rootDir = cli.resolveRoot()
-const config = jiti(rootDir)('./nuxt.config').default
+const config = loadFile(rootDir, './nuxt.config')
+
+const storybook = config.storybook || {}
 
 module.exports = {
-  ...pick(config.storybook, ['webpackFinal', 'stories', 'addons'])
+  webpackFinal: storybook.webpackFinal,
+  stories: storybook.stories,
+  addons: storybook.addons
 }

@@ -22,5 +22,3 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
   // Return the altered config
   return config
 }
-
-module.exports = getWebpackConfig
