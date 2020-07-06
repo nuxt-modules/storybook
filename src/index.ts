@@ -8,7 +8,7 @@ export async function start (options: StorybookOptions) {
   const configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
 
   const {
-    // nuxt,
+    nuxt,
     nuxtBuilder,
     nuxtWebpackConfig
   } = await buildNuxt(options)
@@ -20,6 +20,7 @@ export async function start (options: StorybookOptions) {
     configDir,
     nuxtBuilder,
     nuxtWebpackConfig,
+    nuxtStorybookConfig: nuxt.options.storybook || {},
     frameworkPresets: [
       ...vueOptions.frameworkPresets,
       require.resolve('./preset')
@@ -48,12 +49,12 @@ export async function buildNuxt (options: StorybookOptions) {
   nuxt.moduleContainer.addTemplate({
     src: path.resolve(templatesRoot, 'main.js'),
     fileName: path.join('storybook', 'main.js'),
-    options: {}
+    options: nuxt.options.storybook || {}
   })
   nuxt.moduleContainer.addTemplate({
     src: path.resolve(templatesRoot, 'preview.js'),
     fileName: path.join('storybook', 'preview.js'),
-    options: {}
+    options: nuxt.options.storybook || {}
   })
 
   // Create new builder
