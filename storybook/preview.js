@@ -1,3 +1,6 @@
+<% if (Array.isArray(options.css)) { %>// Import styles
+<%= options.css.map(s => `import '${s}'`).join("\n") %>
+<% } %>
 import Vue from 'vue'
 import { configure } from '@storybook/vue'
 import { store, components } from '~storybook/plugins'

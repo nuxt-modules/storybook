@@ -2,6 +2,7 @@
 export interface WebpackExtras {
   configType: string;
   isDev: boolean;
+  nuxt: any;
   nuxtBuilder: any;
   nuxtWebpackConfig: any;
 }

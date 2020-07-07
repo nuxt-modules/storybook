@@ -7,7 +7,7 @@ import { StorybookOptions } from './types'
 
 export async function start (options: StorybookOptions) {
   const {
-    // nuxt,
+    nuxt,
     nuxtBuilder,
     nuxtWebpackConfig,
     nuxtStorybookConfig
@@ -20,6 +20,7 @@ export async function start (options: StorybookOptions) {
     packageJson: require('../package.json'),
     rootDir: options.rootDir,
     configDir: nuxtStorybookConfig.configDir,
+    nuxt,
     nuxtBuilder,
     nuxtWebpackConfig,
     nuxtStorybookConfig,
@@ -48,7 +49,7 @@ export async function buildNuxt (options: StorybookOptions) {
 
   const nuxtStorybookConfig = nuxt.options.storybook || {}
   if (!fs.existsSync(path.resolve(options.rootDir, 'storybook'))) {
-    generateStorybookFiles.call(nuxt.moduleContainer, nuxtStorybookConfig)
+    generateStorybookFiles.call(nuxt.moduleContainer, nuxtStorybookConfig, nuxt.options)
   }
 
   // Create new builder
@@ -72,7 +73,7 @@ export async function buildNuxt (options: StorybookOptions) {
   }
 }
 
-function generateStorybookFiles (options) {
+function generateStorybookFiles (options, nuxtOptions) {
   const templatesRoot = path.resolve(__dirname, '../storybook')
   this.addTemplate({
     src: path.resolve(templatesRoot, 'main.js'),
@@ -82,6 +83,8 @@ function generateStorybookFiles (options) {
   this.addTemplate({
     src: path.resolve(templatesRoot, 'preview.js'),
     fileName: path.join('storybook', 'preview.js'),
-    options
+    options: {
+      css: nuxtOptions.css
+    }
   })
 }
