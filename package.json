@@ -5,36 +5,46 @@
   "repository": "nuxt-community/nuxt-storybook",
   "license": "MIT",
   "bin": {
-    "nuxt-storybook": "./bin/nuxt-storybook.js"
+    "nuxt-storybook": "bin/nuxt-storybook.js"
   },
   "files": [
     "bin",
-    "lib"
+    "dist",
+    "storybook"
   ],
-  "main": "lib/module.js",
   "scripts": {
-    "nuxt-storybook": "./bin/nuxt-storybook.js",
+    "build": "yarn clean && tsc",
+    "clean": "rimraf dist",
+    "dev": "yarn nuxt-storybook example dev",
+    "nuxt-storybook": "ts-node src/cli",
     "storybook": "yarn nuxt-storybook example",
-    "lint": "eslint --ext .js,.vue .",
-    "release": "yarn test && standard-version && git push --follow-tags && npm publish",
-    "test": "yarn lint && jest"
+    "test": "yarn lint",
+    "lint": "eslint --ext .ts,.js,.vue .",
+    "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "dependencies": {
+    "@storybook/addon-actions": "^5.3.19",
     "@storybook/vue": "^5.3.19",
     "babel-preset-vue": "^2.0.2",
-    "defu": "^2.0.4"
+    "consola": "^2.14.0",
+    "jiti": "^0.1.11"
   },
   "devDependencies": {
-    "@babel/core": "latest",
     "@babel/preset-env": "latest",
-    "@nuxtjs/eslint-config": "latest",
-    "@nuxtjs/module-test-utils": "latest",
+    "@nuxt/types": "latest",
+    "@nuxt/typescript-build": "latest",
+    "@nuxt/typescript-runtime": "latest",
+    "@nuxtjs/eslint-config-typescript": "latest",
+    "@nuxtjs/proxy": "^2.0.0",
+    "@types/ci-info": "latest",
+    "@types/inquirer": "latest",
     "babel-eslint": "latest",
-    "babel-jest": "latest",
+    "core-js": "2",
     "eslint": "latest",
-    "jest": "latest",
     "nuxt-edge": "latest",
-    "standard-version": "latest"
+    "rimraf": "latest",
+    "standard-version": "latest",
+    "typescript": "latest"
   },
   "publishConfig": {
     "access": "public"

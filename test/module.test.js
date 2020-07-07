@@ -1,3 +1,0 @@
-describe('module', () => {
-  it('test', () => {})
-})
