@@ -11,6 +11,17 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
   config.plugins.push(...extras.nuxtWebpackConfig.plugins.filter(p => NPlugins.includes(p.constructor.name)))
   config.plugins = config.plugins.filter(p => p.constructor.name !== 'ProgressPlugin')
 
+  // Nuxt filtered rules
+  const NuxtFilteredRules = [
+    '.vue',
+    '.css'
+  ]
+
+  config.module.rules = [
+    ...config.module.rules,
+    ...extras.nuxtWebpackConfig.module.rules.filter(r => !r.test || !NuxtFilteredRules.some(nr => r.test.test(nr)))
+  ]
+
   // Aliases
   config.resolve.alias = {
     ...extras.nuxtWebpackConfig.resolve.alias,
