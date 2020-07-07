@@ -7,5 +7,8 @@ export default {
     extras.isDev = (extras.configType || '').toLocaleLowerCase() === 'development'
 
     return getWebpackConfig(config, extras)
-  }
+  },
+  addons: [
+    '@storybook/addon-actions/register'
+  ]
 }

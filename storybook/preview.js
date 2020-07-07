@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import { configure } from '@storybook/vue'
 import { store, components } from '~storybook/plugins'
+import '~storybook/mock'
 
 Vue.use(store)
 Vue.use(components)
-
-// TODO: implement components mock, like `nuxt-link`
 
 /**
  * Importing Stories in here instead of `main.js` have benefit of hot reload
