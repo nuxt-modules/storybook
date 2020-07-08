@@ -1,9 +1,7 @@
 module.exports = {
-<% if (typeof options.webpackFinal === 'function') { %>
-  webpackFinal (config, options) {
+  webpackFinal(config, options) {
     return options.nuxtStorybookConfig.webpackFinal(config, options)
   },
-<% } %>
 <% if (Array.isArray(options.stories)) { %>
   stories: [<%= options.stories.map(s => `'${s}'`).join(",") %>],
 <% } %>
