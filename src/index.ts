@@ -71,7 +71,9 @@ export async function buildNuxt (options: StorybookOptions) {
       generateStorybookFiles.call(nuxt.moduleContainer, {
         ...nuxtStorybookConfig,
         plugins: plugins.filter(p => p.mode !== 'server'),
-        styles: nuxt.options.css
+        styles: nuxt.options.css,
+        store: nuxt.options.features.store ? nuxt.options.store : false,
+        components: nuxt.options.components
       })
     })
   }
