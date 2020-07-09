@@ -15,9 +15,8 @@
   "scripts": {
     "build": "yarn clean && tsc",
     "clean": "rimraf dist",
-    "dev": "yarn nuxt-storybook example dev",
+    "dev": "yarn nuxt-storybook examples/rich dev",
     "nuxt-storybook": "ts-node src/cli",
-    "storybook": "yarn nuxt-storybook example",
     "test": "yarn lint",
     "lint": "eslint --ext .ts,.js,.vue .",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
@@ -31,11 +30,16 @@
   },
   "devDependencies": {
     "@babel/preset-env": "latest",
+    "@fortawesome/free-brands-svg-icons": "^5.13.1",
+    "@fortawesome/free-regular-svg-icons": "^5.13.1",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
     "@nuxt/types": "latest",
     "@nuxt/typescript-build": "latest",
     "@nuxt/typescript-runtime": "latest",
     "@nuxtjs/eslint-config-typescript": "latest",
+    "@nuxtjs/fontawesome": "^1.1.2",
     "@nuxtjs/proxy": "^2.0.0",
+    "@nuxtjs/tailwindcss": "^2.0.0",
     "@types/ci-info": "latest",
     "@types/inquirer": "latest",
     "babel-eslint": "latest",
@@ -44,7 +48,7 @@
     "node-sass": "^4.14.1",
     "nuxt-edge": "latest",
     "rimraf": "latest",
-    "sass-loader": "^9.0.1",
+    "sass-loader": "^9.0.2",
     "standard-version": "latest",
     "typescript": "latest"
   },
