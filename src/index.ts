@@ -14,7 +14,6 @@ export async function start (options: StorybookOptions) {
     nuxtStorybookConfig
   } = await buildNuxt(options)
 
-  nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
   const userWebpackFinal = nuxtStorybookConfig.webpackFinal
   nuxtStorybookConfig.webpackFinal = (config, options) => {
     config = getWebpackConfig(config, options)
@@ -61,10 +60,12 @@ export async function buildNuxt (options: StorybookOptions) {
 
   // Load webpack config for Nuxt
   const { bundleBuilder } = nuxtBuilder
-  const nuxtWebpackConfig = await bundleBuilder.getWebpackConfig('client')
 
   const nuxtStorybookConfig = nuxt.options.storybook || {}
+  nuxtStorybookConfig.configDir = path.resolve(options.rootDir, 'storybook')
   if (!fs.existsSync(path.resolve(options.rootDir, 'storybook'))) {
+    // generate files
+    nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
     nuxt.hook('build:before', async () => {
       const plugins = await nuxtBuilder.normalizePlugins()
       generateStorybookFiles.call(nuxt.moduleContainer, {
@@ -74,12 +75,14 @@ export async function buildNuxt (options: StorybookOptions) {
       })
     })
   }
-
   // Mock webpack build as we only need generated templates
   nuxtBuilder.bundleBuilder = {
     build () { }
   }
   await nuxtBuilder.build()
+
+  // It's important to call getWebpackConfig after bundler build
+  const nuxtWebpackConfig = await bundleBuilder.getWebpackConfig('client')
 
   return {
     nuxt,
