@@ -6,6 +6,9 @@ export default {
   buildModules: [
     '@nuxtjs/fontawesome'
   ],
+  modules: [
+    '@nuxtjs/axios'
+  ],
   fontawesome: {
     icons: {
       solid: true
