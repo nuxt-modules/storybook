@@ -31,8 +31,6 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
     ...extras.nuxtBuilder.plugins.reduce((map, plugin) => ({ ...map, [plugin.name]: path.resolve(buildDir, plugin.src) }), {})
   }
 
-  // TODO: transpile __dirname
-
   // Return the altered config
   return config
 }
