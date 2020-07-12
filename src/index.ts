@@ -52,7 +52,8 @@ export async function buildNuxt (options: StorybookOptions) {
     for: options.mode,
     configOverrides: {
       buildDir
-    }
+    },
+    transpile: [path.resolve(__dirname, '../storybook')]
   })
 
   // Create new builder
