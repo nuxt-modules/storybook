@@ -9,7 +9,7 @@ features:
   - Use Store in stories
 ---
 
-![nuxt-storybook](/card.png)
+<intro-card />
 
 This module integrate [Storybook](https://storybook.js.org/) with [NuxtJS](https://nuxtjs.org).
 
