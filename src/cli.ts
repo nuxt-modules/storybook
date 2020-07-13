@@ -2,7 +2,7 @@ import path from 'path'
 import arg from 'arg'
 import { logger } from './utils'
 
-import { start } from './index'
+import { start, build } from './index'
 
 export const usage = 'nuxt storybook [`dir`] [`mode`]'
 
@@ -15,7 +15,10 @@ function _run () {
 
   switch (mode) {
     case 'build':
-      return
+      return build({
+        rootDir,
+        mode
+      })
     case 'dev':
     default:
       start({

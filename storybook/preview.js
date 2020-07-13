@@ -23,12 +23,3 @@ const plugins = [<%= options.plugins.map(plugin => plugin.name).join(",") %>].fo
     plugin(Vue.prototype, inject)
   }
 })
-
-/**
- * Importing Stories in here instead of `main.js` have benefit of hot reload
- */
-configure([
-  require.context('~/components', true, /\.stories\.js$/),
-  // Auto load modules storybook
-  require.context('@nuxtjs', true, /\.stories\.js$/),
-], module)

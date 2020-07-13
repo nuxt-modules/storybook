@@ -1,12 +1,21 @@
 import path from 'path'
 import fs from 'fs'
 import vueOptions from '@storybook/vue/dist/server/options'
-import { buildDev } from '@storybook/core/server'
+import { buildDev, buildStatic } from '@storybook/core/server'
 import { requireMaybeEdge } from './utils'
 import { StorybookOptions } from './types'
 import { getWebpackConfig } from './webpack'
 
+export async function build (options: StorybookOptions) {
+  const buildOptions = await getStorybookConfig(options)
+  buildStatic(buildOptions)
+}
 export async function start (options: StorybookOptions) {
+  const buildOptions = await getStorybookConfig(options)
+  buildDev(buildOptions)
+}
+
+async function getStorybookConfig (options: StorybookOptions) {
   const {
     nuxt,
     nuxtBuilder,
@@ -23,12 +32,12 @@ export async function start (options: StorybookOptions) {
     return config
   }
 
-  const buildOptions = {
+  return {
     ...vueOptions,
     packageJson: require('../package.json'),
     rootDir: options.rootDir,
     configDir: nuxtStorybookConfig.configDir,
-    port: nuxtStorybookConfig.port || 3000,
+    port: process.env.PORT || nuxtStorybookConfig.port || 3000,
     nuxt,
     nuxtBuilder,
     nuxtWebpackConfig,
@@ -38,11 +47,9 @@ export async function start (options: StorybookOptions) {
       require.resolve('./preset')
     ]
   }
-
-  buildDev(buildOptions)
 }
 
-export async function buildNuxt (options: StorybookOptions) {
+async function buildNuxt (options: StorybookOptions) {
   const buildDir = path.resolve(options.rootDir, '.nuxt-storybook')
   const { loadNuxt, getBuilder } = requireMaybeEdge('nuxt')
 
