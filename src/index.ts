@@ -28,7 +28,7 @@ export async function start (options: StorybookOptions) {
     packageJson: require('../package.json'),
     rootDir: options.rootDir,
     configDir: nuxtStorybookConfig.configDir,
-    port: 3000,
+    port: nuxtStorybookConfig.port || 3000,
     nuxt,
     nuxtBuilder,
     nuxtWebpackConfig,
