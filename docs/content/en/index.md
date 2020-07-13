@@ -6,9 +6,10 @@ category: ''
 categoryPosition: "1"
 features:
   - Integrate Nuxt modules
-  - Use Store in stories
+  - Generate static web app
 ---
 
+&nbsp;
 <intro-card />
 
 This module integrate [Storybook](https://storybook.js.org/) with [NuxtJS](https://nuxtjs.org).
