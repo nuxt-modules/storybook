@@ -70,20 +70,21 @@ async function buildNuxt (options: StorybookOptions) {
   const { bundleBuilder } = nuxtBuilder
 
   const nuxtStorybookConfig = nuxt.options.storybook || {}
+  // generate files
+  nuxt.hook('build:before', async () => {
+    const plugins = await nuxtBuilder.normalizePlugins()
+    generateStorybookFiles.call(nuxt.moduleContainer, {
+      ...nuxtStorybookConfig,
+      plugins: plugins.filter(p => p.mode !== 'server'),
+      styles: nuxt.options.css,
+      store: nuxt.options.features.store ? nuxt.options.store : false,
+      components: nuxt.options.components
+    })
+  })
+
   nuxtStorybookConfig.configDir = path.resolve(options.rootDir, 'storybook')
   if (!fs.existsSync(path.resolve(options.rootDir, 'storybook'))) {
-    // generate files
     nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
-    nuxt.hook('build:before', async () => {
-      const plugins = await nuxtBuilder.normalizePlugins()
-      generateStorybookFiles.call(nuxt.moduleContainer, {
-        ...nuxtStorybookConfig,
-        plugins: plugins.filter(p => p.mode !== 'server'),
-        styles: nuxt.options.css,
-        store: nuxt.options.features.store ? nuxt.options.store : false,
-        components: nuxt.options.components
-      })
-    })
   }
   // Mock webpack build as we only need generated templates
   nuxtBuilder.bundleBuilder = {

@@ -2,7 +2,6 @@
 <%= options.styles.map(s => `import '${s}'`).join("\n") %>
 <% } %>
 import Vue from 'vue'
-import { configure } from '@storybook/vue'
 import '~storybook/mock'
 <% if (options.store) { %>import { createStore } from '~/.nuxt-storybook/store'<% } %>
 <% if (options.components) { %>import * as components from '~/.nuxt-storybook/components'<% } %>
