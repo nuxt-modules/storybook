@@ -15,7 +15,9 @@ export default {
     }
   },
   storybook: {
-    stories: [],
+    stories: [
+      '~/stories/paragraph.stories.js'
+    ],
     webpackFinal (config) {
       return config
     }

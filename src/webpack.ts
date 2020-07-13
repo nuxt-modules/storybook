@@ -13,8 +13,12 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
     // 'HotModuleReplacementPlugin',
     'HtmlWebpackPlugin'
   ]
+  const storybookValidPlugins = [
+    'VirtualModulesPlugin',
+    'HtmlWebpackPlugin'
+  ]
   config.plugins = [
-    config.plugins.find(p => p.constructor.name === 'HtmlWebpackPlugin'),
+    ...config.plugins.filter(p => storybookValidPlugins.some(np => p.constructor.name === np)),
     ...extras.nuxtWebpackConfig.plugins.filter(p => !nuxtFilteredPlugins.some(np => p.constructor.name === np))
   ]
 
