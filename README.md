@@ -6,11 +6,11 @@
 [![Codecov][codecov-src]][codecov-href]
 [![License][license-src]][license-href]
 
-> Storybook integration with Nuxt
+> [Storybook](https://storybook.js.org/) integration with [NuxtJS](https://nuxtjs.org)
 
-[📖 **Release Notes**](./CHANGELOG.md)
+- [✨ &nbsp;Release Notes](https://github.com/nuxt-community/nuxt-storybook/releases)
+- [📖 &nbsp;Read the documentation](https://storybook.nuxtjs.org)
 
-🚧 WIP 🚧
 
 ## Quick Setup
 
@@ -24,37 +24,22 @@ yarn add -D @nuxtjs/storybook
 npm install -D @nuxtjs/storybook
 ```
 
-Create `.storybook/main.js`:
+Now you can use `nuxt-storybook` to start!  
 
-```js
-module.exports = {
-  stories: [
-    '../components/*.stories.js'
-  ]
-}
+```bash
+# Using yarn
+yarn nuxt-storybook
+
+# Using npm
+npm run nuxt-storybook
 ```
 
-Now you can use `nuxt storybook` to start!
-
-## Alternative Usage
-
-Alternatively, you can use this package as a preset and use `@storybook/vue` (not recommended)
-
-```js
-module.exports = {
-  presets: [
-    require.resolve('@nuxtjs/storybook/lib/preset')
-  ]
-}
-```
-
-You can now use `npx start-storybook`
 
 ## Development
 
 1. Clone this repository
 2. Install dependencies using `yarn install`
-3. Start storybook server using `yarn storybok`
+3. Start storybook server using `yarn dev`
 
 ## License
 
@@ -69,11 +54,11 @@ Copyright (c)
 [npm-downloads-src]: https://img.shields.io/npm/dt/@nuxtjs/storybook.svg
 [npm-downloads-href]: https://npmjs.com/package/@nuxtjs/storybook
 
-[github-actions-ci-src]: https://github.com/nuxt-community/storybook-module/workflows/ci/badge.svg
-[github-actions-ci-href]: https://github.com/nuxt-community/storybook-module/actions?query=workflow%3Aci
+[github-actions-ci-src]: https://github.com/nuxt-community/nuxt-storybook/workflows/ci/badge.svg
+[github-actions-ci-href]: https://github.com/nuxt-community/nuxt-storybook/actions?query=workflow%3Aci
 
-[codecov-src]: https://img.shields.io/codecov/c/github/nuxt-community/storybook-module.svg
-[codecov-href]: https://codecov.io/gh/nuxt-community/storybook-module
+[codecov-src]: https://img.shields.io/codecov/c/github/nuxt-community/nuxt-storybook.svg
+[codecov-href]: https://codecov.io/gh/nuxt-community/nuxt-storybook
 
 [license-src]: https://img.shields.io/npm/l/@nuxtjs/storybook.svg
 [license-href]: https://npmjs.com/package/@nuxtjs/storybook
