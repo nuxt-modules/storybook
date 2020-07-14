@@ -37,7 +37,7 @@ async function getStorybookConfig (options: StorybookOptions) {
     packageJson: require('../package.json'),
     rootDir: options.rootDir,
     configDir: nuxtStorybookConfig.configDir,
-    port: process.env.PORT || nuxtStorybookConfig.port || 3000,
+    port: process.env.PORT || nuxtStorybookConfig.port || 3003,
     nuxt,
     nuxtBuilder,
     nuxtWebpackConfig,

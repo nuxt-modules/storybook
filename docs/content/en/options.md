@@ -8,7 +8,7 @@ categoryPosition: 3
 
 ## `port`
 
-- Default: `3000`
+- Default: `3003`
 
 Port to run Storybook
 
