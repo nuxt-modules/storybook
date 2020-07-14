@@ -5,8 +5,13 @@ position: "1"
 category: ''
 categoryPosition: "1"
 features:
-  - Integrate Nuxt modules
-  - Generate static web app
+  - Zero configuration
+  - Nuxt webpack configuration
+  - Nuxt plugins support
+  - Story discovery from nuxt modules
+  - Nuxt components support
+  - Storybook Generate 
+  - Hot reload support
 ---
 
 &nbsp;
