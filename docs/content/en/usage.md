@@ -14,14 +14,7 @@ To start storybook in development environmnet:
   <code-block label="Yarn" active>
 
   ```bash
-  yarn nuxt-storybook
-  ```
-
-  </code-block>
-  <code-block label="NPM">
-
-  ```bash
-  npm run nuxt-storybook
+  yarn nuxt storybook
   ```
 
   </code-block>
@@ -35,14 +28,7 @@ Export your storybook into a static web app. Then you can deploy it to GitHub pa
   <code-block label="Yarn" active>
 
   ```bash
-  yarn nuxt-storybook . build
-  ```
-
-  </code-block>
-  <code-block label="NPM">
-
-  ```bash
-  npm run nuxt-storybook . build
+  yarn nuxt storybook . build
   ```
 
   </code-block>

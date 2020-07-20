@@ -46,14 +46,7 @@ All done, just start storybook and make your changes.
   <code-block label="Yarn" active>
 
   ```bash
-  yarn nuxt-storybook
-  ```
-
-  </code-block>
-  <code-block label="NPM">
-
-  ```bash
-  npm run nuxt-storybook
+  yarn nuxt storybook
   ```
 
   </code-block>
