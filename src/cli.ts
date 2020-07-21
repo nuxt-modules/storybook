@@ -4,12 +4,16 @@ import { logger } from './utils'
 
 import { start, build } from './index'
 
-export const usage = 'nuxt storybook [`dir`] [`mode`]'
+export const usage = 'nuxt storybook [`dev`|`build`] [`dir`]'
 
 function _run () {
-  const args = arg({
-  })
-  const [_dir = '.', mode = 'dev'] = args._
+  const args = arg({})
+
+  let [mode, _dir] = args._
+  if (!_dir) {
+    _dir = mode || '.'
+    mode = 'dev'
+  }
   // Resolve dir
   const rootDir = path.resolve(process.cwd(), _dir)
 

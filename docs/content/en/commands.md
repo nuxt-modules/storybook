@@ -39,14 +39,14 @@ Export your Storybook into a static web application to deploy it to GitHub pages
   <code-block label="Yarn" active>
 
   ```bash
-  yarn nuxt storybook . build
+  yarn nuxt storybook build
   ```
 
   </code-block>
   <code-block label="NPM">
 
   ```bash
-  npx nuxt storybook . build
+  npx nuxt storybook build
   ```
 
   </code-block>

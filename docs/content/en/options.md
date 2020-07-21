@@ -44,18 +44,23 @@ You don't need to register these addons in your project:
 
 ## `stories`
 
-Load stories by filename. For example, if your stories files are located in the `components` directory, you can use the following snippet:
+With this option you can register your custom stories to Storybook. For example, If your stories are located in the `stories` directory, you can use the following snippet:
 
 ```js{}[nuxt.config.js]
 export default {
   storybook: {
     stories: [
-      '~/components/**/*.stories.js',
+      '~/stories/**/*.stories.js',
       '~/custom/path/sample.stories.js'
     ],
   }
 }
 ```
+<base-alert type="info">
+
+By default `@nuxtjs/storybook` load all stories inside `~/components`. You don't need to add this directory.
+
+</base-alert>
 
 ## `port`
 
