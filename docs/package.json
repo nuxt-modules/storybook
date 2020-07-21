@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Docs for @nuxtjs/storybook",
   "author": "NuxtJS",
+  "repository": "nuxt-community/storybook",
   "scripts": {
     "dev": "nuxt",
     "generate": "nuxt static",
@@ -10,13 +11,12 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "@nuxt/content": "^1.4.1",
+    "@nuxt/content": "nuxt/content#dev",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "lodash.groupby": "^4.6.0",
-    "nuxt-edge": "^2.14.0-26575226.124cb099",
+    "nuxt-edge": "^2.14.0-26582020.6ab65fbf",
     "nuxt-i18n": "^6.13.1",
     "prism-themes": "^1.4.0",
-    "tailwindcss": "^1.4.6",
     "vue-scrollactive": "^0.9.3"
   },
   "devDependencies": {
@@ -24,12 +24,12 @@
     "@nuxtjs/color-mode": "^1.0.0",
     "@nuxtjs/eslint-config": "^3.0.0",
     "@nuxtjs/eslint-module": "^2.0.0",
-    "@nuxtjs/tailwindcss": "^2.0.0",
+    "@nuxtjs/tailwindcss": "^2.1.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.4.0",
+    "eslint": "^7.5.0",
     "eslint-plugin-nuxt": ">=1.0.0",
     "nuxt-ackee": "^1.0.1",
-    "tailwindcss-dark-mode": "^1.1.4",
+    "tailwindcss-dark-mode": "^1.1.5",
     "vue-multiselect": "^2.1.6"
   }
 }

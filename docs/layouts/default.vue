@@ -45,7 +45,7 @@
               </a>
 
               <a
-                href="https://github.com/nuxt-community/nuxt-storybook"
+                href="https://github.com/nuxt-community/storybook"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Github"

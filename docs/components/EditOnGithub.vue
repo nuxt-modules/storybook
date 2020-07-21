@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     link () {
-      return `https://github.com/nuxt-community/nuxt-storybook/edit/master/docs/content${this.document.path}${this.document.extension}`
+      return `https://github.com/nuxt-community/nuxt/edit/master/docs/content${this.document.path}${this.document.extension}`
     }
   }
 }

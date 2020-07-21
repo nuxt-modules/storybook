@@ -1,8 +1,8 @@
 ---
 title: Examples
-description: ''
+description: 'Explore examples with NuxtJS and Storybook'
 position: 5
-category: ' '
+category: Guide
 categoryPosition: 5
 ---
 

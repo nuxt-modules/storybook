@@ -6,9 +6,9 @@ category: Guide
 categoryPosition: 2
 ---
 
-## Start development
+## Development
 
-To start storybook in development environmnet:
+To start Storybook in development environment:
 
 <code-group>
   <code-block label="Yarn" active>
@@ -18,17 +18,31 @@ To start storybook in development environmnet:
   ```
 
   </code-block>
+  <code-block label="NPM">
+
+  ```bash
+  npm run nuxt storybook
+  ```
+
+  </code-block>
 </code-group>
 
-## Generate static web app
+## Export
 
-Export your storybook into a static web app. Then you can deploy it to GitHub pages or any static hosting service.
+Export your Storybook into a static web application to deploy it to GitHub pages or any static hosting service:
 
 <code-group>
   <code-block label="Yarn" active>
 
   ```bash
   yarn nuxt storybook . build
+  ```
+
+  </code-block>
+  <code-block label="NPM">
+
+  ```bash
+  npm run nuxt storybook . build
   ```
 
   </code-block>

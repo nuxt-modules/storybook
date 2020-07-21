@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: ''
+description: '@nuxtjs/storybook let you integrate Storybook with NuxtJS with a single command.'
 position: "1"
 category: ''
 categoryPosition: "1"
@@ -14,10 +14,9 @@ features:
   - Hot reload support
 ---
 
-&nbsp;
-<intro-card />
+![@nuxtjs/storybook](/card.png)
 
-This module integrate [Storybook](https://storybook.js.org/) with [NuxtJS](https://nuxtjs.org).
+[Storybook](https://storybook.js.org/) integration with [NuxtJS](https://nuxtjs.org).
 
 ## Features
 
