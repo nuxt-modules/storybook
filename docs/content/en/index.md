@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: '@nuxtjs/storybook let you integrate Storybook with NuxtJS with a single command.'
+description: '@nuxtjs/storybook lets you integrate Storybook with NuxtJS with a single command.'
 position: 1
 category: ''
 categoryPosition: 1

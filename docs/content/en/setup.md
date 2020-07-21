@@ -6,10 +6,9 @@ category: Guide
 categoryPosition: 2
 ---
 
-Check the [Nuxt.js documentation](https://nuxtjs.org/api/configuration-modules#the-modules-property) for more information about installing and using modules in Nuxt.js.
+Using Storybook in your NuxtJS project is only one command away ✨
 
 ## Installation
-
 
 1. Add `@nuxtjs/storybook` dependency to your project:
 
@@ -33,7 +32,7 @@ Check the [Nuxt.js documentation](https://nuxtjs.org/api/configuration-modules#t
 
 2. Add `.nuxt-storybook` and `storybook-static` to your `.gitignore`:
 
-```bash[]{.gitignore}
+```bash{}[.gitignore]
 .nuxt-storybook
 storybook-static
 ```

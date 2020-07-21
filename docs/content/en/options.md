@@ -1,6 +1,6 @@
 ---
 title: Options
-description: ''
+description: 'You can configure the integration easily with the storybook property.'
 position: 4
 category: Guide
 categoryPosition: 2
