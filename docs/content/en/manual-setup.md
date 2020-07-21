@@ -25,7 +25,6 @@ module.exports = {
     // add your awesome
     return config;
   },
-
   stories: [
     '~/components/**/*.stories.js'
   ],
@@ -48,6 +47,13 @@ All done, just start storybook and make your changes.
 
   ```bash
   yarn nuxt storybook
+  ```
+
+  </code-block>
+  <code-block label="NPM">
+
+  ```bash
+  npx nuxt storybook
   ```
 
   </code-block>
