@@ -1,5 +1,5 @@
 <template>
   <nuxt-link to="https://nuxtjs.org">
-    NuxtJs
+    NuxtJS
   </nuxt-link>
 </template>

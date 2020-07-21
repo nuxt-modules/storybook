@@ -6,8 +6,8 @@
   "repository": "nuxt-community/storybook",
   "scripts": {
     "dev": "nuxt",
-    "generate": "nuxt static",
-    "serve": "nuxt serve",
+    "generate": "nuxt generate",
+    "start": "nuxt start",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
@@ -20,7 +20,6 @@
     "vue-scrollactive": "^0.9.3"
   },
   "devDependencies": {
-    "@nuxt/static": "^1.0.0",
     "@nuxtjs/color-mode": "^1.0.0",
     "@nuxtjs/eslint-config": "^3.0.0",
     "@nuxtjs/eslint-module": "^2.0.0",

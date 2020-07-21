@@ -1,10 +1,20 @@
 ---
 title: Options
 description: ''
-position: 2
-category: 'Guide'
-categoryPosition: 4
+position: 4
+category: Guide
+categoryPosition: 2
 ---
+
+To configure the integration, you can use `storybook` property in the `nuxt.config.js`:
+
+```js{}[nuxt.config.js]
+export default {
+  storybook: {
+    // Options
+  }
+}
+```
 
 ## `addons`
 

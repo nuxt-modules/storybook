@@ -1,9 +1,9 @@
 ---
 title: Manual Setup
 description: '@nuxtjs/storybook provides a clean and simple way to integrate Storybook with NuxtJS. If you want to config Storybook by yourself or do things that is beyond the scope of this module follow these steps.'
-position: 1
+position: 5
 category: Advanced
-categoryPosition: 3
+categoryPosition: 2
 ---
 
 `@nuxtjs/storybook` provides a clean and simple way to integrate Storybook with NuxtJS. If you want to config Storybook by yourself or do things that is beyond the scope of this module follow these steps.

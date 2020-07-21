@@ -10,7 +10,8 @@ Check the [Nuxt.js documentation](https://nuxtjs.org/api/configuration-modules#t
 
 ## Installation
 
-Add `@nuxtjs/storybook` dependency to your project:
+
+1. Add `@nuxtjs/storybook` dependency to your project:
 
 <code-group>
   <code-block label="Yarn" active>
@@ -28,6 +29,16 @@ Add `@nuxtjs/storybook` dependency to your project:
 
   </code-block>
 </code-group>
+
+
+2. Add `.nuxt-storybook` and `storybook-static` to your `.gitignore`:
+
+```bash[]{.gitignore}
+.nuxt-storybook
+storybook-static
+```
+
+3. Start adding [stories](/usage)
 
 ## Configure
 

@@ -1,9 +1,9 @@
 ---
 title: Introduction
 description: '@nuxtjs/storybook let you integrate Storybook with NuxtJS with a single command.'
-position: "1"
+position: 1
 category: ''
-categoryPosition: "1"
+categoryPosition: 1
 features:
   - Zero configuration
   - Nuxt webpack configuration

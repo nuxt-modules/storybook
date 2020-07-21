@@ -3,7 +3,7 @@ title: Examples
 description: 'Explore examples with NuxtJS and Storybook'
 position: 5
 category: Guide
-categoryPosition: 5
+categoryPosition: 2
 ---
 
 

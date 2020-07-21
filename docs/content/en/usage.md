@@ -1,49 +1,54 @@
 ---
 title: Usage
-description: ''
+description: 'Using Storybook with NuxtJS is simple, add your stories and run nuxt storybook command.'
 position: 2
 category: Guide
 categoryPosition: 2
 ---
 
-## Development
+First, we need to add the stories for our components, by default `@nuxtjs/storybook` will look into `~/components/**/*.stories.js`.
 
-To start Storybook in development environment:
+```bash
+components/
+  Link.vue
+  Link.stories.vue
+pages/
+  index.vue
+nuxt.config.js
+```
 
 <code-group>
-  <code-block label="Yarn" active>
+  <code-block label="Link.vue" active>
 
-  ```bash
-  yarn nuxt storybook
+  ```html
+  <template>
+    <nuxt-link to="https://nuxtjs.org">
+      NuxtJs
+    </nuxt-link>
+  </template>
   ```
 
   </code-block>
-  <code-block label="NPM">
+  <code-block label="Link.stories.js">
 
-  ```bash
-  npm run nuxt storybook
+  ```js
+  export default {
+    title: 'Link'
+  }
+
+  export const NuxtWebsite = () => '<Link />'
   ```
 
   </code-block>
 </code-group>
 
-## Export
+Then we can run the [development command](/commands#development) with `npx nuxt storybook` and go to [http://localhost:3003](http://localhost:3003), you will see our first story:
 
-Export your Storybook into a static web application to deploy it to GitHub pages or any static hosting service:
+![nuxt-storybook-screenshot](/screenshot.png)
 
-<code-group>
-  <code-block label="Yarn" active>
 
-  ```bash
-  yarn nuxt storybook . build
-  ```
+<base-alert type="info">
 
-  </code-block>
-  <code-block label="NPM">
+You can extend where `@nuxtjs/storybook` will load the stories in the [stories option](/options#stories).
 
-  ```bash
-  npm run nuxt storybook . build
-  ```
-
-  </code-block>
-</code-group>
+</base-alert>
