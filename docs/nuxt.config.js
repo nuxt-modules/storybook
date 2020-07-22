@@ -112,7 +112,7 @@ export default {
   },
   ackee: {
     server: 'https://ackee.nuxtjs.com',
-    domainId: '4370defe-04f9-4987-82d7-817b4de6b253',
+    domainId: '7e54dba4-1702-4c2a-9fb4-e0657449fb95',
     detailed: true
   }
 }
