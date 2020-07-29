@@ -22,8 +22,12 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
     ...extras.nuxtWebpackConfig.plugins.filter(p => !nuxtFilteredPlugins.some(np => p.constructor.name === np))
   ]
 
+  const rules = config.module.rules.filter(rule => !/js|vue|css|svg|mp4/.test(rule.test.toString()))
   // Nuxt rules
-  config.module.rules = extras.nuxtWebpackConfig.module.rules
+  config.module.rules = [
+    ...rules,
+    ...extras.nuxtWebpackConfig.module.rules
+  ]
 
   // Aliases
   const buildDir = extras.nuxt.options.buildDir
