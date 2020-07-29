@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/nuxt-community/storybook/compare/v0.0.1...v0.0.2) (2020-07-29)
+
+
+### Bug Fixes
+
+* **cli:** put comands in currect order ([910556f](https://github.com/nuxt-community/storybook/commit/910556f1a1b83084a4960de5a062fe5f9045432f))
+
 ### 0.0.1 (2020-07-14)
 
 
