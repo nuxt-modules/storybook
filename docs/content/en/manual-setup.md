@@ -37,7 +37,7 @@ Note that if you want to use Nuxt features in your storybook (like store or axio
 
 Create another file called `preview.js` inside `storybook` directory and import Nuxt helpers in it.
 ```js{}[preview.js]
-import '~/.nuxt-storybook/storybook/preview.js'
+import '~~/.nuxt-storybook/storybook/preview.js'
 ```
 
 All done, just start storybook and make your changes.

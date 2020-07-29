@@ -3,8 +3,8 @@
 <% } %>
 import Vue from 'vue'
 import '~storybook/mock'
-<% if (options.store) { %>import { createStore } from '~/.nuxt-storybook/store'<% } %>
-<% if (options.components) { %>import * as components from '~/.nuxt-storybook/components'<% } %>
+<% if (options.store) { %>import { createStore } from '~~/.nuxt-storybook/store'<% } %>
+<% if (options.components) { %>import * as components from '~~/.nuxt-storybook/components'<% } %>
 /* Plugins */
 <% options.plugins.forEach((plugin) => { %>import <%= plugin.name %> from '<%= plugin.name %>' // Source: <%= relativeToBuild(plugin.src) %> (mode: '<%= plugin.mode %>')
 <% }) %>
