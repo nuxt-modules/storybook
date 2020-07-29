@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/nuxt-community/storybook/compare/v0.0.2...v0.0.3) (2020-07-29)
+
+
+### Bug Fixes
+
+* **webpack:** merge storybook webpack rules with nuxt ([34b7491](https://github.com/nuxt-community/storybook/commit/34b7491db50fa37b28a8a625ceea6c8ffd72fa56))
+* allow using custom `srcDir` ([5f70899](https://github.com/nuxt-community/storybook/commit/5f70899a89e3c5bd03e2559eb03ddb6ea383ce25)), closes [#19](https://github.com/nuxt-community/storybook/issues/19)
+
 ### [0.0.2](https://github.com/nuxt-community/storybook/compare/v0.0.1...v0.0.2) (2020-07-29)
 
 
