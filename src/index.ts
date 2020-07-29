@@ -58,7 +58,10 @@ async function buildNuxt (options: StorybookOptions) {
     rootDir: options.rootDir,
     for: options.mode,
     configOverrides: {
-      buildDir
+      buildDir,
+      build: {
+        extractCSS: false
+      }
     },
     transpile: [path.resolve(__dirname, '../storybook')]
   })
