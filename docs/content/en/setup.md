@@ -30,6 +30,10 @@ Using Storybook in your NuxtJS project is only one command away ✨
 </code-group>
 
 
+<base-alert type="warning">
+If you are using <b>Nuxt < 2.14.0</b>, you need to <a href="https://github.com/nuxt/nuxt.js/tree/v2.13.3/packages/babel-preset-app#example-2-use-core-js3">use `core-js@3`</a> 
+</base-alert>
+
 2. Add `.nuxt-storybook` and `storybook-static` to your `.gitignore`:
 
 ```bash{}[.gitignore]
