@@ -15,7 +15,7 @@
   "scripts": {
     "build": "yarn clean && tsc",
     "clean": "rimraf dist",
-    "dev": "yarn nuxt-storybook playground dev",
+    "dev": "yarn nuxt-storybook playground",
     "nuxt-storybook": "ts-node src/cli",
     "test": "yarn lint",
     "lint": "eslint --ext .ts,.js,.vue .",
