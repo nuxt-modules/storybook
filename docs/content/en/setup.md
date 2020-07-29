@@ -16,43 +16,32 @@ Using Storybook in your NuxtJS project is only one command away ✨
   <code-block label="Yarn" active>
 
   ```bash
-  yarn add --dev @nuxtjs/storybook core-js@3
+  yarn add --dev @nuxtjs/storybook
   ```
 
   </code-block>
   <code-block label="NPM">
 
   ```bash
-  npm install --save-dev @nuxtjs/storybook core-js@3
+  npm install --save-dev @nuxtjs/storybook
   ```
 
   </code-block>
 </code-group>
 
-2. Move to `core-js@3`:
 
-Storybook requires that we move to `core-js@3`, which we can enable with a small tweak to our config:
+<base-alert type="warning">
+If you are using <b>Nuxt < 2.14.0</b>, you need to <a href="https://github.com/nuxt/nuxt.js/tree/v2.13.3/packages/babel-preset-app#example-2-use-core-js3">use `core-js@3`</a> 
+</base-alert>
 
-```js[nuxt.config.js]
-export default {
-  build: {
-    babel: {
-      presets(_, [_preset, options]) {
-        options.corejs = { version: 3 };
-      }
-    }
-  }
-}
-```
-
-3. Add `.nuxt-storybook` and `storybook-static` to your `.gitignore`:
+2. Add `.nuxt-storybook` and `storybook-static` to your `.gitignore`:
 
 ```bash{}[.gitignore]
 .nuxt-storybook
 storybook-static
 ```
 
-4. Start adding [stories](/usage)
+3. Start adding [stories](/usage)
 
 ## Configure
 
