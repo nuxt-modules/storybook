@@ -1,4 +1,5 @@
 import path from 'path'
+import fs from 'fs'
 import arg from 'arg'
 import { logger } from './utils'
 
@@ -10,9 +11,12 @@ function _run () {
   const args = arg({})
 
   let [mode, _dir] = args._
-  if (!_dir) {
+  if (!_dir && fs.existsSync(mode)) {
     _dir = mode || '.'
     mode = 'dev'
+  } else {
+    _dir = _dir || '.'
+    mode = mode || 'dev'
   }
   // Resolve dir
   const rootDir = path.resolve(process.cwd(), _dir)
@@ -24,11 +28,12 @@ function _run () {
         mode
       })
     case 'dev':
-    default:
-      start({
+      return start({
         rootDir,
         mode
       })
+    default:
+      logger.error(`Command "${mode}" not found`)
   }
 }
 
