@@ -41,7 +41,13 @@ If you are using <b>Nuxt < 2.14.0</b>, you need to <a href="https://github.com/n
 storybook-static
 ```
 
-3. Start adding [stories](/usage)
+3. Add `**/*.stories.js` to `.nuxtignore`
+
+```bash{}[.nuxtignore]
+**/*.stories.js
+```
+
+4. Start adding [stories](/usage)
 
 ## Configure
 

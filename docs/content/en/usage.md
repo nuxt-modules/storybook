@@ -52,8 +52,4 @@ You can extend where `@nuxtjs/storybook` will load the stories in the [stories o
 
 </base-alert>
 
-<base-alert type="next">
-
 Learn more about [writing stories for your Vue components](https://storybook.js.org/docs/guides/guide-vue/#step-4-write-your-stories) on Storybook official documentation.
-
-</base-alert>
