@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/nuxt-community/storybook/compare/v0.0.3...v0.0.4) (2020-07-30)
+
+
+### Bug Fixes
+
+* **cli:** fallback to command if `dir` not exists ([153f11a](https://github.com/nuxt-community/storybook/commit/153f11acf7366158a83ff14a3e78219f2634d03b))
+* **style:** force disable extractCSS ([3ed5d3c](https://github.com/nuxt-community/storybook/commit/3ed5d3c2938c75d2ed8286577ba532f7aab1cd4a))
+
 ### [0.0.3](https://github.com/nuxt-community/storybook/compare/v0.0.2...v0.0.3) (2020-07-29)
 
 
