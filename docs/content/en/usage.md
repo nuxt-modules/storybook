@@ -11,7 +11,7 @@ First, we need to add the stories for our components, by default `@nuxtjs/storyb
 ```bash
 components/
   Link.vue
-  Link.stories.vue
+  Link.stories.js
 pages/
   index.vue
 nuxt.config.js
@@ -46,9 +46,14 @@ Then we can run the [development command](/commands#development) with `npx nuxt 
 
 ![nuxt-storybook-screenshot](/screenshot.png)
 
-
 <base-alert type="info">
 
 You can extend where `@nuxtjs/storybook` will load the stories in the [stories option](/options#stories).
+
+</base-alert>
+
+<base-alert type="next">
+
+Learn more about [writing stories for your Vue components](https://storybook.js.org/docs/guides/guide-vue/#step-4-write-your-stories) on Storybook official documentation.
 
 </base-alert>
