@@ -13,3 +13,6 @@ categoryPosition: 2
 - **Manual Setup**: Create your own configuration files for Storybook.
     [[Source]](https://github.com/nuxt-community/storybook/tree/master/examples/manual-setup)
     [[Demo]](https://codesandbox.io/s/github/nuxt-community/storybook/tree/master/examples/manual-setup)
+- **MDX Stories**: Write stories in MDX format
+    [[Source]](https://github.com/nuxt-community/storybook/tree/master/examples/mdx)
+    [[Demo]](https://codesandbox.io/s/github/nuxt-community/storybook/tree/master/examples/mdx)
