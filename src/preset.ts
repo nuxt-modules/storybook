@@ -3,7 +3,6 @@ export default {
     '@storybook/addon-actions/register'
   ],
   stories: [
-    '~/components/**/*.stories.js',
-    '@nuxtjs/**/*.stories.js'
+    '~/components/**/*.stories.js'
   ]
 }
