@@ -58,6 +58,7 @@ async function buildNuxt (options: StorybookOptions) {
     rootDir: options.rootDir,
     for: options.mode,
     configOverrides: {
+      ssr: false,
       buildDir,
       build: {
         extractCSS: false
@@ -97,6 +98,8 @@ async function buildNuxt (options: StorybookOptions) {
 
   // It's important to call getWebpackConfig after bundler build
   const nuxtWebpackConfig = await bundleBuilder.getWebpackConfig('client')
+  // Manually call `webpack:config` hook to extend config by modules
+  await nuxt.callHook('webpack:config', [nuxtWebpackConfig])
 
   return {
     nuxt,
