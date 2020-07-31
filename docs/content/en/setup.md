@@ -10,7 +10,7 @@ Using Storybook in your NuxtJS project is only one command away ✨
 
 ## Installation
 
-1. Add `@nuxtjs/storybook` dependency to your project:
+Add `@nuxtjs/storybook` dependency to your project:
 
 <code-group>
   <code-block label="Yarn" active>
@@ -30,24 +30,26 @@ Using Storybook in your NuxtJS project is only one command away ✨
 </code-group>
 
 
-<base-alert type="warning">
+<alert type="warning">
 If you are using <b>Nuxt < 2.14.0</b>, you need to <a href="https://github.com/nuxt/nuxt.js/tree/v2.13.3/packages/babel-preset-app#example-2-use-core-js3">use `core-js@3`</a> 
-</base-alert>
+</alert>
 
-2. Add `.nuxt-storybook` and `storybook-static` to your `.gitignore`:
+Next, add `.nuxt-storybook` and `storybook-static` to your `.gitignore`:
 
 ```bash{}[.gitignore]
 .nuxt-storybook
 storybook-static
 ```
 
-3. Add `**/*.stories.js` to `.nuxtignore`
+Then add `**/*.stories.js` to your `.nuxtignore`
 
 ```bash{}[.nuxtignore]
 **/*.stories.js
 ```
 
-4. Start adding [stories](/usage)
+That's it ✨!
+
+Now you can start adding [stories](/usage).
 
 ## Configure
 
