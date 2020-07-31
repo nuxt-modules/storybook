@@ -35,6 +35,7 @@ async function getStorybookConfig (options: StorybookOptions) {
   return {
     ...vueOptions,
     packageJson: require('../package.json'),
+    versionUpdates: false,
     rootDir: options.rootDir,
     configDir: nuxtStorybookConfig.configDir,
     port: process.env.PORT || nuxtStorybookConfig.port || 3003,
