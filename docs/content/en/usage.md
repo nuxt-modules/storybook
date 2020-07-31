@@ -46,10 +46,10 @@ Then we can run the [development command](/commands#development) with `npx nuxt 
 
 ![nuxt-storybook-screenshot](/screenshot.png)
 
-<base-alert type="info">
+<alert type="info">
 
 You can extend where `@nuxtjs/storybook` will load the stories in the [stories option](/options#stories).
 
-</base-alert>
+</alert>
 
 Learn more about [writing stories for your Vue components](https://storybook.js.org/docs/guides/guide-vue/#step-4-write-your-stories) on Storybook official documentation.

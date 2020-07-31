@@ -1,4 +1,4 @@
-[![@nuxtjs/storybokok](https://user-images.githubusercontent.com/904724/88040381-1bf03680-cb49-11ea-9ef3-50d0746c999c.png)](https://storybook.nuxtjs.org)
+[![@nuxtjs/storybook](https://user-images.githubusercontent.com/904724/89059288-3607f100-d361-11ea-8313-6ebc702b4fa4.png)](https://storybook.nuxtjs.org)
 
 # @nuxtjs/storybook
 
@@ -10,7 +10,7 @@
 
 > [Storybook](https://storybook.js.org/) integration with [NuxtJS](https://nuxtjs.org)
 
-- [✨ &nbsp;Release Notes](https://github.com/nuxt-community/storybook/releases)
+- [✨ &nbsp;Release Notes](https://storybook.nuxtjs.org/releases)
 - [📖 &nbsp;Documentation](https://storybook.nuxtjs.org)
 
 ## Features

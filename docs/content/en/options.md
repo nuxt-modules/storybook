@@ -33,14 +33,14 @@ export default {
 }
 ```
 
-<base-alert type="info">
+<alert type="info">
 
 `@nuxtjs/storybook` internally registered some third party addons.
 
 You don't need to register these addons in your project:
 - `@storybook/addon-actions/register` 
 
-</base-alert>
+</alert>
 
 ## `stories`
 
@@ -56,11 +56,11 @@ export default {
   }
 }
 ```
-<base-alert type="info">
+<alert type="info">
 
 By default `@nuxtjs/storybook` load all stories inside `~/components`. You don't need to add this directory.
 
-</base-alert>
+</alert>
 
 ## `port`
 

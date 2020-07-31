@@ -7,28 +7,13 @@
   "scripts": {
     "dev": "nuxt",
     "generate": "nuxt generate",
-    "start": "nuxt start",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+    "start": "nuxt start"
   },
   "dependencies": {
-    "@nuxt/content": "^1.5.0",
-    "@nuxtjs/pwa": "^3.0.0-beta.20",
-    "lodash.groupby": "^4.6.0",
-    "nuxt-edge": "^2.14.0-26597729.aebf0ffe",
-    "nuxt-i18n": "^6.13.1",
-    "prism-themes": "^1.4.0",
-    "vue-scrollactive": "^0.9.3"
+    "@nuxt/content-theme-docs": "^0.1.3",
+    "nuxt-edge": "^2.14.1-26602588.73a87536"
   },
   "devDependencies": {
-    "@nuxtjs/color-mode": "^1.0.2",
-    "@nuxtjs/eslint-config": "^3.1.0",
-    "@nuxtjs/eslint-module": "^2.0.0",
-    "@nuxtjs/tailwindcss": "^2.1.1",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.5.0",
-    "eslint-plugin-nuxt": ">=1.0.0",
-    "nuxt-ackee": "^1.0.1",
-    "tailwindcss-dark-mode": "^1.1.5",
-    "vue-multiselect": "^2.1.6"
+    "nuxt-ackee": "^1.0.1"
   }
 }
