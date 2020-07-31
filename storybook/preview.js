@@ -17,8 +17,14 @@ const inject = (name, impl) => {
   Vue.prototype['$' + name] = impl
 }
 <% if (options.store) {%>inject('store', createStore({}))<% }%>
-const plugins = [<%= options.plugins.map(plugin => plugin.name).join(",") %>].forEach(plugin => {
+Vue.prototype.app = {};<% /* prevent undefined app exception */ %>
+[<%= options.plugins.map(plugin => plugin.name).join(",") %>].forEach(plugin => {
   if (typeof plugin === 'function') {
-    plugin(Vue.prototype, inject)
+    try {
+      plugin(Vue.prototype, inject)
+    } catch (e) {
+      console.warn(e)<% /* warn plugin error */ %>
+    }
   }
 })
+  
