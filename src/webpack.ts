@@ -13,9 +13,18 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
     // 'HotModuleReplacementPlugin',
     'HtmlWebpackPlugin'
   ]
+  const nuxtFilteredEntries = [
+    'webpack-hot-middleware',
+    '.nuxt-storybook/client.js',
+    'eventsource-polyfill'
+  ]
   const storybookValidPlugins = [
     'VirtualModulesPlugin',
     'HtmlWebpackPlugin'
+  ]
+  config.entry = [
+    ...extras.nuxtWebpackConfig.entry.app.filter(p => !nuxtFilteredEntries.some(np => p.includes(np))),
+    ...(config.entry as string[])
   ]
   config.plugins = [
     ...config.plugins.filter(p => storybookValidPlugins.some(np => p.constructor.name === np)),
