@@ -4,6 +4,10 @@ export default theme({
   /*
   ** Nuxt.js dev-modules
   */
+  generate: {
+    fallback: '404.html', // for Netlify
+    routes: ['/'] // give the first url to start crawling
+  },
   buildModules: [
     // https://github.com/bdrtsky/nuxt-ackee
     'nuxt-ackee'
