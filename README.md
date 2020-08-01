@@ -1,4 +1,4 @@
-[![@nuxtjs/storybook](https://user-images.githubusercontent.com/904724/89059288-3607f100-d361-11ea-8313-6ebc702b4fa4.png)](https://storybook.nuxtjs.org)
+[![@nuxtjs/storybook](https://storybook.nuxtjs.org/preview.png)](https://storybook.nuxtjs.org)
 
 # @nuxtjs/storybook
 
