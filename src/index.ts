@@ -62,6 +62,7 @@ async function buildNuxt (options: StorybookOptions) {
       ssr: false,
       buildDir,
       build: {
+        corejs: '3',
         extractCSS: false
       }
     },
