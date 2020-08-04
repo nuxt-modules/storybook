@@ -9,6 +9,8 @@ export const usage = 'nuxt storybook [`dev`|`build`] [`dir`]'
 
 function _run () {
   const args = arg({
+    '--static-dir': String,
+    '-s': '--static-dir',
     '--output-dir': String,
     '-o': '--output-dir',
     '--quiet': Boolean

@@ -11,5 +11,6 @@ export interface StorybookOptions {
   rootDir: string;
   mode: string;
   outputDir?: string;
+  staticDir?: string;
   quiet?: boolean;
 }
