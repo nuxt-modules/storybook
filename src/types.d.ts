@@ -13,4 +13,8 @@ export interface StorybookOptions {
   outputDir?: string;
   staticDir?: string;
   quiet?: boolean;
+  smokeTest?: Boolean;
+  ci?: Boolean;
+  port?: Number;
+  host?: String;
 }

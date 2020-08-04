@@ -13,7 +13,13 @@ function _run () {
     '-s': '--static-dir',
     '--output-dir': String,
     '-o': '--output-dir',
-    '--quiet': Boolean
+    '--quiet': Boolean,
+    '--smoke-test': Boolean,
+    '--ci': Boolean,
+    '--port': Number,
+    '-p': '--port',
+    '--host': String,
+    '-h': '--host'
   })
   const { _, ...flags } = args
 
