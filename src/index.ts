@@ -38,6 +38,7 @@ async function getStorybookConfig (options: StorybookOptions) {
     versionUpdates: false,
     rootDir: options.rootDir,
     configDir: nuxtStorybookConfig.configDir,
+    staticDir: [path.resolve(options.rootDir, nuxt.options.dir.static)],
     port: process.env.PORT || nuxtStorybookConfig.port || 3003,
     nuxt,
     nuxtBuilder,
