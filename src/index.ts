@@ -43,6 +43,7 @@ async function getStorybookConfig (options: StorybookOptions) {
     nuxtBuilder,
     nuxtWebpackConfig,
     nuxtStorybookConfig,
+    ...options,
     frameworkPresets: [
       ...vueOptions.frameworkPresets,
       require.resolve('./preset')
@@ -62,7 +63,7 @@ async function buildNuxt (options: StorybookOptions) {
       ssr: false,
       buildDir,
       build: {
-        corejs: '3',
+        corejs: 3,
         extractCSS: false
       }
     },
