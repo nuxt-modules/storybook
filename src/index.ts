@@ -44,6 +44,7 @@ async function getStorybookConfig (options: StorybookOptions) {
     nuxtBuilder,
     nuxtWebpackConfig,
     nuxtStorybookConfig,
+    ...options,
     frameworkPresets: [
       ...vueOptions.frameworkPresets,
       require.resolve('./preset')

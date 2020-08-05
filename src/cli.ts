@@ -8,9 +8,22 @@ import { start, build } from './index'
 export const usage = 'nuxt storybook [`dev`|`build`] [`dir`]'
 
 function _run () {
-  const args = arg({})
+  const args = arg({
+    '--static-dir': String,
+    '-s': '--static-dir',
+    '--output-dir': String,
+    '-o': '--output-dir',
+    '--quiet': Boolean,
+    '--smoke-test': Boolean,
+    '--ci': Boolean,
+    '--port': Number,
+    '-p': '--port',
+    '--host': String,
+    '-h': '--host'
+  })
+  const { _, ...flags } = args
 
-  let [mode, _dir] = args._
+  let [mode, _dir] = _
   if (!_dir && fs.existsSync(mode)) {
     _dir = mode || '.'
     mode = 'dev'
@@ -25,7 +38,8 @@ function _run () {
     case 'build':
       return build({
         rootDir,
-        mode
+        mode,
+        ...flags
       })
     case 'dev':
       // Make sure NODE_ENV is `development`.
@@ -34,7 +48,8 @@ function _run () {
       process.env.NODE_ENV = 'development'
       return start({
         rootDir,
-        mode
+        mode,
+        ...flags
       })
     default:
       logger.error(`Command "${mode}" not found`)
