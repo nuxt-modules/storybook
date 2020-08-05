@@ -28,6 +28,10 @@ function _run () {
         mode
       })
     case 'dev':
+      // Make sure NODE_ENV is `development`.
+      // NOTE: While using `nuxt` to execute commands, Nuxt set NODE_ENV to `production` if it is missing.
+      // https://github.com/nuxt/nuxt.js/blob/dev/packages/cli/src/setup.js#L9
+      process.env.NODE_ENV = 'development'
       return start({
         rootDir,
         mode
