@@ -1,3 +1,5 @@
+import fsExtra from 'fs-extra'
+import template from 'lodash/template'
 import jiti from 'jiti'
 import consola from 'consola'
 
@@ -25,4 +27,19 @@ export function normalizeFlags (flags) {
     acc[normalizedFlag] = flags[flag]
     return acc
   }, {})
+}
+
+export async function compileTemplate (src, destination, templateVars) {
+  let content
+  try {
+    const fileContent = await fsExtra.readFile(src, 'utf8')
+
+    const templateFunction = template(fileContent)
+    content = templateFunction({
+      options: templateVars
+    })
+  } catch (err) {
+    throw new Error(`Could not compile template: ${err.message}`)
+  }
+  await fsExtra.outputFile(destination, content, 'utf8')
 }

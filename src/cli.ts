@@ -1,9 +1,9 @@
 import path from 'path'
 import fs from 'fs'
 import arg from 'arg'
-import { logger, normalizeFlags } from './utils'
 
-import { start, build, eject } from './index'
+import { logger, normalizeFlags } from './utils'
+import { eject, start, build } from './index'
 
 export const usage = 'nuxt storybook [`dev`|`build`] [`dir`]'
 
