@@ -1,8 +1,8 @@
 import path from 'path'
-import fs from 'fs'
+import fsExtra from 'fs-extra'
 import vueOptions from '@storybook/vue/dist/server/options'
 import { buildDev, buildStatic } from '@storybook/core/server'
-import { requireMaybeEdge } from './utils'
+import { requireMaybeEdge, compileTemplate, logger } from './utils'
 import { StorybookOptions } from './types'
 import { getWebpackConfig } from './webpack'
 
@@ -91,7 +91,7 @@ async function buildNuxt (options: StorybookOptions) {
   })
 
   nuxtStorybookConfig.configDir = path.resolve(options.rootDir, 'storybook')
-  if (!fs.existsSync(path.resolve(options.rootDir, 'storybook'))) {
+  if (!fsExtra.existsSync(path.resolve(options.rootDir, 'storybook'))) {
     nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
   }
   // Mock webpack build as we only need generated templates
@@ -125,4 +125,27 @@ function generateStorybookFiles (options) {
     fileName: path.join('storybook', 'preview.js'),
     options
   })
+}
+
+export async function eject (options: StorybookOptions) {
+  const buildDir = path.resolve(options.rootDir, '.nuxt-storybook')
+  const configDir = path.resolve(options.rootDir, 'storybook')
+  const templatesRoot = path.resolve(__dirname, '../storybook')
+  if (!options.force && fsExtra.existsSync(configDir)) {
+    logger.warn('Storybook is already ejected, use `--force` to overwrite files.')
+    return
+  }
+  const { loadNuxtConfig } = requireMaybeEdge('nuxt')
+  const config = await loadNuxtConfig({
+    rootDir: options.rootDir,
+    for: 'build',
+    configOverrides: {
+      ssr: false,
+      buildDir
+    }
+  })
+
+  const nuxtStorybookConfig = config.storybook || {}
+  compileTemplate(path.resolve(templatesRoot, 'eject', 'main.js'), path.join(configDir, 'main.js'), nuxtStorybookConfig)
+  compileTemplate(path.resolve(templatesRoot, 'eject', 'preview.js'), path.join(configDir, 'preview.js'), nuxtStorybookConfig)
 }

@@ -1,9 +1,9 @@
 import path from 'path'
 import fs from 'fs'
 import arg from 'arg'
-import { logger } from './utils'
 
-import { start, build } from './index'
+import { logger, normalizeFlags } from './utils'
+import { eject, start, build } from './index'
 
 export const usage = 'nuxt storybook [`dev`|`build`] [`dir`]'
 
@@ -19,7 +19,8 @@ function _run () {
     '--port': Number,
     '-p': '--port',
     '--host': String,
-    '-h': '--host'
+    '-h': '--host',
+    '--force': Boolean
   })
   const { _, ...flags } = args
 
@@ -39,7 +40,13 @@ function _run () {
       return build({
         rootDir,
         mode,
-        ...flags
+        ...normalizeFlags(flags)
+      })
+    case 'eject':
+      return eject({
+        rootDir,
+        mode: 'dev',
+        force: args['--force']
       })
     case 'dev':
       // Make sure NODE_ENV is `development`.
@@ -49,7 +56,7 @@ function _run () {
       return start({
         rootDir,
         mode,
-        ...flags
+        ...normalizeFlags(flags)
       })
     default:
       logger.error(`Command "${mode}" not found`)

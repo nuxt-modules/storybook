@@ -17,4 +17,5 @@ export interface StorybookOptions {
   ci?: Boolean;
   port?: Number;
   host?: String;
+  force?: boolean;
 }
