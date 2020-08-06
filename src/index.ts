@@ -2,7 +2,7 @@ import path from 'path'
 import fs from 'fs'
 import vueOptions from '@storybook/vue/dist/server/options'
 import { buildDev, buildStatic } from '@storybook/core/server'
-import { requireMaybeEdge } from './utils'
+import { requireMaybeEdge, logger } from './utils'
 import { StorybookOptions } from './types'
 import { getWebpackConfig } from './webpack'
 
@@ -125,4 +125,72 @@ function generateStorybookFiles (options) {
     fileName: path.join('storybook', 'preview.js'),
     options
   })
+}
+
+function generateEjectFiles (configDir, options) {
+  const templatesRoot = path.resolve(__dirname, '../storybook')
+  this.addTemplate({
+    src: path.resolve(templatesRoot, 'eject', 'main.js'),
+    fileName: path.join(configDir, 'main.js'),
+    options
+  })
+  this.addTemplate({
+    src: path.resolve(templatesRoot, 'eject', 'preview.js'),
+    fileName: path.join(configDir, 'preview.js'),
+    options
+  })
+}
+
+export async function eject (options: StorybookOptions) {
+  const buildDir = path.resolve(options.rootDir, '.nuxt-storybook')
+  const configDir = path.resolve(options.rootDir, 'storybook')
+  if (!options.force && fs.existsSync(configDir)) {
+    logger.warn('Storybook is already ejected, use `--force` to overwrite files.')
+    return
+  }
+  const { loadNuxt, getBuilder } = requireMaybeEdge('nuxt')
+  // Create new nuxt instance
+  const nuxt = await loadNuxt({
+    rootDir: options.rootDir,
+    for: 'build',
+    configOverrides: {
+      ssr: false,
+      buildDir
+    }
+  })
+
+  // Create new builder
+  const nuxtBuilder = await getBuilder(nuxt)
+
+  const nuxtStorybookConfig = nuxt.options.storybook || {}
+  // generate files
+  nuxt.hook('build:before', async () => {
+    const plugins = await nuxtBuilder.normalizePlugins()
+    generateStorybookFiles.call(nuxt.moduleContainer, {
+      ...nuxtStorybookConfig,
+      plugins: plugins.filter(p => p.mode !== 'server'),
+      styles: nuxt.options.css,
+      store: nuxt.options.features.store ? nuxt.options.store : false,
+      components: nuxt.options.components
+    })
+    generateEjectFiles.call(nuxt.moduleContainer, configDir, {
+      ...nuxtStorybookConfig,
+      plugins: plugins.filter(p => p.mode !== 'server'),
+      styles: nuxt.options.css,
+      store: nuxt.options.features.store ? nuxt.options.store : false,
+      components: nuxt.options.components
+    })
+  })
+
+  // Mock webpack build as we only need generated templates
+  nuxtBuilder.bundleBuilder = {
+    build () { }
+  }
+  await nuxtBuilder.build()
+
+  return {
+    nuxt,
+    nuxtBuilder,
+    nuxtStorybookConfig
+  }
 }

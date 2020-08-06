@@ -16,3 +16,13 @@ export function tryRequire (pkg) {
 export function requireMaybeEdge (pkg) {
   return tryRequire(pkg + '-edge') || tryRequire(pkg)
 }
+
+export function normalizeFlags (flags) {
+  return Object.keys(flags).reduce((acc, flag) => {
+    const normalizedFlag = flag
+      .replace('--', '')
+      .replace(/-([a-z])/, v => v.replace('-', '').toUpperCase())
+    acc[normalizedFlag] = flags[flag]
+    return acc
+  }, {})
+}
