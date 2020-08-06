@@ -135,9 +135,8 @@ export async function eject (options: StorybookOptions) {
     logger.warn('Storybook is already ejected, use `--force` to overwrite files.')
     return
   }
-  const { loadNuxt } = requireMaybeEdge('nuxt')
-  // Create new nuxt instance
-  const nuxt = await loadNuxt({
+  const { loadNuxtConfig } = requireMaybeEdge('nuxt')
+  const config = await loadNuxtConfig({
     rootDir: options.rootDir,
     for: 'build',
     configOverrides: {
@@ -146,7 +145,7 @@ export async function eject (options: StorybookOptions) {
     }
   })
 
-  const nuxtStorybookConfig = nuxt.options.storybook || {}
+  const nuxtStorybookConfig = config.storybook || {}
   compileTemplate(path.resolve(templatesRoot, 'eject', 'main.js'), path.join(configDir, 'main.js'), nuxtStorybookConfig)
   compileTemplate(path.resolve(templatesRoot, 'eject', 'preview.js'), path.join(configDir, 'preview.js'), nuxtStorybookConfig)
 }
