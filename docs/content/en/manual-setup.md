@@ -10,11 +10,35 @@ categoryPosition: 2
 
 Before starting, take a look at Storybook's oficial documentation about [Configuration](https://storybook.js.org/docs/configurations/overview/)
 
-## Create `storybook` directory
+## User `eject` command
+Using `eject` command is the easiest way to create and customize Storybook config. 
+
+<code-group>
+  <code-block label="Yarn" active>
+
+  ```bash
+  yarn nuxt storybook eject
+  ```
+
+  </code-block>
+  <code-block label="NPM">
+
+  ```bash
+  npx nuxt storybook eject
+  ```
+
+  </code-block>
+</code-group>
+
+After running `eject` command you'll see `storybook` directory in your project's root dirctory.
+
+
+## Manual
+### Create `storybook` directory
 
 In root directory of your project create `storybook` directory. This directory will become your storybook's entry point.
 
-## Create `main.js`
+### Create `main.js`
 
 Create a new file inside `storybook` directory called `main.js`, This is where you can import your stories.  
 A sample `main.js` files could be like this:
@@ -33,7 +57,7 @@ module.exports = {
 
 Note that if you want to use Nuxt features in your storybook (like store or axios module and ...) you need to define a `webpackFinal` function in `main.js` and put this line `config = options.nuxtStorybookConfig.webpackFinal(config, options)` in the first line of function.
 
-## Create `preview.js`
+### Create `preview.js`
 
 Create another file called `preview.js` inside `storybook` directory and import Nuxt helpers in it.
 ```js{}[preview.js]

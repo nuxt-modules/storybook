@@ -72,3 +72,30 @@ Build command have some options you can pass to alter storybook behaviors.
 -o, --output-dir [dir-name]   Directory where to store built files
 --quiet  
 ```
+
+## Eject
+Generate manual config directory for Storybook 
+
+<code-group>
+  <code-block label="Yarn" active>
+
+  ```bash
+  yarn nuxt storybook eject
+  ```
+
+  </code-block>
+  <code-block label="NPM">
+
+  ```bash
+  npx nuxt storybook eject
+  ```
+
+  </code-block>
+</code-group>
+
+This command will create a `storybook` directory and default configuration.
+
+### CLI Options
+```
+--force  Force to overwrite config files if there are existed 
+```
