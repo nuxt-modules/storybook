@@ -93,7 +93,7 @@ Generate manual config directory for Storybook
   </code-block>
 </code-group>
 
-This command will create a `storybook` directory and default configuration.
+This command will create a `storybook` directory and default configuration files.
 
 ### CLI Options
 ```
