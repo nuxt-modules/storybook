@@ -1,5 +1,5 @@
 /* Styles */<% if (Array.isArray(options.styles)) { %>
-<%= options.styles.map(s => `import '${s}'`).join("\n") %>
+<%= options.styles.map(s => `import '${s.replace(/\\/g, "\\\\")}'`).join("\n") %>
 <% } %>
 import Vue from 'vue'
 import { normalizeError } from '~~/.nuxt-storybook/utils'
@@ -12,7 +12,7 @@ Object.keys(components).forEach(name => Vue.component(name, components[name]))<%
 <% }) %>
 
 
-const inject = (name, impl) => { 
+const inject = (name, impl) => {
   Vue.prototype['$' + name] = impl
 }
 <% if (options.store) {%>inject('store', createStore({}))<% }%>
@@ -26,4 +26,3 @@ Vue.prototype.app = {};<% /* prevent undefined app exception */ %>
     }
   }
 })
-  
