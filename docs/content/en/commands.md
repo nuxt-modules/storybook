@@ -33,6 +33,7 @@ By default, it will start the development server on [http://localhost:3003](http
 ### CLI Options
 Development command have some options you can pass to alter storybook behaviors.
 ```
+-c, --config-file <file-path> Specify the path to nuxt.config.js file.
 -p, --port [number]           Port to run Storybook.
 -h, --host [string]           Host to run Storybook
 -s, --static-dir <dir-names>  Directory where to load static files from, comma-separated list. By default it loads Nuxt static dir
@@ -67,6 +68,7 @@ By default this command will output a `storybook-static/` directory. See command
 ### CLI Options
 Build command have some options you can pass to alter storybook behaviors.
 ```
+-c, --config-file <file-path> Specify the path to nuxt.config.js file.
 -s, --static-dir <dir-names>  Directory where to load static files from, comma-separated list. By default it loads Nuxt static dir
 -o, --output-dir [dir-name]   Directory where to store built files
 --quiet
@@ -96,5 +98,6 @@ This command will create a `storybook` directory and default configuration files
 
 ### CLI Options
 ```
+-c, --config-file <file-path> Specify the path to nuxt.config.js file.
 --force  Force to overwrite config files if there are existed
 ```
