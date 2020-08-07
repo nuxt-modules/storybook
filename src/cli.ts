@@ -9,7 +9,7 @@ export const usage = 'nuxt storybook [`dev`|`build`] [`dir`]'
 
 function _run () {
   const args = arg({
-    // Spcify Nuxt config file
+    // Specify Nuxt config file
     '--config-file': String,
     '-c': '--config-file',
     '--static-dir': String,
