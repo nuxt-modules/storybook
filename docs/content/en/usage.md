@@ -3,7 +3,6 @@ title: Usage
 description: 'Using Storybook with NuxtJS is simple, add your stories and run nuxt storybook command.'
 position: 2
 category: Guide
-categoryPosition: 2
 ---
 
 First, we need to add the stories for our components, by default `@nuxtjs/storybook` will look into `~/components/**/*.stories.js`.
