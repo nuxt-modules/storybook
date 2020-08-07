@@ -3,7 +3,6 @@ title: Commands
 description: '@nuxtjs/storybook is shipped with multiple commands, making easy to develop or ship the UI for production'
 position: 3
 category: Guide
-categoryPosition: 2
 ---
 
 `@nuxtjs/storybook` is shipped with multiple commands, making easy to develop or ship the UI for production.
@@ -70,11 +69,11 @@ Build command have some options you can pass to alter storybook behaviors.
 ```
 -s, --static-dir <dir-names>  Directory where to load static files from, comma-separated list. By default it loads Nuxt static dir
 -o, --output-dir [dir-name]   Directory where to store built files
---quiet  
+--quiet
 ```
 
 ## Eject
-Generate manual config directory for Storybook 
+Generate manual config directory for Storybook
 
 <code-group>
   <code-block label="Yarn" active>
@@ -97,5 +96,5 @@ This command will create a `storybook` directory and default configuration files
 
 ### CLI Options
 ```
---force  Force to overwrite config files if there are existed 
+--force  Force to overwrite config files if there are existed
 ```

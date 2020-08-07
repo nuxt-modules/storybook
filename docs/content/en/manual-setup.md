@@ -3,7 +3,6 @@ title: Manual Setup
 description: '@nuxtjs/storybook provides a clean and simple way to integrate Storybook with NuxtJS. If you want to config Storybook by yourself or do things that is beyond the scope of this module follow these steps.'
 position: 5
 category: Advanced
-categoryPosition: 2
 ---
 
 `@nuxtjs/storybook` provides a clean and simple way to integrate Storybook with NuxtJS. If you want to config Storybook by yourself or do things that is beyond the scope of this module follow these steps.
@@ -11,7 +10,7 @@ categoryPosition: 2
 Before starting, take a look at Storybook's oficial documentation about [Configuration](https://storybook.js.org/docs/configurations/overview/)
 
 ## User `eject` command
-Using `eject` command is the easiest way to create and customize Storybook config. 
+Using `eject` command is the easiest way to create and customize Storybook config.
 
 <code-group>
   <code-block label="Yarn" active>
@@ -40,7 +39,7 @@ In root directory of your project create `storybook` directory. This directory w
 
 ### Create `main.js`
 
-Create a new file inside `storybook` directory called `main.js`, This is where you can import your stories.  
+Create a new file inside `storybook` directory called `main.js`, This is where you can import your stories.
 A sample `main.js` files could be like this:
 ```js{}[main.js]
 module.exports = {
