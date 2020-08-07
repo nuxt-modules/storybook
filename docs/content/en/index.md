@@ -3,14 +3,13 @@ title: Introduction
 description: '@nuxtjs/storybook lets you integrate Storybook with NuxtJS with a single command.'
 position: 1
 category: ''
-categoryPosition: 1
 features:
   - Zero configuration
   - Nuxt webpack configuration
   - Nuxt plugins support
   - Story discovery from nuxt modules
   - Nuxt components support
-  - Storybook Generate 
+  - Storybook Generate
   - Hot reload support
 ---
 

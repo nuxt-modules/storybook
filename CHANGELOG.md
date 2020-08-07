@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/nuxt-community/storybook/compare/v1.1.0...v1.2.0) (2020-08-07)
+
+
+### Features
+
+* **cli:** introduce `eject` command ([#54](https://github.com/nuxt-community/storybook/issues/54)) ([1fbdcab](https://github.com/nuxt-community/storybook/commit/1fbdcab9cfb66ced16cfd7c17ea61a8a9c61412a))
+* **cli:** support nuxt's custom config file ([#61](https://github.com/nuxt-community/storybook/issues/61)) ([39caced](https://github.com/nuxt-community/storybook/commit/39cacedaaf78477ec6b120e22e3c34f77fa2f3fb))
+* **cli:** support storybook flags ([#40](https://github.com/nuxt-community/storybook/issues/40)) ([3078602](https://github.com/nuxt-community/storybook/commit/307860246b476a082ddb80500985da0c3405b795))
+* **storybook:** serve nuxt static dir ([#42](https://github.com/nuxt-community/storybook/issues/42)) ([680781a](https://github.com/nuxt-community/storybook/commit/680781a8eb46712a857c8db76e3653715fa5a7c8))
+
+
+### Bug Fixes
+
+* **cli:** run storybook in `development` env ([#47](https://github.com/nuxt-community/storybook/issues/47)) ([132bc31](https://github.com/nuxt-community/storybook/commit/132bc317024f5932804bb82a8fa8dde3ff3f8a1b))
+
 ## [1.1.0](https://github.com/nuxt-community/storybook/compare/v1.0.0...v1.1.0) (2020-08-02)
 
 

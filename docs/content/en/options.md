@@ -3,7 +3,6 @@ title: Options
 description: 'You can configure the integration easily with the storybook property.'
 position: 4
 category: Guide
-categoryPosition: 2
 ---
 
 To configure the integration, you can use `storybook` property in the `nuxt.config.js`:
@@ -20,7 +19,7 @@ export default {
 
 - Default: `[]`
 
-Register third party addons.  
+Register third party addons.
 
 ```js{}[nuxt.config.js]
 export default {
@@ -38,7 +37,7 @@ export default {
 `@nuxtjs/storybook` internally registered some third party addons.
 
 You don't need to register these addons in your project:
-- `@storybook/addon-actions/register` 
+- `@storybook/addon-actions/register`
 
 </alert>
 

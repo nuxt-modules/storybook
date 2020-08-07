@@ -10,4 +10,13 @@ export interface WebpackExtras {
 export interface StorybookOptions {
   rootDir: string;
   mode: string;
+  configFile?: string;
+  outputDir?: string;
+  staticDir?: string;
+  quiet?: boolean;
+  smokeTest?: Boolean;
+  ci?: Boolean;
+  port?: Number;
+  host?: String;
+  force?: boolean;
 }
