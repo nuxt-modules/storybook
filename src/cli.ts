@@ -9,6 +9,9 @@ export const usage = 'nuxt storybook [`dev`|`build`] [`dir`]'
 
 function _run () {
   const args = arg({
+    // Specify Nuxt config file
+    '--config-file': String,
+    '-c': '--config-file',
     '--static-dir': String,
     '-s': '--static-dir',
     '--output-dir': String,
@@ -46,7 +49,7 @@ function _run () {
       return eject({
         rootDir,
         mode: 'dev',
-        force: args['--force']
+        ...normalizeFlags(flags)
       })
     case 'dev':
       // Make sure NODE_ENV is `development`.

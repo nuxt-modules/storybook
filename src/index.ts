@@ -58,6 +58,7 @@ async function buildNuxt (options: StorybookOptions) {
 
   // Create new nuxt instance
   const nuxt = await loadNuxt({
+    ...options,
     rootDir: options.rootDir,
     for: options.mode,
     configOverrides: {
@@ -137,6 +138,7 @@ export async function eject (options: StorybookOptions) {
   }
   const { loadNuxtConfig } = requireMaybeEdge('nuxt')
   const config = await loadNuxtConfig({
+    ...options,
     rootDir: options.rootDir,
     for: 'build',
     configOverrides: {
