@@ -1,9 +1,10 @@
-/* Styles */<% if (Array.isArray(options.styles)) { %>
-<%= options.styles.map(s => `import '${s.replace(/\\/g, "\\\\")}'`).join("\n") %>
-<% } %>
 import Vue from 'vue'
+import { wp } from '~storybook';
+
+/* Styles */<% if (Array.isArray(options.styles)) { %>
+<%= options.styles.map(s => `import '${wp(s)}'`).join("\n") %>
+<% } %>
 import { normalizeError } from '~~/.nuxt-storybook/utils'
-import '~storybook/mock'
 <% if (options.store) { %>import { createStore } from '~~/.nuxt-storybook/store'<% } %>
 <% if (options.components) { %>import * as components from '~~/.nuxt-storybook/components';
 Object.keys(components).forEach(name => Vue.component(name, components[name]))<% } %>
