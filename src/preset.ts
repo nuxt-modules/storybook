@@ -3,6 +3,6 @@ export default {
     '@storybook/addon-actions/register'
   ],
   stories: [
-    '~/components/**/*.stories.js'
+    '~/components/**/*.stories.@(ts|js)'
   ]
 }
