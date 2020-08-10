@@ -1,9 +1,8 @@
-import { withKnobs, text } from '@storybook/addon-knobs'
+import { text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 
 export default {
   title: 'AwesomeButton',
-  decorators: [withKnobs]
 }
 
 export const MyAwesomeButton = () => ({
