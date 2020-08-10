@@ -32,19 +32,24 @@ async function getStorybookConfig (options: StorybookOptions) {
     return config
   }
 
+  if (!options.staticDir) {
+    options.staticDir = path.resolve(options.rootDir, nuxt.options.dir.static)
+  }
+  const staticDir = options.staticDir.split(',').map(dir => dir.trim())
+
   return {
     ...vueOptions,
     packageJson: require('../package.json'),
     versionUpdates: false,
     rootDir: options.rootDir,
     configDir: nuxtStorybookConfig.configDir,
-    staticDir: [path.resolve(options.rootDir, nuxt.options.dir.static)],
     port: process.env.PORT || nuxtStorybookConfig.port || 3003,
     nuxt,
     nuxtBuilder,
     nuxtWebpackConfig,
     nuxtStorybookConfig,
     ...options,
+    staticDir,
     frameworkPresets: [
       ...vueOptions.frameworkPresets,
       require.resolve('./preset')
