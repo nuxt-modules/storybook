@@ -1,6 +1,6 @@
 export default {
   addons: [
-    '@storybook/addon-actions/register'
+    '@storybook/addon-actions/preset'
   ],
   stories: [
     '~/components/**/*.stories.@(ts|js)'
