@@ -22,8 +22,8 @@
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "dependencies": {
-    "@storybook/addon-actions": "^5.3.19",
-    "@storybook/vue": "^5.3.19",
+    "@storybook/addon-actions": "^6.0.0",
+    "@storybook/vue": "^6.0.0",
     "arg": "^4.1.3",
     "babel-preset-vue": "^2.0.2",
     "consola": "^2.15.0",
