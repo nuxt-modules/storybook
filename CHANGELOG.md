@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/nuxt-community/storybook/compare/v1.2.0...v2.0.0) (2020-08-11)
+
+
+### Features
+
+* **storybook:** Migration to Storybook v6 ([#67](https://github.com/nuxt-community/storybook/issues/67)) ([cbccedd](https://github.com/nuxt-community/storybook/commit/cbcceddf92920908e0650fc2ac27768189f35d32))
+* **storybook:** support multiple staticDir ([2c0a52e](https://github.com/nuxt-community/storybook/commit/2c0a52e40f23a55293c17b41c054b8ccc5891fb8))
+
+
+### Bug Fixes
+
+* **storybook:** escape win32 paths ([#63](https://github.com/nuxt-community/storybook/issues/63)) ([55c4869](https://github.com/nuxt-community/storybook/commit/55c4869fe6ec49927a6766fb06f24ffddc11a2ad))
+
 ## [1.2.0](https://github.com/nuxt-community/storybook/compare/v1.1.0...v1.2.0) (2020-08-07)
 
 
