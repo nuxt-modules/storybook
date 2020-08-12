@@ -83,7 +83,24 @@ async function buildNuxt (options: StorybookOptions) {
   // Load webpack config for Nuxt
   const { bundleBuilder } = nuxtBuilder
 
-  const nuxtStorybookConfig = nuxt.options.storybook || {}
+  const nuxtStorybookConfig = Object.assign({
+    stories: [],
+    addons: []
+  }, nuxt.options.storybook)
+
+  nuxtStorybookConfig.configDir = path.resolve(options.rootDir, 'storybook')
+  if (!fsExtra.existsSync(path.resolve(options.rootDir, 'storybook'))) {
+    nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
+  }
+
+  nuxtStorybookConfig.stories = [
+    '~/components/**/*.stories.@(ts|js)',
+    ...nuxtStorybookConfig.stories
+  ].map(story => story
+    .replace(/^~~/, path.relative(nuxtStorybookConfig.configDir, nuxt.options.rootDir))
+    .replace(/^~/, path.relative(nuxtStorybookConfig.configDir, nuxt.options.srcDir))
+  )
+
   // generate files
   nuxt.hook('build:before', async () => {
     const plugins = await nuxtBuilder.normalizePlugins()
@@ -96,10 +113,6 @@ async function buildNuxt (options: StorybookOptions) {
     })
   })
 
-  nuxtStorybookConfig.configDir = path.resolve(options.rootDir, 'storybook')
-  if (!fsExtra.existsSync(path.resolve(options.rootDir, 'storybook'))) {
-    nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
-  }
   // Mock webpack build as we only need generated templates
   nuxtBuilder.bundleBuilder = {
     build () { }
