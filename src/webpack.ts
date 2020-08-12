@@ -30,8 +30,8 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
     ...config.plugins.filter(p => storybookValidPlugins.some(np => p.constructor.name === np)),
     ...extras.nuxtWebpackConfig.plugins.filter(p => !nuxtFilteredPlugins.some(np => p.constructor.name === np))
   ]
-
-  const rules = config.module.rules.filter(rule => !/js|vue|css|svg|mp4/.test(rule.test.toString()))
+  const rules = config.module.rules
+    .filter(rule => !/css|svg|mp/.test(rule.test.toString()) && !/vue-loader/.test(String(rule.loader)))
   // Nuxt rules
   config.module.rules = [
     ...rules,
