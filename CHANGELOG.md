@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1-rc.1](https://github.com/nuxt-community/storybook/compare/v2.0.0...v2.0.1-rc.1) (2020-08-12)
+
+
+### Bug Fixes
+
+* **storybook:** resolve nuxt aliases in globs ([#76](https://github.com/nuxt-community/storybook/issues/76)) ([94cfa26](https://github.com/nuxt-community/storybook/commit/94cfa266fe65b820f41601cb14249c84b656f34d))
+* **storybook:** windows path resolve ([b93669b](https://github.com/nuxt-community/storybook/commit/b93669be4eb5b9c33508dcedf3773c4cc4adcefa))
+* **webpack:** improve rules detection ([2b75646](https://github.com/nuxt-community/storybook/commit/2b756465e3dd7f79bfd8821da562e6ac8fc45a9a))
+
 ## [2.0.0](https://github.com/nuxt-community/storybook/compare/v1.2.0...v2.0.0) (2020-08-11)
 
 
