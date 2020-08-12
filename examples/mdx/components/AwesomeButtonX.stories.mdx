@@ -4,27 +4,27 @@ import { action } from '@storybook/addon-actions';
 
 import AwesomeButton from '../components/AwesomeButton.vue';
 
-<Meta title='AwesomeButton' component={AwesomeButton}  />
+<Meta title='AwesomeButton2' component={AwesomeButton}  />
 
 # This is an awesome button
 
 Some **markdown** description, or whatever you want.
 
 <Story name='basic button'>{{
-    template:  '<AwesomeButton @click.native="clickme" :label="label" :color="color" />',
-    props: {
-        label: {
-            default: text('Label', 'button')
-        },
-        color: {
-            default: text('Color Me', '777777')
-        }
+  template: '<AwesomeButton @click.native="clickme" :label="label" :color="color" />',
+  props: {
+    label: {
+      default: text('Label', 'Awesome button')
     },
-    methods: {
-        clickme() {
-            action('button-click')()
-        }
-    },
+    color: {
+      default: text('Color Me', '777777')
+    }
+  },
+  methods: {
+    clickme () {
+      action('button-click')()
+    }
+  }
 }}</Story>
 
 ## Example

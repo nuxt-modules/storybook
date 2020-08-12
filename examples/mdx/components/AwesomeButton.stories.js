@@ -17,8 +17,7 @@ export const MyAwesomeButton = () => ({
   },
   methods: {
     clickme () {
-      action('button-click')
+      action('button-click')()
     }
   }
-
 })

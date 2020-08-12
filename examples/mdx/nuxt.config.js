@@ -5,7 +5,7 @@ export default {
       '~/components/**/*.stories.mdx'
     ],
     addons: [
-      '@storybook/addon-knobs/preset',
+      '@storybook/addon-knobs',
       '@storybook/addon-docs'
     ]
   }
