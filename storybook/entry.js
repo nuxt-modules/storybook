@@ -1,10 +1,15 @@
-/* eslint-disable prefer-destructuring */
+// Vue framework entry point, base on @storybook/vue@6.0.5
+// https://github.com/storybookjs/storybook/blob/next/app/vue/src/client/preview/index.ts
 import Vue from 'vue'
 import { start } from '@storybook/core/client'
 import '@storybook/vue/dist/client/preview/globals'
 import { extractProps } from '@storybook/vue/dist/client/preview/util'
-window.__NUXT__ = window.__NUXT__ || {}
 
+/**
+ * @nuxtjs/storybook
+ * execute plugin scripts
+ */
+window.__NUXT__ = window.__NUXT__ || {}
 <%= options.nuxtOptions.head.script.map(s => s.innerHTML).join("\n") %>
 
 let root;
@@ -99,6 +104,11 @@ function decorateStory (
   )
 }
 
+/**
+ * @nuxtjs/storybook
+ * Custom render function for stories
+ * 
+ */
 async function render({
   storyFn,
   kind,
@@ -110,6 +120,7 @@ async function render({
   forceRender,
 }) {
   if (!root) {
+    // Make sure plugin scripts executes before `../index.js` import
     const { createApp } = require('../')
     const { app } = await createApp(null, {})
     
