@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0-rc.1](https://github.com/nuxt-community/storybook/compare/v2.0.1-rc.1...v2.1.0-rc.1) (2020-08-13)
+
+
+### Features
+
+* **storybook:** custom Vue app based on nuxt `createApp` ([#80](https://github.com/nuxt-community/storybook/issues/80)) ([443fccd](https://github.com/nuxt-community/storybook/commit/443fccdba32a620b644393eb0a9ff3d6d1b69541))
+
 ### [2.0.1-rc.1](https://github.com/nuxt-community/storybook/compare/v2.0.0...v2.0.1-rc.1) (2020-08-12)
 
 
