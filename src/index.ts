@@ -86,16 +86,9 @@ async function buildNuxt (options: StorybookOptions) {
   const nuxtStorybookConfig = nuxtStorybookOptions(nuxt.options)
 
   // generate files
-  nuxt.hook('build:before', async () => {
-    const plugins = await nuxtBuilder.normalizePlugins()
-    generateStorybookFiles.call(nuxt.moduleContainer, {
-      ...nuxtStorybookConfig,
-      nuxtOptions: { ...nuxt.options, build: undefined },
-      plugins: plugins.filter(p => p.mode !== 'server'),
-      styles: nuxt.options.css,
-      store: nuxt.options.features.store ? nuxt.options.store : false,
-      components: nuxt.options.components
-    })
+  generateStorybookFiles.call(nuxt.moduleContainer, {
+    ...nuxtStorybookConfig,
+    nuxtOptions: nuxt.options
   })
 
   // Mock webpack build as we only need generated templates
