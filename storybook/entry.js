@@ -1,4 +1,4 @@
-// Vue framework entry point, base on @storybook/vue@6.0.5
+// Vue framework entry point, based on @storybook/vue@6.0.5
 // https://github.com/storybookjs/storybook/blob/next/app/vue/src/client/preview/index.ts
 import Vue from 'vue'
 import { start } from '@storybook/core/client'
@@ -107,7 +107,6 @@ function decorateStory (
 /**
  * @nuxtjs/storybook
  * Custom render function for stories
- * 
  */
 async function render({
   storyFn,
