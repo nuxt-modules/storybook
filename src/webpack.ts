@@ -26,6 +26,14 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
     ...extras.nuxtWebpackConfig.entry.app.filter(p => !nuxtFilteredEntries.some(np => p.includes(np))),
     ...(config.entry as string[])
   ]
+
+  // @ts-ignore
+  // replace entry point
+  const modules = config.plugins.find(p => p.constructor.name === 'VirtualModulesPlugin')._staticModules
+  Object.keys(modules).forEach((key) => {
+    modules[key] = modules[key].replace(/@storybook\/vue/g, '~~/.nuxt-storybook/storybook/entry')
+  })
+
   config.plugins = [
     ...config.plugins.filter(p => storybookValidPlugins.some(np => p.constructor.name === np)),
     ...extras.nuxtWebpackConfig.plugins.filter(p => !nuxtFilteredPlugins.some(np => p.constructor.name === np))
