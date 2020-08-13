@@ -90,6 +90,7 @@ async function buildNuxt (options: StorybookOptions) {
     const plugins = await nuxtBuilder.normalizePlugins()
     generateStorybookFiles.call(nuxt.moduleContainer, {
       ...nuxtStorybookConfig,
+      nuxtOptions: { ...nuxt.options, build: undefined },
       plugins: plugins.filter(p => p.mode !== 'server'),
       styles: nuxt.options.css,
       store: nuxt.options.features.store ? nuxt.options.store : false,
@@ -126,6 +127,11 @@ function generateStorybookFiles (options) {
   this.addTemplate({
     src: path.resolve(templatesRoot, 'preview.js'),
     fileName: path.join('storybook', 'preview.js'),
+    options
+  })
+  this.addTemplate({
+    src: path.resolve(templatesRoot, 'entry.js'),
+    fileName: path.join('storybook', 'entry.js'),
     options
   })
 }
