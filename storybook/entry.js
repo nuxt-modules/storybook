@@ -133,7 +133,6 @@ async function render({
         };
       },
       render(h) {
-        console.log(this[COMPONENT], "this[COMPONENT]");
         const children = this[COMPONENT] ? [h(this[COMPONENT])] : undefined;
         return h('div', { attrs: { id: 'root' } }, children);
       },
