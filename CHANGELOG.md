@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0-rc.2](https://github.com/nuxt-community/storybook/compare/v2.1.0-rc.1...v2.1.0-rc.2) (2020-08-14)
+
+
+### Features
+
+* **storybook:** support nuxt fetch api ([afcbb40](https://github.com/nuxt-community/storybook/commit/afcbb407e470e7fd836b3131635cb51bcc916be6))
+
 ## [2.1.0-rc.1](https://github.com/nuxt-community/storybook/compare/v2.0.1-rc.1...v2.1.0-rc.1) (2020-08-13)
 
 
