@@ -1,9 +1,11 @@
 // Vue framework entry point, based on @storybook/vue@6.0.5
 // https://github.com/storybookjs/storybook/blob/next/app/vue/src/client/preview/index.ts
 import Vue from 'vue'
+import fetch from 'unfetch'
 import { start } from '@storybook/core/client'
 import '@storybook/vue/dist/client/preview/globals'
 import { extractProps } from '@storybook/vue/dist/client/preview/util'
+import fetchMixin from '../mixins/fetch.client'
 
 /**
  * @nuxtjs/storybook
@@ -11,6 +13,14 @@ import { extractProps } from '@storybook/vue/dist/client/preview/util'
  */
 window.__NUXT__ = window.__NUXT__ || {}
 <%= options.nuxtOptions.head.script.map(s => s.innerHTML).join("\n") %>
+
+// Fetch mixin
+if (!Vue.__nuxt__fetch__mixin__) {
+  Vue.mixin(fetchMixin)
+  Vue.__nuxt__fetch__mixin__ = true
+}
+
+if (!global.fetch) { global.fetch = fetch }
 
 let root;
 export const WRAPS = 'STORYBOOK_WRAPS'
@@ -122,11 +132,12 @@ async function render({
     // Make sure plugin scripts executes before `../index.js` import
     const { createApp } = require('../')
     const { app } = await createApp(null, {})
-    
+
     root = new Vue({  
       ...app,
       data() {
         return {
+          ...app.data(),
           [COMPONENT]: undefined,
           [VALUES]: {},
         };
