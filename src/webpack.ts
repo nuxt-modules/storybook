@@ -20,7 +20,8 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
   ]
   const storybookValidPlugins = [
     'VirtualModulesPlugin',
-    'HtmlWebpackPlugin'
+    'HtmlWebpackPlugin',
+    'DefinePlugin' // Required because of https://storybook.js.org/docs/vue/configure/environment-variables
   ]
   config.entry = [
     ...extras.nuxtWebpackConfig.entry.app.filter(p => !nuxtFilteredEntries.some(np => p.includes(np))),
