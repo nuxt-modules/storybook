@@ -1,5 +1,6 @@
 import path from 'path'
 import fsExtra from 'fs-extra'
+import upath from 'upath'
 import vueOptions from '@storybook/vue/dist/server/options'
 import { buildDev, buildStatic } from '@storybook/core/server'
 import { requireMaybeEdge, compileTemplate, logger } from './utils'
@@ -171,9 +172,9 @@ function nuxtStorybookOptions (options) {
   nuxtStorybookConfig.stories = [
     '~/components/**/*.stories.@(ts|js)',
     ...nuxtStorybookConfig.stories
-  ].map(story => story
+  ].map(story => upath.normalize(story
     .replace(/^~~/, path.relative(nuxtStorybookConfig.configDir, options.rootDir))
-    .replace(/^~/, path.relative(nuxtStorybookConfig.configDir, srcDir))
+    .replace(/^~/, path.relative(nuxtStorybookConfig.configDir, srcDir)))
   )
 
   return nuxtStorybookConfig
