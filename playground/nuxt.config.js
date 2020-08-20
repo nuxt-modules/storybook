@@ -14,6 +14,9 @@ export default {
       solid: true
     }
   },
+  publicRuntimeConfig: {
+    moduleName: "@nuxtjs/storybook",
+  },
   storybook: {
     stories: [
       '~/stories/**/*.stories.@(ts|js)'

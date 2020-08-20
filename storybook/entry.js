@@ -11,7 +11,7 @@ import fetchMixin from '../mixins/fetch.client'
  * @nuxtjs/storybook
  * execute plugin scripts
  */
-window.__NUXT__ = window.__NUXT__ || {}
+window.__NUXT__ = { config: <%= JSON.stringify(options.nuxtOptions.publicRuntimeConfig || {}) %> }
 <%= options.nuxtOptions.head.script.map(s => s.innerHTML).join("\n") %>
 
 // Fetch mixin
@@ -131,7 +131,7 @@ async function render({
   if (!root) {
     // Make sure plugin scripts executes before `../index.js` import
     const { createApp } = require('../')
-    const { app } = await createApp(null, {})
+    const { app } = await createApp(null, __NUXT__.config)
 
     root = new Vue({  
       ...app,
