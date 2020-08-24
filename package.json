@@ -22,6 +22,7 @@
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "dependencies": {
+    "@nuxt/devalue": "^1.2.4",
     "@storybook/addon-actions": "^6.0.15",
     "@storybook/vue": "^6.0.15",
     "arg": "^4.1.3",
