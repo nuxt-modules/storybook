@@ -40,12 +40,6 @@ Next, add `.nuxt-storybook` and `storybook-static` to your `.gitignore`:
 storybook-static
 ```
 
-Then add `**/*.stories.js` to your `.nuxtignore`
-
-```bash{}[.nuxtignore]
-**/*.stories.js
-```
-
 That's it ✨!
 
 Now you can start adding [stories](/usage).
