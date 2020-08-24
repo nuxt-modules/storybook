@@ -32,6 +32,25 @@ export default {
 }
 ```
 
+You can pass configurations by using Object addon declaration and adding the configurations under the `option` key. For example if you want to use `@storybook/preset-scss` with custom configuration you can do this:
+```js{}[nuxt.config.js]
+export default {
+  storybook: {
+    addons: [
+      {
+        name: '@storybook/preset-scss',
+        options: {
+          cssLoaderOptions: {
+              modules: true,
+              localIdentName: '[name]__[local]--[hash:base64:5]',
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
 <alert type="info">
 
 `@nuxtjs/storybook` internally registered some third party addons.
