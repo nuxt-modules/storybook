@@ -34,7 +34,7 @@ async function getStorybookConfig (options: StorybookOptions) {
   }
 
   if (!options.staticDir) {
-    options.staticDir = path.resolve(options.rootDir, nuxt.options.dir.static)
+    options.staticDir = path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
   }
   const staticDir = options.staticDir.split(',').map(dir => dir.trim())
 
