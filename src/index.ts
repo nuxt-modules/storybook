@@ -3,7 +3,7 @@ import fsExtra from 'fs-extra'
 import upath from 'upath'
 import vueOptions from '@storybook/vue/dist/server/options'
 import { buildDev, buildStatic } from '@storybook/core/server'
-import { requireMaybeEdge, compileTemplate, logger } from './utils'
+import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3 } from './utils'
 import { StorybookOptions } from './types'
 import { getWebpackConfig } from './webpack'
 
@@ -59,6 +59,7 @@ async function getStorybookConfig (options: StorybookOptions) {
 }
 
 async function buildNuxt (options: StorybookOptions) {
+  ensureCoreJs3(options.rootDir)
   const buildDir = path.resolve(options.rootDir, '.nuxt-storybook')
   const { loadNuxt, getBuilder } = requireMaybeEdge('nuxt')
 
