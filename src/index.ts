@@ -169,10 +169,13 @@ function nuxtStorybookOptions (options) {
   if (!srcDir.startsWith('/')) {
     srcDir = path.resolve(options.rootDir, srcDir)
   }
-  nuxtStorybookConfig.stories = [
-    '~/components/**/*.stories.@(ts|js)',
-    ...nuxtStorybookConfig.stories
-  ].map(story => upath.normalize(story
+
+  const storiesDir = path.resolve(options.srcDir, 'components')
+  if (fsExtra.existsSync(storiesDir)) {
+    nuxtStorybookConfig.stories.unshift('~/components/**/*.stories.@(ts|js)')
+  }
+
+  nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.map(story => upath.normalize(story
     .replace(/^~~/, path.relative(nuxtStorybookConfig.configDir, options.rootDir))
     .replace(/^~/, path.relative(nuxtStorybookConfig.configDir, srcDir)))
   )
