@@ -158,7 +158,8 @@ export async function eject (options: StorybookOptions) {
 function nuxtStorybookOptions (options) {
   const nuxtStorybookConfig = Object.assign({
     stories: [],
-    addons: []
+    addons: [],
+    parameters: {}
   }, options.storybook)
 
   nuxtStorybookConfig.configDir = path.resolve(options.rootDir, 'storybook')
