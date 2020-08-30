@@ -1819,7 +1819,7 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@storybook/addon-actions@^6.0.20":
+"@storybook/addon-actions@6.0.20", "@storybook/addon-actions@^6.0.20":
   version "6.0.20"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-6.0.20.tgz#4fcf83ec7f961a90a0836633cdf18ecf37d9ed51"
   integrity sha512-zO0iol1FQya3cPuVjkq5/YWmmmgXuElIcVQpxndACHGIF6ktwmMJSLToLjfz9Gi5l9LA9/m8j/7FUZrORFtWQQ==
@@ -1843,7 +1843,37 @@
     util-deprecate "^1.0.2"
     uuid "^8.0.0"
 
-"@storybook/addon-docs@^6.0.20":
+"@storybook/addon-backgrounds@6.0.20":
+  version "6.0.20"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-backgrounds/-/addon-backgrounds-6.0.20.tgz#cbebe936bf5d4555003a7bafbacf4359d514df21"
+  integrity sha512-P7TonjNrLdHAQ2L9OBriXRY332zvh5JKWzbkvRDknzQY4lP4YUfj9+U7bhZHoh/42p+LUu6e7AVlL25ncEBZZw==
+  dependencies:
+    "@storybook/addons" "6.0.20"
+    "@storybook/api" "6.0.20"
+    "@storybook/client-logger" "6.0.20"
+    "@storybook/components" "6.0.20"
+    "@storybook/core-events" "6.0.20"
+    "@storybook/theming" "6.0.20"
+    core-js "^3.0.1"
+    memoizerific "^1.11.3"
+    react "^16.8.3"
+    regenerator-runtime "^0.13.3"
+
+"@storybook/addon-controls@6.0.20":
+  version "6.0.20"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-controls/-/addon-controls-6.0.20.tgz#30105c90f67c04efdd551a3470135f78e8940594"
+  integrity sha512-l8gaw1BpaXz21/OSBcftqhlQnquWVj3Pkf32m8ZhecR2kKu2k7ht5bbW4cd+SzXksyLCqIoW7jYEco7TigEIwA==
+  dependencies:
+    "@storybook/addons" "6.0.20"
+    "@storybook/api" "6.0.20"
+    "@storybook/client-api" "6.0.20"
+    "@storybook/components" "6.0.20"
+    "@storybook/node-logger" "6.0.20"
+    "@storybook/theming" "6.0.20"
+    core-js "^3.0.1"
+    ts-dedent "^1.1.1"
+
+"@storybook/addon-docs@6.0.20", "@storybook/addon-docs@^6.0.20":
   version "6.0.20"
   resolved "https://registry.yarnpkg.com/@storybook/addon-docs/-/addon-docs-6.0.20.tgz#7a10fa71916babe659f01429c8092f253b0a10bb"
   integrity sha512-Ss9vWSWxnHIjJ4U3ttlE507XOckyHbD3DoK4yf8G3acs1wlz05rs4mQ8P6zzbdmKGWluYg5RaOmlmRgNXYDZ/Q==
@@ -1887,6 +1917,24 @@
     ts-dedent "^1.1.1"
     util-deprecate "^1.0.2"
 
+"@storybook/addon-essentials@^6.0.20":
+  version "6.0.20"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-essentials/-/addon-essentials-6.0.20.tgz#e18b9f149b0bb62ecee1f333b5efda6f1602ac9b"
+  integrity sha512-+OQOvANxsOZ7iD6iiMo1SGb8xDsXjEBzhORbhJ62hCAwo34oSXzwh5kETUM3AvTG3gl3BTxJuOLzBtsd9wwuiQ==
+  dependencies:
+    "@storybook/addon-actions" "6.0.20"
+    "@storybook/addon-backgrounds" "6.0.20"
+    "@storybook/addon-controls" "6.0.20"
+    "@storybook/addon-docs" "6.0.20"
+    "@storybook/addon-toolbars" "6.0.20"
+    "@storybook/addon-viewport" "6.0.20"
+    "@storybook/addons" "6.0.20"
+    "@storybook/api" "6.0.20"
+    "@storybook/node-logger" "6.0.20"
+    core-js "^3.0.1"
+    regenerator-runtime "^0.13.3"
+    ts-dedent "^1.1.1"
+
 "@storybook/addon-knobs@^6.0.20":
   version "6.0.20"
   resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-6.0.20.tgz#2287eab2bd54aba72afeccfc40c932e767f3bc85"
@@ -1910,6 +1958,34 @@
     react-color "^2.17.0"
     react-lifecycles-compat "^3.0.4"
     react-select "^3.0.8"
+    regenerator-runtime "^0.13.3"
+
+"@storybook/addon-toolbars@6.0.20":
+  version "6.0.20"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-toolbars/-/addon-toolbars-6.0.20.tgz#b39bd8016f3bf135fc17b472f33a9e153b0ce357"
+  integrity sha512-fPebdcu2pMx1GH+iVtexwpx5hGseYrtQIA7Gge41eglQWtS3J1q3EOm17iElyIPPNg65/FlFayGQFPJfwKpXXg==
+  dependencies:
+    "@storybook/addons" "6.0.20"
+    "@storybook/api" "6.0.20"
+    "@storybook/client-api" "6.0.20"
+    "@storybook/components" "6.0.20"
+    core-js "^3.0.1"
+
+"@storybook/addon-viewport@6.0.20":
+  version "6.0.20"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-viewport/-/addon-viewport-6.0.20.tgz#62e0bc08db11efd8547053c54998c7aace1a0f1c"
+  integrity sha512-QyRSA9UFIZHra69xY3mf0xUsAix+SLASD3VTkPsIq8BM8VtdlHw/STqDD3m5OCTKrlsuDJ1CAMeimjp6jWriXw==
+  dependencies:
+    "@storybook/addons" "6.0.20"
+    "@storybook/api" "6.0.20"
+    "@storybook/client-logger" "6.0.20"
+    "@storybook/components" "6.0.20"
+    "@storybook/core-events" "6.0.20"
+    "@storybook/theming" "6.0.20"
+    core-js "^3.0.1"
+    global "^4.3.2"
+    memoizerific "^1.11.3"
+    prop-types "^15.7.2"
     regenerator-runtime "^0.13.3"
 
 "@storybook/addons@6.0.20":
