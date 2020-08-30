@@ -1,5 +1,3 @@
-const devalue = require('devalue')
-
 module.exports = {
   webpackFinal(config, options) {
     return options.nuxtStorybookConfig.webpackFinal(config, options)
