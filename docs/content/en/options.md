@@ -109,3 +109,24 @@ export default {
   }
 }
 ```
+
+## `parameters`
+> Parameters are a set of static, named metadata about a story, typically used to control the behavior of Storybook features and addons.[*](https://storybook.js.org/docs/react/writing-stories/parameters)
+
+Customize Storybook's global parameters.  
+
+```js{}[nuxt.config.js]
+export default {
+  storybook: {
+    parameters: {
+      backgrounds: {
+        default: 'white',
+        values: [
+          { name: 'white', value: '#ffffff' },
+          { name: 'gray', value: '#aaaaaa' },
+        ],
+      },
+    }
+  }
+}
+```

@@ -34,7 +34,7 @@ export default {
     },
     parameters: {
       backgrounds: {
-        default: 'twitter',
+        default: 'white',
         values: [
           { name: 'white', value: '#ffffff' },
           { name: 'gray', value: '#aaaaaa' },
