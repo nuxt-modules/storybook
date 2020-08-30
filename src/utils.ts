@@ -2,6 +2,7 @@ import fsExtra from 'fs-extra'
 import template from 'lodash/template'
 import jiti from 'jiti'
 import consola from 'consola'
+import createRequire from 'create-require'
 
 export const logger = consola.withScope('@nuxt/storybook')
 
@@ -42,4 +43,20 @@ export async function compileTemplate (src, destination, templateVars) {
     throw new Error(`Could not compile template: ${err.message}`)
   }
   await fsExtra.outputFile(destination, content, 'utf8')
+}
+
+export function ensureCoreJs3 (rootDir) {
+  const corejsVersion = Number.parseInt(createRequire(rootDir)('core-js/package.json').version.split('.')[0])
+  if (corejsVersion < 3) {
+    let nuxtVersion = ''
+    try { nuxtVersion = (createRequire(rootDir)('nuxt/package.json').version) } catch {}
+    try { nuxtVersion = (createRequire(rootDir)('nuxt-edge/package.json').version) } catch {}
+
+    if (nuxtVersion.startsWith('2.14')) {
+      logger.error('Storybook requires `core-js@3`. Run `yarn add --dev core-js@3 @babel/runtime-corejs3`')
+    } else {
+      logger.error('Storybook requires `core-js@3`. See https://github.com/nuxt/nuxt.js/tree/v2.13.3/packages/babel-preset-app#example-2-use-core-js3')
+    }
+    process.exit(1)
+  }
 }
