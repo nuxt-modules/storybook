@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/nuxt-community/storybook/compare/v2.1.0...v2.2.0) (2020-08-31)
+
+
+### Features
+
+* **storybbok:** Integrate Storybook environment variables ([#91](https://github.com/nuxt-community/storybook/issues/91)) ([c4006ae](https://github.com/nuxt-community/storybook/commit/c4006ae8eb10c29b9af981b308304cc988acf6cd))
+* **storybook:** add global parameters in nuxt config ([#114](https://github.com/nuxt-community/storybook/issues/114)) ([2cdf97e](https://github.com/nuxt-community/storybook/commit/2cdf97ee726ac28d13f3ada3609170394a8a1ca0))
+* **storybook:** support addon config ([#103](https://github.com/nuxt-community/storybook/issues/103)) ([8313ddb](https://github.com/nuxt-community/storybook/commit/8313ddb0d36d4ca48785d86ea32c16acd91e84c2))
+* **storybook:** support nuxt runtime config ([#92](https://github.com/nuxt-community/storybook/issues/92)) ([675cf80](https://github.com/nuxt-community/storybook/commit/675cf8029857e4213da96fd776f3e1e0c8b0b58a))
+
+
+### Bug Fixes
+
+* **storybook:** ensure default `components/` dir exists ([#104](https://github.com/nuxt-community/storybook/issues/104)) ([fcea238](https://github.com/nuxt-community/storybook/commit/fcea238f9fa0ea55b8328eb58cd3a25000445b56))
+* **storybook:** normalize win32 paths for storybook globs ([#93](https://github.com/nuxt-community/storybook/issues/93)) ([658229f](https://github.com/nuxt-community/storybook/commit/658229fee932237ae83ab19d65e61f6b6e87472d))
+* **storybook:** resolve static dir relative to src dir ([#108](https://github.com/nuxt-community/storybook/issues/108)) ([a49c51f](https://github.com/nuxt-community/storybook/commit/a49c51f602c1be7584fa355f7e0273acbdfee064))
+* **webpack:** show error when `core-js@3` is missing ([#111](https://github.com/nuxt-community/storybook/issues/111)) ([3004ea8](https://github.com/nuxt-community/storybook/commit/3004ea8403c584d7dd1d2c2ae419b2dee82d8ee2))
+
 ## [2.1.0](https://github.com/nuxt-community/storybook/compare/v2.1.0-rc.2...v2.1.0) (2020-08-14)
 
 ## [2.1.0-rc.2](https://github.com/nuxt-community/storybook/compare/v2.1.0-rc.1...v2.1.0-rc.2) (2020-08-14)
