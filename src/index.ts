@@ -129,6 +129,11 @@ function generateStorybookFiles (options) {
     fileName: path.join('storybook', 'entry.js'),
     options
   })
+  this.addTemplate({
+    src: path.resolve(templatesRoot, 'nuxt-entry.js'),
+    fileName: path.join('storybook', 'nuxt-entry.js'),
+    options
+  })
 }
 
 export async function eject (options: StorybookOptions) {
