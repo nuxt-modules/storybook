@@ -25,8 +25,8 @@ Register third party addons.
 export default {
   storybook: {
     addons: [
-      '@storybook/addon-knobs/register',
-      '@storybook/addon-notes/register',
+      '@storybook/addon-controls',
+      '@storybook/addon-notes',
     ]
   }
 }

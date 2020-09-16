@@ -1,23 +1,25 @@
 import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
-import { text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import AwesomeButton from '../components/AwesomeButton.vue';
 
-<Meta title='AwesomeButton2' component={AwesomeButton}  />
+<Meta title='AwesomeButton2' component={AwesomeButton} argTypes={{
+  label: { control: 'text' },
+  color: { control: 'color' },
+}}  />
 
 # This is an awesome button
 
 Some **markdown** description, or whatever you want.
 
-<Story name='basic button'>{{
+<Story name='basic button' args={{ label: 'hello', color: '#ff0' }}>{{
   template: '<AwesomeButton @click.native="clickme" :label="label" :color="color" />',
   props: {
     label: {
-      default: text('Label', 'Awesome button')
+      default: 'Awesome button',
     },
     color: {
-      default: text('Color Me', '777777')
+      default: '#777777'
     }
   },
   methods: {

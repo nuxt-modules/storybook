@@ -1,18 +1,17 @@
-import { text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 
 export default {
   title: 'AwesomeButton',
 }
 
-export const MyAwesomeButton = () => ({
+export const MyAwesomeButton = ({ label }) => ({
   template: '<AwesomeButton @click.native="clickme" :label="label" :color="color" />',
   props: {
     label: {
-      default: text('Label', 'Awesome button')
+      default: 'Awesome button'
     },
     color: {
-      default: text('Color Me', '777777')
+      default: '#777777'
     }
   },
   methods: {
@@ -21,3 +20,10 @@ export const MyAwesomeButton = () => ({
     }
   }
 })
+MyAwesomeButton.argTypes = {
+  label: {
+    type: { name: 'string' },
+    defaultValue: "Awesome button"
+  },
+  color: { control: 'color' },
+}

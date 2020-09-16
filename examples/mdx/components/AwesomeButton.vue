@@ -1,5 +1,5 @@
 <template>
-  <button :style="{backgroundColor: '#' + color}">
+  <button :style="{backgroundColor: color}">
     {{ label }}
   </button>
 </template>
@@ -9,13 +9,20 @@ export default {
   props: {
     label: {
       type: String,
-      default: ''
+      default: 'Awesome Button'
     },
     color: {
       type: String,
-      default: '000000'
+      default: '#f0f0f0'
     }
   }
 
 }
 </script>
+
+<style scoped>
+button {
+  border: none;
+  padding: 10px;
+}
+</style>
