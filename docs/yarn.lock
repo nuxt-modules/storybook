@@ -1023,15 +1023,15 @@
     rc9 "^1.0.0"
     std-env "^2.2.1"
 
-"@nuxt/content-theme-docs@^0.5.6":
-  version "0.5.6"
-  resolved "https://registry.yarnpkg.com/@nuxt/content-theme-docs/-/content-theme-docs-0.5.6.tgz#705fe06661380eae8c9a114879645c624c75f073"
-  integrity sha512-z5KIicfFGMsha6LNUorZIAk/urlTqw+YsL2f6fLp9cWf4ftz8CUefBIjHzq9Yj/7zuPwwnCw179UCu5ea1fbrA==
+"@nuxt/content-theme-docs@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@nuxt/content-theme-docs/-/content-theme-docs-0.6.0.tgz#fdd5d2ce0a1d0fd086d751e59d504e01af2244cc"
+  integrity sha512-QgdczV8IZjSTIMIK14Hfx/Pv4jTC6bYzdf0wtvX7MxkL6t9PAki1N0fnR2C1yFgVmYlzuf+BCKXBqe/ASWMS7g==
   dependencies:
-    "@nuxt/content" "^1.8.1"
-    "@nuxt/types" "^2.14.4"
-    "@nuxtjs/color-mode" "^1.0.3"
-    "@nuxtjs/google-fonts" "^1.0.0"
+    "@nuxt/content" "^1.9.0"
+    "@nuxt/types" "^2.14.5"
+    "@nuxtjs/color-mode" "^1.1.1"
+    "@nuxtjs/google-fonts" "^1.0.2"
     "@nuxtjs/pwa" "^3.0.2"
     "@nuxtjs/tailwindcss" "^3.0.2"
     "@tailwindcss/typography" "^0.2.0"
@@ -1039,18 +1039,18 @@
     defu "^3.1.0"
     lodash.groupby "^4.6.0"
     marked "^1.1.1"
-    nuxt-i18n "^6.13.12"
+    nuxt-i18n "^6.15.1"
     prism-themes "^1.4.0"
     vue-scrollactive "^0.9.3"
 
-"@nuxt/content@^1.8.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@nuxt/content/-/content-1.8.1.tgz#c7f16d53952b39ae8cf12bb630e43e0eaaff2072"
-  integrity sha512-CvSMaxnmVIaq3bVav3IWA31I4VNjjwOuLQBIImOU8M42POt7LECTy1/iCLYjx8TyWq6SKxDGJvVnGl9PNZ8/hg==
+"@nuxt/content@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@nuxt/content/-/content-1.9.0.tgz#ecdd4d0d7d6f1b54338b3f9a8c49993ecbcbeb5b"
+  integrity sha512-B22DvTtQy8EtApjzBManU2+Z39gvFEHeydzi0XPo/H2pGVnuMW4KmnrJjgnHdLNzwXacDAKpvGWEusA2JUNKqA==
   dependencies:
     "@lokidb/full-text-search" "^2.1.0"
     "@lokidb/loki" "^2.1.0"
-    "@nuxt/types" "^2.14.4"
+    "@nuxt/types" "^2.14.5"
     "@types/js-yaml" "^3.12.5"
     "@types/xml2js" "^0.4.5"
     change-case "^4.1.1"
@@ -1213,10 +1213,10 @@
     rc9 "^1.0.0"
     std-env "^2.2.1"
 
-"@nuxt/types@^2.14.4":
-  version "2.14.4"
-  resolved "https://registry.yarnpkg.com/@nuxt/types/-/types-2.14.4.tgz#1c000849fdc3124f8544b251a811cc4094c1d085"
-  integrity sha512-hqqVY9rXBqYrkCStzZmoIWi7keJudOYZ1nBhbHs1pXN/AYwyJUAfYoPG4UE81kEG5CqIQrMXj47+xvOjbZuGbQ==
+"@nuxt/types@^2.14.5":
+  version "2.14.5"
+  resolved "https://registry.yarnpkg.com/@nuxt/types/-/types-2.14.5.tgz#426236eda1790f15c123110421c6d222c3d02c8f"
+  integrity sha512-1gOiwv6K4eNJbrYb68jtmZup/0gw6dGeu6fhUykyCcJS3emt+tzf6V0Lvg7WblJ/1xkzQfnNfbrbCm1CJpRAHg==
   dependencies:
     "@types/autoprefixer" "^9.7.2"
     "@types/babel__core" "^7.1.9"
@@ -1226,13 +1226,13 @@
     "@types/file-loader" "^4.2.0"
     "@types/html-minifier" "^4.0.0"
     "@types/less" "^3.0.1"
-    "@types/node" "^12.12.54"
+    "@types/node" "^12.12.56"
     "@types/node-sass" "^4.11.1"
     "@types/optimize-css-assets-webpack-plugin" "^5.0.1"
     "@types/pug" "^2.0.4"
     "@types/serve-static" "^1.13.5"
     "@types/terser-webpack-plugin" "^2.2.0"
-    "@types/webpack" "^4.41.21"
+    "@types/webpack" "^4.41.22"
     "@types/webpack-bundle-analyzer" "^3.8.0"
     "@types/webpack-dev-middleware" "^3.7.2"
     "@types/webpack-hot-middleware" "^2.25.3"
@@ -1328,21 +1328,21 @@
     webpack-node-externals "^2.5.0"
     webpackbar "^4.0.0"
 
-"@nuxtjs/color-mode@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/color-mode/-/color-mode-1.0.3.tgz#213d9e757f354cb7db1efe9702d54789e95d6dae"
-  integrity sha512-fTmjn9fzFv/LPYPJc6m/AxTSPrkoNrgZncLRxVoG3vfhBcHc3D5bFmKvxOLk4ailR+YlxHgIXQp7YK5lf6sYog==
+"@nuxtjs/color-mode@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/color-mode/-/color-mode-1.1.1.tgz#588fb4a8ae7de6bea6da85324dfebadf98463972"
+  integrity sha512-Q091KLVMX4ZhVnwgNE2eKdjkaMZRdfVsKISI4kOsWBxJgj/PdPAQpGcSjLIOTB+l1XuLGLmh7hUtLOIM8FE0gA==
   dependencies:
     defu "^2.0.4"
     lodash.template "^4.5.0"
 
-"@nuxtjs/google-fonts@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/google-fonts/-/google-fonts-1.0.0.tgz#fca4c72627be846b617b91653a2ad73f326eefbb"
-  integrity sha512-QRaD6wsprWJISFdIj3/3ER9L3EePXZ5Y1CnCuAsJQ0m9tvRKudSrP4ok+h6EYKCqKmEWYMerb57vfEwFJZRDPA==
+"@nuxtjs/google-fonts@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/google-fonts/-/google-fonts-1.0.2.tgz#37cd53cc0e8cff61310a3c34c9b9f432953c99c9"
+  integrity sha512-ecyyFAwLyb3U9m9FS/bmP8BYBXqJpPg3xv322dn1xaxDyFoW25LJutRtHeORlgloYrjyHJLc0kSpi75yYpXOBg==
   dependencies:
-    consola "^2.14.0"
-    google-fonts-helper "^1.0.1"
+    consola "^2.15.0"
+    google-fonts-helper "^1.0.4"
 
 "@nuxtjs/pwa@^3.0.2":
   version "3.0.2"
@@ -1376,10 +1376,10 @@
     mustache "^2.3.0"
     stack-trace "0.0.10"
 
-"@sindresorhus/is@^3.0.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-3.1.0.tgz#d8735532635bea69ad39119df5f0f10099bd09dc"
-  integrity sha512-n4J+zu52VdY43kdi/XdI9DzuMr1Mur8zFL5ZRG2opCans9aiFwkPxHYFEb5Xgy7n1Z4K6WfI4FpqUqsh3E8BPQ==
+"@sindresorhus/is@^3.1.1":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-3.1.2.tgz#548650de521b344e3781fbdb0ece4aa6f729afb8"
+  integrity sha512-JiX9vxoKMmu8Y3Zr2RVathBL1Cdu4Nt4MuNWemt1Nc06A0RAin9c5FArkhGsyMBWfCu4zj+9b+GxtjAnE4qqLQ==
 
 "@szmarczak/http-timer@^4.0.5":
   version "4.0.5"
@@ -1593,10 +1593,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.27.tgz#a151873af5a5e851b51b3b065c9e63390a9e0eb1"
   integrity sha512-kVrqXhbclHNHGu9ztnAwSncIgJv/FaxmzXJvGXNdcCpV1b8u1/Mi6z6m0vwy0LzKeXFTPLH0NzwmoJ3fNCIq0g==
 
-"@types/node@^12.12.54":
-  version "12.12.54"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.54.tgz#a4b58d8df3a4677b6c08bfbc94b7ad7a7a5f82d1"
-  integrity sha512-ge4xZ3vSBornVYlDnk7yZ0gK6ChHf/CHB7Gl1I0Jhah8DDnEQqBzgohYG4FX4p81TNirSETOiSyn+y1r9/IR6w==
+"@types/node@^12.12.56":
+  version "12.12.59"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.59.tgz#3a6154c24d4b5bd95bb1ce921ef805fb722f24cc"
+  integrity sha512-D2MISWfv2j17aFBAkMD3lQ97vYpXCkAJMJf0mx2eKHNkzXA6Vo9w7A7BWi9fH8sOH1zeFb7fIhOo22z0TtrSag==
 
 "@types/optimize-css-assets-webpack-plugin@^5.0.1":
   version "5.0.1"
@@ -1709,10 +1709,22 @@
     "@types/source-list-map" "*"
     source-map "^0.7.3"
 
-"@types/webpack@*", "@types/webpack@^4.41.21", "@types/webpack@^4.41.8":
+"@types/webpack@*", "@types/webpack@^4.41.8":
   version "4.41.21"
   resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.21.tgz#cc685b332c33f153bb2f5fc1fa3ac8adeb592dee"
   integrity sha512-2j9WVnNrr/8PLAB5csW44xzQSJwS26aOnICsP3pSGCEdsu6KYtfQ6QJsVUKHWRnm1bL7HziJsfh5fHqth87yKA==
+  dependencies:
+    "@types/anymatch" "*"
+    "@types/node" "*"
+    "@types/tapable" "*"
+    "@types/uglify-js" "*"
+    "@types/webpack-sources" "*"
+    source-map "^0.6.0"
+
+"@types/webpack@^4.41.22":
+  version "4.41.22"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.22.tgz#ff9758a17c6bd499e459b91e78539848c32d0731"
+  integrity sha512-JQDJK6pj8OMV9gWOnN1dcLCyU9Hzs6lux0wBO4lr1+gyEhIBR9U3FMrz12t2GPkg110XAxEAw2WHF6g7nZIbRQ==
   dependencies:
     "@types/anymatch" "*"
     "@types/node" "*"
@@ -4414,28 +4426,28 @@ good-listener@^1.2.2:
   dependencies:
     delegate "^3.1.2"
 
-google-fonts-helper@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/google-fonts-helper/-/google-fonts-helper-1.0.1.tgz#17a6728586ae2ee2dae8ba2243eae021cae5d3b0"
-  integrity sha512-fwgV4Z694NjP3W3NLkXsJMqmyzL1OsEXFlDjm/keb0E5hLTTMnGNnLb470r8QizIX3aeTzYpztagAGN8vx6RgA==
+google-fonts-helper@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/google-fonts-helper/-/google-fonts-helper-1.0.4.tgz#c64dbb49428cab14517804b15f7bb06491d6ec69"
+  integrity sha512-SSjbWUqygILiMjjubdhEME93BccRvzjtSOzfs6eBHhdYYn7jXVj1uRkL7ouuleDd/opbV2L2jhTDIN96oi2mWQ==
   dependencies:
     deepmerge "^4.2.2"
     fs-extra "^9.0.1"
-    got "^11.5.1"
+    got "^11.6.1"
 
-got@^11.5.1:
-  version "11.5.1"
-  resolved "https://registry.yarnpkg.com/got/-/got-11.5.1.tgz#bf098a270fe80b3fb88ffd5a043a59ebb0a391db"
-  integrity sha512-reQEZcEBMTGnujmQ+Wm97mJs/OK6INtO6HmLI+xt3+9CvnRwWjXutUvb2mqr+Ao4Lu05Rx6+udx9sOQAmExMxA==
+got@^11.6.1:
+  version "11.6.2"
+  resolved "https://registry.yarnpkg.com/got/-/got-11.6.2.tgz#79d7bb8c11df212b97f25565407a1f4ae73210ec"
+  integrity sha512-/21qgUePCeus29Jk7MEti8cgQUNXFSWfIevNIk4H7u1wmXNDrGPKPY6YsPY+o9CIT/a2DjCjRz0x1nM9FtS2/A==
   dependencies:
-    "@sindresorhus/is" "^3.0.0"
+    "@sindresorhus/is" "^3.1.1"
     "@szmarczak/http-timer" "^4.0.5"
     "@types/cacheable-request" "^6.0.1"
     "@types/responselike" "^1.0.0"
     cacheable-lookup "^5.0.3"
     cacheable-request "^7.0.1"
     decompress-response "^6.0.0"
-    http2-wrapper "^1.0.0-beta.5.0"
+    http2-wrapper "^1.0.0-beta.5.2"
     lowercase-keys "^2.0.0"
     p-cancelable "^2.0.0"
     responselike "^2.0.0"
@@ -4807,7 +4819,7 @@ http-errors@~1.7.2:
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.0"
 
-http2-wrapper@^1.0.0-beta.5.0:
+http2-wrapper@^1.0.0-beta.5.2:
   version "1.0.0-beta.5.2"
   resolved "https://registry.yarnpkg.com/http2-wrapper/-/http2-wrapper-1.0.0-beta.5.2.tgz#8b923deb90144aea65cf834b016a340fc98556f3"
   integrity sha512-xYz9goEyBnC8XwXDTuC/MZ6t+MrKVQZOk4s7+PaDkwIsQd8IwqvM+0M6bA/2lvG8GHXcPdf+MejTUeO2LCPCeQ==
@@ -6205,10 +6217,10 @@ nuxt-edge@^2.14.1-26608350.3204f301:
     "@nuxt/telemetry" "^1.2.3"
     "@nuxt/webpack-edge" "2.14.1-26608350.3204f301"
 
-nuxt-i18n@^6.13.12:
-  version "6.13.12"
-  resolved "https://registry.yarnpkg.com/nuxt-i18n/-/nuxt-i18n-6.13.12.tgz#590e1b69f5dbfd2b7d777a8cc0231f23e0f438f5"
-  integrity sha512-lpk59Fs8+heoXSJ/7VAHmSLXvyegaPmlYe+wSeI7g4VHVHL7YHIHypUPu/pQfEe0h1f5GY0R/w1Y8AEEPaXiVw==
+nuxt-i18n@^6.15.1:
+  version "6.15.1"
+  resolved "https://registry.yarnpkg.com/nuxt-i18n/-/nuxt-i18n-6.15.1.tgz#01bccd4fe2181a0611d43392dd66e60341c04457"
+  integrity sha512-LWKfr1B6JWhXYEpM5iHXJ2kyXMyH7RiHLbAHTVWV6PoRFwHgaFAPC9juq6Uis/SLxKwojP2QOmwfZYep8Uk+Dw==
   dependencies:
     "@babel/parser" "^7.5.5"
     "@babel/traverse" "^7.5.5"
