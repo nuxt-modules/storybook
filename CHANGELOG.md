@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/nuxt-community/storybook/compare/v2.2.0...v2.2.1) (2020-09-18)
+
+
+### Bug Fixes
+
+* **addon-docs:** support nuxt context in docs canvas ([#124](https://github.com/nuxt-community/storybook/issues/124)) ([305c619](https://github.com/nuxt-community/storybook/commit/305c6197025982d8af7dbcc2152c7ab4a52c128f))
+
 ## [2.2.0](https://github.com/nuxt-community/storybook/compare/v2.1.0...v2.2.0) (2020-08-31)
 
 
