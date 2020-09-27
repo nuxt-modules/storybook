@@ -85,7 +85,7 @@ async function buildNuxt (options: StorybookOptions) {
   // Load webpack config for Nuxt
   const { bundleBuilder } = nuxtBuilder
 
-  const nuxtStorybookConfig = nuxtStorybookOptions(nuxt.options)
+  const nuxtStorybookConfig = await nuxtStorybookOptions(nuxt, nuxt.options)
 
   // generate files
   generateStorybookFiles.call(nuxt.moduleContainer, {
@@ -136,31 +136,18 @@ function generateStorybookFiles (options) {
   })
 }
 
-export async function eject (options: StorybookOptions) {
-  const buildDir = path.resolve(options.rootDir, '.nuxt-storybook')
+export function eject (options: StorybookOptions) {
   const configDir = path.resolve(options.rootDir, 'storybook')
   const templatesRoot = path.resolve(__dirname, '../storybook')
   if (!options.force && fsExtra.existsSync(configDir)) {
     logger.warn('Storybook is already ejected, use `--force` to overwrite files.')
     return
   }
-  const { loadNuxtConfig } = requireMaybeEdge('nuxt')
-  const config = await loadNuxtConfig({
-    ...options,
-    rootDir: options.rootDir,
-    for: 'build',
-    configOverrides: {
-      ssr: false,
-      buildDir
-    }
-  })
-
-  const nuxtStorybookConfig = nuxtStorybookOptions(config)
-  compileTemplate(path.resolve(templatesRoot, 'eject', 'main.js'), path.join(configDir, 'main.js'), nuxtStorybookConfig)
-  compileTemplate(path.resolve(templatesRoot, 'eject', 'preview.js'), path.join(configDir, 'preview.js'), nuxtStorybookConfig)
+  compileTemplate(path.resolve(templatesRoot, 'eject', 'main.js'), path.join(configDir, 'main.js'), {})
+  compileTemplate(path.resolve(templatesRoot, 'eject', 'preview.js'), path.join(configDir, 'preview.js'), {})
 }
 
-function nuxtStorybookOptions (options) {
+async function nuxtStorybookOptions (nuxt, options) {
   const nuxtStorybookConfig = Object.assign({
     stories: [],
     addons: [],
@@ -181,6 +168,8 @@ function nuxtStorybookOptions (options) {
   if (fsExtra.existsSync(storiesDir)) {
     nuxtStorybookConfig.stories.unshift('~/components/**/*.stories.@(ts|js)')
   }
+
+  await nuxt.callHook('storybook:config', nuxtStorybookConfig)
 
   nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.map(story => upath.normalize(story
     .replace(/^~~/, path.relative(nuxtStorybookConfig.configDir, options.rootDir))

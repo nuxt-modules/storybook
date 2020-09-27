@@ -1,7 +1,7 @@
 const {
-  // Stories from modules and nuxt config
+  // Stories from modules and nuxt config file
   stories: nuxtStories,
-  // Addons from modules and nuxt config
+  // Addons from modules and nuxt config file
   addons: nuxtAddons
 } = require('../.nuxt-storybook/storybook/main.js')
 
