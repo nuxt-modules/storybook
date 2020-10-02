@@ -187,5 +187,14 @@ function nuxtStorybookOptions (options) {
     .replace(/^~/, path.relative(nuxtStorybookConfig.configDir, srcDir)))
   )
 
+  // In the better world we should drop this logic and simply use essential addon
+  const essentials = nuxtStorybookConfig.addons
+    .find(addon => addon === '@storybook/addon-essentials' || addon.name === '@storybook/addon-essentials')
+  if (!essentials) {
+    nuxtStorybookConfig.addons.unshift('@storybook/addon-essentials')
+  } else if (essentials.options && essentials.options.actions === false) {
+    nuxtStorybookConfig.addons.unshift('@storybook/addon-actions/preset')
+  }
+
   return nuxtStorybookConfig
 }
