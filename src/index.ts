@@ -177,7 +177,7 @@ function nuxtStorybookOptions (options) {
     srcDir = path.resolve(options.rootDir, srcDir)
   }
 
-  const storiesDir = path.resolve(options.srcDir, 'components')
+  const storiesDir = path.resolve(srcDir, 'components')
   if (fsExtra.existsSync(storiesDir)) {
     nuxtStorybookConfig.stories.unshift('~/components/**/*.stories.@(ts|js)')
   }
