@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.2](https://github.com/nuxt-community/storybook/compare/v2.2.1...v2.2.2) (2020-10-02)
+
+
+### Bug Fixes
+
+* **eject:**  undefined srcDir issue ([039c3de](https://github.com/nuxt-community/storybook/commit/039c3de715885f6b6b4bda09fe288d4c757ac27f))
+
 ### [2.2.1](https://github.com/nuxt-community/storybook/compare/v2.2.0...v2.2.1) (2020-09-18)
 
 
