@@ -7,7 +7,9 @@ export default {
     '@nuxtjs/fontawesome'
   ],
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    "~/modules/included-module/index.js",
+    "~/modules/excluded-module/index.js"
   ],
   fontawesome: {
     icons: {
@@ -40,6 +42,10 @@ export default {
           { name: 'gray', value: '#aaaaaa' },
         ],
       },
-    }
+    },
+    // exclude stories / modules
+    exclude: [
+      "excluded-module"
+    ]
   }
 }
