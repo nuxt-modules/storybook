@@ -1,7 +1,7 @@
 ---
 title: API
 description: '@nuxtjs/storybook provides a clean and simple way to integrate NuxtJS modules with Storybook.'
-position: 5
+position: 6
 category: Advanced
 ---
 
