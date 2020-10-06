@@ -56,11 +56,13 @@ export default {
 `@nuxtjs/storybook` internally registered some third party addons.
 
 You don't need to register these addons in your project:
-- `@storybook/addon-actions/register`
+- `@storybook/addon-essntials`
 
 </alert>
 
 ## `stories`
+
+- Default: `[]`
 
 With this option you can register your custom stories to Storybook. For example, If your stories are located in the `stories` directory, you can use the following snippet:
 
@@ -111,6 +113,9 @@ export default {
 ```
 
 ## `parameters`
+
+- Default: `{}`
+
 > Parameters are a set of static, named metadata about a story, typically used to control the behavior of Storybook features and addons.[*](https://storybook.js.org/docs/react/writing-stories/parameters)
 
 Customize Storybook's global parameters.  
@@ -127,6 +132,22 @@ export default {
         ],
       },
     }
+  }
+}
+```
+
+## `exclude`
+
+- Default: `[]`
+
+As of Version 3 `@nuxtjs/storybook` will provide an API for modules to modify Storybook config and add their own stories. If you want to exclude stories of specific module you can use this option.  
+
+```js{}[nuxt.config.js]
+export default {
+  storybook: {
+    exclude: [
+      'module_name',
+    ]
   }
 }
 ```
