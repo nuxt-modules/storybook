@@ -9,6 +9,10 @@ category: Advanced
 
 As of Version 3 `@nuxtjs/storybook` will provide API for modules to modify Storybook config and add their own stories. Modules can use `storybook:config` hook to access Storybook config and add their own stories.
 
+<alert type="info">
+It is highly recommended to create your stories under <code>Modules</code>. This is best way to keep storybook cleen. Take a look at below example. <a href="https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy">Read more about naming</a>
+</alert>
+
 Here is a sample example:
 
 <code-group>
@@ -30,10 +34,10 @@ Here is a sample example:
 
   ```js{}[your-awesome-module/stories/awesome.stories.js]
   export default {
-    title: "Awesome Story"
+    title: "Moduels/Awesome Module"
   }
 
-  export const awesome = () => "<div>AWESOME</div>"
+  export const awesomeStory = () => "<div>AWESOME</div>"
   ```
 
   </code-block>
