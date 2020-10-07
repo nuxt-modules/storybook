@@ -44,8 +44,10 @@ export default {
       },
     },
     // exclude stories / modules
-    exclude: [
-      "excluded-module"
-    ]
+    modules: {
+      exclude: [
+        "excluded-module"
+      ]
+    }
   }
 }

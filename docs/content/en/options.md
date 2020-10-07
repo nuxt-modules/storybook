@@ -136,18 +136,38 @@ export default {
 }
 ```
 
-## `exclude`
+## `modules`
 
-- Default: `[]`
+- Default: `true`
 
-As of Version 3 `@nuxtjs/storybook` will provide an API for modules to modify Storybook config and add their own stories. If you want to exclude stories of specific module you can use this option.  
+As of Version 3 `@nuxtjs/storybook` will provide an API for modules to modify Storybook config and add their own stories. Each module can use [module API](/API#config-hook) to provide their own stories.  
+Using `module` option you can control modules stories, exclude all or a specific modules.  
 
-```js{}[nuxt.config.js]
-export default {
-  storybook: {
-    exclude: [
-      'module_name',
-    ]
+<code-group>
+  <code-block label="Specific Module" active>
+
+ ```js{}[nuxt.config.js]
+  export default {
+    storybook: {
+      modules: {
+        exclude: [
+          'module_name',
+        ]
+      }
+    }
   }
-}
-```
+  ```
+
+  </code-block>
+  <code-block label="All">
+
+ ```js{}[nuxt.config.js]
+  export default {
+    storybook: {
+      modules: false
+    }
+  }
+  ```
+
+  </code-block>
+</code-group>

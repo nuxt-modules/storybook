@@ -152,7 +152,7 @@ async function nuxtStorybookOptions (nuxt, options) {
     stories: [],
     addons: [],
     parameters: {},
-    exclude: []
+    modules: true
   }, options.storybook)
 
   nuxtStorybookConfig.configDir = path.resolve(options.rootDir, 'storybook')
@@ -170,11 +170,14 @@ async function nuxtStorybookOptions (nuxt, options) {
     nuxtStorybookConfig.stories.unshift('~/components/**/*.stories.@(ts|js)')
   }
 
-  await nuxt.callHook('storybook:config', nuxtStorybookConfig)
+  if (nuxtStorybookConfig.modules !== false) {
+    const { exclude = [] } = nuxtStorybookConfig.modules
+    await nuxt.callHook('storybook:config', nuxtStorybookConfig)
 
-  nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.filter(
-    story => !nuxtStorybookConfig.exclude.some(e => story.match(e))
-  )
+    nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.filter(
+      story => !exclude.some(e => story.match(e))
+    )
+  }
 
   nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.map(story => upath.normalize(story
     .replace(/^~~/, path.relative(nuxtStorybookConfig.configDir, options.rootDir))
