@@ -73,7 +73,9 @@ async function buildNuxt (options: StorybookOptions) {
       buildDir,
       build: {
         corejs: '3',
-        extractCSS: false
+        extractCSS: false,
+        // https://github.com/nuxt-community/storybook/issues/102#issuecomment-704821377
+        parallel: false
       }
     },
     transpile: [path.resolve(__dirname, '../storybook')]
