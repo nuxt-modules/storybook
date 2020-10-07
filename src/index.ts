@@ -181,6 +181,12 @@ function nuxtStorybookOptions (options) {
   if (fsExtra.existsSync(storiesDir)) {
     nuxtStorybookConfig.stories.unshift('~/components/**/*.stories.@(ts|js)')
   }
+  // ensure essential addon exists
+  const essentials = nuxtStorybookConfig.addons
+    .find(addon => addon === '@storybook/addon-essentials' || addon.name === '@storybook/addon-essentials')
+  if (!essentials) {
+    nuxtStorybookConfig.addons.unshift('@storybook/addon-essentials')
+  }
 
   nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.map(story => upath.normalize(story
     .replace(/^~~/, path.relative(nuxtStorybookConfig.configDir, options.rootDir))

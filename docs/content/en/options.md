@@ -56,7 +56,7 @@ export default {
 `@nuxtjs/storybook` internally registered some third party addons.
 
 You don't need to register these addons in your project:
-- `@storybook/addon-actions/register`
+- `@storybook/addon-essentials`
 
 </alert>
 
