@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/nuxt-community/storybook/compare/v2.2.2...v3.0.0) (2020-10-07)
+
+
+### Features
+
+* **config:** allow modules to modify storybook config ([#129](https://github.com/nuxt-community/storybook/issues/129)) ([09cfe39](https://github.com/nuxt-community/storybook/commit/09cfe3971214c746c87813a4ead10ca7e962a372))
+* **storybook:** use `.storybook` config dir ([#139](https://github.com/nuxt-community/storybook/issues/139)) ([0e311ba](https://github.com/nuxt-community/storybook/commit/0e311ba2405091dfae011c37c50a50a9b7b22760))
+
+
+### Bug Fixes
+
+* **storybook:** port should be a number ([235d814](https://github.com/nuxt-community/storybook/commit/235d814b5d2165a8e3744269b247e0be1310ac00))
+* **webpack:** Storybook do not work with thread-loader ([#137](https://github.com/nuxt-community/storybook/issues/137)) ([625682f](https://github.com/nuxt-community/storybook/commit/625682f43485d15aca8fa2dfc4d4284c9345964c))
+
 ### [2.2.2](https://github.com/nuxt-community/storybook/compare/v2.2.1...v2.2.2) (2020-10-02)
 
 

@@ -44,7 +44,7 @@ async function getStorybookConfig (options: StorybookOptions) {
     versionUpdates: false,
     rootDir: options.rootDir,
     configDir: nuxtStorybookConfig.configDir,
-    port: process.env.PORT || nuxtStorybookConfig.port || 3003,
+    port: parseInt(process.env.PORT || nuxtStorybookConfig.port || 3003, 10),
     nuxt,
     nuxtBuilder,
     nuxtWebpackConfig,
@@ -73,7 +73,9 @@ async function buildNuxt (options: StorybookOptions) {
       buildDir,
       build: {
         corejs: '3',
-        extractCSS: false
+        extractCSS: false,
+        // https://github.com/nuxt-community/storybook/issues/102#issuecomment-704821377
+        parallel: false
       }
     },
     transpile: [path.resolve(__dirname, '../storybook')]
@@ -85,7 +87,7 @@ async function buildNuxt (options: StorybookOptions) {
   // Load webpack config for Nuxt
   const { bundleBuilder } = nuxtBuilder
 
-  const nuxtStorybookConfig = nuxtStorybookOptions(nuxt.options)
+  const nuxtStorybookConfig = await nuxtStorybookOptions(nuxt, nuxt.options)
 
   // generate files
   generateStorybookFiles.call(nuxt.moduleContainer, {
@@ -136,39 +138,28 @@ function generateStorybookFiles (options) {
   })
 }
 
-export async function eject (options: StorybookOptions) {
-  const buildDir = path.resolve(options.rootDir, '.nuxt-storybook')
-  const configDir = path.resolve(options.rootDir, 'storybook')
+export function eject (options: StorybookOptions) {
+  const configDir = path.resolve(options.rootDir, '.storybook')
   const templatesRoot = path.resolve(__dirname, '../storybook')
   if (!options.force && fsExtra.existsSync(configDir)) {
     logger.warn('Storybook is already ejected, use `--force` to overwrite files.')
     return
   }
-  const { loadNuxtConfig } = requireMaybeEdge('nuxt')
-  const config = await loadNuxtConfig({
-    ...options,
-    rootDir: options.rootDir,
-    for: 'build',
-    configOverrides: {
-      ssr: false,
-      buildDir
-    }
-  })
-
-  const nuxtStorybookConfig = nuxtStorybookOptions(config)
-  compileTemplate(path.resolve(templatesRoot, 'eject', 'main.js'), path.join(configDir, 'main.js'), nuxtStorybookConfig)
-  compileTemplate(path.resolve(templatesRoot, 'eject', 'preview.js'), path.join(configDir, 'preview.js'), nuxtStorybookConfig)
+  compileTemplate(path.resolve(templatesRoot, 'eject', 'main.js'), path.join(configDir, 'main.js'), {})
+  compileTemplate(path.resolve(templatesRoot, 'eject', 'preview.js'), path.join(configDir, 'preview.js'), {})
 }
 
-function nuxtStorybookOptions (options) {
+async function nuxtStorybookOptions (nuxt, options) {
   const nuxtStorybookConfig = Object.assign({
     stories: [],
     addons: [],
-    parameters: {}
+    parameters: {},
+    modules: true
   }, options.storybook)
 
-  nuxtStorybookConfig.configDir = path.resolve(options.rootDir, 'storybook')
-  if (!fsExtra.existsSync(path.resolve(options.rootDir, 'storybook'))) {
+  nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.storybook')
+
+  if (!fsExtra.existsSync(nuxtStorybookConfig.configDir)) {
     nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
   }
 
@@ -180,6 +171,21 @@ function nuxtStorybookOptions (options) {
   const storiesDir = path.resolve(srcDir, 'components')
   if (fsExtra.existsSync(storiesDir)) {
     nuxtStorybookConfig.stories.unshift('~/components/**/*.stories.@(ts|js)')
+  }
+  // ensure essential addon exists
+  const essentials = nuxtStorybookConfig.addons
+    .find(addon => addon === '@storybook/addon-essentials' || addon.name === '@storybook/addon-essentials')
+  if (!essentials) {
+    nuxtStorybookConfig.addons.unshift('@storybook/addon-essentials')
+  }
+
+  if (nuxtStorybookConfig.modules !== false) {
+    const { exclude = [] } = nuxtStorybookConfig.modules
+    await nuxt.callHook('storybook:config', nuxtStorybookConfig)
+
+    nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.filter(
+      story => !exclude.some(e => story.match(e))
+    )
   }
 
   nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.map(story => upath.normalize(story
