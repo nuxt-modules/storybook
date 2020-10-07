@@ -137,7 +137,7 @@ function generateStorybookFiles (options) {
 }
 
 export function eject (options: StorybookOptions) {
-  const configDir = path.resolve(options.rootDir, 'storybook')
+  const configDir = path.resolve(options.rootDir, '.storybook')
   const templatesRoot = path.resolve(__dirname, '../storybook')
   if (!options.force && fsExtra.existsSync(configDir)) {
     logger.warn('Storybook is already ejected, use `--force` to overwrite files.')
@@ -155,8 +155,9 @@ async function nuxtStorybookOptions (nuxt, options) {
     modules: true
   }, options.storybook)
 
-  nuxtStorybookConfig.configDir = path.resolve(options.rootDir, 'storybook')
-  if (!fsExtra.existsSync(path.resolve(options.rootDir, 'storybook'))) {
+  nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.storybook')
+
+  if (!fsExtra.existsSync(nuxtStorybookConfig.configDir)) {
     nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
   }
 
