@@ -11,8 +11,8 @@ import fetchMixin from '../mixins/fetch.client'
  * @nuxtjs/storybook
  * execute plugin scripts
  */
-window.__NUXT__ = { config: <%= JSON.stringify(options.nuxtOptions.publicRuntimeConfig || {}) %> }
-<%= options.nuxtOptions.head.script.map(s => s.innerHTML).join("\n") %>
+window.__NUXT__ = { config: <%= JSON.stringify(options.nuxtOptions.publicRuntimeConfig || {}) %> };
+<%= options.nuxtOptions.head.script.map(s => s.innerHTML).join(";\n") %>
 
 // Fetch mixin
 if (!Vue.__nuxt__fetch__mixin__) {
