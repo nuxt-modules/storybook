@@ -44,7 +44,7 @@ async function getStorybookConfig (options: StorybookOptions) {
     versionUpdates: false,
     rootDir: options.rootDir,
     configDir: nuxtStorybookConfig.configDir,
-    port: parseInt(process.env.PORT || nuxtStorybookConfig.port || 3003, 10),
+    port: parseInt(process.env.PORT_STORYBOOK || process.env.PORT || nuxtStorybookConfig.port || 3003, 10),
     nuxt,
     nuxtBuilder,
     nuxtWebpackConfig,
