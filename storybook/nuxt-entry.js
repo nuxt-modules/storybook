@@ -6,6 +6,7 @@ import fetch from 'unfetch'
 import '@storybook/vue/dist/client/preview/globals'
 import { extractProps } from '@storybook/vue/dist/client/preview/util'
 import fetchMixin from '../mixins/fetch.client'
+import { createApp } from '../'
 
 /**
  * @nuxtjs/storybook
@@ -186,7 +187,6 @@ export async function render({
 export async function getNuxtApp() {
     if (!window.__NUXT_APP) {
         // Make sure plugin scripts executes before `../index.js` import
-        const { createApp } = require('../')
         const { app } = await createApp(null, __NUXT__.config)
         window.__NUXT_APP = app;
     }
