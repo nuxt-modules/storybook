@@ -7,7 +7,7 @@ category: Advanced
 
 `@nuxtjs/storybook` provides a clean and simple way to integrate Storybook with NuxtJS. If you want to config Storybook by yourself or do things that is beyond the scope of this module follow these steps.
 
-Before starting, take a look at Storybook's oficial documentation about [Configuration](https://storybook.js.org/docs/configurations/overview/)
+Before starting, take a look at Storybook's official documentation about [Configuration](https://storybook.js.org/docs/configurations/overview/)
 
 ## User `eject` command
 Using `eject` command is the easiest way to create and customize Storybook config.
