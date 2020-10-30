@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 Vue.component('NuxtLink', {
   props: {
     to: {
-      type: String,
+      type: [String, Object],
       required: true
     }
   },

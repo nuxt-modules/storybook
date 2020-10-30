@@ -20,14 +20,7 @@ export default {
     moduleName: "@nuxtjs/storybook",
   },
   storybook: {
-    addons: [
-      {
-        name: '@storybook/addon-essentials',
-        options: {
-          actions: false,
-        }
-      }
-    ],
+    addons: [],
     stories: [
       '~/stories/**/*.stories.@(ts|js)'
     ],

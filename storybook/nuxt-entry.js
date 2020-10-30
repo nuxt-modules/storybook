@@ -6,13 +6,14 @@ import fetch from 'unfetch'
 import '@storybook/vue/dist/client/preview/globals'
 import { extractProps } from '@storybook/vue/dist/client/preview/util'
 import fetchMixin from '../mixins/fetch.client'
+import { createApp } from '../'
 
 /**
  * @nuxtjs/storybook
  * execute plugin scripts
  */
-window.__NUXT__ = { config: <%= JSON.stringify(options.nuxtOptions.publicRuntimeConfig || {}) %> }
-<%= options.nuxtOptions.head.script.map(s => s.innerHTML).join("\n") %>
+window.__NUXT__ = { config: <%= JSON.stringify(options.nuxtOptions.publicRuntimeConfig || {}) %> };
+<%= options.nuxtOptions.head.script.map(s => s.innerHTML).join(";\n") %>
 
 // Fetch mixin
 if (!Vue.__nuxt__fetch__mixin__) {
@@ -186,7 +187,6 @@ export async function render({
 export async function getNuxtApp() {
     if (!window.__NUXT_APP) {
         // Make sure plugin scripts executes before `../index.js` import
-        const { createApp } = require('../')
         const { app } = await createApp(null, __NUXT__.config)
         window.__NUXT_APP = app;
     }
