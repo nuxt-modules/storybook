@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/nuxt-community/storybook/compare/v3.0.0...v3.1.0) (2020-10-30)
+
+
+### Features
+
+* **module:** support `PORT_STORYBOOK` env ([8d809bf](https://github.com/nuxt-community/storybook/commit/8d809bfa77d01f8e61df82f13e9efbe2bdb68181)), closes [#119](https://github.com/nuxt-community/storybook/issues/119)
+
+
+### Bug Fixes
+
+* **storybook:** Allow nuxt-link mock to take an Object for the to prop ([#158](https://github.com/nuxt-community/storybook/issues/158)) ([8f2cbdf](https://github.com/nuxt-community/storybook/commit/8f2cbdf0548e0b371e30c7437b5d1dc586dc97c7))
+* ensure nuxt load all style and plugins ([8b733f4](https://github.com/nuxt-community/storybook/commit/8b733f417a06f52a0101adb0d09988040aeccf18))
+* **storybook:** prevent scripts conflict in nuxt-entry ([#144](https://github.com/nuxt-community/storybook/issues/144)) ([b96d7be](https://github.com/nuxt-community/storybook/commit/b96d7be069bb5a13b2358a166e01d2a4e22c33dc))
+
 ## [3.0.0](https://github.com/nuxt-community/storybook/compare/v2.2.2...v3.0.0) (2020-10-07)
 
 
