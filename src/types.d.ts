@@ -12,6 +12,7 @@ export interface StorybookOptions {
   mode: string;
   configFile?: string;
   outputDir?: string;
+  tsconfig?: string;
   staticDir?: string;
   quiet?: boolean;
   smokeTest?: Boolean;
