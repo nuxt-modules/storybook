@@ -23,7 +23,8 @@ function _run () {
     '-p': '--port',
     '--host': String,
     '-h': '--host',
-    '--force': Boolean
+    '--force': Boolean,
+    '--tsconfig': String
   })
   const { _, ...flags } = args
 
