@@ -1,1 +1,1 @@
-import '~~/.nuxt-storybook/storybook/preview.js'
+export * from '~~/.nuxt-storybook/storybook/preview.js'
