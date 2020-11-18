@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/nuxt-community/storybook/compare/v3.1.0...v3.2.0) (2020-11-18)
+
+
+### Features
+
+* support typescript runtime ([#164](https://github.com/nuxt-community/storybook/issues/164)) ([1e3a659](https://github.com/nuxt-community/storybook/commit/1e3a659e102546021d6b56a2618fa03769795b9a))
+
+
+### Bug Fixes
+
+* export global parameters on eject mode ([#169](https://github.com/nuxt-community/storybook/issues/169)) ([89afc41](https://github.com/nuxt-community/storybook/commit/89afc4174bde44cbf10467aef0bec8f9080c4a23))
+
 ## [3.1.0](https://github.com/nuxt-community/storybook/compare/v3.0.0...v3.1.0) (2020-10-30)
 
 
