@@ -63,6 +63,18 @@ async function buildNuxt (options: StorybookOptions) {
   const buildDir = path.resolve(options.rootDir, '.nuxt-storybook')
   const { loadNuxt, getBuilder } = requireMaybeEdge('nuxt')
 
+  const tsConfigPath = path.resolve(options.tsconfig || options.rootDir, options.tsconfig ? '' : 'tsconfig.json')
+  if (fsExtra.existsSync(tsConfigPath)) {
+    const tsNode = require('ts-node')
+    tsNode.register({
+      project: tsConfigPath,
+      compilerOptions: {
+        module: 'commonjs'
+      },
+      transpileOnly: true
+    })
+  }
+
   // Create new nuxt instance
   const nuxt = await loadNuxt({
     ...options,
