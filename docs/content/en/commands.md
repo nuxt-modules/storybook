@@ -40,6 +40,7 @@ Development command have some options you can pass to alter storybook behaviors.
 --smoke-test                  Exit after successful start
 --ci                          CI mode (skip interactive prompts, don't open browser)
 --quiet                       Suppress verbose build output
+--tsconfig <file-path>        Specify tha path to tsconfig.json file.
 ```
 
 ## Export
@@ -71,6 +72,7 @@ Build command have some options you can pass to alter storybook behaviors.
 -c, --config-file <file-path> Specify the path to nuxt.config.js file.
 -s, --static-dir <dir-names>  Directory where to load static files from, comma-separated list. By default it loads Nuxt static dir
 -o, --output-dir [dir-name]   Directory where to store built files
+--tsconfig <file-path>        Specify tha path to tsconfig.json file.
 --quiet
 ```
 
