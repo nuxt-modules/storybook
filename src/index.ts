@@ -52,8 +52,8 @@ async function getStorybookConfig (options: StorybookOptions) {
     ...options,
     staticDir,
     frameworkPresets: [
-      ...vueOptions.frameworkPresets,
-      require.resolve('./preset')
+      require.resolve('./preset'),
+      ...vueOptions.frameworkPresets
     ]
   }
 }
