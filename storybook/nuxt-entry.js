@@ -196,13 +196,13 @@ export async function getNuxtApp() {
 
 // based on: https://github.com/storybookjs/storybook/blob/master/addons/docs/src/frameworks/vue/prepareForInline.ts
 export function prepareForInline (storyFn, { args }) {
-  const component = storyFn()
   const el = React.useRef(null)
   // FIXME: This recreates the Vue instance every time, which should be optimized
   React.useEffect(() => {
     let root
     const __NUXT_APP = getNuxtApp()
     __NUXT_APP.then((app) => {
+      const component = storyFn()
       root = new Vue({
         ...app,
         el: el.current,
