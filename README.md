@@ -46,13 +46,7 @@ npm install --save-dev @nuxtjs/storybook
 storybook-static
 ```
 
-3. Add `**/*.stories.js` to `.nuxtignore`
-
-```bash{}[.nuxtignore]
-**/*.stories.js
-```
-
-4. Start adding [stories](https://storybook.nuxtjs.org/usage)
+3. Start adding [stories](https://storybook.nuxtjs.org/usage)
 
 ## Configure
 
