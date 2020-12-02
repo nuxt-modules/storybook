@@ -12,3 +12,5 @@ globalParameters.docs = {
     prepareForInline
 }
 export const parameters = globalParameters
+
+export const decorators = [<%= options.decorators.map(decorator => `() => "${decorator}"`) %>]

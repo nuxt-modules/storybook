@@ -165,6 +165,7 @@ async function nuxtStorybookOptions (nuxt, options) {
   const nuxtStorybookConfig = Object.assign({
     stories: [],
     addons: [],
+    decorators: [],
     parameters: {},
     modules: true
   }, options.storybook)
@@ -184,6 +185,15 @@ async function nuxtStorybookOptions (nuxt, options) {
   if (fsExtra.existsSync(storiesDir)) {
     nuxtStorybookConfig.stories.unshift('~/components/**/*.stories.@(ts|js)')
   }
+
+  // validate decorators
+  if (nuxtStorybookConfig.decorators.find(decorator => typeof decorator !== 'string')) {
+    logger.warn('Decorators inside `nuxt.config` should be simple template strings. Non-string decorators will be ignored.')
+
+    nuxtStorybookConfig.decorators = nuxtStorybookConfig.decorators
+      .filter(decorator => typeof decorator === 'string')
+  }
+
   // ensure essential addon exists
   const essentials = nuxtStorybookConfig.addons
     .find(addon => addon === '@storybook/addon-essentials' || addon.name === '@storybook/addon-essentials')
