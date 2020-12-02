@@ -62,6 +62,9 @@ function prepare (
     [VALUES]: { ...(innerStory ? innerStory.options[VALUES] : {}), ...extractProps(story) },
     functional: true,
     render (h, { data, parent, children }) {
+      // Suddenly story will render twice and in the first render it isn't descendent of nuxt app
+      // Ensure that story will render only inside the nuxt context 
+      if (!parent.$root.nuxt) return null
       return h(
         story,
         {
