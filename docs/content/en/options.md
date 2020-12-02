@@ -136,6 +136,25 @@ export default {
 }
 ```
 
+## `decorators`
+
+- Default: `[]`
+
+> A decorator is a way to wrap a story in extra “rendering” functionality. Many addons define decorators in order to augment your stories with extra rendering or gather details about how your story is rendered.[*](https://storybook.js.org/docs/react/writing-stories/decorators/#global-decorators)
+
+Customize Storybook's global decorators.  
+
+```js{}[nuxt.config.js]
+export default {
+  storybook: {
+    decorators: [
+      // VApp decorator for Vuetify
+      '<v-app><story/></v-app>'
+    ]
+  }
+}
+```
+
 ## `modules`
 
 - Default: `true`
