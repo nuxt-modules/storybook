@@ -118,6 +118,11 @@ async function buildNuxt (options: StorybookOptions) {
   // Manually call `webpack:config` hook to extend config by modules
   await nuxt.callHook('webpack:config', [nuxtWebpackConfig])
 
+  nuxt.hook('watch:restart', () => {
+    nuxt.close()
+    buildNuxt(options)
+  })
+
   return {
     nuxt,
     nuxtBuilder,
