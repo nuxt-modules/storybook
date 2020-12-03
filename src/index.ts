@@ -24,6 +24,8 @@ async function getStorybookConfig (options: StorybookOptions) {
     nuxtStorybookConfig
   } = await buildNuxt(options)
 
+  nuxt.hook('watch:restart', () => buildNuxt(options))
+
   const userWebpackFinal = nuxtStorybookConfig.webpackFinal
   nuxtStorybookConfig.webpackFinal = (config, options) => {
     config = getWebpackConfig(config, options)
