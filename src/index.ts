@@ -24,8 +24,6 @@ async function getStorybookConfig (options: StorybookOptions) {
     nuxtStorybookConfig
   } = await buildNuxt(options)
 
-  nuxt.hook('watch:restart', () => buildNuxt(options))
-
   const userWebpackFinal = nuxtStorybookConfig.webpackFinal
   nuxtStorybookConfig.webpackFinal = (config, options) => {
     config = getWebpackConfig(config, options)
@@ -119,6 +117,11 @@ async function buildNuxt (options: StorybookOptions) {
   const nuxtWebpackConfig = await bundleBuilder.getWebpackConfig('client')
   // Manually call `webpack:config` hook to extend config by modules
   await nuxt.callHook('webpack:config', [nuxtWebpackConfig])
+
+  nuxt.hook('watch:restart', () => {
+    nuxt.close()
+    buildNuxt(options)
+  })
 
   return {
     nuxt,
