@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/nuxt-community/storybook/compare/v3.2.0...v3.3.0) (2020-12-03)
+
+
+### Features
+
+* decorators option ([#194](https://github.com/nuxt-community/storybook/issues/194)) ([45a12a1](https://github.com/nuxt-community/storybook/commit/45a12a1f7e937bfe3246e185a8390b30fedaa2c3))
+* rebuild nuxt on file change ([#198](https://github.com/nuxt-community/storybook/issues/198)) ([ed355ed](https://github.com/nuxt-community/storybook/commit/ed355edc1c55e49ed463b76dccf2326d38ac610b))
+
+
+### Bug Fixes
+
+* prevent rendering outside of nuxt context ([#195](https://github.com/nuxt-community/storybook/issues/195)) ([ee0aadf](https://github.com/nuxt-community/storybook/commit/ee0aadf3c349c1f44e5cc9fa6b9ede2c490d498d))
+* **module:** move aliases to preset ([#184](https://github.com/nuxt-community/storybook/issues/184)) ([33beee1](https://github.com/nuxt-community/storybook/commit/33beee1105cd1173fc8ffab13aabf2eea57e8775))
+* create story component after nuxt app initiation ([0488263](https://github.com/nuxt-community/storybook/commit/0488263c407ee99e54ef3bc742cfebfa2763435b))
+
 ## [3.2.0](https://github.com/nuxt-community/storybook/compare/v3.1.0...v3.2.0) (2020-11-18)
 
 
