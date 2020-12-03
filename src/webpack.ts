@@ -1,4 +1,3 @@
-import path from 'path'
 import * as webpack from 'webpack'
 import { WebpackExtras } from './types'
 
@@ -46,16 +45,6 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
     ...rules,
     ...extras.nuxtWebpackConfig.module.rules
   ]
-
-  // Aliases
-  const buildDir = extras.nuxt.options.buildDir
-  config.resolve.alias = {
-    ...extras.nuxtWebpackConfig.resolve.alias,
-    ...config.resolve.alias,
-    '~storybook': path.resolve(__dirname, '../storybook'),
-    // Nuxt plugins alias
-    ...extras.nuxtBuilder.plugins.reduce((map, plugin) => ({ ...map, [plugin.name]: path.resolve(buildDir, plugin.src) }), {})
-  }
 
   // Return the altered config
   return config

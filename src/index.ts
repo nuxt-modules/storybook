@@ -52,8 +52,8 @@ async function getStorybookConfig (options: StorybookOptions) {
     ...options,
     staticDir,
     frameworkPresets: [
-      ...vueOptions.frameworkPresets,
-      require.resolve('./preset')
+      require.resolve('./preset'),
+      ...vueOptions.frameworkPresets
     ]
   }
 }
@@ -118,6 +118,11 @@ async function buildNuxt (options: StorybookOptions) {
   // Manually call `webpack:config` hook to extend config by modules
   await nuxt.callHook('webpack:config', [nuxtWebpackConfig])
 
+  nuxt.hook('watch:restart', () => {
+    nuxt.close()
+    buildNuxt(options)
+  })
+
   return {
     nuxt,
     nuxtBuilder,
@@ -165,6 +170,7 @@ async function nuxtStorybookOptions (nuxt, options) {
   const nuxtStorybookConfig = Object.assign({
     stories: [],
     addons: [],
+    decorators: [],
     parameters: {},
     modules: true
   }, options.storybook)
@@ -184,6 +190,15 @@ async function nuxtStorybookOptions (nuxt, options) {
   if (fsExtra.existsSync(storiesDir)) {
     nuxtStorybookConfig.stories.unshift('~/components/**/*.stories.@(ts|js)')
   }
+
+  // validate decorators
+  if (nuxtStorybookConfig.decorators.find(decorator => typeof decorator !== 'string')) {
+    logger.warn('Decorators inside `nuxt.config` should be simple template strings. Non-string decorators will be ignored.')
+
+    nuxtStorybookConfig.decorators = nuxtStorybookConfig.decorators
+      .filter(decorator => typeof decorator === 'string')
+  }
+
   // ensure essential addon exists
   const essentials = nuxtStorybookConfig.addons
     .find(addon => addon === '@storybook/addon-essentials' || addon.name === '@storybook/addon-essentials')

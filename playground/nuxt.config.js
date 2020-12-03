@@ -27,6 +27,7 @@ export default {
     webpackFinal (config) {
       return config
     },
+    decorators: ["<div><h1>Story with global decorator</h1><story/></div>"],
     parameters: {
       backgrounds: {
         default: 'white',

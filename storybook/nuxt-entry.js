@@ -62,6 +62,9 @@ function prepare (
     [VALUES]: { ...(innerStory ? innerStory.options[VALUES] : {}), ...extractProps(story) },
     functional: true,
     render (h, { data, parent, children }) {
+      // Suddenly story will render twice and in the first render it isn't descendent of nuxt app
+      // Ensure that story will render only inside the nuxt context 
+      if (!parent.$root.nuxt) return null
       return h(
         story,
         {
@@ -196,13 +199,13 @@ export async function getNuxtApp() {
 
 // based on: https://github.com/storybookjs/storybook/blob/master/addons/docs/src/frameworks/vue/prepareForInline.ts
 export function prepareForInline (storyFn, { args }) {
-  const component = storyFn()
   const el = React.useRef(null)
   // FIXME: This recreates the Vue instance every time, which should be optimized
   React.useEffect(() => {
     let root
     const __NUXT_APP = getNuxtApp()
     __NUXT_APP.then((app) => {
+      const component = storyFn()
       root = new Vue({
         ...app,
         el: el.current,

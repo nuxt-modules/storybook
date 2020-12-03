@@ -42,25 +42,32 @@ In root directory of your project create `storybook` directory. This directory w
 Create a new file inside `storybook` directory called `main.js`, This is where you can import your stories.
 A sample `main.js` files could be like this:
 ```js{}[main.js]
-module.exports = {
-  webpackFinal(config, options) {
-    config = options.nuxtStorybookConfig.webpackFinal(config, options)
-    // add your awesome
-    return config;
+const { nuxifyStorybook } = require('../.nuxt-storybook/storybook/main.js')
+
+module.exports = nuxifyStorybook({
+  webpackFinal (config, options) {
+
+    // extend config here
+    
+    return config
   },
   stories: [
-    '~/components/**/*.stories.js'
+    // Add your stories here
   ],
-}
+  addons: [
+    // Add your addons here
+  ]
+})
+
 ```
 
-Note that if you want to use Nuxt features in your storybook (like store or axios module and ...) you need to define a `webpackFinal` function in `main.js` and put this line `config = options.nuxtStorybookConfig.webpackFinal(config, options)` in the first line of function.
+Note that if you want to use Nuxt features in your storybook (like store or axios module and ...) you need to use `nuxifyStorybook` function in `main.js`.
 
 ### Create `preview.js`
 
 Create another file called `preview.js` inside `storybook` directory and import Nuxt helpers in it.
 ```js{}[preview.js]
-import '~~/.nuxt-storybook/storybook/preview.js'
+export * from '~~/.nuxt-storybook/storybook/preview.js'
 ```
 
 All done, just start storybook and make your changes.
