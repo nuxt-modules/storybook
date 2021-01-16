@@ -101,6 +101,12 @@ async function buildNuxt (options: StorybookOptions) {
 
   const nuxtStorybookConfig = await nuxtStorybookOptions(nuxt, nuxt.options)
 
+  // Transpile stories
+  nuxt.options.build.transpile = [
+    ...(nuxt.options.build.transpile || []),
+    /.*\.stories\.js$/
+  ]
+
   // generate files
   generateStorybookFiles.call(nuxt.moduleContainer, {
     ...nuxtStorybookConfig,
