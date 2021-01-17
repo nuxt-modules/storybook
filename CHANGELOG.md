@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.1](https://github.com/nuxt-community/storybook/compare/v3.3.0...v3.3.1) (2021-01-17)
+
+
+### Bug Fixes
+
+* prevent webpack source map error ([#212](https://github.com/nuxt-community/storybook/issues/212)) ([94d966d](https://github.com/nuxt-community/storybook/commit/94d966d2b3e9a7afab985a36d8166bf951fc47f0))
+
 ## [3.3.0](https://github.com/nuxt-community/storybook/compare/v3.2.0...v3.3.0) (2020-12-03)
 
 
