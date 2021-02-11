@@ -4,7 +4,8 @@ export default {
     '~/assets/styles/main.scss'
   ],
   buildModules: [
-    '@nuxtjs/fontawesome'
+    '@nuxtjs/fontawesome',
+    '@nuxtjs/color-mode'
   ],
   modules: [
     '@nuxtjs/axios',
