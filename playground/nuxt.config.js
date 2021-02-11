@@ -38,6 +38,19 @@ export default {
         ],
       },
     },
+    // https://storybook.js.org/docs/react/essentials/toolbars-and-globals#global-types-and-the-toolbar-annotation
+    globalTypes: {
+      theme: {
+        name: 'Theme',
+        description: 'Global theme for components',
+        defaultValue: 'light',
+        toolbar: {
+          icon: 'circlehollow',
+          // array of plain string values or MenuItem shape (see below)
+          items: ['light', 'dark'],
+        },
+      }
+    },
     // exclude stories / modules
     modules: {
       exclude: [

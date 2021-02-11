@@ -13,4 +13,6 @@ globalParameters.docs = {
 }
 export const parameters = globalParameters
 
+export const globalTypes = <%= devalue(options.globalTypes) %>
+
 export const decorators = [<%= options.decorators.map(decorator => `() => "${decorator}"`) %>]

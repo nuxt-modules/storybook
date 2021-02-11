@@ -178,6 +178,7 @@ async function nuxtStorybookOptions (nuxt, options) {
     addons: [],
     decorators: [],
     parameters: {},
+    globalTypes: {},
     modules: true
   }, options.storybook)
 
