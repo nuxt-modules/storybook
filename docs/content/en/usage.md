@@ -31,6 +31,8 @@ nuxt.config.js
   <code-block label="Link.stories.js">
 
   ```js
+  // This example assumes you have the `components: true` option 
+  // set in `nuxt.config.js`.
   export default {
     title: 'Link'
   }
