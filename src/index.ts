@@ -110,7 +110,11 @@ async function buildNuxt (options: StorybookOptions) {
   // generate files
   generateStorybookFiles.call(nuxt.moduleContainer, {
     ...nuxtStorybookConfig,
-    nuxtOptions: nuxt.options
+    nuxtOptions: nuxt.options,
+    proxy: {
+      ...nuxtStorybookConfig.proxy,
+      ...nuxt.options.proxy
+    }
   })
 
   // Mock webpack build as we only need generated templates
@@ -145,6 +149,11 @@ function generateStorybookFiles (options) {
     options
   })
   this.addTemplate({
+    src: path.resolve(templatesRoot, 'middleware.js'),
+    fileName: path.join('storybook', 'middleware.js'),
+    options
+  })
+  this.addTemplate({
     src: path.resolve(templatesRoot, 'preview.js'),
     fileName: path.join('storybook', 'preview.js'),
     options
@@ -169,6 +178,7 @@ export function eject (options: StorybookOptions) {
     return
   }
   compileTemplate(path.resolve(templatesRoot, 'eject', 'main.js'), path.join(configDir, 'main.js'), {})
+  compileTemplate(path.resolve(templatesRoot, 'eject', 'middleware.js'), path.join(configDir, 'middleware.js'), {})
   compileTemplate(path.resolve(templatesRoot, 'eject', 'preview.js'), path.join(configDir, 'preview.js'), {})
 }
 
