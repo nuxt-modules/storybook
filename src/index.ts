@@ -112,8 +112,9 @@ async function buildNuxt (options: StorybookOptions) {
     ...nuxtStorybookConfig,
     nuxtOptions: nuxt.options,
     proxy: {
-      ...nuxtStorybookConfig.proxy,
-      ...nuxt.options.proxy
+      ...nuxt.options.proxy,
+      // allwow overwriting config
+      ...nuxtStorybookConfig.proxy
     }
   })
 

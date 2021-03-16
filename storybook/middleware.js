@@ -3,7 +3,7 @@ module.exports = function (app) {
     app.use('/', handler)
   }
 
-  /* <% if (options.proxy) { %> */
+  /* <% if (Object.keys(options.proxy).length) { %> */
   try {
     const proxyModule = require('@nuxtjs/proxy')
     proxyModule.call({
