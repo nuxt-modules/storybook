@@ -20,6 +20,9 @@ export default {
   publicRuntimeConfig: {
     moduleName: "@nuxtjs/storybook",
   },
+  proxy: {
+    '/users': 'https://api.github.com',
+  },
   storybook: {
     addons: [],
     stories: [
