@@ -1,12 +1,22 @@
-const proxyModule = require('@nuxtjs/proxy')
-
-const proxy = { <%= Object.entries(options.proxy).map(([k, v]) => `'${k}': '${v}'`).join(", ") %> }
-
 module.exports = function (app) {
-  proxyModule.call({
-    addServerMiddleware: ({ prefix, handler }) => {
-      app.use('/', handler)
-    },
-    nuxt: { options: { proxy, server: true }
-  }})
+  const addServerMiddleware = ({ prefix, handler }) => {
+    app.use('/', handler)
+  }
+
+  /* <% if (options.proxy) { %> */
+  try {
+    const proxyModule = require('@nuxtjs/proxy')
+    proxyModule.call({
+      addServerMiddleware,
+      nuxt: {
+        options: {
+          proxy: <%= devalue(options.proxy) %>,
+          server: true
+        }
+      }
+    })
+  } catch (e) {
+    console.error(`Cannot register proxy middleware -- ${e}`);
+  }
+  /* <% } %> */
 }
