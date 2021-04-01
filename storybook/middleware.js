@@ -1,22 +1,9 @@
+const { middlewares } = require('../<%= relativeToBuild(options.moduleDir + "/runtime/middlewares.js") %>')
 module.exports = function (app) {
-  const addServerMiddleware = ({ prefix, handler }) => {
-    app.use('/', handler)
+  const addServerMiddleware = ({ handler, handle, route }) => {
+    app.use(route || '/', handler || handle)
   }
 
-  /* <% if (Object.keys(options.proxy).length) { %> */
-  try {
-    const proxyModule = require('@nuxtjs/proxy')
-    proxyModule.call({
-      addServerMiddleware,
-      nuxt: {
-        options: {
-          proxy: <%= devalue(options.proxy) %>,
-          server: true
-        }
-      }
-    })
-  } catch (e) {
-    console.error(`Cannot register proxy middleware -- ${e}`);
-  }
-  /* <% } %> */
+  middlewares.forEach(m => addServerMiddleware(m))
+
 }

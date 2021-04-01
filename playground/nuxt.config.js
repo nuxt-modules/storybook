@@ -5,7 +5,8 @@ export default {
   ],
   buildModules: [
     '@nuxtjs/fontawesome',
-    '@nuxtjs/color-mode'
+    '@nuxtjs/color-mode',
+    '@nuxt/content'
   ],
   modules: [
     '@nuxtjs/axios',
@@ -19,6 +20,9 @@ export default {
   },
   publicRuntimeConfig: {
     moduleName: "@nuxtjs/storybook",
+  },
+  axios: {
+    proxy: true
   },
   proxy: {
     '/users': 'https://api.github.com',

@@ -6,6 +6,7 @@ import { buildDev, buildStatic } from '@storybook/core/server'
 import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3 } from './utils'
 import { StorybookOptions } from './types'
 import { getWebpackConfig } from './webpack'
+import middlewares from './runtime/middlewares'
 
 export async function build (options: StorybookOptions) {
   const buildOptions = await getStorybookConfig(options)
@@ -23,6 +24,8 @@ async function getStorybookConfig (options: StorybookOptions) {
     nuxtWebpackConfig,
     nuxtStorybookConfig
   } = await buildNuxt(options)
+
+  nuxt.options.serverMiddleware.forEach(m => middlewares.addServerMiddleware(m))
 
   const userWebpackFinal = nuxtStorybookConfig.webpackFinal
   nuxtStorybookConfig.webpackFinal = (config, options) => {
@@ -111,11 +114,7 @@ async function buildNuxt (options: StorybookOptions) {
   generateStorybookFiles.call(nuxt.moduleContainer, {
     ...nuxtStorybookConfig,
     nuxtOptions: nuxt.options,
-    proxy: {
-      ...nuxt.options.proxy,
-      // allwow overwriting config
-      ...nuxtStorybookConfig.proxy
-    }
+    moduleDir: __dirname
   })
 
   // Mock webpack build as we only need generated templates
