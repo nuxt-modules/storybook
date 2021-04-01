@@ -39,7 +39,7 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
     ...extras.nuxtWebpackConfig.plugins.filter(p => !nuxtFilteredPlugins.some(np => p.constructor.name === np))
   ]
   const rules = config.module.rules
-    .filter(rule => !/css|svg|mp/.test(rule.test.toString()) && !/vue-loader/.test(String(rule.loader)))
+    .filter(rule => !/css|svg|mp/.test(rule.test?.toString()) && !/vue-loader/.test(String(rule.loader)))
   // Nuxt rules
   config.module.rules = [
     ...rules,
