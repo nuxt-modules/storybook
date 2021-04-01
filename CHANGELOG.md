@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/nuxt-community/storybook/compare/v3.3.1...v4.0.0) (2021-04-01)
+
+
+### Features
+
+* support for @nuxtjs/proxy module ([#242](https://github.com/nuxt-community/storybook/issues/242)) ([df0eaaa](https://github.com/nuxt-community/storybook/commit/df0eaaa19eb05583280be8babd06ed05fae2a752))
+* support Nuxt server middlewares ([a61b0b4](https://github.com/nuxt-community/storybook/commit/a61b0b44c30dbf8acf0192be5cfb618f3f444e91))
+* **module:** globalTypes in Nuxt config ([#226](https://github.com/nuxt-community/storybook/issues/226)) ([e5b3698](https://github.com/nuxt-community/storybook/commit/e5b3698482873d7129cd763a0422b8c3151cee0b))
+
+
+### Bug Fixes
+
+* freeze storybook 6.2 ([b98ebbe](https://github.com/nuxt-community/storybook/commit/b98ebbe0e9b6e8df59096e71f929a7ddd17b5481))
+* improve middleware support ([c029e89](https://github.com/nuxt-community/storybook/commit/c029e897e4d09c8a48336b1cc0c62730e24d7d61))
+* lint ([fbe0e3c](https://github.com/nuxt-community/storybook/commit/fbe0e3ce7db4b50a51842e7c3d3165a909d08a9c))
+* manual setup middleware ([d4f4919](https://github.com/nuxt-community/storybook/commit/d4f4919fa9a3d3990c93c395f8f5f18e60b0026c))
+* prevent undefined error ([1a239bc](https://github.com/nuxt-community/storybook/commit/1a239bc09ba2109a934f5288d564a42a43e2a52d))
+* upgrade to storybook 6.2 ([37d3887](https://github.com/nuxt-community/storybook/commit/37d38875b09874379fc3dbd090b5fbfe3fce41d3))
+* **plugins:** execute plugin scripts before imports ([#227](https://github.com/nuxt-community/storybook/issues/227)) ([3f35a5d](https://github.com/nuxt-community/storybook/commit/3f35a5d00f5688e49a72ce4c458a89e4b91862fc))
+
 ### [3.3.1](https://github.com/nuxt-community/storybook/compare/v3.3.0...v3.3.1) (2021-01-17)
 
 
