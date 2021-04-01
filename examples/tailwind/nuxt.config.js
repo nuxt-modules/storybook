@@ -3,6 +3,9 @@ export default {
   buildModules: [
     '@nuxtjs/tailwindcss'
   ],
+  tailwindcss: {
+    jit: true
+  },
   storybook: {
     stories: [],
     webpackFinal (config) {

@@ -4,7 +4,9 @@ export default {
     '~/assets/styles/main.scss'
   ],
   buildModules: [
-    '@nuxtjs/fontawesome'
+    '@nuxtjs/fontawesome',
+    '@nuxtjs/color-mode',
+    '@nuxt/content'
   ],
   modules: [
     '@nuxtjs/axios',
@@ -18,6 +20,12 @@ export default {
   },
   publicRuntimeConfig: {
     moduleName: "@nuxtjs/storybook",
+  },
+  axios: {
+    proxy: true
+  },
+  proxy: {
+    '/users': 'https://api.github.com',
   },
   storybook: {
     addons: [],
@@ -36,6 +44,19 @@ export default {
           { name: 'gray', value: '#aaaaaa' },
         ],
       },
+    },
+    // https://storybook.js.org/docs/react/essentials/toolbars-and-globals#global-types-and-the-toolbar-annotation
+    globalTypes: {
+      theme: {
+        name: 'Theme',
+        description: 'Global theme for components',
+        defaultValue: 'light',
+        toolbar: {
+          icon: 'circlehollow',
+          // array of plain string values or MenuItem shape (see below)
+          items: ['light', 'dark'],
+        },
+      }
     },
     // exclude stories / modules
     modules: {

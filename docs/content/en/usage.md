@@ -16,6 +16,12 @@ pages/
 nuxt.config.js
 ```
 
+<alert type="warning">
+
+The example below assumes you have the [`components: true`](https://github.com/nuxt/components#usage) option set in `nuxt.config`. If not, you will need to [import the components yourself](https://github.com/nuxt-community/storybook/issues/234#issuecomment-789655639).
+
+</alert>
+
 <code-group>
   <code-block label="Link.vue" active>
 
