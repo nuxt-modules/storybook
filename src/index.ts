@@ -1,7 +1,7 @@
 import path from 'path'
 import fsExtra from 'fs-extra'
 import upath from 'upath'
-import vueOptions from '@storybook/vue/dist/server/options'
+import vueOptions from '@storybook/vue/dist/cjs/server/options'
 import { buildDev, buildStatic } from '@storybook/core/server'
 import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3 } from './utils'
 import { StorybookOptions } from './types'

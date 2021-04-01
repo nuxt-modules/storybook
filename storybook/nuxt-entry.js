@@ -3,8 +3,8 @@
 import Vue from 'vue'
 import React from 'react'
 import fetch from 'unfetch'
-import '@storybook/vue/dist/client/preview/globals'
-import { extractProps } from '@storybook/vue/dist/client/preview/util'
+import '@storybook/vue/dist/esm/client/preview/globals'
+import { extractProps } from '@storybook/vue/dist/esm/client/preview/util'
 import fetchMixin from '../mixins/fetch.client'
 
 /**
