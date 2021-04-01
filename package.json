@@ -18,7 +18,7 @@
     "dev": "STORYBOOK_LIFE_UNIVERSE_AND_EVERYTHING=42 yarn nuxt-storybook playground",
     "nuxt-storybook": "ts-node src/cli",
     "test": "yarn lint",
-    "lint": "eslint --ext .ts,.js,.vue .",
+    "lint": "eslint --ext .ts,.js,.vue ./src",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "dependencies": {
