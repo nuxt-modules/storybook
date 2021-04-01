@@ -70,6 +70,15 @@ Create another file called `preview.js` inside `.storybook` directory and import
 export * from '~~/.nuxt-storybook/storybook/preview.js'
 ```
 
+### Create `middleware.js`
+
+This file is required if you plan to use Nuxt server middleware inside Storybook.
+
+```js{}[middleware.js]
+module.exports = require('../.nuxt-storybook/storybook/middleware.js')
+```
+
+
 All done, just start storybook and make your changes.
 
 <code-group>
