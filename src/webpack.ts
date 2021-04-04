@@ -10,7 +10,8 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
     'VueSSRClientPlugin',
     'ExtractCSS',
     // 'HotModuleReplacementPlugin',
-    'HtmlWebpackPlugin'
+    'HtmlWebpackPlugin',
+    'ESLintWebpackPlugin'
   ]
   const nuxtFilteredEntries = [
     'webpack-hot-middleware',
