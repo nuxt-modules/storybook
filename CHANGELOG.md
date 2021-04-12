@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.2](https://github.com/nuxt-community/storybook/compare/v3.3.1...v3.3.2) (2021-04-12)
+
+
+### Bug Fixes
+
+* **deps:** freeze storybook ([#260](https://github.com/nuxt-community/storybook/issues/260)) ([7e07b31](https://github.com/nuxt-community/storybook/commit/7e07b3100ecb74d52297f9beae3e87d94b614eec))
+
 ### [3.3.1](https://github.com/nuxt-community/storybook/compare/v3.3.0...v3.3.1) (2021-01-17)
 
 
