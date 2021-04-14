@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://github.com/nuxt-community/storybook/compare/v4.0.1...v4.0.2) (2021-04-14)
+
+
+### Bug Fixes
+
+* **module:** resolve path aliases in middleware path ([ce7e63d](https://github.com/nuxt-community/storybook/commit/ce7e63d2f7061c4aedfd7fc21e93a5c0be061474)), closes [#257](https://github.com/nuxt-community/storybook/issues/257)
+
 ### [4.0.1](https://github.com/nuxt-community/storybook/compare/v4.0.0...v4.0.1) (2021-04-04)
 
 
