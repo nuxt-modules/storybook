@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://github.com/nuxt-community/storybook/compare/v4.0.1...v4.0.2) (2021-04-14)
+
+
+### Bug Fixes
+
+* **module:** resolve path aliases in middleware path ([ce7e63d](https://github.com/nuxt-community/storybook/commit/ce7e63d2f7061c4aedfd7fc21e93a5c0be061474)), closes [#257](https://github.com/nuxt-community/storybook/issues/257)
+
+### [4.0.1](https://github.com/nuxt-community/storybook/compare/v4.0.0...v4.0.1) (2021-04-04)
+
+
+### Bug Fixes
+
+* add missed path dependency in main.js ([5984a05](https://github.com/nuxt-community/storybook/commit/5984a051688e4d4989f03d98320cafcac4c702ad))
+* disable eslint webpack module ([88bcdd0](https://github.com/nuxt-community/storybook/commit/88bcdd03e2044da43e1ceb02cf5d14f984c94cec))
+* manual setup config ([fb759f9](https://github.com/nuxt-community/storybook/commit/fb759f9cd66a44d11c75713cf7f52726afe09f67))
+
 ## [4.0.0](https://github.com/nuxt-community/storybook/compare/v3.3.1...v4.0.0) (2021-04-01)
 
 

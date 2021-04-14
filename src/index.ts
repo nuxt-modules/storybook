@@ -25,7 +25,12 @@ async function getStorybookConfig (options: StorybookOptions) {
     nuxtStorybookConfig
   } = await buildNuxt(options)
 
-  nuxt.options.serverMiddleware.forEach(m => middlewares.addServerMiddleware(m))
+  nuxt.options.serverMiddleware.forEach((m) => {
+    if (typeof m.handler === 'string') {
+      m.handler = nuxt.resolver.resolvePath(m.handler)
+    }
+    middlewares.addServerMiddleware(m)
+  })
 
   const userWebpackFinal = nuxtStorybookConfig.webpackFinal
   nuxtStorybookConfig.webpackFinal = (config, options) => {
