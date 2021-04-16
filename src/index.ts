@@ -26,6 +26,9 @@ async function getStorybookConfig (options: StorybookOptions) {
   } = await buildNuxt(options)
 
   nuxt.options.serverMiddleware.forEach((m) => {
+    if (typeof m === 'string') {
+      m = nuxt.resolver.resolvePath(m)
+    }
     if (typeof m.handler === 'string') {
       m.handler = nuxt.resolver.resolvePath(m.handler)
     }
