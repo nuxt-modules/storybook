@@ -47,7 +47,16 @@ npm install --save-dev @nuxtjs/storybook
 storybook-static
 ```
 
-3. Start adding [stories](https://storybook.nuxtjs.org/usage)
+3. Add module `@nuxt/postcss8` to `buildModules` for `nuxt.config.js`
+
+```js
+buildModules: [
+  // Doc: https://github.com/nuxt/postcss8
+  '@nuxt/postcss8',
+],
+```
+
+4. Start adding [stories](https://storybook.nuxtjs.org/usage)
 
 ## Configure
 
