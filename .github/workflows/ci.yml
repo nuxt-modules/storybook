@@ -45,8 +45,16 @@ jobs:
       - name: Coverage
         uses: codecov/codecov-action@v1
 
+      - name: cache example dependenies
+        id: cache-example
+        uses: actions/cache@v2
+        with:
+          path: examples/manual-setup/node_modules
+          key: ${{ matrix.os }}-node-v${{ matrix.node }}-deps-${{ hashFiles(format('{0}{1}', github.workspace, 'examples/manual-setup/node_modules/package.json')) }}
+
       - name: Example install dependencies
         working-directory: examples/manual-setup
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn
 
       - name: Example build
