@@ -13,7 +13,7 @@
     "storybook"
   ],
   "scripts": {
-    "build": "yarn clean && tsc && mkdist --src src/runtime --dist dist/runtime",
+    "build": "yarn clean && tsc && mkdist --ext=js --src src/runtime --dist dist/runtime",
     "clean": "rimraf dist",
     "dev": "STORYBOOK_LIFE_UNIVERSE_AND_EVERYTHING=42 yarn nuxt-storybook playground",
     "nuxt-storybook": "ts-node src/cli",
