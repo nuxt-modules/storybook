@@ -1,5 +1,10 @@
 name: ci
 
+on:
+  push:
+    branches:
+      - master
+      - test-ci
 
 jobs:
   ci:
