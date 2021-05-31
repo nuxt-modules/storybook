@@ -45,9 +45,14 @@ async function getStorybookConfig (options: StorybookOptions) {
   }
 
   if (!options.staticDir) {
-    options.staticDir = path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
+    // Do not register static dir if it does not exists
+    // https://github.com/nuxt-community/storybook/issues/263
+    const staticDirPath = path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
+    if (fsExtra.existsSync(staticDirPath)) {
+      options.staticDir = staticDirPath
+    }
   }
-  const staticDir = options.staticDir.split(',').map(dir => dir.trim())
+  const staticDir = (options.staticDir || '').split(',').map(dir => dir.trim()).filter(Boolean)
 
   return {
     ...vueOptions,
