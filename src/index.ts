@@ -3,7 +3,7 @@ import fsExtra from 'fs-extra'
 import upath from 'upath'
 import vueOptions from '@storybook/vue/dist/cjs/server/options'
 import { buildDev, buildStatic } from '@storybook/core/server'
-import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3 } from './utils'
+import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3, requireTsNodeOrFail } from './utils'
 import { StorybookOptions } from './types'
 import { getWebpackConfig } from './webpack'
 import middlewares from './runtime/middlewares'
@@ -81,7 +81,7 @@ async function buildNuxt (options: StorybookOptions) {
 
   const tsConfigPath = path.resolve(options.tsconfig || options.rootDir, options.tsconfig ? '' : 'tsconfig.json')
   if (fsExtra.existsSync(tsConfigPath)) {
-    const tsNode = require('ts-node')
+    const tsNode = requireTsNodeOrFail()
     tsNode.register({
       project: tsConfigPath,
       compilerOptions: {
