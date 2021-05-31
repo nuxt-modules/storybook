@@ -99,7 +99,10 @@ async function buildNuxt (options: StorybookOptions) {
         extractCSS: false,
         // https://github.com/nuxt-community/storybook/issues/102#issuecomment-704821377
         parallel: false
-      }
+      },
+      buildModules: [
+        '@nuxt/postcss8'
+      ]
     },
     transpile: [path.resolve(__dirname, '../storybook')]
   })
