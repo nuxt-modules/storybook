@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.3](https://github.com/nuxt-community/storybook/compare/v4.0.2...v4.0.3) (2021-05-31)
+
+
+### Bug Fixes
+
+* do not use nuxt static dir when when it does not exists ([155c8ec](https://github.com/nuxt-community/storybook/commit/155c8ec89b662e1449cb170fb00444ac6eeb009d))
+* use `@nuxt/postcss8` build module ([76bb933](https://github.com/nuxt-community/storybook/commit/76bb933788c9a7ef6408b389ab503d01fea08d53))
+* **server-middleware:** handle single file ([23e1358](https://github.com/nuxt-community/storybook/commit/23e13580742c56377556baaec9be7fea2eac9cc3))
+
 ### [4.0.2](https://github.com/nuxt-community/storybook/compare/v4.0.1...v4.0.2) (2021-04-14)
 
 
