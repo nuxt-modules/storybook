@@ -3,7 +3,7 @@ import fsExtra from 'fs-extra'
 import upath from 'upath'
 import vueOptions from '@storybook/vue/dist/cjs/server/options'
 import { buildDev, buildStatic } from '@storybook/core/server'
-import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3 } from './utils'
+import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3, requireTsNodeOrFail } from './utils'
 import { StorybookOptions } from './types'
 import { getWebpackConfig } from './webpack'
 import middlewares from './runtime/middlewares'
@@ -26,6 +26,9 @@ async function getStorybookConfig (options: StorybookOptions) {
   } = await buildNuxt(options)
 
   nuxt.options.serverMiddleware.forEach((m) => {
+    if (typeof m === 'string') {
+      m = nuxt.resolver.resolvePath(m)
+    }
     if (typeof m.handler === 'string') {
       m.handler = nuxt.resolver.resolvePath(m.handler)
     }
@@ -42,9 +45,14 @@ async function getStorybookConfig (options: StorybookOptions) {
   }
 
   if (!options.staticDir) {
-    options.staticDir = path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
+    // Do not register static dir if it does not exists
+    // https://github.com/nuxt-community/storybook/issues/263
+    const staticDirPath = path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
+    if (fsExtra.existsSync(staticDirPath)) {
+      options.staticDir = staticDirPath
+    }
   }
-  const staticDir = options.staticDir.split(',').map(dir => dir.trim())
+  const staticDir = (options.staticDir || '').split(',').map(dir => dir.trim()).filter(Boolean)
 
   return {
     ...vueOptions,
@@ -73,7 +81,7 @@ async function buildNuxt (options: StorybookOptions) {
 
   const tsConfigPath = path.resolve(options.tsconfig || options.rootDir, options.tsconfig ? '' : 'tsconfig.json')
   if (fsExtra.existsSync(tsConfigPath)) {
-    const tsNode = require('ts-node')
+    const tsNode = requireTsNodeOrFail()
     tsNode.register({
       project: tsConfigPath,
       compilerOptions: {
@@ -96,7 +104,10 @@ async function buildNuxt (options: StorybookOptions) {
         extractCSS: false,
         // https://github.com/nuxt-community/storybook/issues/102#issuecomment-704821377
         parallel: false
-      }
+      },
+      buildModules: [
+        '@nuxt/postcss8'
+      ]
     },
     transpile: [path.resolve(__dirname, '../storybook')]
   })

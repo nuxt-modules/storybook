@@ -1,6 +1,12 @@
 const { middlewares } = require('../<%= relativeToBuild(options.moduleDir + "/runtime/middlewares.js") %>')
 module.exports = function (app) {
-  const addServerMiddleware = ({ handler, handle, path, route }) => {
+  const addServerMiddleware = (middleware) => {
+    if (typeof middleware === 'string') {
+      middleware = require(middleware)
+      middleware = middleware.default || middleware
+    }
+    const { handler, handle, path, route } = middleware
+
     let _route = path || route || '/'
     _route = _route.startsWith('/') ? _route : `/${_route}`
     
@@ -9,6 +15,7 @@ module.exports = function (app) {
       _handler = require(_handler)
       _handler = _handler.default || _handler
     }
+
     app.use(_route, _handler)
   }
 

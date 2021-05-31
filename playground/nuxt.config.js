@@ -18,7 +18,10 @@ export default {
       solid: true
     }
   },
-  serverMiddleware: [{ path: '/express', handler: '~/server/index.ts' }],
+  serverMiddleware: [
+    { path: '/express', handler: '~/server/index.ts' },
+    '~/server/object.ts'
+  ],
   publicRuntimeConfig: {
     moduleName: "@nuxtjs/storybook",
   },
