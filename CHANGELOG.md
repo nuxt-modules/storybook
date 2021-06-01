@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.4](https://github.com/nuxt-community/storybook/compare/v4.0.3...v4.0.4) (2021-06-01)
+
+
+### Bug Fixes
+
+* temporary fix babel `loose` issue ([2397998](https://github.com/nuxt-community/storybook/commit/239799815e0784746535f2f0add0a0a12e621f36))
+
 ### [4.0.3](https://github.com/nuxt-community/storybook/compare/v4.0.2...v4.0.3) (2021-05-31)
 
 
