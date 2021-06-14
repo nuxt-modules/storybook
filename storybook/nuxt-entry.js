@@ -3,10 +3,9 @@
 import Vue from 'vue'
 import React from 'react'
 import fetch from 'unfetch'
-import '@storybook/vue/dist/client/preview/globals'
-import { extractProps } from '@storybook/vue/dist/client/preview/util'
+import '@storybook/vue/dist/esm/client/preview/globals'
+import { extractProps } from '@storybook/vue/dist/esm/client/preview/util'
 import fetchMixin from '../mixins/fetch.client'
-import { createApp } from '../'
 
 /**
  * @nuxtjs/storybook
@@ -14,6 +13,13 @@ import { createApp } from '../'
  */
 window.__NUXT__ = { config: <%= JSON.stringify(options.nuxtOptions.publicRuntimeConfig || {}) %> };
 <%= options.nuxtOptions.head.script.map(s => s.innerHTML).join(";\n") %>
+
+/**
+ * Important: Import `createApp` after plugin scripts
+ * This is required because some plugins (like color-mode) uses global scripts on import
+ * link: https://github.com/nuxt-community/color-mode-module/blob/master/lib/templates/plugin.client.js#L7
+ */
+const { createApp } = require('../')
 
 // Fetch mixin
 if (!Vue.__nuxt__fetch__mixin__) {

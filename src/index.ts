@@ -1,11 +1,12 @@
 import path from 'path'
 import fsExtra from 'fs-extra'
 import upath from 'upath'
-import vueOptions from '@storybook/vue/dist/server/options'
+import vueOptions from '@storybook/vue/dist/cjs/server/options'
 import { buildDev, buildStatic } from '@storybook/core/server'
-import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3 } from './utils'
+import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3, requireTsNodeOrFail } from './utils'
 import { StorybookOptions } from './types'
 import { getWebpackConfig } from './webpack'
+import middlewares from './runtime/middlewares'
 
 export async function build (options: StorybookOptions) {
   const buildOptions = await getStorybookConfig(options)
@@ -24,6 +25,16 @@ async function getStorybookConfig (options: StorybookOptions) {
     nuxtStorybookConfig
   } = await buildNuxt(options)
 
+  nuxt.options.serverMiddleware.forEach((m) => {
+    if (typeof m === 'string') {
+      m = nuxt.resolver.resolvePath(m)
+    }
+    if (typeof m.handler === 'string') {
+      m.handler = nuxt.resolver.resolvePath(m.handler)
+    }
+    middlewares.addServerMiddleware(m)
+  })
+
   const userWebpackFinal = nuxtStorybookConfig.webpackFinal
   nuxtStorybookConfig.webpackFinal = (config, options) => {
     config = getWebpackConfig(config, options)
@@ -34,9 +45,14 @@ async function getStorybookConfig (options: StorybookOptions) {
   }
 
   if (!options.staticDir) {
-    options.staticDir = path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
+    // Do not register static dir if it does not exists
+    // https://github.com/nuxt-community/storybook/issues/263
+    const staticDirPath = path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
+    if (fsExtra.existsSync(staticDirPath)) {
+      options.staticDir = staticDirPath
+    }
   }
-  const staticDir = options.staticDir.split(',').map(dir => dir.trim())
+  const staticDir = (options.staticDir || '').split(',').map(dir => dir.trim()).filter(Boolean)
 
   return {
     ...vueOptions,
@@ -65,7 +81,7 @@ async function buildNuxt (options: StorybookOptions) {
 
   const tsConfigPath = path.resolve(options.tsconfig || options.rootDir, options.tsconfig ? '' : 'tsconfig.json')
   if (fsExtra.existsSync(tsConfigPath)) {
-    const tsNode = require('ts-node')
+    const tsNode = requireTsNodeOrFail()
     tsNode.register({
       project: tsConfigPath,
       compilerOptions: {
@@ -88,7 +104,10 @@ async function buildNuxt (options: StorybookOptions) {
         extractCSS: false,
         // https://github.com/nuxt-community/storybook/issues/102#issuecomment-704821377
         parallel: false
-      }
+      },
+      buildModules: [
+        '@nuxt/postcss8'
+      ]
     },
     transpile: [path.resolve(__dirname, '../storybook')]
   })
@@ -110,7 +129,8 @@ async function buildNuxt (options: StorybookOptions) {
   // generate files
   generateStorybookFiles.call(nuxt.moduleContainer, {
     ...nuxtStorybookConfig,
-    nuxtOptions: nuxt.options
+    nuxtOptions: nuxt.options,
+    moduleDir: __dirname
   })
 
   // Mock webpack build as we only need generated templates
@@ -145,6 +165,11 @@ function generateStorybookFiles (options) {
     options
   })
   this.addTemplate({
+    src: path.resolve(templatesRoot, 'middleware.js'),
+    fileName: path.join('storybook', 'middleware.js'),
+    options
+  })
+  this.addTemplate({
     src: path.resolve(templatesRoot, 'preview.js'),
     fileName: path.join('storybook', 'preview.js'),
     options
@@ -169,6 +194,7 @@ export function eject (options: StorybookOptions) {
     return
   }
   compileTemplate(path.resolve(templatesRoot, 'eject', 'main.js'), path.join(configDir, 'main.js'), {})
+  compileTemplate(path.resolve(templatesRoot, 'eject', 'middleware.js'), path.join(configDir, 'middleware.js'), {})
   compileTemplate(path.resolve(templatesRoot, 'eject', 'preview.js'), path.join(configDir, 'preview.js'), {})
 }
 
@@ -178,6 +204,7 @@ async function nuxtStorybookOptions (nuxt, options) {
     addons: [],
     decorators: [],
     parameters: {},
+    globalTypes: {},
     modules: true
   }, options.storybook)
 

@@ -22,7 +22,8 @@ export default {
     }
   },
   mounted () {
-    this.$axios.$get('https://api.github.com/users')
+    const port = ((window || {}).location || {}).port || '3003'
+    this.$axios.$get(`http://localhost:${port}/users`)
       .then((users) => {
         setTimeout(() => {
           this.loading = false

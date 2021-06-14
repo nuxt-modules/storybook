@@ -60,3 +60,12 @@ export function ensureCoreJs3 (rootDir) {
     process.exit(1)
   }
 }
+
+export function requireTsNodeOrFail () {
+  const tsNode = tryRequire('ts-node')
+  if (!tsNode) {
+    logger.error('Using Storybook within a Typescript project requires installing `ts-node`. Run `yarn add --dev ts-node`')
+    process.exit(1)
+  }
+  return tsNode
+}

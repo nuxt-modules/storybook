@@ -22,6 +22,7 @@
 - Nuxt components support
 - Storybook Generate
 - Hot reload support
+- Nuxt server middlewares
 
 [📖 &nbsp;Read more](https://storybook.nuxtjs.org)
 
