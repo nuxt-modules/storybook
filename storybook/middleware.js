@@ -1,6 +1,11 @@
 const { middlewares } = require('../<%= relativeToBuild(options.moduleDir + "/runtime/middlewares.js") %>')
 module.exports = function (app) {
   const addServerMiddleware = (middleware) => {
+    // Directly use functions
+    if (typeof middleware === 'function') {
+      return app.use(middleware);
+    }
+
     if (typeof middleware === 'string') {
       middleware = require(middleware)
       middleware = middleware.default || middleware
