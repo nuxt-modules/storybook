@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "serve": "nuxt-storybook",
+    "serve": "nuxt storybook",
+    "storybook:build": "nuxt storybook build",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },
   "dependencies": {
