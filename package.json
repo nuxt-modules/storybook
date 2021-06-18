@@ -17,7 +17,7 @@
     "clean": "rimraf dist",
     "dev": "STORYBOOK_LIFE_UNIVERSE_AND_EVERYTHING=42 yarn nuxt-storybook playground",
     "nuxt-storybook": "ts-node src/cli",
-    "test": "yarn lint",
+    "test": "yarn nuxt-storybook build playground",
     "lint": "eslint --ext .ts,.js,.vue ./src",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
@@ -35,6 +35,9 @@
     "postcss": "^8.3.5",
     "upath": "^2.0.1",
     "vue-loader": "^15.9.7"
+  },
+  "resolutions": {
+    "vue-template-compiler": "2.6.13"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.14.5",
