@@ -1,0 +1,15 @@
+{
+  "name": "nuxt-storybook-starter",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "serve": "nuxt storybook",
+    "storybook:build": "nuxt storybook build",
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+  },
+  "dependencies": {
+    "@nuxtjs/storybook": "latest",
+    "nuxt-edge": "latest",
+    "postcss": "latest"
+  }
+}
