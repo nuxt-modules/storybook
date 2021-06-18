@@ -13,6 +13,9 @@ export default {
     "~/modules/included-module/index.js",
     "~/modules/excluded-module/index.js"
   ],
+  plugins: [
+    '~/plugins/nop.server.js',
+  ],
   fontawesome: {
     icons: {
       solid: true
