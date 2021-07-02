@@ -112,6 +112,22 @@ async function buildNuxt (options: StorybookOptions) {
     transpile: [path.resolve(__dirname, '../storybook')]
   })
 
+  /**
+   * Filter server-side plugins
+   */
+  nuxt.options.plugins = nuxt.options.plugins.filter((plugin) => {
+    let src = plugin
+    if (typeof plugin === 'object') {
+      src = plugin.src
+    }
+
+    if (typeof src === 'string' && src.match(/\.server\.(ts|js)/)) {
+      return false
+    }
+
+    return true
+  })
+
   // Create new builder
   const nuxtBuilder = await getBuilder(nuxt)
 
