@@ -3676,6 +3676,20 @@
   dependencies:
     core-js "^3.8.2"
 
+"@storybook/react-docgen-typescript-plugin@^0.7.2-canary.91cf050.0":
+  version "0.7.2-canary.91cf050.0"
+  resolved "https://registry.yarnpkg.com/@storybook/react-docgen-typescript-plugin/-/react-docgen-typescript-plugin-0.7.2-canary.91cf050.0.tgz#d1f3515b4ef18dea5aaf829f9e655cda6f1b0fb5"
+  integrity sha512-y54RIY5/GxRRC5+SOxxlidYU6TzBOMYMjVzmzOXwHuPdfqJ5DOam4dhe5vh86U0gyyFSF1WF6WS5Rws6IwQ1hw==
+  dependencies:
+    debug "^4.1.1"
+    endent "^2.0.1"
+    find-cache-dir "^3.3.1"
+    flat-cache "^3.0.4"
+    micromatch "^4.0.2"
+    react-docgen-typescript "^1.22.0"
+    tslib "^2.0.0"
+    webpack-sources "^2.2.0"
+
 "@storybook/router@6.3.2":
   version "6.3.2"
   resolved "https://registry.yarnpkg.com/@storybook/router/-/router-6.3.2.tgz#8df811af403d08ba5b9dcf005eab38bb6d3929d9"
