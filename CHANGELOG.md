@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/nuxt-community/storybook/compare/v4.0.4...v4.1.0) (2021-07-05)
+
+
+### Bug Fixes
+
+* ci ([#291](https://github.com/nuxt-community/storybook/issues/291)) ([c56772c](https://github.com/nuxt-community/storybook/commit/c56772ceff762048e90cd624cb8c7abb57149674))
+* filter server plugins ([#290](https://github.com/nuxt-community/storybook/issues/290)) ([41a0f4a](https://github.com/nuxt-community/storybook/commit/41a0f4a12e6cd7fec7a1ed41f3d5b9422ee932a4))
+* support functions as middleware ([#286](https://github.com/nuxt-community/storybook/issues/286)) ([c0946cd](https://github.com/nuxt-community/storybook/commit/c0946cd8ad6ead2e12dedc5fb9a51a20cd52c687))
+
+### [4.0.4](https://github.com/nuxt-community/storybook/compare/v4.0.3...v4.0.4) (2021-06-01)
+
+
+### Bug Fixes
+
+* temporary fix babel `loose` issue ([2397998](https://github.com/nuxt-community/storybook/commit/239799815e0784746535f2f0add0a0a12e621f36))
+
 ### [4.0.3](https://github.com/nuxt-community/storybook/compare/v4.0.2...v4.0.3) (2021-05-31)
 
 

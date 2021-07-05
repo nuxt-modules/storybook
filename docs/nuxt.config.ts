@@ -1,6 +1,7 @@
-import theme from '@nuxt/content-theme-docs'
+import { withDocus } from 'docus'
 
-export default theme({
+export default withDocus({
+  rootDir: __dirname,
   env: {
     GITHUB_TOKEN: process.env.GITHUB_TOKEN
   },
