@@ -22,7 +22,7 @@
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "dependencies": {
-    "@nuxt/devalue": "^1.2.5",
+    "@nuxt/devalue": "^2.0.0",
     "@nuxt/postcss8": "^1.1.3",
     "@storybook/addon-essentials": "~6.3.2",
     "@storybook/addon-postcss": "^2.0.0",
