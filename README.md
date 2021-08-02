@@ -47,7 +47,7 @@ npm install --save-dev @nuxtjs/storybook
 storybook-static
 ```
 
-3. Start adding [stories](https://storybook.nuxtjs.org/usage)
+3. Start adding [stories](https://storybook.nuxtjs.org/getting-started/usage)
 
 ## Configure
 
@@ -61,7 +61,7 @@ export default {
 }
 ```
 
-See [module options](https://storybook.nuxtjs.org/options).
+See [module options](https://storybook.nuxtjs.org/api/options).
 
 ## Run
 Now you can use `nuxt storybook` to start:
