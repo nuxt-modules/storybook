@@ -8,16 +8,16 @@ import { StorybookOptions } from './types'
 import { getWebpackConfig } from './webpack'
 import middlewares from './runtime/middlewares'
 
-export async function build(options: StorybookOptions) {
+export async function build (options: StorybookOptions) {
   const buildOptions = await getStorybookConfig(options)
   buildStatic(buildOptions)
 }
-export async function start(options: StorybookOptions) {
+export async function start (options: StorybookOptions) {
   const buildOptions = await getStorybookConfig(options)
   buildDev(buildOptions)
 }
 
-async function getStorybookConfig(options: StorybookOptions) {
+async function getStorybookConfig (options: StorybookOptions) {
   const {
     nuxt,
     nuxtBuilder,
@@ -74,7 +74,7 @@ async function getStorybookConfig(options: StorybookOptions) {
   }
 }
 
-async function buildNuxt(options: StorybookOptions) {
+async function buildNuxt (options: StorybookOptions) {
   ensureCoreJs3(options.rootDir)
   const buildDir = path.resolve(options.rootDir, '.nuxt-storybook')
   const { loadNuxt, getBuilder } = requireMaybeEdge('nuxt')
@@ -151,7 +151,7 @@ async function buildNuxt(options: StorybookOptions) {
 
   // Mock webpack build as we only need generated templates
   nuxtBuilder.bundleBuilder = {
-    build() { }
+    build () { }
   }
   await nuxtBuilder.build()
 
@@ -173,7 +173,7 @@ async function buildNuxt(options: StorybookOptions) {
   }
 }
 
-function generateStorybookFiles(options) {
+function generateStorybookFiles (options) {
   const templatesRoot = path.resolve(__dirname, '../storybook')
   this.addTemplate({
     src: path.resolve(templatesRoot, 'main.js'),
@@ -202,7 +202,7 @@ function generateStorybookFiles(options) {
   })
 }
 
-export function eject(options: StorybookOptions) {
+export function eject (options: StorybookOptions) {
   const configDir = path.resolve(options.rootDir, '.storybook')
   const templatesRoot = path.resolve(__dirname, '../storybook')
   if (!options.force && fsExtra.existsSync(configDir)) {
@@ -214,7 +214,7 @@ export function eject(options: StorybookOptions) {
   compileTemplate(path.resolve(templatesRoot, 'eject', 'preview.js'), path.join(configDir, 'preview.js'), {})
 }
 
-async function nuxtStorybookOptions(nuxt, options) {
+async function nuxtStorybookOptions (nuxt, options) {
   const nuxtStorybookConfig = Object.assign({
     stories: [],
     addons: [],
