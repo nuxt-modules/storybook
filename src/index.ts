@@ -121,7 +121,7 @@ async function buildNuxt (options: StorybookOptions) {
       src = plugin.src
     }
 
-    if (typeof src === 'string' && src.match(/\.server\.(ts|js)/)) {
+    if (typeof src === 'string' && src.match(/\.server\.?(.*)\.(ts|js)/)) {
       return false
     }
 
