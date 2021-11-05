@@ -48,6 +48,11 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
     ...extras.nuxtWebpackConfig.module.rules
   ]
 
+  // Set the correct public path for Vue to Support `@nuxtjs/composition-api`
+  config.resolve.alias.vue = require.resolve('vue/dist/vue.js')
+  // Set the correct public path for Vue to support Nuxt bridge
+  config.resolve.alias.vue2 = require.resolve('vue/dist/vue.js')
+
   // Return the altered config
   return config
 }
