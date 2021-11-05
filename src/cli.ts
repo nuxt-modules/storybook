@@ -24,7 +24,8 @@ function _run () {
     '--host': String,
     '-h': '--host',
     '--force': Boolean,
-    '--tsconfig': String
+    '--tsconfig': String,
+    '--no-manager-cache': Boolean
   })
   const { _, ...flags } = args
 
