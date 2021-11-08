@@ -23,9 +23,10 @@ export function requireMaybeEdge (pkg) {
 export function normalizeFlags (flags) {
   return Object.keys(flags).reduce((acc, flag) => {
     const normalizedFlag = flag
+      .replace(/^--no-/, '')
       .replace('--', '')
       .replace(/-([a-z])/, v => v.replace('-', '').toUpperCase())
-    acc[normalizedFlag] = flags[flag]
+    acc[normalizedFlag] = flag.startsWith('--no-') ? !flags[flag] : flags[flag]
     return acc
   }, {})
 }

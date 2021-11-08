@@ -42,21 +42,16 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
   const rules = config.module.rules
     .filter(rule => !/css|svg|mp/.test(rule.test?.toString()) && !/vue-loader/.test(String(rule.loader)))
 
-  // Temporary add `loose: true` into babel presets
-  // This will fix on Storybook@v6.3 and should be remove after
-  rules.forEach((rule) => {
-    if (Array.isArray(rule.use)) {
-      const loader: any = rule.use.find((u: any) => u.loader && String(u.loader).includes('babel-loader'))
-      if (loader && loader.options && loader.options.presets && loader.options.presets[0] && loader.options.presets[0][1]) {
-        loader.options.presets[0][1].loose = true
-      }
-    }
-  })
   // Nuxt rules
   config.module.rules = [
     ...rules,
     ...extras.nuxtWebpackConfig.module.rules
   ]
+
+  // Set the correct public path for Vue to Support `@nuxtjs/composition-api`
+  config.resolve.alias.vue = require.resolve('vue/dist/vue.js')
+  // Set the correct public path for Vue to support Nuxt bridge
+  config.resolve.alias.vue2 = require.resolve('vue/dist/vue.js')
 
   // Return the altered config
   return config

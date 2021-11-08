@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.0](https://github.com/nuxt-community/storybook/compare/v4.1.1...v4.2.0) (2021-11-08)
+
+
+### Features
+
+* bridge support ([#335](https://github.com/nuxt-community/storybook/issues/335)) ([ebd1c17](https://github.com/nuxt-community/storybook/commit/ebd1c17292cbd8a010ab10d6153c7b184f5fc0dd))
+* support `--no-manager-cache` flag ([90d245c](https://github.com/nuxt-community/storybook/commit/90d245c18c874280ba7e8ccaf14531e20ac8fa67)), closes [#244](https://github.com/nuxt-community/storybook/issues/244)
+
+
+### Bug Fixes
+
+* Make sure to ignore all Nuxt server plugins ([#323](https://github.com/nuxt-community/storybook/issues/323)) ([7393d18](https://github.com/nuxt-community/storybook/commit/7393d181464cca05a5db7fe1991315c10100d662))
+* respect object notation of plugin registration ([0f82579](https://github.com/nuxt-community/storybook/commit/0f825792d1983314cceb1e80b831acba1b9c5a0f)), closes [#309](https://github.com/nuxt-community/storybook/issues/309)
+
+### [4.1.1](https://github.com/nuxt-community/storybook/compare/v4.1.0...v4.1.1) (2021-07-06)
+
 ## [4.1.0](https://github.com/nuxt-community/storybook/compare/v4.0.4...v4.1.0) (2021-07-05)
 
 

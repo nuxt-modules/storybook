@@ -1,15 +1,15 @@
 {
-  "name": "tailwind",
+  "name": "nuxt-storybook-starter",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "serve": "nuxt storybook",
+    "storybook:build": "nuxt storybook build",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },
   "dependencies": {
     "@nuxtjs/storybook": "latest",
-    "@nuxtjs/tailwindcss": "latest",
-    "@tailwindcss/jit": "latest",
+    "@nuxt/bridge": "npm:@nuxt/bridge-edge@latest",
     "nuxt-edge": "latest",
     "postcss": "latest"
   }

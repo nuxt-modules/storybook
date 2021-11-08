@@ -116,12 +116,11 @@ async function buildNuxt (options: StorybookOptions) {
    * Filter server-side plugins
    */
   nuxt.options.plugins = nuxt.options.plugins.filter((plugin) => {
-    let src = plugin
     if (typeof plugin === 'object') {
-      src = plugin.src
+      return !plugin.mode || plugin.mode === 'client'
     }
 
-    if (typeof src === 'string' && src.match(/\.server\.(ts|js)/)) {
+    if (typeof plugin === 'string' && plugin.match(/\.server\.?(.*)\.(ts|js)/)) {
       return false
     }
 
