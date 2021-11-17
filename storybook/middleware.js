@@ -21,7 +21,11 @@ module.exports = function (app) {
       _handler = _handler.default || _handler
     }
 
-    app.use(_route, _handler)
+    if (_handler) {
+      app.use(_route, _handler)
+    } else {
+      console.log(`[nuxt-storybook] Middleware ${middleware} has no handler`)
+    }
   }
 
   middlewares.forEach(m => addServerMiddleware(m))
