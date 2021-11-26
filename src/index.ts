@@ -199,6 +199,7 @@ function generateStorybookFiles (options) {
     fileName: path.join('storybook', 'nuxt-entry.js'),
     options
   })
+  // Dummy package.json is needed for workaround https://github.com/storybookjs/storybook/issues/11587
   this.addTemplate({
     src: path.resolve(templatesRoot, 'package-template.json'),
     fileName: path.join('storybook', 'package.json'),
