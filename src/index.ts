@@ -150,7 +150,8 @@ async function buildNuxt (options: StorybookOptions) {
 
   // Mock webpack build as we only need generated templates
   nuxtBuilder.bundleBuilder = {
-    build () { }
+    build () { },
+    close () { }
   }
   await nuxtBuilder.build()
 
