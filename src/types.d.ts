@@ -20,4 +20,5 @@ export interface StorybookOptions {
   port?: Number;
   host?: String;
   force?: boolean;
+  webpackStatsJson?: string;
 }
