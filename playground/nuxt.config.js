@@ -38,7 +38,8 @@ export default {
   storybook: {
     addons: [],
     stories: [
-      '~/stories/**/*.stories.@(ts|js)'
+      '~/stories/**/*.stories.@(ts|js)',
+      '~/components/**/*.stories.mdx'
     ],
     webpackFinal (config) {
       return config
