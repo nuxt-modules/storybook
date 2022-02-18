@@ -32,7 +32,7 @@ export function getWebpackConfig (config: webpack.Configuration, extras: Webpack
   // replace entry point
   const modules = config.plugins.find(p => p.constructor.name === 'VirtualModulesPlugin')._staticModules
   Object.keys(modules).forEach((key) => {
-    modules[key] = modules[key].replace(/@storybook\/vue/g, '~~/.nuxt-storybook/storybook/entry')
+    modules[key] = modules[key].replace(/@storybook\/vue(?!\/)/g, '~~/.nuxt-storybook/storybook/entry')
   })
 
   config.plugins = [
