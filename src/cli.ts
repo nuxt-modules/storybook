@@ -1,5 +1,5 @@
-import path from 'path'
-import fs from 'fs'
+import { existsSync } from 'fs'
+import path from 'pathe'
 import arg from 'arg'
 
 import { logger, normalizeFlags } from './utils'
@@ -31,7 +31,7 @@ function _run () {
   const { _, ...flags } = args
 
   let [mode, _dir] = _
-  if (!_dir && fs.existsSync(mode)) {
+  if (!_dir && existsSync(mode)) {
     _dir = mode || '.'
     mode = 'dev'
   } else {

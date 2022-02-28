@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'pathe'
 import * as webpack from 'webpack'
 import { WebpackExtras } from './types'
 

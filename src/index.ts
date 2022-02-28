@@ -1,6 +1,5 @@
-import path from 'path'
-import fsExtra from 'fs-extra'
-import upath from 'upath'
+import { existsSync } from 'fs'
+import path from 'pathe'
 import vueOptions from '@storybook/vue/dist/cjs/server/options'
 import { buildDev, buildStatic } from '@storybook/core/server'
 import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3, requireTsNodeOrFail } from './utils'
@@ -48,7 +47,7 @@ async function getStorybookConfig (options: StorybookOptions) {
     // Do not register static dir if it does not exists
     // https://github.com/nuxt-community/storybook/issues/263
     const staticDirPath = path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
-    if (fsExtra.existsSync(staticDirPath)) {
+    if (existsSync(staticDirPath)) {
       options.staticDir = staticDirPath
     }
   }
@@ -80,7 +79,7 @@ async function buildNuxt (options: StorybookOptions) {
   const { loadNuxt, getBuilder } = requireMaybeEdge('nuxt')
 
   const tsConfigPath = path.resolve(options.tsconfig || options.rootDir, options.tsconfig ? '' : 'tsconfig.json')
-  if (fsExtra.existsSync(tsConfigPath)) {
+  if (existsSync(tsConfigPath)) {
     const tsNode = requireTsNodeOrFail()
     tsNode.register({
       project: tsConfigPath,
@@ -211,7 +210,7 @@ function generateStorybookFiles (options) {
 export function eject (options: StorybookOptions) {
   const configDir = path.resolve(options.rootDir, '.storybook')
   const templatesRoot = path.resolve(__dirname, '../storybook')
-  if (!options.force && fsExtra.existsSync(configDir)) {
+  if (!options.force && existsSync(configDir)) {
     logger.warn('Storybook is already ejected, use `--force` to overwrite files.')
     return
   }
@@ -232,7 +231,7 @@ async function nuxtStorybookOptions (nuxt, options) {
 
   nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.storybook')
 
-  if (!fsExtra.existsSync(nuxtStorybookConfig.configDir)) {
+  if (!existsSync(nuxtStorybookConfig.configDir)) {
     nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
   }
 
@@ -242,7 +241,7 @@ async function nuxtStorybookOptions (nuxt, options) {
   }
 
   const storiesDir = path.resolve(srcDir, 'components')
-  if (fsExtra.existsSync(storiesDir)) {
+  if (existsSync(storiesDir)) {
     nuxtStorybookConfig.stories.unshift('~/components/**/*.stories.@(ts|js)')
   }
 
@@ -270,7 +269,7 @@ async function nuxtStorybookOptions (nuxt, options) {
     )
   }
 
-  const normalize = (_path:string) => upath.normalize(_path
+  const normalize = (_path:string) => path.normalize(_path
     .replace(/^~~/, path.relative(nuxtStorybookConfig.configDir, options.rootDir))
     .replace(/^~/, path.relative(nuxtStorybookConfig.configDir, srcDir)))
 
