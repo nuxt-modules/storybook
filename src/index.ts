@@ -266,14 +266,21 @@ async function nuxtStorybookOptions (nuxt, options) {
     await nuxt.callHook('storybook:config', nuxtStorybookConfig)
 
     nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.filter(
-      story => !exclude.some(e => story.match(e))
+      story => !exclude.some(e => story.directory ? story.directory.match(e) : story.match(e))
     )
   }
 
-  nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.map(story => upath.normalize(story
+  const normalize = (_path:string) => upath.normalize(_path
     .replace(/^~~/, path.relative(nuxtStorybookConfig.configDir, options.rootDir))
     .replace(/^~/, path.relative(nuxtStorybookConfig.configDir, srcDir)))
-  )
+
+  nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.map((story) => {
+    if (story.directory) {
+      story.directory = normalize(story.directory)
+      return story
+    }
+    return normalize(story)
+  })
 
   return nuxtStorybookConfig
 }

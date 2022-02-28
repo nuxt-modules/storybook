@@ -38,6 +38,11 @@ export default {
   storybook: {
     addons: [],
     stories: [
+      {
+        directory: '~/stories-2',
+        titlePrefix: '[OBJ]',
+        files: '*.stories.*',
+      },
       '~/stories/**/*.stories.@(ts|js)',
       '~/components/**/*.stories.mdx'
     ],

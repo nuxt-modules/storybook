@@ -1,4 +1,4 @@
-const stories = [<%= options.stories.map(s => `'${s}'`).join(",") %>]
+const stories = <%= JSON.stringify(options.stories) %>
 const addons  = [<%= options.addons.map(s => devalue(s)).join(",") %>,{
   name: '@storybook/addon-postcss',
   options: {
