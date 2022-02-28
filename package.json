@@ -21,6 +21,9 @@
     "lint": "eslint --ext .ts,.js,.vue ./src",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
+  "resolutions": {
+    "trim": "0.0.3"
+  },
   "dependencies": {
     "@nuxt/devalue": "^2.0.0",
     "@nuxt/postcss8": "^1.1.3",
