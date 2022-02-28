@@ -22,7 +22,7 @@
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "resolutions": {
-    "trim": "0.0.3"
+    "trim": "1.0.1"
   },
   "dependencies": {
     "@nuxt/devalue": "^2.0.0",
