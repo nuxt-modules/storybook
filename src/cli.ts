@@ -25,7 +25,8 @@ function _run () {
     '-h': '--host',
     '--force': Boolean,
     '--tsconfig': String,
-    '--no-manager-cache': Boolean
+    '--no-manager-cache': Boolean,
+    '--webpack-stats-json': String
   })
   const { _, ...flags } = args
 
