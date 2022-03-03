@@ -1,4 +1,4 @@
-import { existsSync } from 'fs'
+import { existsSync, mkdirSync } from 'fs'
 import path from 'path'
 import pathe from 'pathe'
 import vueOptions from '@storybook/vue/dist/cjs/server/options'
@@ -211,9 +211,13 @@ function generateStorybookFiles (options) {
 export function eject (options: StorybookOptions) {
   const configDir = path.resolve(options.rootDir, '.storybook')
   const templatesRoot = path.resolve(__dirname, '../storybook')
-  if (!options.force && existsSync(configDir)) {
-    logger.warn('Storybook is already ejected, use `--force` to overwrite files.')
-    return
+  if (existsSync(configDir)) {
+    if (!options.force) {
+      logger.warn('Storybook is already ejected, use `--force` to overwrite files.')
+      return
+    }
+  } else {
+    mkdirSync(configDir)
   }
   compileTemplate(path.resolve(templatesRoot, 'eject', 'main.js'), path.join(configDir, 'main.js'), {})
   compileTemplate(path.resolve(templatesRoot, 'eject', 'middleware.js'), path.join(configDir, 'middleware.js'), {})
