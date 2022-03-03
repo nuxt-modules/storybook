@@ -1,5 +1,5 @@
 import fs from 'fs'
-import template from 'lodash/template'
+import template from 'lodash.template'
 import jiti from 'jiti'
 import consola from 'consola'
 import createRequire from 'create-require'

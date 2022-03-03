@@ -13,12 +13,12 @@
     "storybook"
   ],
   "scripts": {
-    "build": "yarn clean && tsc && mkdist --ext=js --src src/runtime --dist dist/runtime",
-    "clean": "rimraf dist",
-    "dev": "STORYBOOK_LIFE_UNIVERSE_AND_EVERYTHING=42 yarn nuxt-storybook playground",
-    "nuxt-storybook": "ts-node src/cli",
+    "play": "STORYBOOK_LIFE_UNIVERSE_AND_EVERYTHING=42 yarn nuxt-storybook playground",
+    "dev": "yarn run play",
+    "build": "yarn unbuild",
     "test": "yarn nuxt-storybook build playground",
     "lint": "eslint --ext .ts,.js,.vue ./src",
+    "nuxt-storybook": "ts-node src/cli",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "resolutions": {
@@ -36,6 +36,7 @@
     "create-require": "^1.1.1",
     "css-loader": "5.2.7",
     "jiti": "^1.13.0",
+    "lodash.template": "^4.5.0",
     "pathe": "^0.2.0",
     "postcss": "^8.4.7",
     "vue-loader": "^15.9.8"
@@ -59,14 +60,13 @@
     "babel-eslint": "latest",
     "eslint": "latest",
     "express": "^4.17.3",
-    "mkdist": "^0.3.10",
     "node-sass": "^5.0.0",
     "nuxt-edge": "^2.16.0-27358576.777a4b7f",
     "react-docgen-typescript-plugin": "^1.0.0",
-    "rimraf": "^3.0.2",
     "sass-loader": "^10.2.1",
     "standard-version": "latest",
-    "typescript": "^4.6.2"
+    "typescript": "^4.6.2",
+    "unbuild": "^0.6.9"
   },
   "publishConfig": {
     "access": "public"
