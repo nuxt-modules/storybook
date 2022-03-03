@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.3.0](https://github.com/nuxt-community/storybook/compare/v4.2.0...v4.3.0) (2022-03-03)
+
+
+### Features
+
+* Support object style path ([eeb66ae](https://github.com/nuxt-community/storybook/commit/eeb66ae8b220b3fb3d2cd5436186105e4f5cb482)), closes [#353](https://github.com/nuxt-community/storybook/issues/353)
+* **#354:** update storybook to 6.4 ([#357](https://github.com/nuxt-community/storybook/issues/357)) ([9eeb04d](https://github.com/nuxt-community/storybook/commit/9eeb04d94920fc676e60b813cb8c45cff7673988)), closes [#354](https://github.com/nuxt-community/storybook/issues/354)
+* **cli:** Support chromatic's `--webpack-stats-json` flag ([#367](https://github.com/nuxt-community/storybook/issues/367)) ([56c8eef](https://github.com/nuxt-community/storybook/commit/56c8eef6e5ac48d1ff714ddec0256565f40dbb07))
+
+
+### Bug Fixes
+
+* ensure `.storbook` exists on eject ([30e6098](https://github.com/nuxt-community/storybook/commit/30e6098c6b7dc75a3712d796dfd4d2302d841093))
+* freeze css loader version `css-loader@5.2.7` ([f97c410](https://github.com/nuxt-community/storybook/commit/f97c41077b304a0772a42dcac576756e8c470fdc)), closes [#341](https://github.com/nuxt-community/storybook/issues/341)
+* **security:** update dependancy `trim@0.0.3` ([3593f4c](https://github.com/nuxt-community/storybook/commit/3593f4c6540e3cf3dadb15d812abc7aa77baea7e)), closes [#346](https://github.com/nuxt-community/storybook/issues/346)
+* create dummy package.json for ESM compatibility ([#345](https://github.com/nuxt-community/storybook/issues/345)) ([7915f30](https://github.com/nuxt-community/storybook/commit/7915f3019fde2d5584b51fa32af2e3bde2d75e25))
+* expose `close` in bundle builder builder mock ([c349518](https://github.com/nuxt-community/storybook/commit/c3495180a3ac61c00a81497517294015d7af13c9)), closes [#342](https://github.com/nuxt-community/storybook/issues/342)
+* handle single function middleware files ([d502e54](https://github.com/nuxt-community/storybook/commit/d502e54ca59cb9bcfef590b59f4e8d689bdd029c)), closes [#303](https://github.com/nuxt-community/storybook/issues/303)
+* missing handler in server middleware ([#344](https://github.com/nuxt-community/storybook/issues/344)) ([73c5a7a](https://github.com/nuxt-community/storybook/commit/73c5a7ab368b525e7f2aa1aed1f491eacc6cf97c))
+
 ## [4.2.0](https://github.com/nuxt-community/storybook/compare/v4.1.1...v4.2.0) (2021-11-08)
 
 
