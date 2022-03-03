@@ -23,7 +23,8 @@ export default {
   },
   serverMiddleware: [
     { path: '/express', handler: '~/server/index.ts' },
-    '~/server/object.ts'
+    '~/server/object.ts',
+    '~/server/function.ts',
   ],
   publicRuntimeConfig: {
     moduleName: "@nuxtjs/storybook",
@@ -37,7 +38,13 @@ export default {
   storybook: {
     addons: [],
     stories: [
-      '~/stories/**/*.stories.@(ts|js)'
+      {
+        directory: '~/stories-2',
+        titlePrefix: '[OBJ]',
+        files: '*.stories.*',
+      },
+      '~/stories/**/*.stories.@(ts|js)',
+      '~/components/**/*.stories.mdx'
     ],
     webpackFinal (config) {
       return config

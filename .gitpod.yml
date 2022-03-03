@@ -1,0 +1,17 @@
+tasks:
+  - init: |
+      nvm install v15
+      nvm use v15
+      yarn
+      yarn build
+    command: NUXT_TELEMETRY_DISABLED=1 yarn dev
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
+    - editorconfig.editorconfig
+    - octref.vetur
+
+ports:
+  - port: 3003
+    visibility: public

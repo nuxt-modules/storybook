@@ -1,6 +1,6 @@
+import { existsSync, mkdirSync } from 'fs'
 import path from 'path'
-import fsExtra from 'fs-extra'
-import upath from 'upath'
+import pathe from 'pathe'
 import vueOptions from '@storybook/vue/dist/cjs/server/options'
 import { buildDev, buildStatic } from '@storybook/core/server'
 import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3, requireTsNodeOrFail } from './utils'
@@ -48,7 +48,7 @@ async function getStorybookConfig (options: StorybookOptions) {
     // Do not register static dir if it does not exists
     // https://github.com/nuxt-community/storybook/issues/263
     const staticDirPath = path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
-    if (fsExtra.existsSync(staticDirPath)) {
+    if (existsSync(staticDirPath)) {
       options.staticDir = staticDirPath
     }
   }
@@ -80,7 +80,7 @@ async function buildNuxt (options: StorybookOptions) {
   const { loadNuxt, getBuilder } = requireMaybeEdge('nuxt')
 
   const tsConfigPath = path.resolve(options.tsconfig || options.rootDir, options.tsconfig ? '' : 'tsconfig.json')
-  if (fsExtra.existsSync(tsConfigPath)) {
+  if (existsSync(tsConfigPath)) {
     const tsNode = requireTsNodeOrFail()
     tsNode.register({
       project: tsConfigPath,
@@ -150,7 +150,8 @@ async function buildNuxt (options: StorybookOptions) {
 
   // Mock webpack build as we only need generated templates
   nuxtBuilder.bundleBuilder = {
-    build () { }
+    build () { },
+    close () { }
   }
   await nuxtBuilder.build()
 
@@ -199,14 +200,24 @@ function generateStorybookFiles (options) {
     fileName: path.join('storybook', 'nuxt-entry.js'),
     options
   })
+  // Dummy package.json is needed for workaround https://github.com/storybookjs/storybook/issues/11587
+  this.addTemplate({
+    src: path.resolve(templatesRoot, 'package-template.json'),
+    fileName: path.join('storybook', 'package.json'),
+    options
+  })
 }
 
 export function eject (options: StorybookOptions) {
   const configDir = path.resolve(options.rootDir, '.storybook')
   const templatesRoot = path.resolve(__dirname, '../storybook')
-  if (!options.force && fsExtra.existsSync(configDir)) {
-    logger.warn('Storybook is already ejected, use `--force` to overwrite files.')
-    return
+  if (existsSync(configDir)) {
+    if (!options.force) {
+      logger.warn('Storybook is already ejected, use `--force` to overwrite files.')
+      return
+    }
+  } else {
+    mkdirSync(configDir)
   }
   compileTemplate(path.resolve(templatesRoot, 'eject', 'main.js'), path.join(configDir, 'main.js'), {})
   compileTemplate(path.resolve(templatesRoot, 'eject', 'middleware.js'), path.join(configDir, 'middleware.js'), {})
@@ -225,7 +236,7 @@ async function nuxtStorybookOptions (nuxt, options) {
 
   nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.storybook')
 
-  if (!fsExtra.existsSync(nuxtStorybookConfig.configDir)) {
+  if (!existsSync(nuxtStorybookConfig.configDir)) {
     nuxtStorybookConfig.configDir = path.resolve(options.rootDir, '.nuxt-storybook', 'storybook')
   }
 
@@ -235,7 +246,7 @@ async function nuxtStorybookOptions (nuxt, options) {
   }
 
   const storiesDir = path.resolve(srcDir, 'components')
-  if (fsExtra.existsSync(storiesDir)) {
+  if (existsSync(storiesDir)) {
     nuxtStorybookConfig.stories.unshift('~/components/**/*.stories.@(ts|js)')
   }
 
@@ -259,14 +270,21 @@ async function nuxtStorybookOptions (nuxt, options) {
     await nuxt.callHook('storybook:config', nuxtStorybookConfig)
 
     nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.filter(
-      story => !exclude.some(e => story.match(e))
+      story => !exclude.some(e => story.directory ? story.directory.match(e) : story.match(e))
     )
   }
 
-  nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.map(story => upath.normalize(story
+  const normalize = (_path:string) => pathe.normalize(_path
     .replace(/^~~/, path.relative(nuxtStorybookConfig.configDir, options.rootDir))
     .replace(/^~/, path.relative(nuxtStorybookConfig.configDir, srcDir)))
-  )
+
+  nuxtStorybookConfig.stories = nuxtStorybookConfig.stories.map((story) => {
+    if (story.directory) {
+      story.directory = normalize(story.directory)
+      return story
+    }
+    return normalize(story)
+  })
 
   return nuxtStorybookConfig
 }

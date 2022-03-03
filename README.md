@@ -79,6 +79,10 @@ npx nuxt storybook
 2. Install dependencies using `yarn install`
 3. Start storybook server using `yarn dev`
 
+### Gitpod
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/nuxt-community/storybook)
+
 ## License
 
 [MIT License](./LICENSE)

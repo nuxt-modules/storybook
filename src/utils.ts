@@ -1,5 +1,5 @@
-import fsExtra from 'fs-extra'
-import template from 'lodash/template'
+import fs from 'fs'
+import template from 'lodash.template'
 import jiti from 'jiti'
 import consola from 'consola'
 import createRequire from 'create-require'
@@ -31,10 +31,10 @@ export function normalizeFlags (flags) {
   }, {})
 }
 
-export async function compileTemplate (src, destination, templateVars) {
+export function compileTemplate (src, destination, templateVars) {
   let content
   try {
-    const fileContent = await fsExtra.readFile(src, 'utf8')
+    const fileContent = fs.readFileSync(src, 'utf8')
 
     const templateFunction = template(fileContent)
     content = templateFunction({
@@ -43,7 +43,7 @@ export async function compileTemplate (src, destination, templateVars) {
   } catch (err) {
     throw new Error(`Could not compile template: ${err.message}`)
   }
-  await fsExtra.outputFile(destination, content, 'utf8')
+  fs.writeFileSync(destination, content, 'utf8')
 }
 
 export function ensureCoreJs3 (rootDir) {
