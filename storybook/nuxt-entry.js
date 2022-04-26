@@ -69,7 +69,7 @@ function prepare (
     functional: true,
     render (h, { data, parent, children }) {
       // Suddenly story will render twice and in the first render it isn't descendent of nuxt app
-      // Ensure that story will render only inside the nuxt context 
+      // Ensure that story will render only inside the nuxt context
       if (!parent.$root.nuxt) return null
       return h(
         story,
@@ -132,7 +132,7 @@ export async function render({
   storyFn,
   kind,
   name,
-  args,
+  storyContext: { args },
   showMain,
   showError,
   showException,
@@ -141,7 +141,7 @@ export async function render({
   if (!root) {
     const app = await getNuxtApp();
 
-    root = new Vue({  
+    root = new Vue({
       ...app,
       data() {
         return {
