@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.1](https://github.com/nuxt-community/storybook/compare/v4.3.0...v4.3.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* `undefined` render args argument ([#378](https://github.com/nuxt-community/storybook/issues/378)) ([ba614fd](https://github.com/nuxt-community/storybook/commit/ba614fd4527045a0c0d79bff07409b3a05a98cc8))
+* keep `NODE_ENV` set by users ([#383](https://github.com/nuxt-community/storybook/issues/383)) ([21064f4](https://github.com/nuxt-community/storybook/commit/21064f404bc9e946779620ed6244b451c00e2503))
+
 ## [4.3.0](https://github.com/nuxt-community/storybook/compare/v4.2.0...v4.3.0) (2022-03-03)
 
 
