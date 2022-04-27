@@ -16,6 +16,7 @@
 ## Features
 
 - Zero configuration
+- Nuxt 3 with Vite support
 - Nuxt webpack configuration
 - Nuxt plugins support
 - Story discovery from nuxt modules
