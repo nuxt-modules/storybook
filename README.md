@@ -32,9 +32,9 @@
 
 ```bash
 #using yarn
-yarn add --dev @nuxtjs/storybook postcss@8
+yarn add --dev @nuxtjs/storybook postcss@8 css-loader@5.2.0
 # using npm
-npm install --save-dev @nuxtjs/storybook postcss@8
+npm install --save-dev @nuxtjs/storybook postcss@8 css-loader@5.2.0
 ```
 
 
