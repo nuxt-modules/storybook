@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync } from 'fs'
 import path from 'path'
-import pathe from 'pathe'
+import { normalize as normalizePath } from 'pathe'
 import vueOptions from '@storybook/vue/dist/cjs/server/options'
 import { buildDev, buildStatic } from '@storybook/core-server'
 import { requireMaybeEdge, compileTemplate, logger, ensureCoreJs3, requireTsNodeOrFail } from './utils'
@@ -274,7 +274,7 @@ async function nuxtStorybookOptions (nuxt, options) {
     )
   }
 
-  const normalize = (_path:string) => pathe.normalize(_path
+  const normalize = (_path:string) => normalizePath(_path
     .replace(/^~~/, path.relative(nuxtStorybookConfig.configDir, options.rootDir))
     .replace(/^~/, path.relative(nuxtStorybookConfig.configDir, srcDir)))
 

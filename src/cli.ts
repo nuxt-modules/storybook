@@ -1,5 +1,5 @@
 import { existsSync } from 'fs'
-import path from 'pathe'
+import { resolve } from 'pathe'
 import arg from 'arg'
 
 import { logger, normalizeFlags } from './utils'
@@ -39,7 +39,7 @@ function _run () {
     mode = mode || 'dev'
   }
   // Resolve dir
-  const rootDir = path.resolve(process.cwd(), _dir)
+  const rootDir = resolve(process.cwd(), _dir)
 
   switch (mode) {
     case 'build':
