@@ -16,7 +16,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         # os: [ubuntu-latest]
-        node: [12]
+        node: [14]
 
     steps:
       - uses: actions/setup-node@v3
