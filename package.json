@@ -36,12 +36,12 @@
     "css-loader": "5.2.7",
     "jiti": "^1.13.0",
     "lodash.template": "^4.5.0",
-    "pathe": "^0.2.0",
-    "postcss": "^8.4.7",
+    "pathe": "^0.3.0",
+    "postcss": "^8.4.14",
     "vue-loader": "^15.9.8"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-env": "^7.18.2",
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
@@ -58,14 +58,14 @@
     "@types/inquirer": "latest",
     "babel-eslint": "latest",
     "eslint": "latest",
-    "express": "^4.17.3",
+    "express": "^4.18.1",
     "node-sass": "^5.0.0",
     "nuxt-edge": "^2.16.0-27358576.777a4b7f",
-    "react-docgen-typescript-plugin": "^1.0.0",
+    "react-docgen-typescript-plugin": "^1.0.1",
     "sass-loader": "^10.2.1",
     "standard-version": "latest",
-    "typescript": "^4.6.2",
-    "unbuild": "^0.6.9"
+    "typescript": "^4.7.2",
+    "unbuild": "^0.7.4"
   },
   "publishConfig": {
     "access": "public"
