@@ -4,9 +4,6 @@ export default {
     stories: [
       '~/components/**/*.stories.mdx'
     ],
-    addons: [
-      '@storybook/addon-controls',
-      '@storybook/addon-docs'
-    ]
+    addons: []
   }
 }

@@ -1,4 +1,4 @@
-import { start } from '@storybook/core/client'
+import { start } from '@storybook/core-client'
 import { render, decorateStory, framework } from './nuxt-entry'
 
 const api = start(render, { decorateStory })
