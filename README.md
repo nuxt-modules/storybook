@@ -8,7 +8,7 @@
 [![Codecov][codecov-src]][codecov-href]
 [![License][license-src]][license-href]
 
-> [Storybook](https://storybook.js.org/) integration with [NuxtJS](https://nuxtjs.org)
+> [Storybook](https://storybook.js.org/) integration with [Nuxt 2](https://v2.nuxt.com/)
 
 - [✨ &nbsp;Release Notes](https://storybook.nuxtjs.org/releases)
 - [📖 &nbsp;Documentation](https://storybook.nuxtjs.org)
