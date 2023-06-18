@@ -13,6 +13,10 @@
 - [✨ &nbsp;Release Notes](https://storybook.nuxtjs.org/releases)
 - [📖 &nbsp;Documentation](https://storybook.nuxtjs.org)
 
+## Nuxt 3
+
+For Nuxt 3 support, checkout https://github.com/hirotaka/storybook-addon-nuxt
+
 ## Features
 
 - Zero configuration
