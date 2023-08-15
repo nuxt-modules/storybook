@@ -1,0 +1,21 @@
+{
+  "extends": "./.storybook/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "target": "ESNext",
+    "module": "ESNext",
+    "types": ["node"],
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "paths": {
+      "#app": [
+        "/Users/chakir/devs/nuxt/node_modules/nuxt/dist/app"
+      ],
+      "#app/entry": [
+        "/Users/chakir/devs/nuxt/node_modules/nuxt/dist/app/*"
+      ],
+    }
+  },
+  "include": ["src/**/*"]
+}
