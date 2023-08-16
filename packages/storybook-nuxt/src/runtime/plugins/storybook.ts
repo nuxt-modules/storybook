@@ -3,9 +3,6 @@ import {  createNuxtApp, defineNuxtPlugin } from "nuxt/app"
 import  plugins  from "#build/plugins"
 import { App } from "vue";
 
-
-
-
 const globalWindow = window as any;
 
 export default defineNuxtPlugin({
@@ -31,11 +28,9 @@ export default defineNuxtPlugin({
             console.log('error in plugin',e)
           }
         }
-        console.log('1-nuxt.router  ',nuxt._router)
-        nuxt._router = vueApp.config.globalProperties.$router
-        console.log('2-nuxt.router  ',nuxt._route)
 
-      
+        nuxt._router = vueApp.config.globalProperties.$router
+       
         return nuxt
       }
       
