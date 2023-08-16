@@ -30,7 +30,7 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     throw new Error(`Storybook-Nuxt does not support '${nuxt.options.builder}' for now.`);
   }
   
-  let extendedConfig  = {}
+  let extendedConfig:ViteConfig = {};   
   
   nuxt.hook('modules:done', () => {
     addPlugin({
@@ -94,15 +94,28 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   }
   const nuxtConfig = await defineNuxtConfig(await getStorybookViteConfig(config, options));
   const { enabled, proxy } = getDevtoolsConfig(nuxtConfig.nuxt)
-  
-  return mergeConfig(nuxtConfig.viteConfig, {
+  console.log({ enabled, proxy })
+
+  const CONFIG = mergeConfig(nuxtConfig.viteConfig, {
     build: { rollupOptions: { external: ['vue','vue-demi'] } },
     define: {
       __NUXT__: JSON.stringify({ config: nuxtConfig.nuxt.options.runtimeConfig }),
     },
     server : { 
       cors : true ,
-      proxy: enabled ? proxy :{},
+      proxy: { '/__storybook_preview__': { 
+        target:`/iframe.html`,
+        
+        changeOrigin: false, 
+        secure: false ,
+        rewrite: (path: string) =>{
+        console.log('\n\n------ rewrite:path',path)
+        const nn = path.replace('/__storybook_preview__', '/iframe.html')
+        console.log('------ rewrite:new path',nn)
+        return nn
+      },
+      ws:true 
+    } },
       fs: { allow:[searchForWorkspaceRoot(process.cwd()),packageDir,runtimeDir,pluginsDir,componentsDir] }
     },
     preview: {
@@ -110,7 +123,8 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     },
     envPrefix: ['NUXT_'],
   });
-
+  console.log('CONFIG \n', CONFIG.server.proxy)
+  return CONFIG
 };
 
 /**
@@ -118,7 +132,7 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
  * @param nuxt 
  * @returns 
  */
-function getDevtoolsConfig(nuxt: Nuxt){  
+export function getDevtoolsConfig(nuxt: Nuxt){  
   const devtools = nuxt.options.runtimeConfig.public['devtools'] as Record<string, any> || {}
   const port = devtools.port?.toString()  ??   '12442'
   const route = '/__nuxt_devtools__/client'
@@ -150,11 +164,12 @@ function extendComponents(nuxt: Nuxt) {
 
 function extendPages(nuxt: Nuxt) {
   nuxt.hook('pages:extend', (pages: any) => {
-
-    // pages.push({
-    //   name: 'iframe.html',
-    //   path: '/iframe.html',
-    //   redirect:'/'
-    // })   
+  // console.log(' storyboo-iframe :',  pages.find(({ name }: any) => name === 'storybook-iframe'))
+     pages.push({
+       name: 'storybook-iframe',
+       path: '/iframe.html',
+       redirect:'/__storybook_preview__'
+     })  
+     
   })
 }

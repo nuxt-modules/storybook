@@ -1,29 +1,21 @@
 <template>
     <div>
+        <MyButton><NuxtLink to="/">Home</NuxtLink></MyButton>
         <h1>News</h1>
-        <p>{{ msg }}</p>
+        
     </div>
 
-    <pre>
+<pre>
   fullPath =  {{   $route.fullPath  }}
   path = {{ $route.path  }} 
   query {{ $route.query  }}
-  </pre>
-   <NuxtLink to="/">Home</NuxtLink>
+</pre>
+
     
 </template>
 <script lang="ts" setup>
 
-    import { RouteLocationNormalized, useRouter , useRoute } from 'vue-router'
-
-    defineProps({
-        msg: String
-    })
-    useRoute((to: RouteLocationNormalized) => {
-        console.log(' useRoute  ',to)
-    })
-    const router = useRouter()
-    console.log(' router  ',router)
+   
 
    
 </script>

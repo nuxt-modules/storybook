@@ -1,7 +1,7 @@
 <template>
     <div>
       <div style="margin: 1rem 0">
-        <h1>{{ msg }}</h1>
+        <b>{{ msg  }}</b> 
         <PiniaLogo />
       </div>
   
@@ -59,21 +59,14 @@
   
       <hr />
   
-      <p>
-        Complete store state via
-        <code>store.$state</code>:
-      </p>
+
   
       <pre>{{ counter.$state }}</pre>
     </div>
-    <MyButton label=""><NuxtLink to="/about">About</NuxtLink></MyButton>
-    <br>
-    <pre>
-  fullPath =  {{   $route.fullPath  }}
-  path = {{ $route.path  }} 
+    
+    
   
-  query {{ $route.query  }}
-  </pre>
+ 
   </template>
   
   <script setup lang="ts">
