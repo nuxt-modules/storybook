@@ -31,7 +31,7 @@ export const Primary : Story = {
  args: { primary: true , label:'Primary' },
 }
 
-export const MyStory : Story = { 
+export const PreLink : Story = { 
   args: { primary: true , label:'My Story' },
   render:(args) => ({
     components: { MyPre },

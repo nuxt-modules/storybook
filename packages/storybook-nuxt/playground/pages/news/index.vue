@@ -1,7 +1,11 @@
 <template>
+    <div style="display: flex;gap: 20px;padding: 20px;">
+        <NuxtLink to="/"><MyButton>Home</MyButton></NuxtLink>
+    </div>
     <div>
-        <MyButton><NuxtLink to="/">Home</NuxtLink></MyButton>
         <h1>News</h1>
+        
+        
         
     </div>
 
@@ -11,12 +15,7 @@
   query {{ $route.query  }}
 </pre>
 
-    
+
 </template>
-<script lang="ts" setup>
 
-   
-
-   
-</script>
 ```

@@ -8,7 +8,7 @@ import  MyNuxtPage  from '~/components/MyNuxtPage.vue';
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 
 const meta = {
-  title: 'Pages/Home ',
+  title: 'Pages/App ',
   component: MyNuxtPage,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],
@@ -23,7 +23,7 @@ type Story = StoryObj<typeof meta>;
  * to learn how to use render functions.
  */
 
-export const NavPage : Story = {
+export const Home : Story = {
   args: {  },
   render (args: any) {
     return({

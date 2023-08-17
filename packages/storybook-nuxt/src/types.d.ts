@@ -30,4 +30,4 @@ export type StorybookConfig = { viteFinal:Record<string, any>  } & StorybookConf
 export interface NuxtOptions {
 }
 
-export { StoryFn, StoryObj, Preview, VueRenderer, addPluginSetup }  
+export { Meta, StoryFn, StoryObj, Preview, VueRenderer, addPluginSetup, DecoratorFunction }  

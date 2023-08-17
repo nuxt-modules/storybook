@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex;gap: 20px;padding: 20px;">
-    <MyButton primary><NuxtLink to="/news">News</NuxtLink></MyButton>
-    <MyButton primary><NuxtLink to="/about">About</NuxtLink></MyButton>
+   <NuxtLink to="/news"><MyButton primary>News</MyButton></NuxtLink>
+   <NuxtLink to="/about"><MyButton primary>About</MyButton></NuxtLink>
   </div>
   <div>
       <h1>Home</h1>

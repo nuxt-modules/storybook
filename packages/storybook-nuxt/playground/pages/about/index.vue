@@ -1,6 +1,9 @@
 <template>
+    <div style="display: flex;gap: 20px;padding: 20px;">
+        <NuxtLink to="/"><MyButton>Home</MyButton></NuxtLink>
+    </div>
     <div>
-        <MyButton><NuxtLink to="/">Home</NuxtLink></MyButton>
+
         <h1>About</h1>
     </div>
 

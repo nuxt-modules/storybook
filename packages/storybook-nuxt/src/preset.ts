@@ -12,6 +12,7 @@ const distDir = resolve(fileURLToPath(import.meta.url), '..')
 const runtimeDir = resolve(distDir, 'runtime')
 const pluginsDir = resolve(runtimeDir, 'plugins')
 const componentsDir = resolve(runtimeDir, 'components')
+const composableDir = resolve(runtimeDir, 'composables')
 
 
 import type { StorybookConfig } from './types';
@@ -36,7 +37,8 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     addPlugin({
       src: join(runtimeDir,'plugins/storybook'),
       mode: 'client',
-    });  
+    });
+    extendComposables(nuxt )  
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
     extendPages(nuxt)
@@ -105,7 +107,6 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
       cors : true ,
       proxy: { '/__storybook_preview__': { 
         target:`/iframe.html`,
-        
         changeOrigin: false, 
         secure: false ,
         rewrite: (path: string) =>{
@@ -116,7 +117,7 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
       },
       ws:true 
     } },
-      fs: { allow:[searchForWorkspaceRoot(process.cwd()),packageDir,runtimeDir,pluginsDir,componentsDir] }
+      fs: { allow:[searchForWorkspaceRoot(process.cwd()),packageDir,runtimeDir,pluginsDir,componentsDir,composableDir] }
     },
     preview: {
       headers: { "Access-Control-Allow-Origin": "*" , "Access-Control-Allow-Headers": "*"},
@@ -173,3 +174,10 @@ function extendPages(nuxt: Nuxt) {
      
   })
 }
+function extendComposables(nuxt: Nuxt) {
+   nuxt.hook('imports:extend', (imports: any) => {
+     imports.push({name:'useRouter',filePath:join(runtimeDir,'composables/router')})
+     console.log('imports:extendComposables ',imports)
+   })
+}
+
