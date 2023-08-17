@@ -4,7 +4,6 @@ import type { PresetProperty } from '@storybook/types';
 import { mergeConfig, searchForWorkspaceRoot, type UserConfig as ViteConfig } from 'vite';
 import type { Nuxt } from '@nuxt/schema';
 
-
 import { fileURLToPath } from 'node:url'
 
 const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
@@ -14,10 +13,7 @@ const pluginsDir = resolve(runtimeDir, 'plugins')
 const componentsDir = resolve(runtimeDir, 'components')
 const composableDir = resolve(runtimeDir, 'composables')
 
-
 import type { StorybookConfig } from './types';
-
-
 
 async function defineNuxtConfig(baseConfig: Record<string, any>) {
   const { loadNuxt, buildNuxt, addPlugin } = await import(require.resolve('@nuxt/kit'));
@@ -96,9 +92,9 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   }
   const nuxtConfig = await defineNuxtConfig(await getStorybookViteConfig(config, options));
   const { enabled, proxy } = getDevtoolsConfig(nuxtConfig.nuxt)
-  console.log({ enabled, proxy })
 
-  const CONFIG = mergeConfig(nuxtConfig.viteConfig, {
+
+  return mergeConfig(nuxtConfig.viteConfig, {
     build: { rollupOptions: { external: ['vue','vue-demi'] } },
     define: {
       __NUXT__: JSON.stringify({ config: nuxtConfig.nuxt.options.runtimeConfig }),
@@ -106,17 +102,14 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     server : { 
       cors : true ,
       proxy: { '/__storybook_preview__': { 
-        target:`/iframe.html`,
-        changeOrigin: false, 
-        secure: false ,
-        rewrite: (path: string) =>{
-        console.log('\n\n------ rewrite:path',path)
-        const nn = path.replace('/__storybook_preview__', '/iframe.html')
-        console.log('------ rewrite:new path',nn)
-        return nn
+          target:`/iframe.html`,
+          changeOrigin: false, 
+          secure: false ,
+          rewrite: (path: string) => path.replace('/__storybook_preview__', '/iframe.html'),
+          ws:true 
+        },
+        ...(enabled ? proxy  :{})
       },
-      ws:true 
-    } },
       fs: { allow:[searchForWorkspaceRoot(process.cwd()),packageDir,runtimeDir,pluginsDir,componentsDir,composableDir] }
     },
     preview: {
@@ -124,8 +117,7 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     },
     envPrefix: ['NUXT_'],
   });
-  console.log('CONFIG \n', CONFIG.server.proxy)
-  return CONFIG
+
 };
 
 /**
@@ -153,7 +145,10 @@ export function getDevtoolsConfig(nuxt: Nuxt){
     proxy
   }
 }
-
+/**
+ * extend nuxt-link component to use storybook router
+ * @param nuxt 
+ */
 function extendComponents(nuxt: Nuxt) {
   nuxt.hook('components:extend', (components: any) => {
     const nuxtLink = components.find(({ name }: any) => name === 'NuxtLink')
@@ -162,6 +157,11 @@ function extendComponents(nuxt: Nuxt) {
     nuxt.options.build.transpile.push(nuxtLink.filePath)      
   });
 }
+
+/**
+ * extend routes to add  storybook-iframe page
+ * @param nuxt 
+ */
 
 function extendPages(nuxt: Nuxt) {
   nuxt.hook('pages:extend', (pages: any) => {
@@ -174,10 +174,16 @@ function extendPages(nuxt: Nuxt) {
      
   })
 }
+
+/**
+ * extend composables to override router ( fix undefined router  useNuxtApp )
+ *
+ * @param nuxt
+ * */
+
 function extendComposables(nuxt: Nuxt) {
    nuxt.hook('imports:extend', (imports: any) => {
      imports.push({name:'useRouter',filePath:join(runtimeDir,'composables/router')})
-     console.log('imports:extendComposables ',imports)
    })
 }
 
