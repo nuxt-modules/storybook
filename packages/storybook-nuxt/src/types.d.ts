@@ -6,7 +6,7 @@ declare var  STORYBOOK_VUE_GLOBAL_MIXINS: string[];
 import type { BuilderOptions, StorybookConfig as StorybookConfigBase } from '@storybook/types';
 import type { Preview , StoryFn , StoryObj, VueRenderer, Meta, DecoratorFunction  } from '@storybook/vue3'
 
-import { setup as addPluginSetup , render , decorateStor, renderToCanvas } from '@storybook/vue3'
+import { setup as addPluginSetup , render , decorateStory, renderToCanvas } from '@storybook/vue3'
 
 type FrameworkName = '@storybook-vue/nuxt' | '@storybook-nuxt/framework';
 type BuilderName = '@storybook/builder-vite';
@@ -20,6 +20,9 @@ type StorybookConfigFramework = {
   core?: StorybookConfigBase['core'] & { builder?: BuilderName  }  
   typescript?: StorybookConfigBase['typescript'];
   previewAnnotations?: StorybookConfigBase['previewAnnotations'];
+  stories?: StorybookConfigBase['stories'];
+  addons?: StorybookConfigBase['addons'];
+  docs?: StorybookConfigBase['docs'];
 };
 
 /**
@@ -30,4 +33,4 @@ export type StorybookConfig = { viteFinal:Record<string, any>  } & StorybookConf
 export interface NuxtOptions {
 }
 
-export { Meta, StoryFn, StoryObj, Preview, VueRenderer, addPluginSetup, DecoratorFunction }  
+export { Meta, StoryFn, StoryObj, Preview, VueRenderer, addPluginSetup, DecoratorFunction, render, decorateStory, renderToCanvas }  
