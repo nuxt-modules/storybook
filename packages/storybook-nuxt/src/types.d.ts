@@ -8,7 +8,7 @@ import type { Preview , StoryFn , StoryObj, VueRenderer, Meta, DecoratorFunction
 
 import { setup as addPluginSetup , render , decorateStor, renderToCanvas } from '@storybook/vue3'
 
-type FrameworkName = '@storybook-vue/nuxt';
+type FrameworkName = '@storybook-vue/nuxt' | '@storybook-nuxt/framework';
 type BuilderName = '@storybook/builder-vite';
 
 export type FrameworkOptions = NuxtOptions & {
