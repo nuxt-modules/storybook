@@ -70,7 +70,7 @@ export const core: PresetProperty<'core', StorybookConfig> = async (config, opti
   return {
     ...config,
     builder:'@storybook/builder-vite',
-    renderer: '@storybook-nuxt/vue3',
+    renderer: '@storybook-nuxt/framework',
   };
 };
 /**
