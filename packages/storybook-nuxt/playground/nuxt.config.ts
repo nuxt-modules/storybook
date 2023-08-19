@@ -7,15 +7,15 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
   i18n: {
-    locales: ['en','fr','ar'],
-    defaultLocale: 'en'
+    locales: ['en', 'fr', 'ar'],
+    defaultLocale: 'en',
   },
- 
+
   runtimeConfig: {
     app: {
       name: 'Nuxt',
       version: '1.0.0',
-      baseURL:'/',
+      baseURL: '/',
       host: 'localhost',
       port: 3000,
     },

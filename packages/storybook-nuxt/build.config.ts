@@ -8,11 +8,13 @@ export default defineBuildConfig({
     // Preset
     { input: 'src/preset' },
     // Runtime dirs
-    { input: 'src/preview', outDir:'dist/', ext: 'js' },
-    { input: 'src/runtime/', outDir:'dist/runtime',format:'esm', ext: 'js' },
-      
+    { input: 'src/preview', outDir: 'dist/', ext: 'js' },
+    {
+      input: 'src/runtime/', outDir: 'dist/runtime', format: 'esm', ext: 'js',
+    },
+
   ],
-  
+
   rollup: {
     emitCJS: true,
     inlineDependencies: true,
@@ -25,8 +27,8 @@ export default defineBuildConfig({
     '@vue/shared',
     '@unhead/vue',
     '@nuxt/devtools-kit',
-    '#app/composables/state'
+    '#app/composables/state',
 
   ],
-  failOnWarn: false
+  failOnWarn: false,
 })

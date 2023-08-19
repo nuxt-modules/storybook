@@ -1,4 +1,5 @@
-const delay = (t: number) => new Promise((r) => setTimeout(r, t))
+// eslint-disable-next-line promise/param-names
+const delay = (t: number) => new Promise(r => setTimeout(r, t))
 
 export const useCounter = defineStore('counter', {
   state: () => ({
@@ -9,7 +10,7 @@ export const useCounter = defineStore('counter', {
   }),
 
   getters: {
-    double: (state) => state.n * 2,
+    double: state => state.n * 2,
   },
 
   actions: {
@@ -19,7 +20,7 @@ export const useCounter = defineStore('counter', {
     },
 
     changeMe() {
-      console.log('change me to test HMR')
+      // console.log('change me to test HMR')
     },
 
     async fail() {
@@ -27,15 +28,15 @@ export const useCounter = defineStore('counter', {
       await delay(1000)
       this.numbers.push(n)
       await delay(1000)
-      if (this.n !== n) {
+      if (this.n !== n)
         throw new Error('Someone changed n!')
-      }
 
       return n
     },
 
-    async decrementToZero(interval: number = 300) {
-      if (this.n <= 0) return
+    async decrementToZero(interval = 300) {
+      if (this.n <= 0)
+        return
 
       while (this.n > 0) {
         this.$patch((state) => {
@@ -48,6 +49,5 @@ export const useCounter = defineStore('counter', {
   },
 })
 
-if (import.meta.hot) {
+if (import.meta.hot)
   import.meta.hot.accept(acceptHMRUpdate(useCounter, import.meta.hot))
-}

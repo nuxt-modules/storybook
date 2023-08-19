@@ -1,17 +1,14 @@
-
-
-const nuxtApp = () => import(('#app/entry')).then((m) => m.default).catch((err) => {});
+const nuxtApp = () => import(('#app/entry')).then(m => m.default).catch(() => {})
 // inject nuxt root element
-const root = document.createElement('div' );
-root.id = '__nuxt';
-root.hidden = true;
-document.body.appendChild(root);
+const root = document.createElement('div')
+root.id = '__nuxt'
+root.hidden = true
+document.body.appendChild(root)
 
 const app = nuxtApp()
 
+app.then(async (m) => {
 
-app.then( async (m) => { 
-    console.log('  vueApp mounted: ',m)
-}).catch((err) => {  console.log('  vueApp error:',err)})
+}).catch(() => {})
 
-export default app;
+export default app
