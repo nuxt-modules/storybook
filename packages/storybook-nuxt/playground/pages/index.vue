@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
-// console.log(' Home route ', route)
+const router = useRouter()
 
-watchEffect(() => {
-  // console.log('watch route ', route)
-})
-// //console.log(route)
+// eslint-disable-next-line no-console
+console.log({ route, router })
 </script>
 
 <template>

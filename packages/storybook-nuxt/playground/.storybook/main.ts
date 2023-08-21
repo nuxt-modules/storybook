@@ -1,5 +1,6 @@
 import type { StorybookConfig } from "@storybook-nuxt/framework";
 
+
 const config: StorybookConfig = {
   stories: [
     "../stories/**/*.mdx",

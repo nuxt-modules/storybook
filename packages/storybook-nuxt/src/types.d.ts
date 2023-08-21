@@ -2,9 +2,7 @@ import type { BuilderOptions, StorybookConfig as StorybookConfigBase } from '@st
 import type {
   Preview, StoryFn, StoryObj, VueRenderer, Meta, DecoratorFunction,
 } from '@storybook/vue3';
-import {
-  setup as addPluginSetup, render, decorateStory, renderToCanvas,
-} from '@storybook/vue3';
+
 
 declare let STORYBOOK_VUE_GLOBAL_PLUGINS: string[];
 declare let STORYBOOK_VUE_GLOBAL_MIXINS: string[];
@@ -33,5 +31,4 @@ export interface NuxtOptions {
 }
 export {
   Meta, StoryFn, StoryObj, Preview, VueRenderer, DecoratorFunction,
-  addPluginSetup, render, decorateStory, renderToCanvas,
 };

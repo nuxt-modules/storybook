@@ -1,8 +1,10 @@
 import { createNuxtApp, defineNuxtPlugin } from 'nuxt/app'
 import { getContext } from 'unctx'
 
-// @ts-expect-error virtual file
 import type { App } from 'vue'
+import { logger } from '../composables/logger'
+
+// @ts-expect-error virtual file
 import plugins from '#build/plugins'
 
 const globalWindow = window as any
@@ -14,28 +16,23 @@ export default defineNuxtPlugin({
   setup(nuxtApp: any) {
     if (nuxtApp.globalName !== 'nuxt')
       return
-
     const applyNuxtPlugins = async (vueApp: App, storyContext: any) => {
       const nuxt = createNuxtApp({ vueApp, globalName: `nuxt-${storyContext.id}` })
-      const nuxtAppCtx = getContext('nuxt-app')
-      nuxtAppCtx.set(nuxt, true)
+      getContext('nuxt-app').set(nuxt, true)
+      nuxt.$router = nuxtApp.$router
+      getContext(nuxt.globalName).set(nuxt, true)
 
       nuxt.hooks.callHook('app:created', vueApp)
-
       for (const plugin of plugins) {
         try {
-          if (typeof plugin === 'function' && !plugin.toString().includes('definePayloadReviver')) {
-            //  //console.log('nuxt._middleware.global ',nuxt._middleware.global)
+          if (typeof plugin === 'function' && !plugin.toString().includes('definePayloadReviver'))
             await vueApp.runWithContext(() => plugin(nuxt))
-          }
         }
         catch (e) {
-          // //console.log('error in plugin', e)
+          logger.info('error in plugin', e)
         }
       }
-
-      // nuxt._router = vueApp.config.globalProperties.$router as Route
-
+      logger.info('applyNuxtPlugins nuxt.router:', nuxt.$router)
       return nuxt
     }
 

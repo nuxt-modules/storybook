@@ -11,9 +11,9 @@ const distDir = resolve(fileURLToPath(import.meta.url), '..')
 const runtimeDir = resolve(distDir, 'runtime')
 const pluginsDir = resolve(runtimeDir, 'plugins')
 const componentsDir = resolve(runtimeDir, 'components')
-const composableDir = resolve(runtimeDir, 'composables')
+const composablesDir = resolve(runtimeDir, 'composables')
 
-const dirs = [packageDir, pluginsDir, componentsDir, composableDir]
+const dirs = [packageDir, pluginsDir, componentsDir, composablesDir]
 
 /**
  * extend nuxt-link component to use storybook router
@@ -50,10 +50,10 @@ function extendPages(nuxt: Nuxt) {
  * @param nuxt
  * */
 
-function extendComposables(nuxt: Nuxt) {
-  nuxt.hook('imports:extend', (imports: any) => {
-    imports.push({ name: 'useRouter', filePath: join(runtimeDir, 'composables/router') })
-  })
+async function extendComposables(nuxt: Nuxt) {
+  const { addImportsSources } = await import(require.resolve('@nuxt/kit'))
+  nuxt.options.build.transpile.push(composablesDir)
+  addImportsSources({ imports: ['useRouter'], from: join(composablesDir, 'router') })
 }
 /**
  *  Get devtools config from nuxt runtime config
@@ -96,11 +96,11 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
   let extendedConfig: ViteConfig = {}
 
   nuxt.hook('modules:done', () => {
+    extendComposables(nuxt)
     addPlugin({
       src: join(runtimeDir, 'plugins/storybook'),
       mode: 'client',
     })
-    extendComposables(nuxt)
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
     extendPages(nuxt)
@@ -131,10 +131,10 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     throw new Error(e)
   }
 }
-export const core: PresetProperty<'core', StorybookConfig> = async config => ({
+export const core: PresetProperty<'core', StorybookConfig> = async (config: any) => ({
   ...config,
   builder: '@storybook/builder-vite',
-  renderer: '@storybook-nuxt/framework',
+  renderer: '@storybook/vue3',
 })
 /**
  *

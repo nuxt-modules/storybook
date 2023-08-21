@@ -3,7 +3,5 @@ export function useMyComposable() {
   // useRuntimeConfig will also work
   const config = useRuntimeConfig()
   // console.log('useMyComposable config', config)
-  useRouter()
-
   return { config }
 }
