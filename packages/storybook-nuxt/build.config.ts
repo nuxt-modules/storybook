@@ -24,6 +24,7 @@ export default defineBuildConfig({
     'nuxt/schema',
     'nuxt/app',
     '@storybook/types',
+    '@storybook/vue3',
     '@vue/shared',
     '@unhead/vue',
     '@nuxt/devtools-kit',

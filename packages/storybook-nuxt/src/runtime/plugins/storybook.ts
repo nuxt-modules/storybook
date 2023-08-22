@@ -36,8 +36,8 @@ export default defineNuxtPlugin({
       return nuxt
     }
 
-    globalWindow.STORYBOOK_VUE_GLOBAL_PLUGINS = []
-    globalWindow.APPLY_PLUGINS_FUNC = applyNuxtPlugins
+    globalWindow.PLUGINS_SETUP_FUNCTIONS ||= new Set<(app: App<any>, context: any) => unknown>()
+    globalWindow.PLUGINS_SETUP_FUNCTIONS.add(applyNuxtPlugins)
   },
 
   hooks: {

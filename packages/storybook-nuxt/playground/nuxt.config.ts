@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/image',
     '@pinia/nuxt',
+    '@invictus.codes/nuxt-vuetify',
   ],
   i18n: {
     locales: ['en', 'fr', 'ar'],
