@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook-nuxt/framework'
+import type { Meta, StoryObj } from '@storybook/vue3'
 
 import MyPre from '~/components/Pre.vue'
 import MyButton from '~/components/MyButton.vue'

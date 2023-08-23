@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    // '/Users/chakir/devs/devtools/local',
+    '@nuxt/ui',
     '@nuxtjs/i18n',
     '@nuxt/image',
     '@pinia/nuxt',

@@ -7,7 +7,7 @@ import type {
 declare let STORYBOOK_VUE_GLOBAL_PLUGINS: string[];
 declare let STORYBOOK_VUE_GLOBAL_MIXINS: string[];
 
-type FrameworkName = '@storybook-nuxt/framework';
+type FrameworkName = '@storybook-vue/nuxt';
 type BuilderName = '@storybook/builder-vite';
 
 export type FrameworkOptions = NuxtOptions & {
