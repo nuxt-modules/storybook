@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook-nuxt/framework'
+import type { Meta, StoryObj } from '@storybook/vue3'
 
-import MyComponent from '~/pages/news/index.vue'
+import MyComponent from '~/pages/index.vue'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 
 const meta = {
-  title: 'Pages/News ',
+  title: 'Pages/Home ',
   component: MyComponent,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],

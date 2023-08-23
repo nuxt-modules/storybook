@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook-nuxt/framework'
+import type { Meta, StoryObj } from '@storybook/vue3'
 
 import MyComponent from '~/components/MyComposable.vue'
 

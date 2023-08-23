@@ -12,7 +12,7 @@ const config: StorybookConfig = {
     "@storybook/addon-interactions",
   ],
   framework: {
-    name: "@storybook-nuxt/framework",
+    name: "@storybook-vue/nuxt",
     options: {},
   },
   docs: {
