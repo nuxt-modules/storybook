@@ -1,0 +1,49 @@
+{
+    "name": "@storybook-vue/nuxt-storybook",
+    "version": "0.0.1-alpha.0",
+    "description": "Storybook module for Nuxt",
+    "license": "MIT",
+    "repository": "nuxt-modules/storybook",
+    "exports": {
+        ".": {
+            "import": "./dist/module.mjs",
+            "require": "./dist/module.cjs"
+        }
+    },
+    "main": "./dist/module.cjs",
+    "types": "./dist/types.d.ts",
+    "files": [
+        "dist",
+        "*.d.ts",
+        "*.cjs",
+        "*.mjs"
+    ],
+    "scripts": {
+        "build": "pnpm build:module ",
+        "build:module": "nuxt-build-module",
+        "dev": "nuxi dev playground",
+        "typecheck": "nuxi typecheck",
+        "prepack": "pnpm build",
+        "prepare": "nuxi prepare playground"
+    },
+    "devDependencies": {
+        "@iconify-json/carbon": "^1.1.20",
+        "@nuxt/devtools": "0.8.0",
+        "@nuxt/devtools-ui-kit": "0.8.0",
+        "@nuxt/module-builder": "^0.4.0",
+        "@nuxt/schema": "^3.6.5",
+        "@nuxt/test-utils": "^3.6.5",
+        "eslint": "^8.46.0",
+        "nuxt": "^3.6.5",
+        "unbuild": "^1.2.1"
+
+    },
+    "dependencies": {
+        "@nuxt/devtools-kit": "latest",
+        "@nuxt/kit": "^3.6.5",
+        "sirv": "^2.0.3"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}
