@@ -2,10 +2,11 @@ import { createNuxtApp, defineNuxtPlugin } from 'nuxt/app'
 import { getContext } from 'unctx'
 
 import type { App } from 'vue'
-import { logger } from '../composables/logger'
 
 // @ts-expect-error virtual file
 import plugins from '#build/plugins'
+
+const logger = console
 
 const globalWindow = window as any
 
