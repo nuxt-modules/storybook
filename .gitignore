@@ -1,2 +1,12 @@
 node_modules
-node_modules
+dist
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
