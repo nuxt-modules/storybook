@@ -5,7 +5,7 @@ import type { Nuxt } from 'nuxt/schema'
 import { logger } from '@nuxt/kit'
 
 export async function setupStorybook(nuxt: Nuxt) {
-  const inited = await existsSync(resolve(nuxt.options.rootDir, '.storybook'))
+  const inited = await existsSync(resolve(nuxt.options.rootDir, '.storybook/main'))
   logger.log(' setupStorybook : ', nuxt.options.dev ? 'DevMode' : 'Prod', { inited })
 
   const projectDir = resolve(nuxt.options.rootDir)
