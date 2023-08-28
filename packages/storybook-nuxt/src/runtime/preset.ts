@@ -4,7 +4,7 @@ import type { PresetProperty } from '@storybook/types'
 import { type UserConfig as ViteConfig, mergeConfig, searchForWorkspaceRoot } from 'vite'
 import type { Nuxt } from '@nuxt/schema'
 
-import type { StorybookConfig } from './types'
+import type { StorybookConfig } from '../types'
 
 const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(import.meta.url), '..')

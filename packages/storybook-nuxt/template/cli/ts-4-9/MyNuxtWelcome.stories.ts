@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook-vue/nuxt'
+import type { Meta, StoryObj } from '@storybook/vue3'
 
 import MyNuxtWelcome from './MyWelcome.vue'
 

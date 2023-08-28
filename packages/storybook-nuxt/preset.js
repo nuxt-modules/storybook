@@ -1,1 +1,1 @@
-module.exports = require('./dist/preset.cjs') // or .esm.js if you use ESM
+module.exports = require('./dist/runtime/preset') // or .esm.js if you use ESM
