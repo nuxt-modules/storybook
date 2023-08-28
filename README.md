@@ -15,7 +15,7 @@ update your nuxt.config
 
 ```ts
   modules: [
-    '../src/module',
+    '@storybook-vue/nuxt-storybook',
   ],
   storybook: {
     url: 'http://localhost:6006',
