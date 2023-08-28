@@ -12,8 +12,7 @@ export async function setupStorybook(nuxt: Nuxt) {
   const args = inited ? 
               ['storybook', 'dev', '--port', '6006', '--ci'] : 
               ['storybook-nuxt', 'init', '--yes', '--force']
-  logger.log(' args : ', args)
-  logger.log(' projectDir : ', projectDir)
+
   if (!nuxt.options.dev)
     return
   const _process = startSubprocess(
