@@ -6,7 +6,7 @@ export default defineBuildConfig({
     // Core
     { input: 'src/index' },
     // Preset
-    { input: 'src/preset' },
+    { input: 'src/preset', outDir: 'dist/', format: 'esm', ext: 'js' },
     // Runtime dirs
     { input: 'src/preview', outDir: 'dist/', ext: 'js' },
     {
