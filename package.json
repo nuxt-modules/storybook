@@ -1,6 +1,6 @@
 {
     "name": "@storybook-vue/nuxt-storybook",
-    "version": "0.0.1-alpha.3",
+    "version": "0.0.1-alpha.4",
     "description": "Storybook module for Nuxt",
     "license": "MIT",
     "repository": "nuxt-modules/storybook",
@@ -46,5 +46,11 @@
     "publishConfig": {
         "access": "public"
     },
-    "packageManager": "pnpm@8.1.2"
+    "packageManager": "pnpm@8.1.2",
+    "pnpm": {
+        "overrides": {
+            "@nuxt/kit": "^3.6.5",
+            "typescript": "^5.4.2"
+        }
+    }
 }
