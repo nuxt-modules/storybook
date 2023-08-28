@@ -19,7 +19,7 @@ update your nuxt.config
   ],
   storybook: {
     url: 'http://localhost:6006',
-    storybookRoute: '/__storybook',
+    storybookRoute: '/__storybook__',
     port: 6006,
   },
 ```
