@@ -6,8 +6,10 @@ import type { Nuxt } from '@nuxt/schema'
 
 import type { StorybookConfig } from '../types'
 
-const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
-const distDir = resolve(fileURLToPath(import.meta.url), '..')
+const packageDir = resolve(fileURLToPath(
+  import.meta.url), '../../..')
+const distDir = resolve(fileURLToPath(
+  import.meta.url), '../../..', 'dist')
 const runtimeDir = resolve(distDir, 'runtime')
 const pluginsDir = resolve(runtimeDir, 'plugins')
 const componentsDir = resolve(runtimeDir, 'components')
