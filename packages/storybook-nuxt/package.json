@@ -27,7 +27,7 @@
     },
     "./preset": {
       "types": "./dist/preset.d.ts",
-      "require": "./dist/preset.cjs"
+      "require": "./dist/server/preset.js"
     },
     "./preview": {
       "types": "./dist/preview.d.ts",
@@ -89,7 +89,6 @@
   "bundler": {
     "entries": [
       "./src/index.ts",
-      "./src/preset.ts",
       "./src/preview.ts"
     ],
     "platform": "node"
