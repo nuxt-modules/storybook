@@ -4,19 +4,18 @@ import type { PresetProperty } from '@storybook/types'
 import { type UserConfig as ViteConfig, mergeConfig, searchForWorkspaceRoot } from 'vite'
 import type { Nuxt } from '@nuxt/schema'
 
-import type { StorybookConfig } from '../types'
+import type { StorybookConfig } from './types'
 
 const packageDir = resolve(fileURLToPath(
-  import.meta.url), '../../..')
+  import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(
-  import.meta.url), '../../..', 'dist')
+  import.meta.url), '../..', 'dist')
 const runtimeDir = resolve(distDir, 'runtime')
 const pluginsDir = resolve(runtimeDir, 'plugins')
 const componentsDir = resolve(runtimeDir, 'components')
 const composablesDir = resolve(runtimeDir, 'composables')
 
-const dirs = [packageDir, pluginsDir, componentsDir, composablesDir]
-
+const dirs = [distDir, packageDir, pluginsDir, componentsDir, composablesDir]
 /**
  * extend nuxt-link component to use storybook router
  * @param nuxt
@@ -140,11 +139,13 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     throw new Error(e)
   }
 }
-export const core: PresetProperty<'core', StorybookConfig> = async (config: any) => ({
-  ...config,
-  builder: '@storybook/builder-vite',
-  renderer: '@storybook/vue3',
-})
+export const core: PresetProperty<'core', StorybookConfig> = async (config: any) => {
+  return ({
+    ...config,
+    builder: '@storybook/builder-vite',
+    renderer: '@storybook/vue3',
+  })
+}
 /**
  *
  * @param entry preview entries

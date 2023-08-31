@@ -1,6 +1,6 @@
 {
   "name": "@storybook-vue/nuxt",
-  "version": "0.0.7",
+  "version": "0.0.8-alpha.0",
   "packageManager": "pnpm@8.6.12",
   "description": "Storybook for Nuxt and Vite: Develop Vue3 components in isolation with Hot Reloading.",
   "license": "MIT",
@@ -27,7 +27,7 @@
     },
     "./preset": {
       "types": "./dist/preset.d.ts",
-      "require": "./dist/server/preset.js"
+      "require": "./dist/preset.cjs"
     },
     "./preview": {
       "types": "./dist/preview.d.ts",
@@ -60,28 +60,29 @@
     "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
-    "nuxt": "^3.6.5",
     "vite": "^4.0.0",
-    "vue": "^3.2.31"
+    "vue": "^3.3.4"
   },
   "dependencies": {
     "@nuxt/devtools-kit": "^0.7.6",
     "@nuxt/kit": "^3.6.5",
     "@nuxt/schema": "^3.6.5",
     "@nuxt/vite-builder": "^3.6.5",
-    "@storybook/builder-vite": "7.4.0-alpha.2",
-    "@storybook/vue3": "npm:@storybook-vue/vue3@7.4.0-alpha.2.1",
-    "@storybook/vue3-vite": "npm:@storybook-vue/vue3-vite@7.4.0-alpha.2",
+    "@storybook/builder-vite": "next",
+    "@storybook/vue3": "next",
+    "@storybook/vue3-vite": "next",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.27",
     "postcss-import": "^15.1.0",
-    "postcss-url": "^10.1.3"
+    "postcss-url": "^10.1.3",
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@storybook/types": "7.4.0-alpha.2",
+    "@storybook/types": "next",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
-    "unbuild": "^1.2.1"
+    "nuxt": "^3.6.5",
+    "vite": "^4.0.0"
   },
   "publishConfig": {
     "access": "public"
@@ -89,7 +90,8 @@
   "bundler": {
     "entries": [
       "./src/index.ts",
-      "./src/preview.ts"
+      "./src/preview.ts",
+      "./src/preset.ts"
     ],
     "platform": "node"
   }
