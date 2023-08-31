@@ -1,1 +1,1 @@
-module.require('./dist/preset')
+module.require('./dist/preset.cjs')
