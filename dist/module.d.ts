@@ -31,7 +31,7 @@ interface ModuleOptions {
     devtools?: boolean;
     /**
      * Storybook Route
-     * @default '/__storybook'
+     * @default '/__storybook_route'
      */
     storybookRoute?: string;
     /**
