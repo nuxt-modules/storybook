@@ -1,7 +1,5 @@
 <template>
-  <h1> Welcome Nuxt to Storybook : </h1>Welcome to Storybook  ❤️ Nuxt <NuxtLink class="readmore" to="https://github.com/storybook-vue/nuxt">
-    Learn more
-  </NuxtLink>
+  <h1> Welcome Nuxt to Storybook  </h1>
   <NuxtWelcome />
 </template>
 
