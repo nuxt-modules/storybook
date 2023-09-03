@@ -102,30 +102,31 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       logger.info('  ')
       nuxt.options.devtools = true
       // nuxt.callHook('devtools:initialized', () => {})
+      if (nuxt.options.devtools) {
+      
+        nuxt.hook('devtools:customTabs', (tabs) => {
+          tabs.push({
+            // unique identifier
+            name: 'nuxt-storybook',
+            // title to display in the tab
+            title: 'Storybook',
+            // any icon from Iconify, or a URL to an image
+            icon: 'devicon:storybook',
+            // iframe view
+            view: {
+              type: 'iframe',
+              // absolute URL to the iframes
+              src: `${STORYBOOK_ROUTE}/`,
+            },
+          })
+        })
+  
+      }
     })
 
     logger.info('')
     logger.info(' devtools :',  nuxt.options.devtools,' STORYBOOK_URL :', STORYBOOK_URL)
-    if (nuxt.options.devtools) {
-      
-      nuxt.hook('devtools:customTabs', (tabs) => {
-        tabs.push({
-          // unique identifier
-          name: 'nuxt-storybook',
-          // title to display in the tab
-          title: 'Storybook',
-          // any icon from Iconify, or a URL to an image
-          icon: 'devicon:storybook',
-          // iframe view
-          view: {
-            type: 'iframe',
-            // absolute URL to the iframes
-            src: `${STORYBOOK_ROUTE}/`,
-          },
-        })
-      })
-
-    }
+   
   
 
 }
