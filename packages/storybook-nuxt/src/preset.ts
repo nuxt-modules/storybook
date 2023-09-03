@@ -16,6 +16,7 @@ const componentsDir = resolve(runtimeDir, 'components')
 const composablesDir = resolve(runtimeDir, 'composables')
 
 const dirs = [distDir, packageDir, pluginsDir, componentsDir, composablesDir]
+
 /**
  * extend nuxt-link component to use storybook router
  * @param nuxt
@@ -130,6 +131,7 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
   try {
     await buildNuxt(nuxt)
 
+    nuxt.options.dev = true
     return {
       viteConfig: extendedConfig,
       nuxt,
@@ -162,7 +164,6 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     return ViteFile(c, o)
   }
   const nuxtConfig = await defineNuxtConfig(await getStorybookViteConfig(config, options))
-  const { enabled, proxy } = getDevtoolsConfig(nuxtConfig.nuxt)
 
   return mergeConfig(nuxtConfig.viteConfig, {
     build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
@@ -170,17 +171,6 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
       __NUXT__: JSON.stringify({ config: nuxtConfig.nuxt.options.runtimeConfig }),
     },
     server: {
-      cors: true,
-      proxy: {
-        '/__storybook_preview__': {
-          target: '/iframe.html',
-          changeOrigin: false,
-          secure: false,
-          rewrite: (path: string) => path.replace('/__storybook_preview__', '/iframe.html'),
-          ws: true,
-        },
-        ...(enabled ? proxy : {}),
-      },
       fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
     },
     preview: {
