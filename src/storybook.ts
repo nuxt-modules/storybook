@@ -62,16 +62,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       followRedirects: true,
       secure: false,
       rewrite: (path: string) =>  path.replace(STORYBOOK_ROUTE, ''),
-      ws: true,
-      configure: (proxy, options) => {
-        // proxy will be an instance of 'http-proxy'
-        proxy.on('proxyReq', ( proxyReq, req, res ) => {
-          // logger.info('     ')
-           logger.info('storybookProxy 🔗  req : ', req.url)
-          // logger.info(' headers ', req.headers)
-
-        })
-      },
+      ws: true
     }
 
 
@@ -109,23 +100,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       config.server.proxy['/pages'] = storybookProxy
       config.server.proxy['/storybook-server-channel'] = storybookProxy
 
-      // config.server.middlewares ??= {}
-      logger.info('  ')
-      config.server.middlewareMode = true
-      console.log(  config.server.middlewareMode)
-      //
-      config.server.middlewares = config.server.middlewares || {}
-      console.log(' middlewares ',  config.server.middlewares)
-      config.server.middlewares['/'] = {
-        handler: (req, res, next) => {
-          logger.info(' ')
-          logger.info('🔗  req : ', req.url)
-          logger.info(' headers ', req.headers)
-          next()
-        }
-      }
-
-  
+      //  
     })
    
     nuxt.hook('build:done', () => {
