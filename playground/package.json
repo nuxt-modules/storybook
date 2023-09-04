@@ -7,12 +7,17 @@
         "generate": "nuxt generate",
         "preview": "nuxt preview",
         "storybook": "storybook dev --port 6006",
-        "build-storybook": "storybook build"
+        "build-storybook": "storybook build",
+        "postinstall": "nuxt prepare"
     },
     "devDependencies": {
-        "@nuxt/devtools": "0.8.0",
+        "@invictus.codes/nuxt-vuetify": "^0.3.0",
+        "@nuxt/devtools": "latest",
+        "@nuxt/image": "rc",
         "@nuxt/ui": "0.4.1",
-        "@storybook-vue/nuxt": "next",
+        "@nuxtjs/i18n": "8.0.0-rc.4",
+        "@pinia/nuxt": "^0.4.11",
+        "@storybook-vue/nuxt": "latest",
         "@storybook/addon-essentials": "next",
         "@storybook/addon-interactions": "next",
         "@storybook/addon-links": "next",
@@ -25,7 +30,9 @@
         "nuxt": "^3.6.5",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "storybook": "next"
+        "storybook": "next",
+        "typescript": "^5.1.0",
+        "vue-router": "^4.2.4"
     },
     "pnpm": {
         "overrides": {

@@ -13,7 +13,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
   const STORYBOOK_URL = 'http://localhost:'+ STORYBOOK_PORT
   
     
-  options.port = STORYBOOK_PORT 
+
   process.env.__STORYBOOK__ = JSON.stringify( options ) 
   process.env.STORYBOOK_PORT = JSON.stringify(STORYBOOK_PORT)
   
@@ -23,15 +23,14 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
               ['storybook-nuxt@next', 'init']
 
   logger.info(' ')
-  logger.info('📚  Starting Storybook  ') 
-  logger.info('    Storybook args: ', args)  
+  logger.info( isStorybookInstalled(projectDir) ? '📚  Storybook is installed' : '📚  Storybook is not installed' )
   logger.info('')           
 
   if (!nuxt.options.dev)
     return
 
   nuxt.hook('app:resolve', async () => {
-      logger.info(' ')
+
       const _process = startSubprocess(
         {
           command: 'npx',
@@ -40,7 +39,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
         },
         {
           id: 'nuxt-storybook-module:client',
-          name: 'Nuxt Storybook Module Client Dev',
+          name: 'Storybook Server Terminal',
         },
         nuxt,
       )
@@ -48,13 +47,13 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       _process.getProcess().stderr?.pipe(process.stderr)
 
       nuxt.hook('close', () => {
-          logger.info('📚 Closing Storybook  ') 
+          logger.info(' ⚠️ Closing Storybook  ') 
           return _process.terminate()
         }
       )
 
       await new Promise(resolve => setTimeout(resolve, 2000))
-      logger.info('📚 Storybook ready  ')
+      logger.info('ℹ️ Storybook ready  ')
     } )
 
     const storybookProxy = {
@@ -63,11 +62,22 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       followRedirects: true,
       secure: false,
       rewrite: (path: string) =>  path.replace(STORYBOOK_ROUTE, ''),
+      ws: true,
+      configure: (proxy, options) => {
+        // proxy will be an instance of 'http-proxy'
+        proxy.on('proxyReq', ( proxyReq, req, res ) => {
+          // logger.info('     ')
+           logger.info('storybookProxy 🔗  req : ', req.url)
+          // logger.info(' headers ', req.headers)
+
+        })
+      },
     }
 
+
     extendViteConfig((config) => {
-      logger.info('  ')
-      logger.info(`🔌  extendViteConfig : `)
+      // logger.info('  ')
+      // logger.info(`🔌  extendViteConfig : `)
 
       config.optimizeDeps ??=  {}
       config.optimizeDeps.include = config.optimizeDeps.include || []
@@ -76,57 +86,74 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
 
       config.server ??= {}
       config.server.proxy ??= {}
+
       config.server.proxy[STORYBOOK_ROUTE] = storybookProxy
       config.server.proxy['/@vite/client'] = storybookProxy
       config.server.proxy['/virtual:/@storybook'] = storybookProxy
       config.server.proxy['/node_modules'] = storybookProxy
       config.server.proxy['/.storybook'] = storybookProxy
+      config.server.proxy['/stores'] = storybookProxy
+    
       config.server.proxy['/stories'] = storybookProxy
+      config.server.proxy['/assets'] = storybookProxy
       config.server.proxy['/@id'] = storybookProxy
       config.server.proxy['/@fs'] = storybookProxy
       config.server.proxy['/app.vue'] = storybookProxy
+      config.server.proxy['/.nuxt'] = storybookProxy
       config.server.proxy['/.nuxt/app.config.mjs'] = storybookProxy
       config.server.proxy['/.nuxt/components/plugin.js'] = storybookProxy
+      config.server.proxy['/.nuxt/i18n.options.mjs'] = storybookProxy
       config.server.proxy['/components'] = storybookProxy
       config.server.proxy['/composables'] = storybookProxy
       config.server.proxy['/layouts'] = storybookProxy
       config.server.proxy['/pages'] = storybookProxy
       config.server.proxy['/storybook-server-channel'] = storybookProxy
 
+      // config.server.middlewares ??= {}
+      logger.info('  ')
+      config.server.middlewareMode = true
+      console.log(  config.server.middlewareMode)
+      //
+      config.server.middlewares = config.server.middlewares || {}
+      console.log(' middlewares ',  config.server.middlewares)
+      config.server.middlewares['/'] = {
+        handler: (req, res, next) => {
+          logger.info(' ')
+          logger.info('🔗  req : ', req.url)
+          logger.info(' headers ', req.headers)
+          next()
+        }
+      }
+
   
     })
-
+   
     nuxt.hook('build:done', () => {
       logger.info(' ')
-      logger.info('📚  Storybook build done  ')
+      logger.info('✔ Storybook build done  ')
       logger.info('  ')
       nuxt.options.devtools = true
       // nuxt.callHook('devtools:initialized', () => {})
-      if (nuxt.options.devtools) {
-      
-        nuxt.hook('devtools:customTabs', (tabs) => {
-          tabs.push({
-            // unique identifier
-            name: 'nuxt-storybook',
-            // title to display in the tab
-            title: 'Storybook',
-            // any icon from Iconify, or a URL to an image
-            icon: 'devicon:storybook',
-            // iframe view
-            view: {
-              type: 'iframe',
-              // absolute URL to the iframes
-              src: `${STORYBOOK_ROUTE}/`,
-            },
-          })
-        })
-  
-      }
+     
     })
-
-    logger.info('')
-    logger.info(' devtools :',  nuxt.options.devtools,' STORYBOOK_URL :', STORYBOOK_URL)
-   
+    logger.info('🔗 STORYBOOK_URL :', STORYBOOK_URL)
+    
+    nuxt.hook('devtools:customTabs', (tabs) => {
+      tabs.push({
+        // unique identifier
+        name: 'nuxt-storybook',
+        // title to display in the tab
+        title: 'Storybook',
+        // any icon from Iconify, or a URL to an image
+        icon: 'devicon:storybook',
+        // iframe view
+        view: {
+          type: 'iframe',
+          // absolute URL to the iframes
+          src: `${STORYBOOK_ROUTE}/`,
+        },
+      })
+    })
   
 
 }

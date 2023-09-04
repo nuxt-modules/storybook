@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-import MyNuxtWelcome from '~/components/MyWelcome.vue'
+import MyComponent from '~/components/pinia/index.vue'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 
 const meta = {
-  title: 'Components/NuxtWelcome ',
-  component: MyNuxtWelcome,
+  title: 'Plugins/Pinia ',
+  component: MyComponent,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],
 
-} satisfies Meta<typeof MyNuxtWelcome>
+} satisfies Meta<typeof MyComponent>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -20,6 +20,6 @@ type Story = StoryObj<typeof meta>
  * to learn how to use render functions.
  */
 
-export const Welcome: Story = {
-  args: {},
+export const Pinia: Story = {
+  args: { msg: 'Storybook ❤️‍🔥 Nuxt ❤️‍🔥 Pinia' },
 }

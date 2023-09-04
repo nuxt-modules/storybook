@@ -67,11 +67,11 @@ export default defineNuxtModule<ModuleOptions>({
   },
   async setup(options, nuxt) {
     
-    console.log(' devtools :', nuxt.options.devtools )
+
     if(process.env.__STORYBOOK__)
      return
    
-    logger.info('Storybook Module Setup')
+    logger.info('🔌  Storybook Module Setup')
     // Default runtimeConfig
   
     const { resolve } = createResolver(import.meta.url)
