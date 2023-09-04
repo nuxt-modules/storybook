@@ -18,12 +18,12 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
   process.env.STORYBOOK_PORT = JSON.stringify(STORYBOOK_PORT)
   
   const projectDir = resolve(nuxt.options.rootDir)
-  const args = isStorybookInstalled(projectDir) ? 
+  const args = isStorybookConfigured(projectDir) ? 
               ['storybook', 'dev', '--port',  `${STORYBOOK_PORT}`, '--ci'] : 
               ['storybook-nuxt@next', 'init']
 
   logger.info(' ')
-  logger.info( isStorybookInstalled(projectDir) ? '📚  Storybook is installed' : '📚  Storybook is not installed' )
+  logger.info( isStorybookConfigured(projectDir) ? '📚  Storybook is already configured' : '📚  Storybook is not installed' )
   logger.info('')           
 
   if (!nuxt.options.dev)
@@ -67,8 +67,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
 
 
     extendViteConfig((config) => {
-      // logger.info('  ')
-      // logger.info(`🔌  extendViteConfig : `)
+    
 
       config.optimizeDeps ??=  {}
       config.optimizeDeps.include = config.optimizeDeps.include || []
@@ -107,10 +106,9 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       logger.info(' ')
       logger.info('✔ Storybook build done  ')
       logger.info('  ')
-      nuxt.options.devtools = true
-      // nuxt.callHook('devtools:initialized', () => {})
-     
+      nuxt.options.devtools = true     
     })
+    
     logger.info('🔗 STORYBOOK_URL :', STORYBOOK_URL)
     
     nuxt.hook('devtools:customTabs', (tabs) => {
@@ -133,9 +131,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
 
 }
 
-
-
-function isStorybookInstalled(rootDir: string) {
+function isStorybookConfigured(rootDir: string) {
 
    const isTypeScriptProject = existsSync(resolve(rootDir, 'tsconfig.json'))
    const configFileExtension = isTypeScriptProject ? 'ts' : 'js'
