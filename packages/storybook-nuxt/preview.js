@@ -1,1 +1,1 @@
-export * from './dist/preview'
+export * from './dist/runtime/preview.js'

@@ -155,7 +155,7 @@ export const core: PresetProperty<'core', StorybookConfig> = async (config: any)
  * @returns preview entries with nuxt runtime
  */
 export const previewAnnotations: StorybookConfig['previewAnnotations'] = (entry = [], options) => {
-  const previewPath = resolve(runtimeDir, 'preview')
+  const previewPath = resolve(packageDir, 'preview')
   logger.log('previewAnnotations preview:', previewPath)
   return [...entry, previewPath]
 }
