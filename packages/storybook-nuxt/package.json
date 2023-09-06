@@ -1,6 +1,6 @@
 {
   "name": "@storybook-vue/nuxt",
-  "version": "0.0.9-beta.2",
+  "version": "0.0.9-beta.3",
   "packageManager": "pnpm@8.6.12",
   "description": "Storybook for Nuxt and Vite: Develop Vue3 components in isolation with Hot Reloading.",
   "license": "MIT",
@@ -30,9 +30,9 @@
       "require": "./dist/preset.cjs"
     },
     "./preview": {
-      "types": "./dist/preview.d.ts",
-      "import": "./dist/preview.mjs",
-      "require": "./dist/preview.cjs"
+      "types": "./dist/runtime/preview.d.ts",
+      "import": "./dist/runtime/preview.mjs",
+      "require": "./dist/runtime/preview.cjs"
     },
     "./package.json": "./package.json"
   },
