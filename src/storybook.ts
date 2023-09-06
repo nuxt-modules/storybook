@@ -12,10 +12,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
   const STORYBOOK_PORT =  await getPort({ ports: [options.port || 6006 , 6007, 6008, 6009, 6010]})
   const STORYBOOK_URL = 'http://localhost:'+ STORYBOOK_PORT
   
-    
-
   process.env.__STORYBOOK__ = JSON.stringify( options ) 
-  process.env.STORYBOOK_PORT = JSON.stringify(STORYBOOK_PORT)
   
   const projectDir = resolve(nuxt.options.rootDir)
   const args = isStorybookConfigured(projectDir) ? 
@@ -23,7 +20,8 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
               ['storybook-nuxt@next', 'init']
 
   logger.info(' ')
-  logger.info( isStorybookConfigured(projectDir) ? '📚  Storybook is already configured' : '📚  Storybook is not installed' )
+  logger.info( isStorybookConfigured(projectDir) ?
+   '📚  Storybook is already configured' : '📚  Storybook is not installed' )
   logger.info('')           
 
   if (!nuxt.options.dev)
@@ -123,7 +121,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
         view: {
           type: 'iframe',
           // absolute URL to the iframes
-          src: `${STORYBOOK_ROUTE}/`,
+          src: STORYBOOK_URL ,//`${STORYBOOK_ROUTE}/`,
         },
       })
     })
