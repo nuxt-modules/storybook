@@ -5,6 +5,7 @@ export default defineBuildConfig({
   entries: [
     { input: 'src/index' },
     { input: 'src/preset', outDir: 'dist/', format: 'cjs', ext: 'js' },
+    { input: 'src/preview', outDir: 'dist/', format: 'esm', ext: 'js' },
     {
       input: 'src/runtime/', outDir: 'dist/runtime', format: 'esm', ext: 'js',
     },

@@ -1,4 +1,5 @@
 import { type Preview } from "@storybook/vue3";
+import { config } from '@storybook-vue/nuxt/preview'
 
 const preview: Preview = {
   parameters: {
@@ -12,5 +13,5 @@ const preview: Preview = {
   },
   
 };
-console.log('.storybook Preview =============')
+console.log('.storybook Preview =============', config.framework, config.renderer, config.version)
 export default preview;
