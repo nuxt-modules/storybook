@@ -178,9 +178,6 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     server: {
       fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
     },
-    preview: {
-      headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*' },
-    },
     envPrefix: ['NUXT_'],
   })
 }
