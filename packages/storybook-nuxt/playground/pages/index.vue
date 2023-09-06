@@ -6,7 +6,7 @@ defineProps({
 
 <template>
   <div>
-    Home
+    Home Storybook
   </div>
   <div>
     {{ msg }}

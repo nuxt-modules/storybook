@@ -17,6 +17,7 @@ const composablesDir = resolve(runtimeDir, 'composables')
 
 const dirs = [distDir, packageDir, pluginsDir, componentsDir, composablesDir]
 
+const logger = console
 /**
  * extend nuxt-link component to use storybook router
  * @param nuxt
@@ -37,12 +38,12 @@ function extendComponents(nuxt: Nuxt) {
 
 function extendPages(nuxt: Nuxt) {
   nuxt.hook('pages:extend', (pages: any) => {
-  // //console.log(' storyboo-iframe :',  pages.find(({ name }: any) => name === 'storybook-iframe'))
-    pages.push({
-      name: 'storybook-iframe',
-      path: '/iframe.html',
-      redirect: '/__storybook_preview__',
-    })
+    logger.info(' storyboo-iframe :', pages.find(({ name }: any) => name === 'storybook-iframe'))
+    // pages.push({
+    //   name: 'storybook-iframe',
+    //   path: '/iframe.html',
+    //   redirect: '/__storybook_preview__',
+    // })
   })
 }
 
@@ -153,7 +154,11 @@ export const core: PresetProperty<'core', StorybookConfig> = async (config: any)
  * @param entry preview entries
  * @returns preview entries with nuxt runtime
  */
-export const previewAnnotations: StorybookConfig['previewAnnotations'] = (entry = []) => [...entry, resolve(join(__dirname, '../preview'))]
+export const previewAnnotations: StorybookConfig['previewAnnotations'] = (entry = [], options) => {
+  const preview = resolve(packageDir, 'preview')
+  logger.log('previewAnnotations preview:', preview)
+  return [...entry, preview]
+}
 
 export const viteFinal: StorybookConfig['viteFinal'] = async (
   config: Record<string, any>,

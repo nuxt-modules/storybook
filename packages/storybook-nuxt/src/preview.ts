@@ -10,7 +10,7 @@ const app = nuxtApp()
 
 app.then(async (m) => {
   const vueApp = await m()
-  c.log(' preview.ts app.then vueApp:', vueApp)
+  c.log('=====storybook-vue/nuxt preview.ts app.then vueApp:', vueApp)
 }).catch(() => {})
 
 export default app
