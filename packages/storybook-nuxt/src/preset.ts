@@ -17,6 +17,8 @@ const composablesDir = resolve(runtimeDir, 'composables')
 
 const dirs = [distDir, packageDir, pluginsDir, componentsDir, composablesDir]
 
+let nuxt: Nuxt
+
 /**
  * extend nuxt-link component to use storybook router
  * @param nuxt
@@ -41,36 +43,10 @@ async function extendComposables(nuxt: Nuxt) {
   nuxt.options.build.transpile.push(composablesDir)
   addImportsSources({ imports: ['useRouter'], from: join(composablesDir, 'router') })
 }
-/**
- *  Get devtools config from nuxt runtime config
- * @param nuxt
- * @returns
- */
-export function getDevtoolsConfig(nuxt: Nuxt) {
-  const devtools = nuxt.options.runtimeConfig.public.devtools as Record<string, any> || {}
-  const port = devtools.port?.toString() ?? '12442'
-  const route = '/__nuxt_devtools__/client'
-  const proxy = {
-    [route]:
-    {
-      target: `http://localhost:${port}${route}`,
-      changeOrigin: true,
-      secure: false,
-      rewrite: (path: string) => path.replace(route, ''),
-      ws: true,
-    },
-  }
-  return {
-    enabled: nuxt.options.devtools,
-    port,
-    route,
-    proxy,
-  }
-}
 
 async function defineNuxtConfig(baseConfig: Record<string, any>) {
-  const { loadNuxt, buildNuxt, addPlugin } = await import(require.resolve('@nuxt/kit'))
-  const nuxt: Nuxt = await loadNuxt({
+  const { loadNuxt, buildNuxt, addPlugin, extendPages } = await import(require.resolve('@nuxt/kit'))
+  nuxt = await loadNuxt({
     rootDir: baseConfig.root,
     ready: false,
     dev: false,
@@ -96,6 +72,13 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     })
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
+    // Add iframe page
+    extendPages((pages: any) => {
+      pages.push({
+        name: 'storybook-iframe',
+        path: '/iframe.html',
+      })
+    })
 
     nuxt.hook(
       'vite:extendConfig',
@@ -115,6 +98,7 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     await buildNuxt(nuxt)
 
     nuxt.options.dev = true
+
     return {
       viteConfig: extendedConfig,
       nuxt,
@@ -136,7 +120,7 @@ export const core: PresetProperty<'core', StorybookConfig> = async (config: any)
  * @param entry preview entries
  * @returns preview entries with nuxt runtime
  */
-export const previewAnnotations: StorybookConfig['previewAnnotations'] = (entry = []) => {
+export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (entry = []) => {
   return [...entry, resolve(packageDir, 'preview')]
 }
 
