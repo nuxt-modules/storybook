@@ -6,7 +6,7 @@ import type { App } from 'vue'
 // @ts-expect-error virtual file
 import plugins from '#build/plugins'
 
-const logger = console
+const logger = { info: (..._args: any) => '' }
 
 const globalWindow = window as any
 
@@ -30,7 +30,7 @@ export default defineNuxtPlugin({
             await vueApp.runWithContext(() => plugin(nuxt))
         }
         catch (e) {
-          logger.info('error in plugin', e)
+          logger.info('error in plugin', plugin.name)
         }
       }
       logger.info('applyNuxtPlugins nuxt.router:', nuxt.$router)
