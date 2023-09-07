@@ -77,11 +77,6 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
     
     nuxt.options.ssr = false
-    // Transpile runtime
-    const runtimeDir = resolve('./runtime')
-    nuxt.options.build.transpile.push(runtimeDir)
-    // Add composables
-    addImportsDir(resolve(runtimeDir, 'composables'))
         
     setupStorybook(options, nuxt)
   },
