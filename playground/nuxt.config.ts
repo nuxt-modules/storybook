@@ -5,7 +5,6 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/i18n',
     '@nuxt/image',
-    '@pinia/nuxt',
     '@invictus.codes/nuxt-vuetify',
     // '@storybook-vue/nuxt-storybook'
     '../src/module.ts'
@@ -27,9 +26,6 @@ export default defineNuxtConfig({
       host: 'localhost',
       port: 3000,
     },
-  },
-  pinia: {
-    autoImports: ['defineStore', 'acceptHMRUpdate'],
   },
   imports: {
     dirs: ['./stores'],
