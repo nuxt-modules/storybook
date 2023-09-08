@@ -1,10 +1,10 @@
 import { resolve } from 'node:path'
 import { existsSync } from 'node:fs'
 import { startSubprocess } from '@nuxt/devtools-kit'
-import { logger } from '@nuxt/kit'
 import { Nuxt } from 'nuxt/schema'
 import { getPort } from 'get-port-please'
 import { extendViteConfig } from '@nuxt/kit'
+import { logger } from '@nuxt/kit'
 
 
 export async function setupStorybook(options: any, nuxt: Nuxt) {
@@ -86,16 +86,16 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       config.server.proxy['/@fs'] = storybookProxy
       config.server.proxy['/app.vue'] = storybookProxy
       config.server.proxy['/.nuxt'] = storybookProxy
-      config.server.proxy['/.nuxt/app.config.mjs'] = storybookProxy
-      config.server.proxy['/.nuxt/components/plugin.js'] = storybookProxy
-      config.server.proxy['/.nuxt/i18n.options.mjs'] = storybookProxy
+      config.server.proxy['/app.config.mjs'] = storybookProxy
+
+      config.server.proxy['/i18n.options.mjs'] = storybookProxy
       config.server.proxy['/components'] = storybookProxy
       config.server.proxy['/composables'] = storybookProxy
       config.server.proxy['/layouts'] = storybookProxy
       config.server.proxy['/pages'] = storybookProxy
       config.server.proxy['/storybook-server-channel'] = storybookProxy
 
-      //  
+      
     })
    
     nuxt.hook('build:done', () => {

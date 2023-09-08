@@ -1,6 +1,6 @@
 {
     "name": "@storybook-vue/nuxt-storybook",
-    "version": "0.0.1-rc.3",
+    "version": "0.0.1-rc.4",
     "description": "Storybook module for Nuxt",
     "license": "MIT",
     "repository": "storybook-vue/nuxt-storybook",
@@ -38,6 +38,7 @@
     "dependencies": {
         "@nuxt/devtools-kit": "0.8.2",
         "@nuxt/kit": "^3.7.0",
+        "consola": "^3.2.3",
         "get-port-please": "^3.0.2"
     },
     "publishConfig": {
