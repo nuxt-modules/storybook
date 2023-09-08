@@ -15,7 +15,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
   const projectDir = resolve(nuxt.options.rootDir)
   const args = isStorybookConfigured(projectDir) ? 
               ['storybook', 'dev', '--port',  `${STORYBOOK_PORT}`, '--ci'] : 
-              ['storybook-nuxt', 'init', '--start']
+              ['storybook-nuxt', 'init', '--start', '--port',  `${STORYBOOK_PORT}`, '--ci']
 
   logger.info(' ')
   logger.info( isStorybookConfigured(projectDir) ?
