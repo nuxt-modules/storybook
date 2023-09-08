@@ -25,6 +25,9 @@ update your nuxt.config
 ```
 
 `pnpm dev`
+## Demo
+
+https://github.com/chakAs3/nuxt-storybook-module-demo
 
 ## Contributing
 
