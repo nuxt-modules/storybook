@@ -89,6 +89,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       config.server.proxy['/app.config.mjs'] = storybookProxy
 
       config.server.proxy['/i18n.options.mjs'] = storybookProxy
+      config.server.proxy['/i18n.config.ts'] = storybookProxy
       config.server.proxy['/components'] = storybookProxy
       config.server.proxy['/composables'] = storybookProxy
       config.server.proxy['/layouts'] = storybookProxy
