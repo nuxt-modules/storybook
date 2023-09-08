@@ -1,12 +1,11 @@
 import { createNuxtApp, defineNuxtPlugin } from 'nuxt/app'
 import { getContext } from 'unctx'
+import logger from 'consola'
 
 import type { App } from 'vue'
 
 // @ts-expect-error virtual file
 import plugins from '#build/plugins'
-
-const logger = { info: (..._args: any) => '' }
 
 const globalWindow = window as any
 
@@ -15,6 +14,11 @@ export default defineNuxtPlugin({
   enforce: 'pre', // or 'post'
 
   setup(nuxtApp: any) {
+    logger.info('🔌  [storybook-nuxt-plugin] setup ', nuxtApp.globalName)
+    const nuxtMainApp = getContext('nuxt-app')
+    if (nuxtMainApp)
+      logger.info('🔌  [storybook-nuxt-plugin] setup already done ', nuxtMainApp)
+
     if (nuxtApp.globalName !== 'nuxt')
       return
     const applyNuxtPlugins = async (vueApp: App, storyContext: any) => {
