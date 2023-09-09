@@ -39,4 +39,12 @@ https://github.com/chakAs3/nuxt-storybook-module-demo
 
 ## License
 
-[MIT License](./LICENSE)
+This repository is licensed under the [MIT License](LICENSE). Feel free to use the code and modify it according to your needs.
+
+## Contacts :
+
+🔖 Mail: javachakir@gmail.com
+
+💬 Discord: ChakAs3
+
+🐦‍⬛ Twitter: [@ChakirQatab](https://twitter.com/ChakirQatab)
