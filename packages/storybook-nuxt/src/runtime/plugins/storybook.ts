@@ -41,7 +41,7 @@ export default defineNuxtPlugin({
       return nuxt
     }
 
-    globalWindow.PLUGINS_SETUP_FUNCTIONS ||= new Set<(app: App<any>, context: any) => unknown>()
+    globalWindow.PLUGINS_SETUP_FUNCTIONS ||= new Set()
     globalWindow.PLUGINS_SETUP_FUNCTIONS.add(applyNuxtPlugins)
   },
 
