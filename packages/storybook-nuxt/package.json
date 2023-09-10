@@ -55,10 +55,9 @@
   "scripts": {
     "build": "unbuild",
     "build:watch": "unbuild --stub",
-    "stub": "pnpm run build --stub",
     "test": "vitest run",
-    "dev": "pnpm build && pnpm -C playground storybook dev",
-    "prepublishOnly": "pnpm build"
+    "dev": "build &&  -C playground storybook dev",
+    "prepublishOnly": "build"
   },
   "peerDependencies": {
     "vite": "^4.0.0",
