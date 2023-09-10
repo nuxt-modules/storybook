@@ -33,12 +33,5 @@
     "storybook": "next",
     "typescript": "^5.1.0",
     "vue-router": "^4.2.4"
-  },
-  "pnpm": {
-    "override": {
-      "@babel/plugin-proposal-class-properties": "npm:@babel/plugin-transform-class-properties",
-      "@babel/plugin-proposal-optional-chaining": "npm:@babel/plugin-transform-optional-chaining",
-      "@babel/plugin-proposal-nullish-coalescing-operator": "npm:@babel/plugin-transform-nullish-coalescing-operator"
-    }
   }
 }
