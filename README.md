@@ -1,17 +1,16 @@
+![Nuxt Storybook](https://github.com/nuxt-modules/storybook/assets/904724/0396b16c-be9b-4b0d-83b5-5e35dd8298df)
 
-![sb-nuxt-github (1)](https://github.com/storybook-vue/nuxt-storybook/assets/711292/7e64e6cc-7d03-469d-91e6-48fa6754a52f)
+# Nuxt Storybook
 
-# nuxt-storybook
+Integrate [Storybook](http://storybook.js.org) into your [Nuxt](https://nuxt.com) application.
 
-Storybook Module for Nuxt Framework
-
-> [Storybook](http://storybookjs.org) module for [Nuxt](https://nuxtjs.org)
->
 ## Installing
 
-`pnpm add @storybook-vue/nuxt-storybook -D`
+```
+pnpm add -D @storybook-vue/nuxt-storybook
+```
 
-update your nuxt.config
+Update your `nuxt.config`:
 
 ```ts
   modules: [
@@ -24,7 +23,8 @@ update your nuxt.config
   },
 ```
 
-`pnpm dev`
+Then run `pnpm dev` to start you Nuxt server.
+
 ## Demo
 
 https://github.com/chakAs3/nuxt-storybook-module-demo
