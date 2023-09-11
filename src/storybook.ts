@@ -57,8 +57,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       changeOrigin: true,
       followRedirects: true,
       secure: false,
-      rewrite: (path: string) =>  path.replace(STORYBOOK_ROUTE, ''),
-      ws: true
+      rewrite: (path: string) =>  path.replace(STORYBOOK_ROUTE, '')
     }
 
 
