@@ -9,10 +9,6 @@ export default defineNuxtConfig({
     // '@storybook-vue/nuxt-storybook'
     '../src/module.ts'
   ],
-  storybook: {
-    url: 'http://localhost:6006',
-    port: 6006,
-  },
   i18n: {
     locales: ['en', 'fr', 'ar'],
     defaultLocale: 'en',

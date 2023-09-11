@@ -64,7 +64,6 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
 
     extendViteConfig((config) => {
     
-
       config.optimizeDeps ??=  {}
       config.optimizeDeps.include = config.optimizeDeps.include || []
 
