@@ -18,7 +18,7 @@ export default {
     }
   },
   github: {
-    repo: 'nuxt-community/storybook',
+    repo: 'nuxt-modules/storybook',
     branch: 'master',
     releases: true
   }

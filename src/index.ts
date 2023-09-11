@@ -46,7 +46,7 @@ async function getStorybookConfig (options: StorybookOptions) {
 
   if (!options.staticDir) {
     // Do not register static dir if it does not exists
-    // https://github.com/nuxt-community/storybook/issues/263
+    // https://github.com/nuxt-modules/storybook/issues/263
     const staticDirPath = path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
     if (existsSync(staticDirPath)) {
       options.staticDir = staticDirPath
@@ -102,7 +102,7 @@ async function buildNuxt (options: StorybookOptions) {
       build: {
         corejs: '3',
         extractCSS: false,
-        // https://github.com/nuxt-community/storybook/issues/102#issuecomment-704821377
+        // https://github.com/nuxt-modules/storybook/issues/102#issuecomment-704821377
         parallel: false
       },
       buildModules: [

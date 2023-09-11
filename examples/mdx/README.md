@@ -1,3 +1,3 @@
 # MDX Example
 
-Demo: [https://codesandbox.io/s/github/nuxt-community/storybook/tree/master/examples/mdx](https://codesandbox.io/s/github/nuxt-community/storybook/tree/master/examples/mdx)
+Demo: [https://codesandbox.io/s/github/nuxt-modules/storybook/tree/master/examples/mdx](https://codesandbox.io/s/github/nuxt-modules/storybook/tree/master/examples/mdx)

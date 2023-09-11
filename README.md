@@ -85,7 +85,7 @@ npx nuxt storybook
 
 ### Gitpod
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/nuxt-community/storybook)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/nuxt-modules/storybook)
 
 ## License
 
@@ -100,11 +100,11 @@ Copyright (c)
 [npm-downloads-src]: https://img.shields.io/npm/dt/@nuxtjs/storybook.svg
 [npm-downloads-href]: https://npmjs.com/package/@nuxtjs/storybook
 
-[github-actions-ci-src]: https://github.com/nuxt-community/storybook/workflows/ci/badge.svg
-[github-actions-ci-href]: https://github.com/nuxt-community/storybook/actions?query=workflow%3Aci
+[github-actions-ci-src]: https://github.com/nuxt-modules/storybook/workflows/ci/badge.svg
+[github-actions-ci-href]: https://github.com/nuxt-modules/storybook/actions?query=workflow%3Aci
 
-[codecov-src]: https://img.shields.io/codecov/c/github/nuxt-community/storybook.svg
-[codecov-href]: https://codecov.io/gh/nuxt-community/storybook
+[codecov-src]: https://img.shields.io/codecov/c/github/nuxt-modules/storybook.svg
+[codecov-href]: https://codecov.io/gh/nuxt-modules/storybook
 
 [license-src]: https://img.shields.io/npm/l/@nuxtjs/storybook.svg
 [license-href]: https://npmjs.com/package/@nuxtjs/storybook
