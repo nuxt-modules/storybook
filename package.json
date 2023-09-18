@@ -4,6 +4,10 @@
     "description": "Storybook module for Nuxt",
     "license": "MIT",
     "repository": "nuxt-modules/storybook",
+    "author": {
+        "name": "ChakAs3",
+        "email": "javachakir@gmail.com"
+    },
     "exports": {
         ".": {
             "import": "./dist/module.mjs",
@@ -22,8 +26,9 @@
         "build": "pnpm build:module ",
         "build:module": "nuxt-build-module",
         "dev": "nuxi dev playground",
+        "docs:generate": "nuxi generate docs",
         "typecheck": "nuxi typecheck",
-        "prepack": "pnpm build",
+        "prepack": "nuxt-module-build",
         "prepare": "nuxi prepare playground"
     },
     "devDependencies": {
@@ -33,6 +38,7 @@
         "@nuxt/module-builder": "^0.4.0",
         "@nuxt/schema": "^3.6.5",
         "@nuxt/test-utils": "^3.6.5",
+        "typescript": "5.2.2",
         "eslint": "^8.46.0",
         "nuxt": "^3.6.5",
         "unbuild": "^1.2.1"
@@ -40,13 +46,12 @@
     },
     "dependencies": {
         "@nuxt/devtools-kit": "latest",
-        "@nuxt/kit": "^3.6.5",
-        "typescript": "^4.5.4"
+        "@nuxt/kit": "^3.6.5"
     },
     "publishConfig": {
         "access": "public"
     },
-    "packageManager": "pnpm@8.1.2",
+    "packageManager": "pnpm@8.7.6",
     "pnpm": {
         "overrides": {
             "@nuxt/kit": "^3.6.5",
