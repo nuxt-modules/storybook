@@ -26,6 +26,8 @@
         "build": "pnpm build:module ",
         "build:module": "nuxt-build-module",
         "dev": "nuxi dev playground",
+        "dev:build": "nuxi build playground",
+        "dev:prepare": "nuxt-module-build --stub && nuxt-module-build prepare && nuxi prepare playground",
         "docs:generate": "nuxi generate docs",
         "typecheck": "nuxi typecheck",
         "prepack": "nuxt-module-build",
