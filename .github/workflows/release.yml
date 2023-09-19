@@ -64,6 +64,6 @@ jobs:
         run: pnpm build
 
       - name: Publish 🚀️
-        run: pnpm publish   --access public --report-summary
+        run: pnpm publish --access public --report-summary
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPMJS_TOKEN}}
