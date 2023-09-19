@@ -21,11 +21,11 @@ export default defineAppConfig({
       logo: true
     },
     github: {
-      dir: 'docs/storybook',
-      root: 'docs/storybook',
+      dir: 'docs/content',
+      root: 'docs/content',
       edit: true,
       releases: true,
-      owner: 'chakAs3',
+      owner: 'nuxt-modules',
       repo: 'storybook',
       branch: 'main'
     },
