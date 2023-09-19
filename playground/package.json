@@ -1,30 +1,16 @@
 {
   "name": "nuxt-app",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "storybook": "storybook dev --port 6006",
-    "build-storybook": "storybook build"
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
-    "nuxt": "^3.6.5",
-    "storybook": "next",
-    "@storybook-vue/nuxt": "rc",
-    "@storybook-vue/nuxt-storybook": "rc",
-    "@storybook/addon-essentials": "next",
-    "@storybook/addon-interactions": "next",
-    "@storybook/addon-links": "next",
-    "@storybook/blocks": "next",
-    "@storybook/builder-vite": "next",
-    "@storybook/testing-library": "^0.2.0",
-    "@storybook/vue3": "next",
-    "@types/node": "^18.17.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "nuxt": "^3.7.3"
   }
 }

@@ -38,13 +38,16 @@
         "@nuxt/schema": "^3.7.3",
         "@nuxt/test-utils": "^3.7.3",
         "eslint": "^8.49.0",
-        "nuxt": "^3.7.3",
+        "nuxt": "3.7.3",
         "typescript": "^5.2.2",
-        "unbuild": "^1.2.1"
+        "unbuild": "^1.2.1",
+        "vitest": "^0.34.4"
     },
     "dependencies": {
         "@nuxt/devtools-kit": "latest",
-        "@nuxt/kit": "^3.7.3"
+        "@nuxt/kit": "3.7.3",
+        "chalk": "^5.3.0",
+        "defu": "^6.1.2"
     },
     "publishConfig": {
         "access": "public"
@@ -52,7 +55,8 @@
     "packageManager": "pnpm@8.7.6",
     "pnpm": {
         "overrides": {
-            "@nuxt/kit": "^3.6.5",
+            "nuxt": "3.7.3",
+            "@nuxt/kit": "3.7.3",
             "typescript": "^5.2.2"
         }
     }
