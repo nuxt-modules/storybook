@@ -32,11 +32,16 @@ https://github.com/chakAs3/nuxt-storybook-module-demo
 ## Features
 
 👌  Zero configuration to start (see video)
+
 🪄  Access Storybook Terminal
+
 🎨  Devtools tab with Storybook app
+
 ⚙️  Reference your Storybook config in your app
+
 📦  Extendable by Nuxt modules
-🚀  Supports both Nuxt 3 and Nuxt 2
+
+🚀  Supports Nuxt 3 / Storybook 7
 
 ## Contributing
 
