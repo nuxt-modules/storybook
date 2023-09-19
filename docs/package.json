@@ -1,18 +1,19 @@
 {
-    "name": "@nuxtjs/storybook-docs",
+    "name": "nuxt-storybook-docs",
     "version": "1.0.0",
-    "description": "Docs for @nuxtjs/storybook",
-    "author": "ChakAs3",
-    "repository": "nuxt-community/storybook",
+    "description": "Storybook module for Nuxt: the docs.",
     "scripts": {
         "dev": "nuxi dev",
+        "build": "nuxi build",
         "generate": "nuxi generate",
-        "start": "nuxi start",
         "preview": "nuxi preview"
     },
+    "author": "Chakir QATAB",
+    "license": "MIT",
+    "homepage": "https://storybook.nuxtjs.org",
     "devDependencies": {
-        "@nuxt-themes/docus": "1.14.6",
-        "@nuxtjs/plausible": "latest",
-        "nuxt": "3.7.3"
+        "@nuxt-themes/docus": "^1.14.6",
+        "@nuxtjs/plausible": "^0.2.1",
+        "nuxt": "^3.6.5"
     }
 }
