@@ -26,6 +26,7 @@
         "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
         "dev": "nuxt dev playground",
         "dev:nuxt2": "nuxt dev nuxt2-playground",
+        "build": "nuxt-module-build",
         "lint": "eslint .",
         "prepack": "nuxt-module-build",
         "release": "pnpm test && pnpm changelogen --release --push && pnpm publish",
@@ -47,7 +48,8 @@
         "@nuxt/devtools-kit": "latest",
         "@nuxt/kit": "3.7.3",
         "chalk": "^5.3.0",
-        "defu": "^6.1.2"
+        "defu": "^6.1.2",
+        "get-port-please": "^3.1.1"
     },
     "publishConfig": {
         "access": "public"
