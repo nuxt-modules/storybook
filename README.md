@@ -7,14 +7,14 @@ Integrate [Storybook](http://storybook.js.org) into your [Nuxt](https://nuxt.com
 ## Installing
 
 ```
-pnpm add -D @storybook-vue/nuxt-storybook
+pnpm add -D @nuxtjs/storybook
 ```
 
 Update your `nuxt.config`:
 
 ```ts
   modules: [
-    '@storybook-vue/nuxt-storybook',
+    '@nuxtjs/storybook',
   ],
   storybook: {
     url: 'http://localhost:6006',
