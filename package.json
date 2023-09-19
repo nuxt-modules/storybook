@@ -25,7 +25,6 @@
     "scripts": {
         "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
         "dev": "nuxt dev playground",
-        "dev:nuxt2": "nuxt dev nuxt2-playground",
         "build": "nuxt-module-build",
         "lint": "eslint .",
         "prepack": "nuxt-module-build",
