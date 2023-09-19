@@ -11,7 +11,7 @@ export default defineAppConfig({
         icon: 'simple-icons:nuxtdotjs',
         href: 'https://nuxt.com'
       },
-      supabase: {
+      storybook: {
         label: 'Storybook',
         icon: 'simple-icons:storybook',
         href: 'https://storybook.js.org '
@@ -19,6 +19,20 @@ export default defineAppConfig({
     },
     header: {
       logo: true
-    }
-  }
+    },
+    github: {
+      dir: 'docs/storybook',
+      root: 'docs/storybook',
+      edit: true,
+      releases: true,
+      owner: 'chakAs3',
+      repo: 'storybook',
+      branch: 'main'
+    },
+  },
+  github: {
+    owner: 'chakAs3',
+    repo: 'storybook',
+    branch: 'main'
+  },
 })
