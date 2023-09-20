@@ -7,14 +7,14 @@ Integrate [Storybook](http://storybook.js.org) into your [Nuxt](https://nuxt.com
 ## Installing
 
 ```
-pnpm add -D @storybook-vue/nuxt-storybook
+pnpm add -D @nuxtjs/storybook
 ```
 
 Update your `nuxt.config`:
 
 ```ts
   modules: [
-    '@storybook-vue/nuxt-storybook',
+    '@nuxtjs/storybook',
   ],
   storybook: {
     url: 'http://localhost:6006',
@@ -32,11 +32,16 @@ https://github.com/chakAs3/nuxt-storybook-module-demo
 ## Features
 
 👌  Zero configuration to start (see video)
+
 🪄  Access Storybook Terminal
+
 🎨  Devtools tab with Storybook app
+
 ⚙️  Reference your Storybook config in your app
+
 📦  Extendable by Nuxt modules
-🚀  Supports both Nuxt 3 and Nuxt 2
+
+🚀  Supports Nuxt 3 / Storybook 7
 
 ## Contributing
 
