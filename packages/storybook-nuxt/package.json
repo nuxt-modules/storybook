@@ -56,7 +56,7 @@
     "build": "unbuild",
     "build:watch": "unbuild --stub",
     "test": "vitest run",
-    "dev": "build &&  -C playground storybook dev",
+    "dev": "unbuild && cd playground && storybook dev",
     "prepack": "unbuild"
   },
   "peerDependencies": {
