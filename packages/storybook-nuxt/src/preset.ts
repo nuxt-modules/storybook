@@ -135,7 +135,7 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   const nuxtConfig = await defineNuxtConfig(await getStorybookViteConfig(config, options))
 
   return mergeConfig(nuxtConfig.viteConfig, {
-    build: { rollupOptions: { external: [] } },
+    build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
     define: {
       __NUXT__: JSON.stringify({ config: nuxtConfig.nuxt.options.runtimeConfig }),
     },
