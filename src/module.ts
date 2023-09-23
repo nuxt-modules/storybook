@@ -51,7 +51,7 @@ export interface ModuleOptions {
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: '@storybook-vue/nuxt-storybook',
+    name: '@nuxtjs/storybook',
     configKey: 'storybook',
     compatibility: {
       nuxt: '^3.0.0',
