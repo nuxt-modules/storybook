@@ -23,7 +23,7 @@ let nuxt: Nuxt
  * extend nuxt-link component to use storybook router
  * @param nuxt
  */
-function extendComponents(nuxt: Nuxt) {
+export function extendComponents(nuxt: Nuxt) {
   nuxt.hook('components:extend', (components: any) => {
     const nuxtLink = components.find(({ name }: any) => name === 'NuxtLink')
     nuxtLink.filePath = join(runtimeDir, 'components/nuxt-link')
@@ -67,8 +67,8 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
   nuxt.hook('modules:done', () => {
     extendComposables(nuxt)
     addPlugin({
-      src: join(runtimeDir, 'plugins/storybook'),
-      mode: 'client',
+      src: join(pluginsDir, 'storybook'),
+      mode: 'all',
     })
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
@@ -97,7 +97,7 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
   try {
     await buildNuxt(nuxt)
 
-    nuxt.options.dev = true
+    // nuxt.options.dev = true
 
     return {
       viteConfig: extendedConfig,

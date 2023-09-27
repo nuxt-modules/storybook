@@ -1,17 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    '@nuxt/ui',
-    '@nuxtjs/i18n',
     '@nuxt/image',
     '@pinia/nuxt',
     '@invictus.codes/nuxt-vuetify',
   ],
-  i18n: {
-    locales: ['en', 'fr', 'ar'],
-    defaultLocale: 'en',
-  },
-
   runtimeConfig: {
     app: {
       name: 'Nuxt',

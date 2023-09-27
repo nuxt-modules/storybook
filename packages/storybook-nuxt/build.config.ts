@@ -16,13 +16,16 @@ export default defineBuildConfig({
     emitCJS: true,
     inlineDependencies: true,
   },
-
+  dependencies: [
+    'vue-router',
+    'vue',
+  ],
   externals: [
+    'nuxt',
     'nuxt/schema',
     'nuxt/app',
     '@storybook/types',
     '@storybook/vue3',
-    'vue-router',
     '@vue/shared',
     '@unhead/vue',
     '@nuxt/devtools-kit',

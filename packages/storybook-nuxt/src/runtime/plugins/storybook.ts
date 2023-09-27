@@ -5,6 +5,7 @@ import logger from 'consola'
 import type { App } from 'vue'
 
 // @ts-expect-error virtual file
+import { createRouter, createWebHistory } from 'vue-router'
 import plugins from '#build/plugins'
 
 const globalWindow = window as any
@@ -14,7 +15,7 @@ export default defineNuxtPlugin({
   enforce: 'pre', // or 'post'
 
   setup(nuxtApp: any) {
-    logger.info('🔌  [storybook-nuxt-plugin] setup ', nuxtApp.globalName)
+    logger.log('🔌 🔌 🔌  [storybook-nuxt-plugin] setup ', { nuxtApp })
     const nuxtMainApp = getContext('nuxt-app')
     if (nuxtMainApp)
       logger.info('🔌  [storybook-nuxt-plugin] setup already done ', nuxtMainApp)
@@ -24,7 +25,10 @@ export default defineNuxtPlugin({
     const applyNuxtPlugins = async (vueApp: App, storyContext: any) => {
       const nuxt = createNuxtApp({ vueApp, globalName: `nuxt-${storyContext.id}` })
       getContext('nuxt-app').set(nuxt, true)
-      nuxt.$router = nuxtApp.$router
+
+      const router = nuxtApp.$router ?? createRouter({ history: createWebHistory(), routes: [] })
+      nuxt.$router = router
+
       getContext(nuxt.globalName).set(nuxt, true)
 
       nuxt.hooks.callHook('app:created', vueApp)
@@ -34,10 +38,10 @@ export default defineNuxtPlugin({
             await vueApp.runWithContext(() => plugin(nuxt))
         }
         catch (e) {
-          logger.info('error in plugin', plugin.name)
+          logger.error('Error in plugin ', plugin)
         }
       }
-      logger.info('applyNuxtPlugins nuxt.router:', nuxt.$router)
+
       return nuxt
     }
 
