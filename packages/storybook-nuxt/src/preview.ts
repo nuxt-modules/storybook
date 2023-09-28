@@ -2,6 +2,7 @@ import consola from 'consola'
 
 const vueAppRootContainer = document.createElement('div')
 vueAppRootContainer.id = '__nuxt'
+vueAppRootContainer.setAttribute('hidden', 'true')
 document.body.appendChild(vueAppRootContainer)
 
 async function nuxtAppEntry() {

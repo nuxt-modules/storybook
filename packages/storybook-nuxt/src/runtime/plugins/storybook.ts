@@ -3,10 +3,12 @@ import { getContext } from 'unctx'
 import logger from 'consola'
 
 import type { App } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
 
 // @ts-expect-error virtual file
-import { createRouter, createWebHistory } from 'vue-router'
 import plugins from '#build/plugins'
+
+import '#build/css'
 
 const globalWindow = window as any
 
