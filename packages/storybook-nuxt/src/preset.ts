@@ -51,8 +51,11 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     ready: false,
     dev: false,
     overrides: {
-      ssr: true,
+      ssr: false,
       target: 'static',
+      build: {
+        ssr: false,
+      },
     },
   })
 
@@ -65,7 +68,7 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     extendComposables(nuxt)
     addPlugin({
       src: join(pluginsDir, 'storybook'),
-      mode: 'all',
+      mode: 'client',
     })
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
