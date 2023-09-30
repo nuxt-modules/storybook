@@ -15,6 +15,8 @@
 
 ## Nuxt 3
 
+For Nuxt 3 full support, checkout https://github.com/storybook-vue/nuxt
+
 For Nuxt 3 support, checkout https://github.com/hirotaka/storybook-addon-nuxt
 
 ## Features
