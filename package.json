@@ -30,7 +30,8 @@
         "prepack": "nuxt-module-build",
         "release": "pnpm changelogen --release --push && pnpm publish",
         "test": "vitest run",
-        "test:watch": "vitest watch"
+        "test:watch": "vitest watch",
+        "docs:dev": "nuxt dev docs"
     },
     "devDependencies": {
         "@iconify-json/carbon": "^1.1.21",
