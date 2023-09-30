@@ -11,7 +11,7 @@ importers:
     dependencies:
       '@nuxt/devtools-kit':
         specifier: latest
-        version: 0.8.3(nuxt@3.7.3)(rollup@3.29.2)(vite@4.4.9)
+        version: 0.8.5(nuxt@3.7.3)(rollup@3.29.2)(vite@4.4.9)
       '@nuxt/kit':
         specifier: 3.7.3
         version: 3.7.3(rollup@3.29.2)
@@ -67,15 +67,6 @@ importers:
       '@nuxtjs/plausible':
         specifier: ^0.2.3
         version: 0.2.3(rollup@3.29.2)
-      nuxt:
-        specifier: 3.7.3
-        version: 3.7.3(eslint@8.49.0)(rollup@3.29.2)(typescript@5.2.2)
-
-  playground:
-    devDependencies:
-      '@nuxt/devtools':
-        specifier: latest
-        version: 0.8.3(nuxt@3.7.3)(rollup@3.29.2)(vite@4.4.9)
       nuxt:
         specifier: 3.7.3
         version: 3.7.3(eslint@8.49.0)(rollup@3.29.2)(typescript@5.2.2)
@@ -1449,10 +1440,10 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxt/devtools-kit@0.8.3(nuxt@3.7.3)(rollup@3.29.2)(vite@4.4.9):
-    resolution: {integrity: sha512-qF5xJSvGzPMcWNTSPOpCWQfoDVqR+S56Ux/ZTm2nydHsXkJfS2k2iztJfbHlPquWdH4uS3lVxcfF4CFtgdJqkw==}
+  /@nuxt/devtools-kit@0.8.5(nuxt@3.7.3)(rollup@3.29.2)(vite@4.4.9):
+    resolution: {integrity: sha512-gkZuythYbx6ybwQc2zE1DC40B3cj3rrSxHG6GIihWseilTea7G4QMkDliEbGnqyM4cLQmMBD+SU4DxiDVSNlQQ==}
     peerDependencies:
-      nuxt: ^3.6.5
+      nuxt: ^3.7.3
       vite: '*'
     dependencies:
       '@nuxt/kit': 3.7.3(rollup@3.29.2)
@@ -1463,6 +1454,7 @@ packages:
     transitivePeerDependencies:
       - rollup
       - supports-color
+    dev: false
 
   /@nuxt/devtools-ui-kit@0.8.2(@nuxt/devtools@0.8.2)(nuxt@3.7.3)(postcss@8.4.30)(rollup@3.29.2)(vite@4.4.9)(vue@3.3.4)(webpack@5.88.2):
     resolution: {integrity: sha512-xOYpwyKeRLfJzC66brvcNuFWtzPXFs9Tmg1SLZW3c9MNod0KC/bK6QiviUGFQAFzSf1wfyRkEn2cu8BHvMCwTw==}
@@ -1530,23 +1522,6 @@ packages:
       semver: 7.5.4
     dev: true
 
-  /@nuxt/devtools-wizard@0.8.3:
-    resolution: {integrity: sha512-1ay6SA6lqi0F25o4iVPboCsWsgrps3esRovJmWdEi2OxwV6CfUv/eGbdCaUOt/v/w4cH+pJj8Bvi0QQ18k9SQg==}
-    hasBin: true
-    dependencies:
-      consola: 3.2.3
-      diff: 5.1.0
-      execa: 7.2.0
-      global-dirs: 3.0.1
-      magicast: 0.2.11
-      pathe: 1.1.1
-      picocolors: 1.0.0
-      pkg-types: 1.0.3
-      prompts: 2.4.2
-      rc9: 2.1.1
-      semver: 7.5.4
-    dev: true
-
   /@nuxt/devtools@0.8.2(nuxt@3.7.3)(rollup@3.29.2)(vite@4.4.9):
     resolution: {integrity: sha512-E3ycLEkqTlXpdz3P7lJRMdB4AnC4tzALM6N6eCUskSCtUQfF57mjk0k7z1duHIjU8xTIFm6gnsotJnR/n6/B0g==}
     hasBin: true
@@ -1564,62 +1539,6 @@ packages:
       error-stack-parser-es: 0.1.1
       execa: 7.2.0
       fast-folder-size: 2.2.0
-      fast-glob: 3.3.1
-      flatted: 3.2.9
-      get-port-please: 3.1.1
-      global-dirs: 3.0.1
-      h3: 1.8.1
-      hookable: 5.5.3
-      image-meta: 0.1.1
-      is-installed-globally: 0.4.0
-      launch-editor: 2.6.0
-      local-pkg: 0.4.3
-      magicast: 0.2.11
-      nuxt: 3.7.3(eslint@8.49.0)(rollup@3.29.2)(typescript@5.2.2)
-      nypm: 0.3.3
-      ofetch: 1.3.3
-      ohash: 1.1.3
-      pacote: 17.0.4
-      pathe: 1.1.1
-      perfect-debounce: 1.0.0
-      picocolors: 1.0.0
-      pkg-types: 1.0.3
-      rc9: 2.1.1
-      semver: 7.5.4
-      simple-git: 3.19.1
-      sirv: 2.0.3
-      unimport: 3.3.0(rollup@3.29.2)
-      vite: 4.4.9
-      vite-plugin-inspect: 0.7.38(@nuxt/kit@3.7.3)(rollup@3.29.2)(vite@4.4.9)
-      vite-plugin-vue-inspector: 3.7.1(vite@4.4.9)
-      wait-on: 7.0.1
-      which: 3.0.1
-      ws: 8.14.2
-    transitivePeerDependencies:
-      - bluebird
-      - bufferutil
-      - debug
-      - rollup
-      - supports-color
-      - utf-8-validate
-    dev: true
-
-  /@nuxt/devtools@0.8.3(nuxt@3.7.3)(rollup@3.29.2)(vite@4.4.9):
-    resolution: {integrity: sha512-jkLsLBRb0nf7P46MHqZlvmMhi82oS5PAmmu326L5OH91thYBDyFAK4+L/NOUSResQNcs2t6/qz5i/ls5E/+sqA==}
-    hasBin: true
-    peerDependencies:
-      nuxt: ^3.6.5
-      vite: '*'
-    dependencies:
-      '@antfu/utils': 0.7.6
-      '@nuxt/devtools-kit': 0.8.3(nuxt@3.7.3)(rollup@3.29.2)(vite@4.4.9)
-      '@nuxt/devtools-wizard': 0.8.3
-      '@nuxt/kit': 3.7.3(rollup@3.29.2)
-      birpc: 0.2.14
-      boxen: 7.1.1
-      consola: 3.2.3
-      error-stack-parser-es: 0.1.1
-      execa: 7.2.0
       fast-glob: 3.3.1
       flatted: 3.2.9
       get-port-please: 3.1.1
