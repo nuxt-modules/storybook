@@ -1,63 +1,63 @@
 {
-  "name": "@nuxtjs/storybook",
-  "version": "7.0.0",
-  "description": "Storybook module for Nuxt",
-  "license": "MIT",
-  "repository": "nuxt-modules/storybook",
-  "author": {
-    "name": "ChakAs3",
-    "email": "javachakir@gmail.com"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
+    "name": "@nuxtjs/storybook",
+    "version": "7.0.0",
+    "description": "Storybook module for Nuxt",
+    "license": "MIT",
+    "repository": "nuxt-modules/storybook",
+    "author": {
+        "name": "ChakAs3",
+        "email": "javachakir@gmail.com"
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/module.mjs",
+            "require": "./dist/module.cjs"
+        }
+    },
+    "main": "./dist/module.cjs",
+    "types": "./dist/types.d.ts",
+    "files": [
+        "dist",
+        "*.d.ts",
+        "*.cjs",
+        "*.mjs"
+    ],
+    "scripts": {
+        "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+        "dev": "nuxt dev playground",
+        "build": "nuxt-module-build",
+        "lint": "eslint .",
+        "prepack": "nuxt-module-build",
+        "release": "pnpm changelogen --release --push && pnpm publish"
+    },
+    "devDependencies": {
+        "@iconify-json/carbon": "^1.1.21",
+        "@nuxt/devtools-ui-kit": "0.8.2",
+        "@nuxt/module-builder": "^0.4.0",
+        "@nuxt/schema": "^3.7.4",
+        "@nuxt/test-utils": "^3.7.4",
+        "changelogen": "^0.5.5",
+        "eslint": "^8.50.0",
+        "jsdom": "^17.0.0",
+        "nuxt": "3.7.4",
+        "typescript": "^5.2.2",
+        "unbuild": "^1.2.1"
+    },
+    "dependencies": {
+        "@nuxt/devtools-kit": "latest",
+        "@nuxt/kit": "3.7.4",
+        "chalk": "^5.3.0",
+        "defu": "^6.1.2",
+        "get-port-please": "^3.1.1"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "pnpm": {
+        "overrides": {
+            "nuxt": "3.7.4",
+            "@nuxt/kit": "3.7.4",
+            "typescript": "^5.2.2"
+        }
     }
-  },
-  "main": "./dist/module.cjs",
-  "types": "./dist/types.d.ts",
-  "files": [
-    "dist",
-    "*.d.ts",
-    "*.cjs",
-    "*.mjs"
-  ],
-  "scripts": {
-    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
-    "dev": "nuxt dev playground",
-    "build": "nuxt-module-build",
-    "lint": "eslint .",
-    "prepack": "nuxt-module-build",
-    "release": "pnpm changelogen --release --push && pnpm publish"
-  },
-  "devDependencies": {
-    "@iconify-json/carbon": "^1.1.21",
-    "@nuxt/devtools-ui-kit": "0.8.2",
-    "@nuxt/module-builder": "^0.4.0",
-    "@nuxt/schema": "^3.7.3",
-    "@nuxt/test-utils": "^3.7.3",
-    "changelogen": "^0.5.5",
-    "eslint": "^8.49.0",
-    "nuxt": "3.7.3",
-    "typescript": "^5.2.2",
-    "unbuild": "^1.2.1",
-    "jsdom": "^17.0.0"
-  },
-  "dependencies": {
-    "@nuxt/devtools-kit": "latest",
-    "@nuxt/kit": "3.7.3",
-    "chalk": "^5.3.0",
-    "defu": "^6.1.2",
-    "get-port-please": "^3.1.1"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "pnpm": {
-    "overrides": {
-      "nuxt": "3.7.3",
-      "@nuxt/kit": "3.7.3",
-      "typescript": "^5.2.2"
-    }
-  }
 }
