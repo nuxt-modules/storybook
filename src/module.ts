@@ -1,4 +1,4 @@
-import { addImportsDir, createResolver, defineNuxtModule, extendViteConfig, logger } from '@nuxt/kit'
+import { createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 
 import { setupStorybook } from './storybook'
 
@@ -67,14 +67,11 @@ export default defineNuxtModule<ModuleOptions>({
   },
   async setup(options, nuxt) {
     
-
     if(process.env.__STORYBOOK__)
      return
    
     logger.info('🔌  Storybook Module Setup')
     // Default runtimeConfig
-  
-    const { resolve } = createResolver(import.meta.url)
     
     nuxt.options.ssr = false
         
