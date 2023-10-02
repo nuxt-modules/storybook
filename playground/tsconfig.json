@@ -52,13 +52,13 @@
         "../public/*"
       ],
       "#app": [
-        "../../node_modules/.pnpm/nuxt@3.7.4_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/dist/app"
+        "../../node_modules/.pnpm/nuxt@3.6.5_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/dist/app"
       ],
       "#app/*": [
-        "../../node_modules/.pnpm/nuxt@3.7.4_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/dist/app/*"
+        "../../node_modules/.pnpm/nuxt@3.6.5_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/dist/app/*"
       ],
       "vue-demi": [
-        "../../node_modules/.pnpm/nuxt@3.7.4_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/dist/app/compat/vue-demi"
+        "../../node_modules/.pnpm/nuxt@3.6.5_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/dist/app/compat/vue-demi"
       ],
       "#vue-router": [
         "./vue-router"
@@ -82,18 +82,18 @@
     "../**/*",
     "../../**/*",
     "../../../../../../../de/runtime",
-    "../../node_modules/.pnpm/@nuxt+devtools@0.8.2_nuxt@3.7.4_rollup@3.29.4_vite@4.4.9/node_modules/@nuxt/devtools/runtime",
+    "../../node_modules/.pnpm/@nuxt+devtools@0.8.2_nuxt@3.6.5_rollup@3.29.4_vite@4.4.9/node_modules/@nuxt/devtools/runtime",
     "../../node_modules/.pnpm/@nuxt+telemetry@2.5.0_rollup@3.29.4/node_modules/@nuxt/telemetry/runtime",
     "..",
-    "../../node_modules/.pnpm/nuxt@3.7.4_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/dist/app",
-    "../../node_modules/.pnpm/nuxt@3.7.4_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/dist/app/compat/vue-demi"
+    "../../node_modules/.pnpm/nuxt@3.6.5_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/dist/app",
+    "../../node_modules/.pnpm/nuxt@3.6.5_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/dist/app/compat/vue-demi"
   ],
   "exclude": [
     "../node_modules",
     "../../node_modules",
-    "../../node_modules/.pnpm/nuxt@3.7.4_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/node_modules",
+    "../../node_modules/.pnpm/nuxt@3.6.5_eslint@8.50.0_rollup@3.29.4_typescript@5.2.2/node_modules/nuxt/node_modules",
     "../../../../../../../de/runtime/server",
-    "../../node_modules/.pnpm/@nuxt+devtools@0.8.2_nuxt@3.7.4_rollup@3.29.4_vite@4.4.9/node_modules/@nuxt/devtools/runtime/server",
+    "../../node_modules/.pnpm/@nuxt+devtools@0.8.2_nuxt@3.6.5_rollup@3.29.4_vite@4.4.9/node_modules/@nuxt/devtools/runtime/server",
     "../../node_modules/.pnpm/@nuxt+telemetry@2.5.0_rollup@3.29.4/node_modules/@nuxt/telemetry/runtime/server",
     "../dist",
     "../.output"
