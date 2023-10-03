@@ -19,6 +19,9 @@ export default defineBuildConfig({
   dependencies: [
     'vue-router',
     'vue',
+    '@storybook/vue3',
+    '@storybook/builder-vite',
+    '@storybook/vue3-vite',
   ],
   externals: [
     'nuxt',

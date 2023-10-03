@@ -39,23 +39,19 @@ function extendComponents(nuxt: Nuxt) {
  * */
 
 async function extendComposables(nuxt: Nuxt) {
-  const { addImportsSources } = await import(require.resolve('@nuxt/kit'))
+  const { addImportsSources } = await import('@nuxt/kit')
   nuxt.options.build.transpile.push(composablesDir)
   addImportsSources({ imports: ['useRouter'], from: join(composablesDir, 'router') })
 }
 
 async function defineNuxtConfig(baseConfig: Record<string, any>) {
-  const { loadNuxt, buildNuxt, addPlugin, extendPages } = await import(require.resolve('@nuxt/kit'))
+  const { loadNuxt, buildNuxt, addPlugin, extendPages } = await import('@nuxt/kit')
   nuxt = await loadNuxt({
     rootDir: baseConfig.root,
     ready: false,
     dev: false,
     overrides: {
       ssr: false,
-      target: 'static',
-      build: {
-        ssr: false,
-      },
     },
   })
 
@@ -129,7 +125,9 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   options: any,
 ) => {
   const getStorybookViteConfig = async (c: Record<string, any>, o: any) => {
-    const { viteFinal: ViteFile } = await import(require.resolve(join('@storybook/vue3-vite', 'preset')))
+    const { viteFinal: ViteFile } = await import(join('@storybook/vue3-vite', 'preset'))
+    if (!ViteFile)
+      throw new Error('ViteFile not found')
     return ViteFile(c, o)
   }
   const nuxtConfig = await defineNuxtConfig(await getStorybookViteConfig(config, options))
