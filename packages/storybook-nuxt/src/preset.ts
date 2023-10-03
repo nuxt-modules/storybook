@@ -1,5 +1,5 @@
 import { dirname, join, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
 import type { PresetProperty } from '@storybook/types'
 import { type UserConfig as ViteConfig, mergeConfig, searchForWorkspaceRoot } from 'vite'
@@ -126,9 +126,9 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   options: any,
 ) => {
   const getStorybookViteConfig = async (c: Record<string, any>, o: any) => {
-    const pkgPath = await getPackageDir('@storybook/vue3-vite')
-
-    const { viteFinal: ViteFile } = await import(join(pkgPath, 'preset.js'))
+    // const pkgPath = await getPackageDir('@storybook/vue3-vite')
+    const presetURL = pathToFileURL(join(await getPackageDir('@storybook/vue3-vite'), 'preset.js'))
+    const { viteFinal: ViteFile } = await import(presetURL.href)
 
     if (!ViteFile)
       throw new Error('ViteFile not found')
