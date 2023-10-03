@@ -1,5 +1,6 @@
-import { join, resolve } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { createRequire } from 'node:module'
 import type { PresetProperty } from '@storybook/types'
 import { type UserConfig as ViteConfig, mergeConfig, searchForWorkspaceRoot } from 'vite'
 import type { Nuxt } from '@nuxt/schema'
@@ -125,7 +126,10 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   options: any,
 ) => {
   const getStorybookViteConfig = async (c: Record<string, any>, o: any) => {
-    const { viteFinal: ViteFile } = await import(join('@storybook/vue3-vite', 'preset'))
+    const pkgPath = await getPackageDir('@storybook/vue3-vite')
+
+    const { viteFinal: ViteFile } = await import(join(pkgPath, 'preset.js'))
+
     if (!ViteFile)
       throw new Error('ViteFile not found')
     return ViteFile(c, o)
@@ -142,4 +146,19 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     },
     envPrefix: ['NUXT_'],
   })
+}
+
+async function getPackageDir(frameworkPackageName: any) {
+  //   const packageJsonPath = join(frameworkPackageName, 'package.json')
+
+  try {
+    const require = createRequire(import.meta.url)
+    const packageDir = dirname(require.resolve(join(frameworkPackageName, 'package.json'), { paths: [process.cwd()] }))
+
+    return packageDir
+  }
+  catch (e) {
+    // logger.error(e)
+  }
+  throw new Error(`Cannot find ${frameworkPackageName},`)
 }

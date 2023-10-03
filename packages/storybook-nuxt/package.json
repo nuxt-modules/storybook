@@ -1,6 +1,6 @@
 {
   "name": "@storybook-vue/nuxt",
-  "version": "0.1.4-alpha.0",
+  "version": "0.1.6-alpha.0",
   "packageManager": "pnpm@8.6.12",
   "description": "Storybook for Nuxt and Vite: Develop Vue3 components in isolation with Hot Reloading.",
   "license": "MIT",
@@ -67,10 +67,10 @@
   },
   "dependencies": {
     "@nuxt/devtools-kit": "latest",
-    "@nuxt/kit": "^3.7.4",
-    "@nuxt/schema": "^3.7.4",
-    "@nuxt/vite-builder": "^3.7.4",
-    "@storybook/builder-vite": "7.4.4",
+    "@nuxt/kit": "^3.6.5",
+    "@nuxt/schema": "^3.6.5",
+    "@nuxt/vite-builder": "^3.6.5",
+    "@storybook/builder-vite": "7.5.0-alpha.3",
     "@storybook/vue3": "npm:@storybook-vue/vue3@7.5.0-alpha.3.0",
     "@storybook/vue3-vite": "npm:@storybook-vue/vue3-vite@7.5.0-alpha.3.0",
     "autoprefixer": "^10.4.15",
@@ -81,7 +81,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@storybook/types": "7.4.4",
+    "@storybook/types": "7.5.0-alpha.3",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "changelogen": "^0.5.5"
