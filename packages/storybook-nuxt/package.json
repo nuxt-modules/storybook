@@ -1,6 +1,6 @@
 {
   "name": "@storybook-vue/nuxt",
-  "version": "0.1.7-alpha.0",
+  "version": "0.1.7",
   "packageManager": "pnpm@8.6.12",
   "description": "Storybook for Nuxt and Vite: Develop Vue3 components in isolation with Hot Reloading.",
   "license": "MIT",
@@ -84,7 +84,8 @@
     "@storybook/types": "7.5.0-alpha.3",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
-    "changelogen": "^0.5.5"
+    "changelogen": "^0.5.5",
+    "unbuild": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v0.1.7
+
+[compare changes](https://github.com/storybook-vue/storybook-nuxt/compare/v0.1.7-alpha.0...v0.1.7)
+
 ## v0.1.4
 
 [compare changes](https://github.com/storybook-vue/storybook-nuxt/compare/v0.1.3...v0.1.4)
