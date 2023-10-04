@@ -43,6 +43,10 @@ https://github.com/chakAs3/nuxt-storybook-module-demo
 
 🚀  Supports Nuxt 3 / Storybook 7
 
+## Nuxt 2
+
+Nuxt 2 is supported with Storybook v6,you can check legacy code on the v4 branch.
+
 ## Contributing
 
 1. Install dependencies with `pnpm`.
