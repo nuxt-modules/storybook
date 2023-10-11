@@ -27,7 +27,7 @@ Then run `pnpm dev` to start you Nuxt server.
 
 ## Demo
 
-https://github.com/chakAs3/nuxt-storybook-module-demo
+https://github.com/storybook-vue/nuxt-storybook-module-demo
 
 ## Features
 
