@@ -9,7 +9,7 @@ import { logger } from '@nuxt/kit'
 
 export async function setupStorybook(options: any, nuxt: Nuxt) {
   const STORYBOOK_ROUTE = options.storybookRoute || '/__storybook_route'
-  const STORYBOOK_PORT =  await getPort({ ports: [options.port || 6006 , 6007, 6008, 6009, 6010]})
+  const STORYBOOK_PORT =  await getPort({ port: options.port || 6006, ports: [6006 , 6007, 6008, 6009, 6010]})
   const STORYBOOK_URL = 'http://localhost:'+ STORYBOOK_PORT
    
   const projectDir = resolve(nuxt.options.rootDir)
