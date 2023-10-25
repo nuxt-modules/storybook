@@ -47,10 +47,12 @@ async function extendComposables(nuxt: Nuxt) {
 
 async function defineNuxtConfig(baseConfig: Record<string, any>) {
   const { loadNuxt, buildNuxt, addPlugin, extendPages } = await import('@nuxt/kit')
+
   nuxt = await loadNuxt({
     rootDir: baseConfig.root,
     ready: false,
-    dev: false,
+    dev: process.env.NODE_ENV !== 'production',
+
     overrides: {
       ssr: false,
     },
@@ -137,7 +139,7 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   const nuxtConfig = await defineNuxtConfig(await getStorybookViteConfig(config, options))
 
   return mergeConfig(nuxtConfig.viteConfig, {
-    build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
+    build: { rollupOptions: { external: process.env.NODE_ENV === 'production' ? [] : ['vue', 'vue-demi'] } },
     define: {
       __NUXT__: JSON.stringify({ config: nuxtConfig.nuxt.options.runtimeConfig }),
     },
