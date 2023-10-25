@@ -33,9 +33,13 @@ https://github.com/storybook-vue/nuxt-storybook-module-demo
 
 👌  Zero configuration to start (see video)
 
+
 🪄  Access Storybook Terminal
 
+
 🎨  Devtools tab with Storybook app
+
+
 
 ⚙️  Reference your Storybook config in your app
 
