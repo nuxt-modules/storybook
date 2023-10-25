@@ -1,6 +1,7 @@
 import { createNuxtApp, defineNuxtPlugin } from 'nuxt/app'
 import { getContext } from 'unctx'
-import logger from 'consola'
+
+// import logger from 'consola'
 
 import type { App } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -11,6 +12,7 @@ import plugins from '#build/plugins'
 import '#build/css'
 
 const globalWindow = window as any
+const logger = console
 
 export default defineNuxtPlugin({
   name: 'storybook-nuxt-plugin',
