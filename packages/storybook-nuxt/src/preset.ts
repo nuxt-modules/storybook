@@ -51,7 +51,7 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
   nuxt = await loadNuxt({
     rootDir: baseConfig.root,
     ready: false,
-    dev: process.env.NODE_ENV !== 'production',
+    dev: false,
 
     overrides: {
       ssr: false,
