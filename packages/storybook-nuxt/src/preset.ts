@@ -71,9 +71,8 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
 
-    nuxt.options.build.transpile.push(resolve(packageDir, 'runtime'))
     nuxt.options.build.transpile.push(resolve(packageDir, 'preview'))
-    nuxt.options.build.transpile.push('@storybook-vue/nuxt')
+    // nuxt.options.build.transpile.push('@storybook-vue/nuxt')
     addPlugin({
       src: join(pluginsDir, 'storybook'),
       mode: 'client',
