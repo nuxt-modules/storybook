@@ -7,6 +7,8 @@ defineProps({
 <template>
   <div>
     Home Storybook
+    Nuxt Image
+    <MyNuxtImage />
   </div>
   <div>
     {{ msg }}

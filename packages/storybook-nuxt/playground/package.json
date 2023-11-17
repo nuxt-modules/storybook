@@ -29,11 +29,14 @@
     "react-dom": "^18.2.0",
     "storybook": "7.5.3",
     "typescript": "^5.1.0",
-    "vue-router": "4.2.5"
+    "vue": "^3.3.8",
+    "vue-router": "^4.2.5"
   },
   "pnpm": {
     "overrides": {
-      "nuxt": "3.8.1"
+      "nuxt": "3.8.1",
+      "vite": "4.5.0",
+      "vue": "3.3.8"
     }
   }
 }

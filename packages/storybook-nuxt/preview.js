@@ -1,1 +1,1 @@
-export * from './dist/preview.mjs'
+export * from './dist/preview'
