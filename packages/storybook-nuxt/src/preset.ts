@@ -65,13 +65,12 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     throw new Error(`Storybook-Nuxt does not support '${nuxt.options.builder}' for now.`)
 
   let extendedConfig: ViteConfig = {}
+  nuxt.options.build.transpile.push(join(packageDir, 'preview'))
 
   nuxt.hook('modules:done', () => {
     extendComposables(nuxt)
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
-
-    nuxt.options.build.transpile.push(resolve(packageDir, 'preview'))
     // nuxt.options.build.transpile.push('@storybook-vue/nuxt')
     addPlugin({
       src: join(pluginsDir, 'storybook'),
