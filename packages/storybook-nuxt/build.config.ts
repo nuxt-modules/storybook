@@ -4,8 +4,8 @@ export default defineBuildConfig({
   declaration: true,
   entries: [
     { input: 'src/index' },
+    { input: 'src/preview' },
     { input: 'src/preset', outDir: 'dist/', format: 'cjs', ext: 'js' },
-    { input: 'src/preview', outDir: 'dist/', format: 'esm', ext: 'js' },
     {
       input: 'src/runtime/', outDir: 'dist/runtime', format: 'esm', ext: 'js',
     },
@@ -18,7 +18,6 @@ export default defineBuildConfig({
   },
   dependencies: [
     'vue-router',
-    'vue',
     '@storybook/vue3',
     '@storybook/builder-vite',
     '@storybook/vue3-vite',
@@ -27,13 +26,15 @@ export default defineBuildConfig({
     'nuxt',
     'nuxt/schema',
     'nuxt/app',
+    'vue',
     '@storybook/types',
     '@storybook/vue3',
     '@vue/shared',
     '@unhead/vue',
     '@nuxt/devtools-kit',
     '#app/composables/state',
-
+    '#app/entry',
+    '#build/plugins',
   ],
   failOnWarn: false,
 })
