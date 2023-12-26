@@ -117,7 +117,7 @@ async function buildNuxt (options: StorybookOptions) {
    */
   nuxt.options.plugins = nuxt.options.plugins.filter((plugin) => {
     if (typeof plugin === 'object') {
-      return !plugin.mode || plugin.mode === 'client'
+      return !plugin.mode || plugin.mode === 'client' || plugin.mode === 'all'
     }
 
     if (typeof plugin === 'string' && plugin.match(/\.server\.?(.*)\.(ts|js)/)) {
