@@ -3,6 +3,10 @@
 
 ## v0.2.0
 
+[compare changes](https://github.com/storybook-vue/storybook-nuxt/compare/v0.2.1-alpha.0...v0.2.0)
+
+## v0.2.0
+
 [compare changes](https://github.com/storybook-vue/storybook-nuxt/compare/v0.2.0-alpha.4...v0.2.0)
 
 ## v0.1.9
