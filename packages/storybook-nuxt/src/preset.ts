@@ -92,8 +92,9 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
       ) => {
         if (isClient) {
           const plugins = baseConfig.plugins.filter((plugin: any) => plugin.name !== 'vite:vue')
-          baseConfig.plugins = [...plugins,
+          baseConfig.plugins = [
             vuePlugin(),
+            ...plugins,
           ]
           extendedConfig = mergeConfig(config, baseConfig)
         }
