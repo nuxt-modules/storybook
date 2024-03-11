@@ -1,3 +1,21 @@
 <template>
-  <NuxtImg src="https://github-production-user-asset-6210df.s3.amazonaws.com/904724/267021354-0396b16c-be9b-4b0d-83b5-5e35dd8298df.png" />
+  <div>
+    <NuxtImg
+      src="/images/sb-nuxt-logo.png"
+      :placeholder="[30, 20]"
+      width="300"
+      height="200"
+      class="rounded"
+    />
+    <br>
+    <h4>
+      responsive image with nuxt-image component:
+    </h4>
+    <NuxtPicture
+      src="/images/sb-nuxt-logo.png"
+      width="1204"
+      height="632"
+      sizes="xs:200px md:500px lg:1024"
+    />
+  </div>
 </template>

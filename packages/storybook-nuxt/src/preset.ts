@@ -1,6 +1,5 @@
-import { dirname, join, resolve } from 'node:path'
+import { join, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { createRequire } from 'node:module'
 import type { PresetProperty } from '@storybook/types'
 import { type UserConfig as ViteConfig, mergeConfig, searchForWorkspaceRoot } from 'vite'
 import type { Nuxt } from '@nuxt/schema'
@@ -164,23 +163,43 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
       preventAssignment: true,
     })],
     server: {
+      cors: true,
+      proxy: {
+        ...getPreviewProxy(),
+        ...getNuxtProxyConfig(nuxt).proxy,
+      },
       fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
     },
     envPrefix: ['NUXT_'],
   })
 }
-
-async function getPackageDir(frameworkPackageName: any) {
-  //   const packageJsonPath = join(frameworkPackageName, 'package.json')
-
-  try {
-    const require = createRequire(import.meta.url)
-    const packageDir = dirname(require.resolve(join(frameworkPackageName, 'package.json'), { paths: [process.cwd()] }))
-
-    return packageDir
+export function getNuxtProxyConfig(nuxt: Nuxt) {
+  const port = nuxt.options.runtimeConfig.app.port ?? 3000
+  const route = '^/(_nuxt|_ipx|_icon|__nuxt_devtools__)'
+  const proxy = {
+    [route]:
+    {
+      target: `http://localhost:${port}`,
+      changeOrigin: true,
+      secure: false,
+      ws: true,
+    },
   }
-  catch (e) {
-    // logger.error(e)
+  return {
+    port,
+    route,
+    proxy,
   }
-  throw new Error(`Cannot find ${frameworkPackageName},`)
+}
+
+function getPreviewProxy() {
+  return {
+    '/__storybook_preview__': {
+      target: '/',
+      changeOrigin: false,
+      secure: false,
+      rewrite: (path: string) => path.replace('/__storybook_preview__', ''),
+      ws: true,
+    },
+  }
 }
