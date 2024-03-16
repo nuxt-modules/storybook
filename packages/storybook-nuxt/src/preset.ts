@@ -1,5 +1,7 @@
-import { join, resolve } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { createRequire } from 'node:module'
+
 import type { PresetProperty } from '@storybook/types'
 import { type UserConfig as ViteConfig, mergeConfig, searchForWorkspaceRoot } from 'vite'
 import type { Nuxt } from '@nuxt/schema'
@@ -7,18 +9,14 @@ import vuePlugin from '@vitejs/plugin-vue'
 
 import replace from '@rollup/plugin-replace'
 import type { StorybookConfig } from './types'
-import { pluginsDir } from './dirs'
+import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
 
 const packageDir = resolve(fileURLToPath(
   import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(
   import.meta.url), '../..', 'dist')
-const runtimeDir = resolve(distDir, 'runtime')
 
-const componentsDir = resolve(runtimeDir, 'components')
-const composablesDir = resolve(runtimeDir, 'composables')
-
-const dirs = [distDir, packageDir, componentsDir, composablesDir, runtimeDir]
+const dirs = [distDir, packageDir, pluginsDir, componentsDir]
 
 let nuxt: Nuxt
 
@@ -90,11 +88,21 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
         { isClient }: any,
       ) => {
         if (isClient) {
-          const plugins = baseConfig.plugins.filter((plugin: any) => plugin.name !== 'vite:vue')
-          baseConfig.plugins = [
-            vuePlugin(),
-            ...plugins,
-          ]
+          const plugins = baseConfig.plugins
+
+          // Find the index of the plugin with name 'vite:vue'
+          const index = plugins.findIndex((plugin: any) => plugin.name === 'vite:vue')
+
+          // Check if the plugin was found
+          if (index !== -1) {
+            // Replace the plugin with the new one using vuePlugin()
+            plugins[index] = vuePlugin()
+          }
+          else {
+            // Handle the case where the plugin with name 'vite:vue' was not found
+            console.error('Plugin \'vite:vue\' not found in the array.')
+          }
+          baseConfig.plugins = plugins
           extendedConfig = mergeConfig(config, baseConfig)
         }
       },
@@ -105,8 +113,6 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
 
   try {
     await buildNuxt(nuxt)
-
-    nuxt.options.dev = true
 
     return {
       viteConfig: extendedConfig,
@@ -173,6 +179,22 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     envPrefix: ['NUXT_'],
   })
 }
+
+async function getPackageDir(frameworkPackageName: any) {
+  //   const packageJsonPath = join(frameworkPackageName, 'package.json')
+
+  try {
+    const require = createRequire(import.meta.url)
+    const packageDir = dirname(require.resolve(join(frameworkPackageName, 'package.json'), { paths: [process.cwd()] }))
+
+    return packageDir
+  }
+  catch (e) {
+    // logger.error(e)
+  }
+  throw new Error(`Cannot find ${frameworkPackageName},`)
+}
+
 export function getNuxtProxyConfig(nuxt: Nuxt) {
   const port = nuxt.options.runtimeConfig.app.port ?? 3000
   const route = '^/(_nuxt|_ipx|_icon|__nuxt_devtools__)'
