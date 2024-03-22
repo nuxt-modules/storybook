@@ -61,7 +61,7 @@ export default defineNuxtModule<ModuleOptions>({
     url: process.env.STORYBOOK_URL || 'http://localhost:6006',
     storybookRoute: '/__storybook_route',
     port: 6006,
-    version: 'v7',
+    version: 'v8',
     cookieName: 'sb_session',
     devtools: false,
   },
