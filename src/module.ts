@@ -1,4 +1,4 @@
-import { createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { defineNuxtModule, logger } from '@nuxt/kit'
 
 import { setupStorybook } from './storybook'
 
