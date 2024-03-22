@@ -17,7 +17,7 @@ export interface ModuleOptions {
    * @type string
    * @example 'v8'
    */
-  version?: 'v7'
+  version?: 'v7' | 'v8'
 
   /**
    * StorybookCookie Name
