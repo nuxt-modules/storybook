@@ -99,8 +99,7 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
             plugins[index] = vuePlugin()
           }
           else {
-            // Handle the case where the plugin with name 'vite:vue' was not found
-            console.error('Plugin \'vite:vue\' not found in the array.')
+            plugins.push(vuePlugin())
           }
           baseConfig.plugins = plugins
           extendedConfig = mergeConfig(config, baseConfig)
