@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v7.0.2
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v7.0.1...v7.0.2)
+
 ## v7.0.1
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v7.0.0...v7.0.1)
