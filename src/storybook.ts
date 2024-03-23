@@ -1,7 +1,7 @@
 import { resolve } from 'node:path'
 import { existsSync } from 'node:fs'
 import { startSubprocess } from '@nuxt/devtools-kit'
-import { Nuxt } from 'nuxt/schema'
+import type { Nuxt } from 'nuxt/schema'
 import { getPort } from 'get-port-please'
 import { extendViteConfig } from '@nuxt/kit'
 import { logger } from '@nuxt/kit'
