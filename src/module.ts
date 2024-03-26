@@ -71,9 +71,6 @@ export default defineNuxtModule<ModuleOptions>({
      return
    
     logger.info('🔌  Storybook Module Setup')
-    // Default runtimeConfig
-    
-    nuxt.options.ssr = false
         
     setupStorybook(options, nuxt)
   },
