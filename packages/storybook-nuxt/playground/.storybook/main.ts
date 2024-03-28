@@ -13,7 +13,9 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: "@storybook-vue/nuxt",
-    options: {},
+    options: { 
+      docgen :"vue-component-meta"
+    },
   },
   docs: {
     autodocs: "tag",

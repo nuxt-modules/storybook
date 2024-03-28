@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/image',
     '@pinia/nuxt',
-    '@invictus.codes/nuxt-vuetify',
+    'vuetify-nuxt-module',
   ],
   runtimeConfig: {
     app: {
