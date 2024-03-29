@@ -37,7 +37,7 @@ function extendComponents(nuxt: Nuxt) {
  * extend composables to override router ( fix undefined router  useNuxtApp )
  *
  * @param nuxt
- * */
+ */
 
 async function extendComposables(nuxt: Nuxt) {
   const { addImportsSources } = await import('@nuxt/kit')
@@ -99,7 +99,6 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
             plugins[index] = vuePlugin()
           }
           else {
-            // Handle the case where the plugin with name 'vite:vue' was not found
             plugins.push(vuePlugin())
           }
           baseConfig.plugins = plugins
