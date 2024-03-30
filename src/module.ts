@@ -13,7 +13,7 @@ export interface ModuleOptions {
 
   /**
    * StorybookVersion
-   * @default 'v7'
+   * @default 'v8'
    * @type string
    * @example 'v8'
    */
