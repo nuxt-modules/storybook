@@ -27,7 +27,7 @@ Then run `pnpm dev` to start you Nuxt server.
 
 ## Demo
 
-https://github.com/chakAs3/nuxt-storybook-module-demo
+https://github.com/storybook-vue/nuxt-storybook-module-demo
 
 ## Features
 
@@ -42,6 +42,10 @@ https://github.com/chakAs3/nuxt-storybook-module-demo
 📦  Extendable by Nuxt modules
 
 🚀  Supports Nuxt 3 / Storybook 7
+
+## Nuxt 2
+
+Nuxt 2 is supported with Storybook v6,you can check legacy code on the v4 branch.
 
 ## Contributing
 

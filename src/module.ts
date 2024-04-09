@@ -1,4 +1,4 @@
-import { addImportsDir, createResolver, defineNuxtModule, extendViteConfig, logger } from '@nuxt/kit'
+import { defineNuxtModule, logger } from '@nuxt/kit'
 
 import { setupStorybook } from './storybook'
 
@@ -17,7 +17,7 @@ export interface ModuleOptions {
    * @type string
    * @example 'v8'
    */
-  version?: 'v7'
+  version?: 'v7' | 'v8'
 
   /**
    * StorybookCookie Name
@@ -61,20 +61,17 @@ export default defineNuxtModule<ModuleOptions>({
     url: process.env.STORYBOOK_URL || 'http://localhost:6006',
     storybookRoute: '/__storybook_route',
     port: 6006,
-    version: 'v7',
+    version: 'v8',
     cookieName: 'sb_session',
     devtools: false,
   },
   async setup(options, nuxt) {
     
-
     if(process.env.__STORYBOOK__)
      return
    
     logger.info('🔌  Storybook Module Setup')
     // Default runtimeConfig
-  
-    const { resolve } = createResolver(import.meta.url)
     
     nuxt.options.ssr = false
         

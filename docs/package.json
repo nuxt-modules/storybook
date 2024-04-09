@@ -13,6 +13,11 @@
     "devDependencies": {
         "@nuxt-themes/docus": "^1.14.9",
         "@nuxtjs/plausible": "^0.2.3",
-        "nuxt": "3.7.4"
+        "nuxt": "3.11.1"
+    },
+    "pnpm": {
+        "overrides": {
+            "chalk": "^4.1.0"
+        }
     }
 }
