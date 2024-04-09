@@ -47,7 +47,7 @@
         "eslint": "^8.56.0",
         "jsdom": "^23.2.0",
         "nuxt": "3.9.1",
-        "release-it": "17.0.1",
+        "release-it": "17.1.1",
         "typescript": "^5.3.3",
         "unbuild": "^2.0.0",
         "vitest": "^1.2.0"
@@ -55,9 +55,11 @@
     "dependencies": {
         "@nuxt/devtools-kit": "^1.0.8",
         "@nuxt/kit": "3.9.1",
+        "@storybook-vue/nuxt": "^0.2.6",
         "chalk": "^4.1.2",
         "defu": "^6.1.4",
-        "get-port-please": "^3.1.2"
+        "get-port-please": "^3.1.2",
+        "storybook": "^8.0.6"
     },
     "publishConfig": {
         "access": "public"
