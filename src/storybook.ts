@@ -1,7 +1,7 @@
 import { resolve } from 'node:path'
 import { existsSync } from 'node:fs'
 import { startSubprocess } from '@nuxt/devtools-kit'
-import { Nuxt } from 'nuxt/schema'
+import type { Nuxt } from 'nuxt/schema'
 import { getPort } from 'get-port-please'
 import { extendViteConfig } from '@nuxt/kit'
 import { logger } from '@nuxt/kit'
@@ -9,8 +9,9 @@ import { logger } from '@nuxt/kit'
 
 export async function setupStorybook(options: any, nuxt: Nuxt) {
   const STORYBOOK_ROUTE = options.storybookRoute || '/__storybook_route'
-  const STORYBOOK_PORT =  await getPort({ ports: [options.port || 6006 , 6007, 6008, 6009, 6010]})
-  const STORYBOOK_URL = 'http://localhost:'+ STORYBOOK_PORT
+  const STORYBOOK_PORT =  await getPort({ ports: [options.port || 6006, 6007, 6008, 6009, 6010]})
+  const STORYBOOK_HOST = options.storybookHost || 'http://localhost'
+  const STORYBOOK_URL = + STORYBOOK_HOST + STORYBOOK_PORT == 80 ? '' : `:${STORYBOOK_PORT}`
    
   const projectDir = resolve(nuxt.options.rootDir)
   const args = isStorybookConfigured(projectDir) ? 
@@ -53,7 +54,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
     } )
 
     const storybookProxy = {
-      target: `http://localhost:${STORYBOOK_PORT}`,
+      target: STORYBOOK_URL,
       changeOrigin: true,
       followRedirects: true,
       secure: false,
@@ -66,7 +67,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       config.optimizeDeps ??=  {}
       config.optimizeDeps.include = config.optimizeDeps.include || []
 
-      nuxt.options.devtools = true
+      nuxt.options.devtools = { enabled: true} 
 
       config.server ??= {}
       config.server.proxy ??= {}
@@ -101,7 +102,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       logger.info(' ')
       logger.info('✔ Storybook build done  ')
       logger.info('  ')
-      nuxt.options.devtools = true 
+      nuxt.options.devtools = {enabled:true} 
       process.env.__STORYBOOK__ = JSON.stringify( options )     
     })
     
