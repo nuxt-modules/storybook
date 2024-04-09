@@ -67,8 +67,6 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       config.optimizeDeps ??=  {}
       config.optimizeDeps.include = config.optimizeDeps.include || []
 
-      nuxt.options.devtools = { enabled: true} 
-
       config.server ??= {}
       config.server.proxy ??= {}
 
@@ -102,8 +100,7 @@ export async function setupStorybook(options: any, nuxt: Nuxt) {
       logger.info(' ')
       logger.info('✔ Storybook build done  ')
       logger.info('  ')
-      nuxt.options.devtools = {enabled:true} 
-      import.meta.env.__STORYBOOK__ = JSON.stringify( options )     
+      process.env.__STORYBOOK__ = JSON.stringify( options )     
     })
     
     logger.info('🔗 STORYBOOK_URL :', STORYBOOK_URL)
