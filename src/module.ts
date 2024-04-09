@@ -5,7 +5,7 @@ import { setupStorybook } from './storybook'
 export interface ModuleOptions {
   /**
    * StorybookAPI URL
-   * @default process.env.STORYBOOK_URL
+   * @default import.meta.env.STORYBOOK_URL
    * @example 'http://localhost:6006'
    * @type string
    */
@@ -58,7 +58,7 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    url: process.env.STORYBOOK_URL || 'http://localhost:6006',
+    url: import.meta.env.STORYBOOK_URL || 'http://localhost:6006',
     storybookRoute: '/__storybook_route',
     port: 6006,
     version: 'v8',
@@ -67,7 +67,7 @@ export default defineNuxtModule<ModuleOptions>({
   },
   async setup(options, nuxt) {
     
-    if(process.env.__STORYBOOK__)
+    if(import.meta.env.__STORYBOOK__)
      return
    
     logger.info('🔌  Storybook Module Setup')
