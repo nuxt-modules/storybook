@@ -20,7 +20,7 @@ export interface ModuleOptions {
   /**
    * The host where the Storybook application server will be started.
    *
-   * @default process.env.STORYBOOK_HOST or 'http://localhost'
+   * @default Environment variable 'STORYBOOK_HOST' or 'http://localhost'
    * @example 'http://localhost'
    */
   host: string
@@ -35,19 +35,16 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    host: process.env.STORYBOOK_HOST || 'http://localhost:6006',
+    host: import.meta.env.STORYBOOK_URL || 'http://localhost:6006',
     route: '/_storybook',
     port: 6006,
   },
   async setup(options, nuxt) {
     
-    if(process.env.__STORYBOOK__)
+    if(import.meta.env.__STORYBOOK__)
      return
    
     logger.info('🔌  Storybook Module Setup')
-    // Default runtimeConfig
-    
-    nuxt.options.ssr = false
         
     setupStorybook(options, nuxt)
   },
