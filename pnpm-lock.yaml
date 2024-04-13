@@ -13,7 +13,7 @@ overrides:
 dependencies:
   '@nuxt/devtools-kit':
     specifier: ^1.0.8
-    version: 1.0.8(nuxt@3.11.2)(rollup@3.29.4)(vite@5.2.3)
+    version: 1.1.5(nuxt@3.11.2)(rollup@3.29.4)(vite@5.2.3)
   '@nuxt/kit':
     specifier: ^3.11.1
     version: 3.11.2(rollup@3.29.4)
@@ -2222,22 +2222,6 @@ packages:
   /@nuxt/devalue@2.0.2:
     resolution: {integrity: sha512-GBzP8zOc7CGWyFQS6dv1lQz8VVpz5C2yRszbXufwG/9zhStTIH50EtD87NmWbTMwXDvZLNg8GIpb1UFdH93JCA==}
 
-  /@nuxt/devtools-kit@1.0.8(nuxt@3.11.2)(rollup@3.29.4)(vite@5.2.3):
-    resolution: {integrity: sha512-j7bNZmoAXQ1a8qv6j6zk4c/aekrxYqYVQM21o/Hy4XHCUq4fajSgpoc8mjyWJSTfpkOmuLyEzMexpDWiIVSr6A==}
-    peerDependencies:
-      nuxt: ^3.11.1
-      vite: '*'
-    dependencies:
-      '@nuxt/kit': 3.11.2(rollup@3.29.4)
-      '@nuxt/schema': 3.11.2(rollup@3.29.4)
-      execa: 7.2.0
-      nuxt: 3.11.2(@unocss/reset@0.59.2)(eslint@8.57.0)(floating-vue@5.2.2)(rollup@3.29.4)(typescript@5.4.5)(unocss@0.59.2)(vite@5.2.3)
-      vite: 5.2.3
-    transitivePeerDependencies:
-      - rollup
-      - supports-color
-    dev: false
-
   /@nuxt/devtools-kit@1.1.5(nuxt@3.11.2)(rollup@3.29.4)(vite@5.2.3):
     resolution: {integrity: sha512-Nb/NKFCRtxyqcPD6snB52rXtbRQMjGtn3ncpa8cLWsnoqnkd9emQ4uwV8IwCNxTnqUBtbGU79/TlJ79SKH9TAw==}
     peerDependencies:
@@ -3358,7 +3342,7 @@ packages:
       vue:
         optional: true
     dependencies:
-      '@nuxt/devtools-kit': 1.0.8(nuxt@3.11.2)(rollup@3.29.4)(vite@5.2.3)
+      '@nuxt/devtools-kit': 1.1.5(nuxt@3.11.2)(rollup@3.29.4)(vite@5.2.3)
       '@nuxt/kit': 3.11.2(rollup@3.29.4)
       '@nuxt/schema': 3.11.2(rollup@3.29.4)
       '@nuxt/types': 2.17.2
