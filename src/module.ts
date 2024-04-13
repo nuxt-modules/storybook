@@ -4,49 +4,26 @@ import { setupStorybook } from './storybook'
 
 export interface ModuleOptions {
   /**
-   * StorybookAPI URL
-   * @default process.env.STORYBOOK_URL
-   * @example 'http://localhost:6006'
-   * @type string
-   */
-  url?: string
-
-  /**
-   * StorybookVersion
-   * @default 'v7'
-   * @type string
-   * @example 'v8'
-   */
-  version?: 'v7' | 'v8'
-
-  /**
-   * StorybookCookie Name
-   * @default 'storybook_jwt'
-   * @type string
-  */
-  cookieName?: string
-
-  /**
-   * Add Storybook  in Nuxt Devtools
+   * The route where the Storybook application will be available in development mode.
    *
-   * Please read the instructions on https://storybook.nuxtjs.org/devtools
-   *
-   * @default false
-  */
-  devtools?: boolean
-
-  /**
-   * Storybook Route
-   * @default '/__storybook_route'
+   * @default '/_storybook'
    */
-  storybookRoute?: string
+  route: string
 
   /**
-   * Storybook Port
+   * The port where the Storybook application server will be started.
+   *
    * @default 6006
-   * @type number
    */
-  port?: number
+  port: number
+
+  /**
+   * The host where the Storybook application server will be started.
+   *
+   * @default Environment variable 'STORYBOOK_HOST' or 'http://localhost'
+   * @example 'http://localhost'
+   */
+  host: string
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -58,22 +35,16 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    url: process.env.STORYBOOK_URL || 'http://localhost:6006',
-    storybookRoute: '/__storybook_route',
+    host: import.meta.env.STORYBOOK_HOST || 'http://localhost:6006',
+    route: '/_storybook',
     port: 6006,
-    version: 'v8',
-    cookieName: 'sb_session',
-    devtools: false,
   },
   async setup(options, nuxt) {
     
-    if(process.env.__STORYBOOK__)
+    if(import.meta.env.__STORYBOOK__)
      return
    
     logger.info('🔌  Storybook Module Setup')
-    // Default runtimeConfig
-    
-    nuxt.options.ssr = false
         
     setupStorybook(options, nuxt)
   },
