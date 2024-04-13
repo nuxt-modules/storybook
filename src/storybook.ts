@@ -5,12 +5,13 @@ import type { Nuxt } from 'nuxt/schema'
 import { getPort } from 'get-port-please'
 import { extendViteConfig } from '@nuxt/kit'
 import { logger } from '@nuxt/kit'
+import type { ModuleOptions } from './module'
 
 
-export async function setupStorybook(options: any, nuxt: Nuxt) {
-  const STORYBOOK_ROUTE = options.storybookRoute || '/__storybook_route'
+export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
+  const STORYBOOK_ROUTE = options.route
   const STORYBOOK_PORT =  await getPort({ ports: [options.port || 6006, 6007, 6008, 6009, 6010]})
-  const STORYBOOK_HOST = options.storybookHost || 'http://localhost'
+  const STORYBOOK_HOST = options.host
   const STORYBOOK_URL = + STORYBOOK_HOST + STORYBOOK_PORT == 80 ? '' : `:${STORYBOOK_PORT}`
    
   const projectDir = resolve(nuxt.options.rootDir)
