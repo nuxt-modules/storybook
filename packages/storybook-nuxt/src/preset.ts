@@ -52,10 +52,6 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     rootDir: baseConfig.root,
     ready: false,
     dev: false,
-
-    overrides: {
-      ssr: false,
-    },
   })
 
   if ((nuxt.options.builder as string) !== '@nuxt/vite-builder')
