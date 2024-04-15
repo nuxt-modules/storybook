@@ -12,15 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-node@v4
         with:
           # Keep this in sync with the oldest Node.js version supported by the storybook
           node-version: 18
-      
+
       - name: Install pnpm
         uses: pnpm/action-setup@v3
-      
+
       - name: Get pnpm store directory
         shell: bash
         run: |
@@ -37,9 +37,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # TODO: This currently fails
-      #- name: Lint
-      #  run: pnpm lint
+      - name: Lint
+        run: pnpm lint
 
       # TODO: This currently fails
       #- name: Test
