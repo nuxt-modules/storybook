@@ -54,6 +54,7 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     dev: false,
 
     overrides: {
+      buildDir: '.nuxt-storybook',
       ssr: false,
     },
   })
