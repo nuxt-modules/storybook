@@ -53,10 +53,11 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     ready: false,
     dev: false,
 
+
     overrides: {
       buildDir: '.nuxt-storybook',
-      ssr: false,
     },
+
   })
 
   if ((nuxt.options.builder as string) !== '@nuxt/vite-builder')
