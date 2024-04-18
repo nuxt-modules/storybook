@@ -51,3 +51,11 @@ jobs:
       # TODO: This currently fails
       #- name: Build Playground
       #  run: pnpm dev:build
+
+      - name: Publish and test Playground
+        uses: chromaui/action@v11
+        with:
+          # Don't wait until Chromatic verified the build
+          exitOnceUploaded: true
+          buildScriptName: dev:publish
+          debug: true
