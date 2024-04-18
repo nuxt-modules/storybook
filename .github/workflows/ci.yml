@@ -9,30 +9,24 @@ on:
       - main
 jobs:
   ci:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # Keep this in sync with the oldest Node.js version supported by the storybook
+        node: [18, 20]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v4
-      
-      - uses: actions/setup-node@v4
-        with:
-          # Keep this in sync with the oldest Node.js version supported by the storybook
-          node-version: 18
+      - name: Checkout
+        uses: actions/checkout@v4
       
       - name: Install pnpm
         uses: pnpm/action-setup@v3
       
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version: ${{ matrix.node }}
+          cache: pnpm
 
       - name: Install dependencies
         run: pnpm install
@@ -51,3 +45,14 @@ jobs:
       # TODO: This currently fails
       #- name: Build Playground
       #  run: pnpm dev:build
+
+      - name: Nightly release
+        if: |
+          github.event_name == 'push' &&
+          matrix.node == 20 &&
+          matrix.os == 'ubuntu-latest' &&
+          !contains(github.event.head_commit.message, '[skip-release]') &&
+          !startsWith(github.event.head_commit.message, 'docs')
+        run: pnpm publish --recursive --tag next --access public --report-summary --no-git-checks
+        env:
+            NODE_AUTH_TOKEN: ${{secrets.NPMJS_TOKEN}}
