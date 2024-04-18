@@ -57,5 +57,6 @@ jobs:
         with:
           # Don't wait until Chromatic verified the build
           exitOnceUploaded: true
+          projectToken: chpt_d7cf5e98426e11e
           buildScriptName: dev:publish
           debug: true
