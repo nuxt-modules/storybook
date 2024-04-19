@@ -46,15 +46,15 @@
     "changelogen": "^0.5.5",
     "eslint": "^9.0.0",
     "jsdom": "^24.0.0",
-    "nuxt": "3.11.2",
-    "release-it": "17.2.0",
+    "nuxt": "^3.11.2",
+    "release-it": "^17.2.0",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
     "vitest": "^1.2.0"
   },
   "dependencies": {
     "@nuxt/devtools-kit": "^1.0.8",
-    "@nuxt/kit": "3.11.2",
+    "@nuxt/kit": "^3.11.2",
     "@storybook-vue/nuxt": "^0.2.6",
     "chalk": "^5.0.0",
     "defu": "^6.1.4",
@@ -65,12 +65,6 @@
     "access": "public"
   },
   "pnpm": {
-    "overrides": {
-      "nuxt": "^3.11.1",
-      "@nuxt/kit": "^3.11.1",
-      "typescript": "^5.2.2",
-      "chalk": "^4.1.2"
-    },
     "peerDependencyRules": {
       "allowedVersions": {
         "vue": "^3.2.45"
