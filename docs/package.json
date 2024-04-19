@@ -1,23 +1,15 @@
 {
     "name": "nuxt-storybook-docs",
-    "version": "1.0.0",
-    "description": "Storybook module for Nuxt: the docs.",
+    "private": true,
+    "type": "module",
     "scripts": {
         "dev": "nuxi dev",
         "build": "nuxi build",
         "preview": "nuxi preview"
     },
-    "author": "Chakir QATAB",
-    "license": "MIT",
-    "homepage": "https://storybook.nuxtjs.org",
     "devDependencies": {
         "@nuxt-themes/docus": "^1.14.9",
         "@nuxtjs/plausible": "^1.0.0",
-        "nuxt": "3.11.2"
-    },
-    "pnpm": {
-        "overrides": {
-            "chalk": "^4.1.0"
-        }
+        "nuxt": "^3.11.2"
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "nuxt-app",
+    "name": "nuxt-storybook-playground",
     "private": true,
     "type": "module",
     "scripts": {
@@ -12,17 +12,11 @@
         "build-storybook": "storybook build"
     },
     "devDependencies": {
-        "@nuxt/devtools": "1.1.5",
-        "nuxt": "^3.11.1",
-        "storybook": "8.0.8",
-        "@types/node": "^20.0.0",
-        "@storybook/vue3": "8.0.8",
-        "@storybook-vue/nuxt": "0.2.6",
-        "@storybook/addon-links": "8.0.8",
-        "@storybook/builder-vite": "8.0.8",
-        "@storybook/addon-essentials": "8.0.8",
-        "@storybook/addon-interactions": "8.0.8",
-        "@storybook/testing-library": "^0.2.0",
-        "@storybook/blocks": "8.0.8"
+        "@nuxt/devtools": "^1.1.5",
+        "@nuxtjs/storybook": "latest",
+        "@storybook/addon-links": "^8.0.8",
+        "@storybook/addon-essentials": "^8.0.8",
+        "@storybook/addon-interactions": "^8.0.8",
+        "nuxt": "^3.11.1"
     }
 }

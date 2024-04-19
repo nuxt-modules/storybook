@@ -1,97 +1,91 @@
 {
-    "name": "@nuxtjs/storybook",
-    "version": "7.0.2",
-    "description": "Storybook module for Nuxt",
-    "license": "MIT",
-    "repository": "nuxt-modules/storybook",
-    "author": {
-        "name": "ChakAs3",
-        "email": "javachakir@gmail.com"
-    },
-    "type": "module",
-    "exports": {
-        ".": {
-            "types": "./dist/types.d.ts",
-            "import": "./dist/module.mjs",
-            "require": "./dist/module.cjs"
-        }
-    },
-    "main": "./dist/module.cjs",
-    "types": "./dist/types.d.ts",
-    "files": [
-        "dist"
-    ],
-    "scripts": {
-        "dev": "./scripts/playground.sh",
-        "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-        "dev:build": "nuxi build playground",
-        "build": "nuxt-module-build build",
-        "lint": "eslint --report-unused-disable-directives .",
-        "prepack": "pnpm build",
-        "release": "pnpm changelogen --release --push && pnpm publish",
-        "prepare": "nuxi prepare playground",
-        "build:docs": "(cd docs && nuxi build)",
-        "test": "./scripts/test.sh",
-        "test:coverage": "vitest --coverage"
-    },
-    "packageManager": "pnpm@8.15.7",
-    "devDependencies": {
-        "@iconify-json/carbon": "^1.1.27",
-        "@nuxt/content": "^2.10.0",
-        "@nuxt/devtools": "^1.0.8",
-        "@nuxt/eslint-config": "^0.3.6",
-        "@nuxt/module-builder": "^0.5.5",
-        "@nuxt/schema": "^3.9.1",
-        "@nuxt/test-utils": "^3.9.0",
-        "@vitest/coverage-v8": "^1.5.0",
-        "changelogen": "^0.5.5",
-        "eslint": "^9.0.0",
-        "jsdom": "^24.0.0",
-        "nuxt": "3.11.2",
-        "release-it": "17.2.0",
-        "typescript": "^5.3.3",
-        "unbuild": "^2.0.0",
-        "vitest": "^1.2.0"
-    },
-    "dependencies": {
-        "@nuxt/devtools-kit": "^1.0.8",
-        "@nuxt/kit": "3.11.2",
-        "@storybook-vue/nuxt": "^0.2.6",
-        "chalk": "^5.0.0",
-        "defu": "^6.1.4",
-        "get-port-please": "^3.1.2",
-        "storybook": "^8.0.6"
-    },
-    "publishConfig": {
-        "access": "public"
-    },
-    "pnpm": {
-        "overrides": {
-            "nuxt": "^3.11.1",
-            "@nuxt/kit": "^3.11.1",
-            "typescript": "^5.2.2",
-            "chalk": "^4.1.2"
-        },
-        "peerDependencyRules": {
-            "allowedVersions": {
-                "vue": "^3.2.45"
-            },
-            "ignoreMissing": [
-                "webpack",
-                "vue"
-            ]
-        }
-    },
-    "release-it": {
-        "git": {
-            "commitMessage": "chore(release): release v${version}"
-        },
-        "github": {
-            "release": true,
-            "releaseName": "v${version}"
-        },
-        "hooks": {
-            "after:bump": "npx changelogen@latest --no-commit --no-tag --output --r $(node -p \"require('./package.json').version\")"
-        }
+  "name": "@nuxtjs/storybook",
+  "version": "8.0.0",
+  "description": "Storybook module for Nuxt",
+  "license": "MIT",
+  "repository": "nuxt-modules/storybook",
+  "author": {
+    "name": "ChakAs3",
+    "email": "javachakir@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
     }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "./scripts/playground.sh",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "dev:build": "nuxi build playground",
+    "build": "nuxt-module-build build",
+    "lint": "eslint --report-unused-disable-directives .",
+    "prepack": "pnpm build",
+    "release": "pnpm changelogen --release --push && pnpm publish",
+    "prepare": "nuxi prepare playground",
+    "build:docs": "(cd docs && nuxi build)",
+    "test": "./scripts/test.sh",
+    "test:coverage": "vitest --coverage"
+  },
+  "packageManager": "pnpm@8.15.7",
+  "devDependencies": {
+    "@iconify-json/carbon": "^1.1.27",
+    "@nuxt/content": "^2.10.0",
+    "@nuxt/devtools": "^1.0.8",
+    "@nuxt/eslint-config": "^0.3.6",
+    "@nuxt/module-builder": "^0.5.5",
+    "@nuxt/schema": "^3.9.1",
+    "@nuxt/test-utils": "^3.9.0",
+    "@vitest/coverage-v8": "^1.5.0",
+    "changelogen": "^0.5.5",
+    "eslint": "^9.0.0",
+    "jsdom": "^24.0.0",
+    "nuxt": "^3.11.2",
+    "release-it": "^17.2.0",
+    "typescript": "^5.3.3",
+    "unbuild": "^2.0.0",
+    "vitest": "^1.2.0"
+  },
+  "dependencies": {
+    "@nuxt/devtools-kit": "^1.0.8",
+    "@nuxt/kit": "^3.11.2",
+    "@storybook-vue/nuxt": "^0.2.6",
+    "chalk": "^5.0.0",
+    "defu": "^6.1.4",
+    "get-port-please": "^3.1.2",
+    "storybook": "^8.0.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "vue": "^3.2.45"
+      },
+      "ignoreMissing": [
+        "webpack",
+        "vue"
+      ]
+    }
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore(release): release v${version}"
+    },
+    "github": {
+      "release": true,
+      "releaseName": "v${version}"
+    },
+    "hooks": {
+      "after:bump": "npx changelogen@latest --no-commit --no-tag --output --r $(node -p \"require('./package.json').version\")"
+    }
+  }
 }

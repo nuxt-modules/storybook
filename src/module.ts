@@ -41,7 +41,7 @@ export default defineNuxtModule<ModuleOptions>({
   },
   async setup(options, nuxt) {
     
-    if(import.meta.env.__STORYBOOK__)
+    if(import.meta.env?.__STORYBOOK__)
      return
    
     logger.info('🔌  Storybook Module Setup')
