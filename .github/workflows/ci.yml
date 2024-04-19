@@ -16,8 +16,9 @@ jobs:
         node: [18, 20]
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
       - name: Install pnpm
         uses: pnpm/action-setup@v3
@@ -45,6 +46,18 @@ jobs:
       - name: Build Playground
         run: pnpm dev:build
 
+      - name: Publish and test Playground
+        uses: chromaui/action@v11
+        if: |
+          matrix.node == 20 &&
+          matrix.os == 'ubuntu-latest'
+        with:
+          # Don't wait until Chromatic verified the build
+          exitOnceUploaded: true
+          projectToken: chpt_d7cf5e98426e11e
+          buildScriptName: playground:storybook:publish
+          debug: true
+ 
       - name: Nightly release
         if: |
           github.event_name == 'push' &&
