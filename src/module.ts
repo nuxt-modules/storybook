@@ -35,13 +35,13 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    host: import.meta.env.STORYBOOK_HOST || 'http://localhost:6006',
+    host: import.meta.env?.STORYBOOK_HOST || 'http://localhost:6006',
     route: '/_storybook',
     port: 6006,
   },
   async setup(options, nuxt) {
     
-    if(import.meta.env.__STORYBOOK__)
+    if(import.meta.env?.__STORYBOOK__)
      return
    
     logger.info('🔌  Storybook Module Setup')
