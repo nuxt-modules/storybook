@@ -22,7 +22,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "./scripts/playground.sh",
+    "dev": "nuxi dev playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "dev:build": "nuxi build playground",
     "playground:storybook:build": "cd playground && pnpm run build-storybook",
@@ -33,7 +33,8 @@
     "release": "pnpm changelogen --release --push && pnpm publish",
     "prepare": "nuxi prepare playground",
     "build:docs": "(cd docs && nuxi build)",
-    "test": "./scripts/test.sh",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
     "test:coverage": "vitest --coverage"
   },
   "packageManager": "pnpm@8.15.7",
