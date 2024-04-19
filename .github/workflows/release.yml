@@ -12,58 +12,29 @@ on:
       - 'v*'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 16
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        with:
-          version: 7
-          run_install: false
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
-
   publish-npm:
     runs-on: ubuntu-latest
-    needs: build
-    environment: development
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
 
-      - name: Use Node LTS ✨
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: 18
           registry-url: https://registry.npmjs.org
           cache: pnpm
 
-      - name: Install dependencies 📦️
-        run: pnpm install --no-frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install
 
-      - name: Build 🔨
+      - name: Build
         run: pnpm build
 
-      - name: Publish 🚀️
-        run: pnpm publish --access public --report-summary
+      - name: Publish
+        run: pnpm publish --recursive --access public --report-summary --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPMJS_TOKEN}}
