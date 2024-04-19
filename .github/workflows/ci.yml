@@ -42,9 +42,8 @@ jobs:
       - name: Build
         run: pnpm build
 
-      # TODO: This currently fails
-      #- name: Build Playground
-      #  run: pnpm dev:build
+      - name: Build Playground
+        run: pnpm dev:build
 
       - name: Nightly release
         if: |
