@@ -32,9 +32,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # TODO: This currently fails
-      #- name: Lint
-      #  run: pnpm lint
+      - name: Lint
+        run: pnpm lint
 
       # TODO: This currently fails
       #- name: Test

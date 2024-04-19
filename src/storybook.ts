@@ -3,8 +3,7 @@ import { existsSync } from 'node:fs'
 import { startSubprocess } from '@nuxt/devtools-kit'
 import type { Nuxt } from 'nuxt/schema'
 import { getPort } from 'get-port-please'
-import { extendViteConfig } from '@nuxt/kit'
-import { logger } from '@nuxt/kit'
+import { extendViteConfig, logger } from '@nuxt/kit'
 import type { ModuleOptions } from './module'
 
 
