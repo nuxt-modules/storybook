@@ -1,5 +1,5 @@
 // @ts-check
-import { createConfigForNuxt } from "@nuxt/eslint-config/flat";
+import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
 
 export default createConfigForNuxt({
   features: {
@@ -7,6 +7,6 @@ export default createConfigForNuxt({
     tooling: true,
   },
   dirs: {
-    src: ["./playground"],
+    src: ['./playground'],
   },
-});
+})

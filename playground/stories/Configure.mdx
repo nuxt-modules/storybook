@@ -1,18 +1,18 @@
-import { Meta } from "@storybook/blocks";
+import { Meta } from '@storybook/blocks'
 
-import Accessibility from "./assets/accessibility.svg";
-import Checkmark from "./assets/checkmark.svg";
-import Document from "./assets/document.svg";
-import Typography from "./assets/typography.svg";
-import Github from "./assets/github.svg";
-import Discord from "./assets/discord.svg";
-import Youtube from "./assets/youtube.svg";
-import Chromatic from "./assets/chromatic.svg";
-import Figma from "./assets/figma.svg";
-import Tutorials from "./assets/tutorials.svg";
-import Styling from "./assets/styling.jpg";
-import Context from "./assets/context.jpg";
-import Assets from "./assets/assets.jpg";
+import Accessibility from './assets/accessibility.svg'
+import Checkmark from './assets/checkmark.svg'
+import Document from './assets/document.svg'
+import Typography from './assets/typography.svg'
+import Github from './assets/github.svg'
+import Discord from './assets/discord.svg'
+import Youtube from './assets/youtube.svg'
+import Chromatic from './assets/chromatic.svg'
+import Figma from './assets/figma.svg'
+import Tutorials from './assets/tutorials.svg'
+import Styling from './assets/styling.jpg'
+import Context from './assets/context.jpg'
+import Assets from './assets/assets.jpg'
 
 <Meta title="Configure your project" />
 
@@ -28,12 +28,15 @@ Because Storybook works separately from your app, you'll need to configure it fo
     />
     <div className="sb-block">
       <h3>Add styling and CSS</h3>
-      <p>Like with web applications, there are many ways to include CSS within Storybook. Learn more about setting up styling within Storybook.</p>
+      <p>
+        Like with web applications, there are many ways to include CSS within
+        Storybook. Learn more about setting up styling within Storybook.
+      </p>
       <a
         href="https://storybook.js.org/docs/{{renderer}}/configure/styling-and-css"
         target="_blank"
       >
-        Read more on how to set up styling 
+        Read more on how to set up styling
         <span className="sb-chevron">&#8250;</span>
       </a>
     </div>
@@ -45,24 +48,37 @@ Because Storybook works separately from your app, you'll need to configure it fo
     />
     <div className="sb-block">
       <h3>Provide context and mocking</h3>
-      <p>Often when a story doesn't render, it's because your component is
-        expecting a specific environment or context (like a theme provider) to be available. 
-        Learn more about solving these issues by providing context and mocking to Storybook.</p>
+      <p>
+        Often when a story doesn't render, it's because your component is
+        expecting a specific environment or context (like a theme provider) to
+        be available. Learn more about solving these issues by providing context
+        and mocking to Storybook.
+      </p>
       <a
         href="https://storybook.js.org/docs/{{renderer}}/writing-stories/decorators#context-for-mocking"
         target="_blank"
-      >Read more on how to set up context <span className="sb-chevron">&#8250;</span></a>
+      >
+        Read more on how to set up context{' '}
+        <span className="sb-chevron">&#8250;</span>
+      </a>
     </div>
   </div>
   <div className="sb-section-item">
     <img src={Assets} alt="A representation of typography and image assets" />
     <div className="sb-block">
       <h3>Load assets and resources</h3>
-      <p>To link static files (like fonts) to your projects and stories, use the `staticDirs` configuration option to specify folders to load when starting Storybook.</p>
+      <p>
+        To link static files (like fonts) to your projects and stories, use the
+        `staticDirs` configuration option to specify folders to load when
+        starting Storybook.
+      </p>
       <a
         href="https://storybook.js.org/docs/{{renderer}}/configure/images-and-assets"
         target="_blank"
-      >Read more on how to load assets <span className="sb-chevron">&#8250;</span></a>
+      >
+        Read more on how to load assets{' '}
+        <span className="sb-chevron">&#8250;</span>
+      </a>
     </div>
   </div>
 </div>
@@ -78,38 +94,57 @@ Now that you know the basics, let's explore other parts of Storybook that will i
     <div className="sb-grid-item">
       <img src={Document} alt="Document" />
       <h3>Autodocs</h3>
-      <p>Auto-generate living, interactive reference documentation from your components and stories.</p>
+      <p>
+        Auto-generate living, interactive reference documentation from your
+        components and stories.
+      </p>
       <a
         href="https://storybook.js.org/docs/{{renderer}}/writing-docs/autodocs"
         target="_blank"
-      >Learn more <span className="sb-chevron">&#8250;</span></a>
+      >
+        Learn more <span className="sb-chevron">&#8250;</span>
+      </a>
     </div>
     <div className="sb-grid-item">
       <img src={Checkmark} alt="Checkmark" />
       <h3>Testing</h3>
-      <p>Use stories to test a component in all its variations, no matter how complex.</p>
+      <p>
+        Use stories to test a component in all its variations, no matter how
+        complex.
+      </p>
       <a
         href="https://storybook.js.org/docs/{{renderer}}/writing-tests/introduction"
         target="_blank"
-      >Learn more <span className="sb-chevron">&#8250;</span></a>
+      >
+        Learn more <span className="sb-chevron">&#8250;</span>
+      </a>
     </div>
     <div className="sb-grid-item">
       <img src={Chromatic} alt="Chromatic" />
       <h3>Publish to Chromatic</h3>
-      <p>Publish your Storybook to review and collaborate with your entire team.</p>
+      <p>
+        Publish your Storybook to review and collaborate with your entire team.
+      </p>
       <a
         href="https://storybook.js.org/docs/{{renderer}}/sharing/publish-storybook#publish-storybook-with-chromatic"
         target="_blank"
-      >Learn more <span className="sb-chevron">&#8250;</span></a>
+      >
+        Learn more <span className="sb-chevron">&#8250;</span>
+      </a>
     </div>
     <div className="sb-grid-item">
       <img src={Figma} alt="Figma" />
       <h3>Figma Plugin</h3>
-      <p>Embed your stories into Figma to cross-reference the design and live implementation in one place.</p>
+      <p>
+        Embed your stories into Figma to cross-reference the design and live
+        implementation in one place.
+      </p>
       <a
         href="https://storybook.js.org/docs/{{renderer}}/sharing/design-integrations#embed-storybook-in-figma-with-the-plugin"
         target="_blank"
-      >Learn more <span className="sb-chevron">&#8250;</span></a>
+      >
+        Learn more <span className="sb-chevron">&#8250;</span>
+      </a>
     </div>
     <div className="sb-grid-item">
       <img src={Accessibility} alt="Accessibility" />
@@ -118,7 +153,9 @@ Now that you know the basics, let's explore other parts of Storybook that will i
       <a
         href="https://storybook.js.org/docs/{{renderer}}/writing-tests/accessibility-testing"
         target="_blank"
-      >Learn more <span className="sb-chevron">&#8250;</span></a>
+      >
+        Learn more <span className="sb-chevron">&#8250;</span>
+      </a>
     </div>
     <div className="sb-grid-item">
       <img src={Typography} alt="Typography" />
@@ -127,7 +164,9 @@ Now that you know the basics, let's explore other parts of Storybook that will i
       <a
         href="https://storybook.js.org/docs/{{renderer}}/configure/theming"
         target="_blank"
-      >Learn more <span className="sb-chevron">&#8250;</span></a>
+      >
+        Learn more <span className="sb-chevron">&#8250;</span>
+      </a>
     </div>
   </div>
 </div>

@@ -1,22 +1,22 @@
 {
-    "name": "nuxt-storybook-playground",
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "build": "nuxt build",
-        "dev": "nuxt dev",
-        "generate": "nuxt generate",
-        "preview": "nuxt preview",
-        "postinstall": "nuxt prepare",
-        "storybook": "storybook dev --port 6006",
-        "build-storybook": "storybook build"
-    },
-    "devDependencies": {
-        "@nuxt/devtools": "^1.1.5",
-        "@nuxtjs/storybook": "latest",
-        "@storybook/addon-links": "^8.0.8",
-        "@storybook/addon-essentials": "^8.0.8",
-        "@storybook/addon-interactions": "^8.0.8",
-        "nuxt": "^3.11.1"
-    }
+  "name": "nuxt-storybook-playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "storybook": "storybook dev --port 6006",
+    "build-storybook": "storybook build"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^1.1.5",
+    "@nuxtjs/storybook": "latest",
+    "@storybook/addon-links": "^8.0.8",
+    "@storybook/addon-essentials": "^8.0.8",
+    "@storybook/addon-interactions": "^8.0.8",
+    "nuxt": "^3.11.1"
+  }
 }

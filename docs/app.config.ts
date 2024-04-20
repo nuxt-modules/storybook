@@ -9,16 +9,16 @@ export default defineAppConfig({
       nuxt: {
         label: 'Nuxt',
         icon: 'simple-icons:nuxtdotjs',
-        href: 'https://nuxt.com'
+        href: 'https://nuxt.com',
       },
       storybook: {
         label: 'Storybook',
         icon: 'simple-icons:storybook',
-        href: 'https://storybook.js.org '
-      }
+        href: 'https://storybook.js.org ',
+      },
     },
     header: {
-      logo: true
+      logo: true,
     },
     github: {
       dir: 'docs/content',
@@ -27,12 +27,12 @@ export default defineAppConfig({
       releases: true,
       owner: 'nuxt-modules',
       repo: 'storybook',
-      branch: 'main'
+      branch: 'main',
     },
   },
   github: {
     owner: 'chakAs3',
     repo: 'storybook',
-    branch: 'main'
+    branch: 'main',
   },
 })
