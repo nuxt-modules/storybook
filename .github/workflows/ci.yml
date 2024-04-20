@@ -64,6 +64,6 @@ jobs:
           matrix.os == 'ubuntu-latest' &&
           !contains(github.event.head_commit.message, '[skip-release]') &&
           !startsWith(github.event.head_commit.message, 'docs')
-        run: pnpm publish --recursive --tag next --access public --report-summary --no-git-checks
+        run: pnpm publish --recursive --tag next --access public --report-summary --no-git-checks --force
         env:
             NODE_AUTH_TOKEN: ${{secrets.NPMJS_TOKEN}}
