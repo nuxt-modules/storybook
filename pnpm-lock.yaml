@@ -69,6 +69,9 @@ importers:
       nuxt:
         specifier: ^3.11.2
         version: 3.11.2(@unocss/reset@0.59.4)(eslint@9.0.0)(floating-vue@5.2.2)(rollup@3.29.4)(typescript@5.4.5)(unocss@0.59.4)(vite@5.2.9)
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
       release-it:
         specifier: ^17.2.0
         version: 17.2.0(typescript@5.4.5)
@@ -12738,7 +12741,6 @@ packages:
     resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: false
 
   /pretty-bytes@6.1.1:
     resolution: {integrity: sha512-mQUvGU6aUFQ+rNvTIAcZuWGRT9a6f6Yrg9bHs4ImKF+HZCEK+plBvnAZYSIQztknZF2qnzNtr6F8s0+IuptdlQ==}
