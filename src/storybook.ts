@@ -100,7 +100,7 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
       logger.info(' ')
       logger.info('✔ Storybook build done  ')
       logger.info('  ')
-      process.env.__STORYBOOK__ = JSON.stringify( options )     
+      import.meta.env.__STORYBOOK__ = JSON.stringify( options )     
     })
     
     logger.info('🔗 STORYBOOK_URL :', STORYBOOK_URL)
