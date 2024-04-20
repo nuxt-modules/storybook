@@ -40,12 +40,10 @@ export default defineNuxtModule<ModuleOptions>({
     port: 6006,
   },
   async setup(options, nuxt) {
-    
-    if(import.meta.env?.__STORYBOOK__)
-     return
-   
+    if (import.meta.env?.__STORYBOOK__) return
+
     logger.info('🔌  Storybook Module Setup')
-        
+
     setupStorybook(options, nuxt)
   },
 })

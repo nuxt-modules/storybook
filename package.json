@@ -28,7 +28,9 @@
     "playground:storybook:build": "cd playground && pnpm run build-storybook",
     "playground:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name playground:storybook:build --project-token=chpt_d7cf5e98426e11e",
     "build": "nuxt-module-build build",
-    "lint": "eslint --report-unused-disable-directives .",
+    "lint": "pnpm lint:eslint && pnpm lint:prettier",
+    "lint:eslint": "eslint --report-unused-disable-directives .",
+    "lint:prettier": "prettier --check .",
     "prepack": "pnpm build",
     "release": "pnpm changelogen --release --push && pnpm publish",
     "prepare": "nuxi prepare playground",
@@ -52,6 +54,7 @@
     "eslint": "^9.0.0",
     "jsdom": "^24.0.0",
     "nuxt": "^3.11.2",
+    "prettier": "^3.2.5",
     "release-it": "^17.2.0",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
@@ -91,5 +94,9 @@
     "hooks": {
       "after:bump": "npx changelogen@latest --no-commit --no-tag --output --r $(node -p \"require('./package.json').version\")"
     }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   }
 }

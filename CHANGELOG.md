@@ -1,6 +1,5 @@
 # Changelog
 
-
 ## v8.0.0
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v7.0.2...v8.0.0)
@@ -11,7 +10,7 @@
 - Opt in to `import.meta.*` properties ([#512](https://github.com/nuxt-modules/storybook/pull/512))
 - Remove disable ssr ([#511](https://github.com/nuxt-modules/storybook/pull/511))
 - **deps:** Update nuxtjs monorepo to v3.11.2 ([#521](https://github.com/nuxt-modules/storybook/pull/521))
-- ⚠️  Improve handling of module options ([#518](https://github.com/nuxt-modules/storybook/pull/518))
+- ⚠️ Improve handling of module options ([#518](https://github.com/nuxt-modules/storybook/pull/518))
 - **deps:** Update nuxtjs monorepo to v3.11.2 ([#523](https://github.com/nuxt-modules/storybook/pull/523))
 - **deps:** Update dependency @nuxt/devtools-kit to v1.1.5 ([#506](https://github.com/nuxt-modules/storybook/pull/506))
 - **deps:** Update dependency chalk to v5 ([#531](https://github.com/nuxt-modules/storybook/pull/531))
@@ -28,7 +27,7 @@
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  Improve handling of module options ([#518](https://github.com/nuxt-modules/storybook/pull/518))
+- ⚠️ Improve handling of module options ([#518](https://github.com/nuxt-modules/storybook/pull/518))
 
 ### ❤️ Contributors
 
@@ -62,4 +61,3 @@
 ## v7.0.0
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v7.0.0-alpha.0...v7.0.0)
-

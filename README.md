@@ -31,17 +31,17 @@ https://github.com/storybook-vue/nuxt-storybook-module-demo
 
 ## Features
 
-👌  Zero configuration to start (see video)
+👌 Zero configuration to start (see video)
 
-🪄  Access Storybook Terminal
+🪄 Access Storybook Terminal
 
-🎨  Devtools tab with Storybook app
+🎨 Devtools tab with Storybook app
 
-⚙️  Reference your Storybook config in your app
+⚙️ Reference your Storybook config in your app
 
-📦  Extendable by Nuxt modules
+📦 Extendable by Nuxt modules
 
-🚀  Supports Nuxt 3 / Storybook 7
+🚀 Supports Nuxt 3 / Storybook 7
 
 ## Nuxt 2
 
@@ -52,7 +52,7 @@ Nuxt 2 is supported with Storybook v6,you can check legacy code on the v4 branch
 1. Install dependencies with `pnpm`.
 2. Run `pnpm dev:prepare` to generate stubbed `dist` directory.
 3. Make your changes.
-4. Run `pnpm lint`  to verify that there is no issues (consider adding tests).
+4. Run `pnpm lint` to verify that there is no issues (consider adding tests).
 5. Submit a PR.
 
 ## License
