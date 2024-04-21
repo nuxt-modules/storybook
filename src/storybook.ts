@@ -5,6 +5,8 @@ import type { Nuxt } from 'nuxt/schema'
 import { getPort } from 'get-port-please'
 import { extendViteConfig, logger } from '@nuxt/kit'
 import type { ModuleOptions } from './module'
+import { withTrailingSlash } from 'ufo'
+import { colors } from './logger'
 
 export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
   const STORYBOOK_ROUTE = options.route
@@ -13,7 +15,7 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
   })
   const STORYBOOK_HOST = options.host
   const STORYBOOK_URL =
-    +STORYBOOK_HOST + STORYBOOK_PORT == 80 ? '' : `:${STORYBOOK_PORT}`
+    STORYBOOK_HOST + (STORYBOOK_PORT == 80 ? '' : `:${STORYBOOK_PORT}`)
 
   const projectDir = resolve(nuxt.options.rootDir)
   const args = isStorybookConfigured(projectDir)
@@ -27,13 +29,13 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
         '--ci',
       ]
 
-  logger.info(' ')
-  logger.info(
+  logger.verbose(' ')
+  logger.verbose(
     isStorybookConfigured(projectDir)
       ? '📚  Storybook is configured'
       : '📚  Storybook is not installed',
   )
-  logger.info('')
+  logger.verbose('')
 
   if (!nuxt.options.dev) return
 
@@ -54,12 +56,12 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     _process.getProcess().stderr?.pipe(process.stderr)
 
     nuxt.hook('close', () => {
-      logger.info(' ⚠️ Closing Storybook  ')
+      logger.verbose(' ⚠️ Closing Storybook  ')
       return _process.terminate()
     })
 
     await new Promise((resolve) => setTimeout(resolve, 2000))
-    logger.info('ℹ️ Storybook ready  ')
+    logger.verbose('ℹ️ Storybook ready  ')
   })
 
   const storybookProxy = {
@@ -102,13 +104,15 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
   })
 
   nuxt.hook('build:done', () => {
-    logger.info(' ')
-    logger.info('✔ Storybook build done  ')
-    logger.info('  ')
+    logger.verbose(' ')
+    logger.verbose('✔ Storybook build done  ')
+    logger.verbose('  ')
     import.meta.env.__STORYBOOK__ = JSON.stringify(options)
   })
 
-  logger.info('🔗 STORYBOOK_URL :', STORYBOOK_URL)
+  logger.log(
+    `  ➜ Storybook: ${colors.underline(withTrailingSlash(STORYBOOK_URL))}`,
+  )
 
   nuxt.hook('devtools:customTabs', (tabs) => {
     tabs.push({
