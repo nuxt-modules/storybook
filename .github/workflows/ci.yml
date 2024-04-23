@@ -11,6 +11,7 @@ jobs:
   ci:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         # Keep this in sync with the oldest Node.js version supported by the storybook
         node: [18, 20]
