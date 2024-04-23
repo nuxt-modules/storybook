@@ -35,6 +35,7 @@
     "release": "pnpm changelogen --release --push && pnpm publish",
     "prepare": "nuxi prepare playground",
     "build:docs": "(cd docs && nuxi build)",
+    "docs:generate": "nuxi generate docs",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:coverage": "vitest --coverage"

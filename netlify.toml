@@ -1,0 +1,21 @@
+# Global settings applied to the whole site.
+
+[build]
+  # https://docs.netlify.com/configure-builds/file-based-configuration/#build-settings
+
+  # Base directory containing the main package.json
+  # https://docs.netlify.com/configure-builds/overview/#definitions
+  base = "/"
+
+  # Command to build the site
+  command = "pnpm docs:generate"
+
+  # Directory containing the deploy-ready HTML files
+  publish = "docs/dist"
+
+[build.environment]
+  # https://docs.netlify.com/configure-builds/environment-variables/
+
+  # Use relatively new Node.js version
+  # https://docs.netlify.com/configure-builds/manage-dependencies/#node-js-and-javascript
+  NODE_VERSION = "18"
