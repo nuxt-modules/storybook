@@ -11,7 +11,7 @@
   command = "pnpm docs:generate"
 
   # Directory containing the deploy-ready HTML files
-  publish = "docs/dist""
+  publish = "docs/dist"
 
 [build.environment]
   # https://docs.netlify.com/configure-builds/environment-variables/
