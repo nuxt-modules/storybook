@@ -49,7 +49,7 @@ jobs:
         uses: chromaui/action@v11
         with:
           # Don't wait until Chromatic verified the build
-          exitOnceUploaded: true
+          # exitOnceUploaded: true
           projectToken: ${{ matrix.projectToken }}
           buildScriptName: ${{ matrix.storybookBuildScript }}
           debug: true
