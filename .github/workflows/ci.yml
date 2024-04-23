@@ -42,21 +42,6 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Build Playground
-        run: pnpm dev:build
-
-      - name: Publish and test Playground
-        uses: chromaui/action@v11
-        if: |
-          matrix.node == 20 &&
-          matrix.os == 'ubuntu-latest'
-        with:
-          # Don't wait until Chromatic verified the build
-          exitOnceUploaded: true
-          projectToken: chpt_d7cf5e98426e11e
-          buildScriptName: playground:storybook:publish
-          debug: true
-
       - name: Nightly release
         if: |
           github.event_name == 'push' &&

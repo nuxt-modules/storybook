@@ -1,0 +1,55 @@
+name: ci-examples
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.package }}
+    strategy:
+      matrix:
+        include:
+          - package: Playground
+            buildScript: dev:build
+            storybookBuildScript: playground:storybook:publish
+            projectToken: chpt_d7cf5e98426e11e
+          - package: Starter
+            buildScript: example:starter:build
+            storybookBuildScript: example:starter:storybook:publish
+            projectToken: chpt_dc04103f8a32bfa
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build module
+        run: pnpm build
+
+      - name: Build example
+        run: pnpm ${{ matrix.buildScript }}
+
+      - name: Publish and test example
+        uses: chromaui/action@v11
+        with:
+          # Don't wait until Chromatic verified the build
+          exitOnceUploaded: true
+          projectToken: ${{ matrix.projectToken }}
+          buildScriptName: ${{ matrix.storybookBuildScript }}
+          debug: true
