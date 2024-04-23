@@ -1,13 +1,14 @@
 # Nuxt 3 Minimal Starter
 
 This example has been created based off the minimal starter template of Nuxt (`npx nuxi@latest init`), followed by running
+
 ```bash
 npx storybook@latest init
 ```
+
 to add Storybook to the project.
 
 ---
-
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
