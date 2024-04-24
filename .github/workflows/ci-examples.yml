@@ -23,6 +23,10 @@ jobs:
             buildScript: example:starter:build
             storybookBuildScript: example:starter:storybook:publish
             projectToken: chpt_dc04103f8a32bfa
+          - package: Tailwind
+            buildScript: example:tailwind:build
+            storybookBuildScript: example:tailwind:storybook:publish
+            projectToken: chpt_fbfe47dc27d4064
     steps:
       - uses: actions/checkout@v4
         with:
