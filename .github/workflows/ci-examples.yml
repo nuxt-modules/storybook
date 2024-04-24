@@ -17,15 +17,15 @@ jobs:
         include:
           - package: Playground
             buildScript: dev:build
-            storybookBuildScript: playground:storybook:publish
+            storybookBuildScript: playground:storybook:build
             projectToken: chpt_d7cf5e98426e11e
           - package: Starter
             buildScript: example:starter:build
-            storybookBuildScript: example:starter:storybook:publish
+            storybookBuildScript: example:starter:storybook:build
             projectToken: chpt_dc04103f8a32bfa
           - package: Tailwind
             buildScript: example:tailwind:build
-            storybookBuildScript: example:tailwind:storybook:publish
+            storybookBuildScript: example:tailwind:storybook:build
             projectToken: chpt_fbfe47dc27d4064
     steps:
       - uses: actions/checkout@v4
