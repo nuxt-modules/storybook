@@ -27,6 +27,10 @@ jobs:
             buildScript: example:tailwind:build
             storybookBuildScript: example:tailwind:storybook:build
             projectToken: chpt_fbfe47dc27d4064
+          - package: Showcase
+            buildScript: example:showcase:build
+            storybookBuildScript: example:showcase:storybook:build
+            projectToken: chpt_a53adf402cb628c
     steps:
       - uses: actions/checkout@v4
         with:

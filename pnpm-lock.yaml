@@ -97,6 +97,37 @@ importers:
         specifier: ^3.11.2
         version: 3.11.2(@parcel/watcher@2.4.1)(@types/node@20.12.7)(@unocss/reset@0.59.4)(change-case@4.1.2)(encoding@0.1.13)(eslint@9.1.1)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.16.4))(vue@3.4.24(typescript@5.4.5)))(fuse.js@6.6.2)(ioredis@5.4.1)(optionator@0.9.3)(rollup@4.16.4)(terser@5.30.4)(typescript@5.4.5)(unocss@0.59.4(postcss@8.4.38)(rollup@4.16.4)(vite@5.2.10(@types/node@20.12.7)(terser@5.30.4)))(vite@5.2.10(@types/node@20.12.7)(terser@5.30.4))
 
+  examples/showcase:
+    dependencies:
+      nuxt:
+        specifier: ^3.11.2
+        version: 3.11.2(@parcel/watcher@2.4.1)(@types/node@20.12.7)(@unocss/reset@0.59.4)(change-case@4.1.2)(encoding@0.1.13)(eslint@9.1.1)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.16.4))(vue@3.4.24(typescript@5.4.5)))(fuse.js@6.6.2)(ioredis@5.4.1)(optionator@0.9.3)(rollup@4.16.4)(terser@5.30.4)(typescript@5.4.5)(unocss@0.59.4(postcss@8.4.38)(rollup@4.16.4)(vite@5.2.10(@types/node@20.12.7)(terser@5.30.4)))(vite@5.2.10(@types/node@20.12.7)(terser@5.30.4))
+      vue:
+        specifier: ^3.4.21
+        version: 3.4.24(typescript@5.4.5)
+      vue-router:
+        specifier: ^4.3.0
+        version: 4.3.2(vue@3.4.24(typescript@5.4.5))
+    devDependencies:
+      '@chromatic-com/storybook':
+        specifier: ^1.3.3
+        version: 1.3.3(react@18.2.0)
+      '@nuxtjs/storybook':
+        specifier: workspace:*
+        version: link:../..
+      '@storybook/addon-essentials':
+        specifier: ^8.0.8
+        version: 8.0.9(@types/react@18.2.79)(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@storybook/addon-links':
+        specifier: ^8.0.8
+        version: 8.0.9(react@18.2.0)
+      '@storybook/blocks':
+        specifier: ^8.0.8
+        version: 8.0.9(@types/react@18.2.79)(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@storybook/test':
+        specifier: ^8.0.8
+        version: 8.0.9(vitest@1.5.0(@types/node@20.12.7)(jsdom@24.0.0)(terser@5.30.4))
+
   examples/starter:
     dependencies:
       nuxt:
@@ -8190,6 +8221,9 @@ packages:
   vue-component-type-helpers@2.0.14:
     resolution: {integrity: sha512-DInfgOyXlMyliyqAAD9frK28tTfch0+tMi4qoWJcZlRxUf+NFAtraJBnAsKLep+FOyLMiajkhfyEb3xLK08i7w==}
 
+  vue-component-type-helpers@2.0.16:
+    resolution: {integrity: sha512-qisL/iAfdO++7w+SsfYQJVPj6QKvxp4i1MMxvsNO41z/8zu3KuAw9LkhKUfP/kcOWGDxESp+pQObWppXusejCA==}
+
   vue-demi@0.14.7:
     resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
     engines: {node: '>=12'}
@@ -11643,7 +11677,7 @@ snapshots:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.4.24(typescript@5.4.5)
-      vue-component-type-helpers: 2.0.14
+      vue-component-type-helpers: 2.0.16
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -19539,6 +19573,8 @@ snapshots:
   vue-component-type-helpers@1.8.27: {}
 
   vue-component-type-helpers@2.0.14: {}
+
+  vue-component-type-helpers@2.0.16: {}
 
   vue-demi@0.14.7(vue@3.4.24(typescript@5.4.5)):
     dependencies:
