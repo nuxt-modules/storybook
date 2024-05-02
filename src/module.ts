@@ -1,4 +1,6 @@
-import { defineNuxtModule, logger } from '@nuxt/kit'
+import { defineNuxtModule } from '@nuxt/kit'
+import type { LogLevel } from './logger'
+import { logger } from './logger'
 
 import { setupStorybook } from './storybook'
 
@@ -24,6 +26,13 @@ export interface ModuleOptions {
    * @example 'http://localhost'
    */
   host: string
+
+  /**
+   * Log level for the terminal output.
+   *
+   * @default nuxt.options.logLevel
+   */
+  logLevel: LogLevel
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -34,15 +43,18 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt: '^3.0.0',
     },
   },
-  defaults: {
-    host: import.meta.env?.STORYBOOK_HOST || 'http://localhost:6006',
+  defaults: (nuxt) => ({
+    host: import.meta.env?.STORYBOOK_HOST || 'http://localhost',
     route: '/_storybook',
     port: 6006,
-  },
+    logLevel: nuxt.options.logLevel === 'silent' ? 0 : 3,
+  }),
   async setup(options, nuxt) {
     if (import.meta.env?.__STORYBOOK__) return
 
-    logger.info('🔌  Storybook Module Setup')
+    logger.level = options.logLevel
+
+    logger.verbose('🔌  Storybook Module Setup')
 
     setupStorybook(options, nuxt)
   },
