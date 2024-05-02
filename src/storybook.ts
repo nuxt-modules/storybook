@@ -107,6 +107,8 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     logger.verbose(' ')
     logger.verbose('✔ Storybook build done  ')
     logger.verbose('  ')
+    // @ts-expect-error: officially import.meta.env is never undefined, but in practice it can be
+    import.meta.env = import.meta.env || {}
     import.meta.env.__STORYBOOK__ = JSON.stringify(options)
   })
 

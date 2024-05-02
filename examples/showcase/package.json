@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-storybook-playground",
+  "name": "tailwind",
   "private": true,
   "type": "module",
   "scripts": {
@@ -7,15 +7,20 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "storybook": "storybook dev --port 6006",
+    "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+  "dependencies": {
+    "nuxt": "^3.11.2",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
   "devDependencies": {
-    "@nuxt/devtools": "^1.1.5",
+    "@chromatic-com/storybook": "^1.3.3",
     "@nuxtjs/storybook": "workspace:*",
-    "@storybook/addon-links": "^8.0.8",
     "@storybook/addon-essentials": "^8.0.8",
-    "@storybook/addon-interactions": "^8.0.8",
-    "nuxt": "^3.11.1"
+    "@storybook/addon-links": "^8.0.8",
+    "@storybook/blocks": "^8.0.8",
+    "@storybook/test": "^8.0.8"
   }
 }
