@@ -23,7 +23,7 @@ Update your `nuxt.config`:
   },
 ```
 
-Then run `pnpm dev` to start you Nuxt server.
+Then run `pnpm dev` to start your Nuxt server.
 
 ## Demo
 
@@ -41,18 +41,18 @@ https://github.com/storybook-vue/nuxt-storybook-module-demo
 
 📦 Extendable by Nuxt modules
 
-🚀 Supports Nuxt 3 / Storybook 7
+🚀 Supports Nuxt 3 / Storybook 8
 
 ## Nuxt 2
 
-Nuxt 2 is supported with Storybook v6,you can check legacy code on the v4 branch.
+Nuxt 2 is supported with Storybook v6, you can check legacy code on the v4 branch.
 
 ## Contributing
 
 1. Install dependencies with `pnpm`.
 2. Run `pnpm dev:prepare` to generate stubbed `dist` directory.
 3. Make your changes.
-4. Run `pnpm lint` to verify that there is no issues (consider adding tests).
+4. Run `pnpm lint` to verify that there are no issues (consider adding tests).
 5. Submit a PR.
 
 ## License
