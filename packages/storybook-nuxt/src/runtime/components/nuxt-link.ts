@@ -1,4 +1,3 @@
-/* eslint-disable max-statements-per-line */
 import type { ComputedRef, DefineComponent, PropType } from 'vue'
 import {
   computed,
@@ -69,7 +68,8 @@ export interface NuxtLinkProps {
 // https://caniuse.com/requestidlecallback
 export const requestIdleCallback: Window['requestIdleCallback'] = import.meta
   .server
-  ? ((() => {}) as any)
+  ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ((() => {}) as any)
   : globalThis.requestIdleCallback ||
     ((cb) => {
       const start = Date.now()
@@ -84,7 +84,8 @@ export const requestIdleCallback: Window['requestIdleCallback'] = import.meta
 
 export const cancelIdleCallback: Window['cancelIdleCallback'] = import.meta
   .server
-  ? ((() => {}) as any)
+  ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ((() => {}) as any)
   : globalThis.cancelIdleCallback ||
     ((id) => {
       clearTimeout(id)
@@ -252,7 +253,8 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
       const el = import.meta.server ? undefined : ref<HTMLElement | null>(null)
       const elRef = import.meta.server
         ? undefined
-        : (ref: any) => {
+        : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (ref: any) => {
             el!.value = props.custom ? ref?.$el?.nextElementSibling : ref?.$el
           }
 
@@ -309,7 +311,7 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
 
       return () => {
         if (!isExternal.value) {
-          const routerLinkProps: Record<string, any> = {
+          const routerLinkProps: Record<string, unknown> = {
             ref: elRef,
             to: to.value,
             activeClass: props.activeClass || options.activeClass,
@@ -460,6 +462,7 @@ function isSlowConnection() {
   if (import.meta.server) return
 
   // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const cn = (navigator as any).connection as {
     saveData: boolean
     effectiveType: string

@@ -11,6 +11,7 @@ import plugins from '#build/plugins'
 
 import '#build/css'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const globalWindow = window as any
 const logger = console
 
@@ -18,7 +19,7 @@ export default defineNuxtPlugin({
   name: 'storybook-nuxt-plugin',
   enforce: 'pre', // or 'post'
 
-  setup(nuxtApp: any) {
+  setup(nuxtApp) {
     logger.log('🔌 🔌 🔌  [storybook-nuxt-plugin] setup ', { nuxtApp })
     const nuxtMainApp = getContext('nuxt-app')
     if (nuxtMainApp)
@@ -28,6 +29,7 @@ export default defineNuxtPlugin({
       )
 
     if (nuxtApp.globalName !== 'nuxt') return
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const applyNuxtPlugins = async (vueApp: App, storyContext: any) => {
       const nuxt = createNuxtApp({
         vueApp,

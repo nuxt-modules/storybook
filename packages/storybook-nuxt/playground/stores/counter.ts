@@ -1,4 +1,3 @@
-// eslint-disable-next-line promise/param-names
 const delay = (t: number) => new Promise((r) => setTimeout(r, t))
 
 export const useCounter = defineStore('counter', {

@@ -1,7 +1,8 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import PiniaLogo from '~/components/PiniaLogo.vue'
 
-const props = defineProps({
+defineProps({
   msg: {
     type: String,
     required: true,

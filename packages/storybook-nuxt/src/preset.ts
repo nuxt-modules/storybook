@@ -27,8 +27,8 @@ let nuxt: Nuxt
  * @param nuxt
  */
 function extendComponents(nuxt: Nuxt) {
-  nuxt.hook('components:extend', (components: any) => {
-    const nuxtLink = components.find(({ name }: any) => name === 'NuxtLink')
+  nuxt.hook('components:extend', (components) => {
+    const nuxtLink = components.find(({ name }) => name === 'NuxtLink')
     nuxtLink.filePath = join(runtimeDir, 'components/nuxt-link')
     nuxtLink.shortPath = join(runtimeDir, 'components/nuxt-link')
     nuxt.options.build.transpile.push(nuxtLink.filePath)
@@ -50,6 +50,7 @@ async function extendComposables(nuxt: Nuxt) {
   })
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function defineNuxtConfig(baseConfig: Record<string, any>) {
   const { loadNuxt, buildNuxt, addPlugin, extendPages } = await import(
     '@nuxt/kit'
@@ -83,39 +84,31 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
       mode: 'client',
     })
     // Add iframe page
-    extendPages((pages: any) => {
+    extendPages((pages) => {
       pages.push({
         name: 'storybook-iframe',
         path: '/iframe.html',
       })
     })
 
-    nuxt.hook(
-      'vite:extendConfig',
-      (
-        config: ViteConfig | PromiseLike<ViteConfig> | Record<string, any>,
-        { isClient }: any,
-      ) => {
-        if (isClient) {
-          const plugins = baseConfig.plugins
+    nuxt.hook('vite:extendConfig', (config, { isClient }) => {
+      if (isClient) {
+        const plugins = baseConfig.plugins
 
-          // Find the index of the plugin with name 'vite:vue'
-          const index = plugins.findIndex(
-            (plugin: any) => plugin.name === 'vite:vue',
-          )
+        // Find the index of the plugin with name 'vite:vue'
+        const index = plugins.findIndex((plugin) => plugin.name === 'vite:vue')
 
-          // Check if the plugin was found
-          if (index !== -1) {
-            // Replace the plugin with the new one using vuePlugin()
-            plugins[index] = vuePlugin()
-          } else {
-            plugins.push(vuePlugin())
-          }
-          baseConfig.plugins = plugins
-          extendedConfig = mergeConfig(config, baseConfig)
+        // Check if the plugin was found
+        if (index !== -1) {
+          // Replace the plugin with the new one using vuePlugin()
+          plugins[index] = vuePlugin()
+        } else {
+          plugins.push(vuePlugin())
         }
-      },
-    )
+        baseConfig.plugins = plugins
+        extendedConfig = mergeConfig(config, baseConfig)
+      }
+    })
   })
 
   await nuxt.ready()
@@ -127,13 +120,12 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
       viteConfig: extendedConfig,
       nuxt,
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     throw new Error(e)
   }
 }
-export const core: PresetProperty<'core', StorybookConfig> = async (
-  config: any,
-) => {
+export const core: PresetProperty<'core', StorybookConfig> = async (config) => {
   return {
     ...config,
     builder: '@storybook/builder-vite',
@@ -152,9 +144,12 @@ export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
 }
 
 export const viteFinal: StorybookConfig['viteFinal'] = async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: Record<string, any>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options: any,
 ) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getStorybookViteConfig = async (c: Record<string, any>, o: any) => {
     // const pkgPath = await getPackageDir('@storybook/vue3-vite')
     const presetURL = pathToFileURL(
@@ -199,7 +194,7 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   })
 }
 
-async function getPackageDir(frameworkPackageName: any) {
+async function getPackageDir(frameworkPackageName: string) {
   //   const packageJsonPath = join(frameworkPackageName, 'package.json')
 
   try {

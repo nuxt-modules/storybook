@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>
 
 export const Home: Story = {
   args: {},
-  render(args: any) {
+  render(args) {
     return {
       components: { MyNuxtPage },
       setup() {

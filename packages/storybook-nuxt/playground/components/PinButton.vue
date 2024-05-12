@@ -43,7 +43,7 @@ function onClick() {
 
 <template>
   <div class="storybook storybook-button">
-    <MyButton label="" class="classes" :style="style" @click="onClick">
+    <MyButton label="" :class="classes" :style="style" @click="onClick">
       <slot />
     </MyButton>
   </div>

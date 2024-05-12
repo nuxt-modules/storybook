@@ -34,7 +34,7 @@ type StorybookConfigFramework = {
  * The interface for Storybook configuration in `main.ts` files.
  */
 export type StorybookConfig = {
-  viteFinal?: Record<string, any>
+  viteFinal?: Record<string, unknown>
 } & StorybookConfigFramework
 export interface NuxtOptions {}
 export { Meta, StoryFn, StoryObj, Preview, VueRenderer, DecoratorFunction }

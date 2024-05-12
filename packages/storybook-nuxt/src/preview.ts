@@ -15,7 +15,7 @@ async function nuxtAppEntry() {
   return vueAppPromise
 }
 
-nuxtAppEntry().then((app: any) => {
+nuxtAppEntry().then((app) => {
   logger.log('nuxtAppEntry done', app)
   app()
     .then(() => {
