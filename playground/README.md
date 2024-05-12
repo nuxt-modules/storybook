@@ -1,4 +1,10 @@
-# Nuxt 3 Minimal Starter
+# Playground
+
+View intermediate state of Vite plugins at http://localhost:6006/__inspect
+
+----
+
+
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
