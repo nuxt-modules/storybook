@@ -4,21 +4,22 @@ import { computed } from 'vue'
 
 type Sizes = 'small' | 'medium' | 'large' | 'xlarge'
 
-const props = withDefaults(defineProps<{
+const props = withDefaults(
+  defineProps<{
+    primary?: boolean
+    /**
+     * size of the button
+     */
+    size?: Sizes
+    /**
+     * background color of the button
+     */
+    backgroundColor?: string
 
-  primary?: boolean
-  /**
-   * size of the button
-   */
-  size?: Sizes
-  /**
-   * background color of the button
-   */
-  backgroundColor?: string
-
-  dataTestid?: string
-
-}>(), { primary: false })
+    dataTestid?: string
+  }>(),
+  { primary: false },
+)
 
 const emit = defineEmits<{
   (e: 'click', id: number): void
@@ -41,7 +42,7 @@ function onClick() {
 </script>
 
 <template>
-  <div class="storybook  storybook-button">
+  <div class="storybook storybook-button">
     <MyButton label="" class="classes" :style="style" @click="onClick">
       <slot />
     </MyButton>

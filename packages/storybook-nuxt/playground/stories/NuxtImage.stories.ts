@@ -9,7 +9,6 @@ const meta = {
   component: MyComponent,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],
-
 } satisfies Meta<typeof MyComponent>
 
 export default meta
@@ -21,5 +20,5 @@ type Story = StoryObj<typeof meta>
  */
 
 export const NuxtImage: Story = {
-  args: { },
+  args: {},
 }

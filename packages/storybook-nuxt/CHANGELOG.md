@@ -1,6 +1,5 @@
 # Changelog
 
-
 ## v0.2.6
 
 [compare changes](https://github.com/storybook-vue/storybook-nuxt/compare/v0.2.6-alpha.0...v0.2.6)
@@ -44,4 +43,3 @@
 ## v0.1.3
 
 [compare changes](https://github.com/storybook-vue/storybook-nuxt/compare/v0.1.3-alpha.0...v0.1.3)
-

@@ -1,10 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: [
-    '@nuxt/image',
-    '@pinia/nuxt',
-    'vuetify-nuxt-module',
-  ],
+  modules: ['@nuxt/image', '@pinia/nuxt', 'vuetify-nuxt-module'],
   runtimeConfig: {
     app: {
       name: 'Nuxt',
@@ -20,5 +16,4 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['./stores'],
   },
-
 })

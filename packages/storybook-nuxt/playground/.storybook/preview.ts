@@ -1,8 +1,8 @@
-import { type Preview } from "@storybook/vue3";
+import { type Preview } from '@storybook/vue3'
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
+    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -10,7 +10,6 @@ const preview: Preview = {
       },
     },
   },
-  
-};
+}
 console.log('.storybook Preview =============')
-export default preview;
+export default preview

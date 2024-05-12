@@ -3,7 +3,7 @@ const { config } = useMyComposable()
 </script>
 
 <template>
-  <h1> Using composables : </h1>
+  <h1>Using composables :</h1>
   <h5>runtime config :</h5>
   <pre>{{ JSON.stringify(config, null, 2) }}</pre>
 </template>

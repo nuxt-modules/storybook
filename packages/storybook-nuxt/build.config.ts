@@ -7,9 +7,11 @@ export default defineBuildConfig({
     { input: 'src/preview' },
     { input: 'src/preset', outDir: 'dist/', format: 'cjs', ext: 'js' },
     {
-      input: 'src/runtime/', outDir: 'dist/runtime', format: 'esm', ext: 'js',
+      input: 'src/runtime/',
+      outDir: 'dist/runtime',
+      format: 'esm',
+      ext: 'js',
     },
-
   ],
 
   rollup: {

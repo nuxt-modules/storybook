@@ -22,15 +22,22 @@ export default defineNuxtPlugin({
     logger.log('🔌 🔌 🔌  [storybook-nuxt-plugin] setup ', { nuxtApp })
     const nuxtMainApp = getContext('nuxt-app')
     if (nuxtMainApp)
-      logger.info('🔌  [storybook-nuxt-plugin] setup already done ', nuxtMainApp)
+      logger.info(
+        '🔌  [storybook-nuxt-plugin] setup already done ',
+        nuxtMainApp,
+      )
 
-    if (nuxtApp.globalName !== 'nuxt')
-      return
+    if (nuxtApp.globalName !== 'nuxt') return
     const applyNuxtPlugins = async (vueApp: App, storyContext: any) => {
-      const nuxt = createNuxtApp({ vueApp, globalName: `nuxt-${storyContext.id}` })
+      const nuxt = createNuxtApp({
+        vueApp,
+        globalName: `nuxt-${storyContext.id}`,
+      })
       getContext('nuxt-app').set(nuxt, true)
 
-      const router = nuxtApp.$router ?? createRouter({ history: createWebHistory(), routes: [] })
+      const router =
+        nuxtApp.$router ??
+        createRouter({ history: createWebHistory(), routes: [] })
       nuxt.$router = router
 
       getContext(nuxt.globalName).set(nuxt, true)
@@ -38,10 +45,12 @@ export default defineNuxtPlugin({
       nuxt.hooks.callHook('app:created', vueApp)
       for (const plugin of plugins) {
         try {
-          if (typeof plugin === 'function' && !plugin.toString().includes('definePayloadReviver'))
+          if (
+            typeof plugin === 'function' &&
+            !plugin.toString().includes('definePayloadReviver')
+          )
             await vueApp.runWithContext(() => plugin(nuxt))
-        }
-        catch (e) {
+        } catch (e) {
           logger.error('Error in plugin ', plugin)
         }
       }
@@ -54,7 +63,6 @@ export default defineNuxtPlugin({
   },
 
   hooks: {
-    'app:created': function () {
-    },
+    'app:created': function () {},
   },
 })

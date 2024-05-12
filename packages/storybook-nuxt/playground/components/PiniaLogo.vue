@@ -16,12 +16,10 @@ onMounted(() => {
       if (blinkState % 2) {
         blinking.value = 'closed'
         setTimeout(blinkHandler, blinkTimer * 1.7)
-      }
-      else if (blinkState < 4) {
+      } else if (blinkState < 4) {
         blinking.value = 'open'
         setTimeout(blinkHandler, blinkTimer)
-      }
-      else {
+      } else {
         blinking.value = 'open'
       }
     }
@@ -40,12 +38,10 @@ onMounted(() => {
       if (blinkState % 2) {
         // talking.value = 'closed'
         setTimeout(blinkHandler, talkRate)
-      }
-      else if (blinkState < 10) {
+      } else if (blinkState < 10) {
         // talking.value = 'open'
         setTimeout(blinkHandler, talkRate)
-      }
-      else {
+      } else {
         // talking.value = 'closed'
       }
     }
@@ -255,75 +251,75 @@ onMounted(() => {
   </svg>
 </template>
 
-  <style>
-  @keyframes leaves-move {
-    0% {
-      transform: rotate(0deg) scale(1);
-    }
-    2.5% {
-      transform: rotate(-2deg) scale3d(0.9, 1.05, 1) translateY(6%);
-    }
-    3.5% {
-      transform: scale3d(1.05, 0.95, 1) translateY(2%);
-    }
-    5% {
-      transform: rotate(3deg) scale3d(0.9, 1.05, 1);
-    }
-    7.5%,
-    100% {
-      transform: rotate(0) scale(1);
-    }
+<style>
+@keyframes leaves-move {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  2.5% {
+    transform: rotate(-2deg) scale3d(0.9, 1.05, 1) translateY(6%);
+  }
+  3.5% {
+    transform: scale3d(1.05, 0.95, 1) translateY(2%);
+  }
+  5% {
+    transform: rotate(3deg) scale3d(0.9, 1.05, 1);
+  }
+  7.5%,
+  100% {
+    transform: rotate(0) scale(1);
+  }
+}
+
+@keyframes rubberBand {
+  0% {
+    transform: scale3d(1, 1, 1);
   }
 
-  @keyframes rubberBand {
-    0% {
-      transform: scale3d(1, 1, 1);
-    }
-
-    .1% {
-      transform: scale3d(1.1, 0.9, 1);
-    }
-
-    4% {
-      transform: scale3d(0.9, 1.1, 1);
-    }
-
-    5% {
-      transform: scale3d(1.05, 0.95, 1);
-    }
-
-    6.5% {
-      transform: scale3d(0.98, 1.02, 1);
-    }
-
-    7.5% {
-      transform: scale3d(1.02, 0.98, 1);
-    }
-
-    7.6%,
-    100% {
-      transform: scale3d(1, 1, 1);
-    }
-  }
-  </style>
-
-  <style scoped>
-  .leaves {
-    /* animation: 10s ease-in-out 0s infinite rubberBand; */
-    animation: 10s ease-in-out 10s infinite normal leaves-move;
-    transform-origin: bottom;
+  .1% {
+    transform: scale3d(1.1, 0.9, 1);
   }
 
-  .body {
-    animation-duration: 500ms;
-    animation-delay: 0s;
-    animation-iteration-count: 0;
-    animation-name: rubberBand;
-    transform-origin: center;
+  4% {
+    transform: scale3d(0.9, 1.1, 1);
   }
 
-  .pinia-container {
-    display: block;
-    margin: auto;
+  5% {
+    transform: scale3d(1.05, 0.95, 1);
   }
-  </style>
+
+  6.5% {
+    transform: scale3d(0.98, 1.02, 1);
+  }
+
+  7.5% {
+    transform: scale3d(1.02, 0.98, 1);
+  }
+
+  7.6%,
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+</style>
+
+<style scoped>
+.leaves {
+  /* animation: 10s ease-in-out 0s infinite rubberBand; */
+  animation: 10s ease-in-out 10s infinite normal leaves-move;
+  transform-origin: bottom;
+}
+
+.body {
+  animation-duration: 500ms;
+  animation-delay: 0s;
+  animation-iteration-count: 0;
+  animation-name: rubberBand;
+  transform-origin: center;
+}
+
+.pinia-container {
+  display: block;
+  margin: auto;
+}
+</style>

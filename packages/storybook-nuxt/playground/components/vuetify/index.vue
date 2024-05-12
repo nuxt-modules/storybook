@@ -14,13 +14,10 @@ defineProps({
           rounded="lg"
         >
           <div>
-            <v-icon
-              color="orange"
-              icon="mdi-fire"
-            />
-            @invictus.codes/nuxt-vuetify by <a href="https://invictus.codes">
-              invictus.codes
-              &nbsp;<v-icon icon="mdi-home" size="12" />
+            <v-icon color="orange" icon="mdi-fire" />
+            @invictus.codes/nuxt-vuetify by
+            <a href="https://invictus.codes">
+              invictus.codes &nbsp;<v-icon icon="mdi-home" size="12" />
             </a>
           </div>
         </v-sheet>
@@ -29,26 +26,17 @@ defineProps({
     <v-row>
       <v-col>
         <v-sheet class="pa-4 d-flex align-center flex-column">
-          Storybook <v-icon
-            color="pink"
-            icon="mdi-heart"
-          /> Nuxt
+          Storybook <v-icon color="pink" icon="mdi-heart" /> Nuxt
         </v-sheet>
       </v-col>
       <v-col>
         <v-sheet class="pa-4 d-flex justify-space-between flex-row">
-          Storybook <v-icon
-            color="pink"
-            icon="mdi-heart"
-          /> Nuxt
+          Storybook <v-icon color="pink" icon="mdi-heart" /> Nuxt
         </v-sheet>
       </v-col>
       <v-col>
         <v-sheet class="pa-4 d-flex align-center flex-column">
-          Storybook <v-icon
-            color="pink"
-            icon="mdi-heart"
-          /> Nuxt
+          Storybook <v-icon color="pink" icon="mdi-heart" /> Nuxt
         </v-sheet>
       </v-col>
     </v-row>

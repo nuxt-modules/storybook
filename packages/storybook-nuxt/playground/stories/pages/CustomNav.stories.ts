@@ -10,7 +10,6 @@ const meta = {
   component: MyNuxtPage,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],
-
 } satisfies Meta<typeof MyNuxtPage>
 
 export default meta
@@ -22,16 +21,15 @@ type Story = StoryObj<typeof meta>
  */
 
 export const Home: Story = {
-  args: { },
+  args: {},
   render(args: any) {
-    return ({
-
+    return {
       components: { MyNuxtPage },
       setup() {
         useRouter().push('/')
         return { args }
       },
       template: '<div><MyNuxtPage /></div>',
-    })
+    }
   },
 }

@@ -21,7 +21,7 @@ const counter = useCounter()
     <p>
       This is an example store to test out devtools. Try one of the following
       with the devtools open:
-      <br>
+      <br />
     </p>
 
     <ol>
@@ -49,15 +49,9 @@ const counter = useCounter()
     <PinButton data-testid="increment" @click="counter.increment()">
       +1
     </PinButton>
-    <PinButton @click="counter.increment(10)">
-      +10
-    </PinButton>
-    <PinButton @click="counter.increment(100)">
-      +100
-    </PinButton>
-    <PinButton @click="counter.n++">
-      Direct Increment
-    </PinButton>
+    <PinButton @click="counter.increment(10)"> +10 </PinButton>
+    <PinButton @click="counter.increment(100)"> +100 </PinButton>
+    <PinButton @click="counter.n++"> Direct Increment </PinButton>
     <PinButton
       @click="
         counter.$patch((state) => {
@@ -71,9 +65,7 @@ const counter = useCounter()
 
     <p>Other actions:</p>
 
-    <PinButton @click="counter.fail">
-      Test Errors
-    </PinButton>
+    <PinButton @click="counter.fail"> Test Errors </PinButton>
     <PinButton @click="counter.decrementToZero()">
       Decrement to zero
     </PinButton>
@@ -81,20 +73,20 @@ const counter = useCounter()
       <code>counter.changeMe()</code>
     </PinButton>
 
-    <hr>
+    <hr />
 
     <pre>{{ counter.$state }}</pre>
   </div>
 </template>
 
-  <style scoped>
-  .storybook-button {
-    margin-right: 0.1rem;
-    margin-bottom: 0.5rem;
-  }
-  h1 {
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
-  }
-  </style>
+<style scoped>
+.storybook-button {
+  margin-right: 0.1rem;
+  margin-bottom: 0.5rem;
+}
+h1 {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+</style>

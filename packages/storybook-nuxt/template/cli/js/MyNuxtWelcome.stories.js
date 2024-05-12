@@ -6,7 +6,6 @@ const meta = {
   component: MyNuxtWelcome,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],
-
 }
 
 export default meta
@@ -19,5 +18,5 @@ export default meta
  */
 
 export const NuxtWelcomeStory = {
-  args: { },
+  args: {},
 }

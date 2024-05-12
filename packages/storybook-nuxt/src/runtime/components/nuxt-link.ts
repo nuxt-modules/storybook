@@ -1,19 +1,34 @@
 /* eslint-disable max-statements-per-line */
 import type { ComputedRef, DefineComponent, PropType } from 'vue'
 import {
-  computed, defineComponent, h, onBeforeUnmount, onMounted, ref, resolveComponent,
+  computed,
+  defineComponent,
+  h,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  resolveComponent,
 } from 'vue'
 import { useRouter as useVueRouter } from 'vue-router'
 import type { RouteLocation, RouteLocationRaw } from 'vue-router'
 import {
-  hasProtocol, parseQuery, parseURL, withTrailingSlash, withoutTrailingSlash,
+  hasProtocol,
+  parseQuery,
+  parseURL,
+  withTrailingSlash,
+  withoutTrailingSlash,
 } from 'ufo'
 
 import {
-  navigateTo, onNuxtReady, preloadRouteComponents, useNuxtApp, useRouter,
+  navigateTo,
+  onNuxtReady,
+  preloadRouteComponents,
+  useNuxtApp,
+  useRouter,
 } from 'nuxt/app'
 
-const firstNonUndefined = <T> (...args: (T | undefined)[]) => args.find(arg => arg !== undefined)
+const firstNonUndefined = <T>(...args: (T | undefined)[]) =>
+  args.find((arg) => arg !== undefined)
 
 const DEFAULT_EXTERNAL_REL_ATTRIBUTE = 'noopener noreferrer'
 
@@ -52,39 +67,62 @@ export interface NuxtLinkProps {
 
 // Polyfills for Safari support
 // https://caniuse.com/requestidlecallback
-export const requestIdleCallback: Window['requestIdleCallback'] = import.meta.server
-  ? (() => {}) as any
-  : (globalThis.requestIdleCallback || ((cb) => {
+export const requestIdleCallback: Window['requestIdleCallback'] = import.meta
+  .server
+  ? ((() => {}) as any)
+  : globalThis.requestIdleCallback ||
+    ((cb) => {
       const start = Date.now()
       const idleDeadline = {
         didTimeout: false,
         timeRemaining: () => Math.max(0, 50 - (Date.now() - start)),
       }
-      return setTimeout(() => { cb(idleDeadline) }, 1)
-    }))
+      return setTimeout(() => {
+        cb(idleDeadline)
+      }, 1)
+    })
 
-export const cancelIdleCallback: Window['cancelIdleCallback'] = import.meta.server
-  ? (() => {}) as any
-  : (globalThis.cancelIdleCallback || ((id) => { clearTimeout(id) }))
+export const cancelIdleCallback: Window['cancelIdleCallback'] = import.meta
+  .server
+  ? ((() => {}) as any)
+  : globalThis.cancelIdleCallback ||
+    ((id) => {
+      clearTimeout(id)
+    })
 
 /*! @__NO_SIDE_EFFECTS__ */
 export function defineNuxtLink(options: NuxtLinkOptions) {
   const componentName = options.componentName || 'NuxtLink'
 
-  const checkPropConflicts = (props: NuxtLinkProps, main: keyof NuxtLinkProps, sub: keyof NuxtLinkProps): void => {
-    if (import.meta.dev && props[main] !== undefined && props[sub] !== undefined)
-      console.warn(`[${componentName}] \`${main}\` and \`${sub}\` cannot be used together. \`${sub}\` will be ignored.`)
+  const checkPropConflicts = (
+    props: NuxtLinkProps,
+    main: keyof NuxtLinkProps,
+    sub: keyof NuxtLinkProps,
+  ): void => {
+    if (
+      import.meta.dev &&
+      props[main] !== undefined &&
+      props[sub] !== undefined
+    )
+      console.warn(
+        `[${componentName}] \`${main}\` and \`${sub}\` cannot be used together. \`${sub}\` will be ignored.`,
+      )
   }
   const resolveTrailingSlashBehavior = (
     to: RouteLocationRaw,
     resolve: (to: RouteLocationRaw) => RouteLocation & { href?: string },
   ): RouteLocationRaw | RouteLocation => {
-    if (!to || (options.trailingSlash !== 'append' && options.trailingSlash !== 'remove'))
+    if (
+      !to ||
+      (options.trailingSlash !== 'append' && options.trailingSlash !== 'remove')
+    )
       return to
 
-    const normalizeTrailingSlash = options.trailingSlash === 'append' ? withTrailingSlash : withoutTrailingSlash
-    if (typeof to === 'string')
-      return normalizeTrailingSlash(to, true)
+    const normalizeTrailingSlash =
+      options.trailingSlash === 'append'
+        ? withTrailingSlash
+        : withoutTrailingSlash
+    if (typeof to === 'string') return normalizeTrailingSlash(to, true)
 
     const path = 'path' in to ? to.path : resolve(to).path
 
@@ -196,18 +234,17 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
       // Resolving link type
       const isExternal = computed<boolean>(() => {
         // External prop is explicitly set
-        if (props.external)
-          return true
+        if (props.external) return true
 
         // When `target` prop is set, link is external
-        if (props.target && props.target !== '_self')
-          return true
+        if (props.target && props.target !== '_self') return true
 
         // When `to` is a route object then it's an internal link
-        if (typeof to.value === 'object')
-          return false
+        if (typeof to.value === 'object') return false
 
-        return to.value === '' || hasProtocol(to.value, { acceptRelative: true })
+        return (
+          to.value === '' || hasProtocol(to.value, { acceptRelative: true })
+        )
       })
 
       // Prefetching
@@ -215,11 +252,17 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
       const el = import.meta.server ? undefined : ref<HTMLElement | null>(null)
       const elRef = import.meta.server
         ? undefined
-        : (ref: any) => { el!.value = props.custom ? ref?.$el?.nextElementSibling : ref?.$el }
+        : (ref: any) => {
+            el!.value = props.custom ? ref?.$el?.nextElementSibling : ref?.$el
+          }
 
       if (import.meta.client) {
         checkPropConflicts(props, 'prefetch', 'noPrefetch')
-        const shouldPrefetch = props.prefetch !== false && props.noPrefetch !== true && props.target !== '_blank' && !isSlowConnection()
+        const shouldPrefetch =
+          props.prefetch !== false &&
+          props.noPrefetch !== true &&
+          props.target !== '_blank' &&
+          !isSlowConnection()
         if (shouldPrefetch) {
           const nuxtApp = useNuxtApp()
           let idleId: number
@@ -229,24 +272,35 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
             onNuxtReady(() => {
               idleId = requestIdleCallback(() => {
                 if (el?.value?.tagName) {
-                  unobserve = observer!.observe(el.value as HTMLElement, async () => {
-                    unobserve?.()
-                    unobserve = null
+                  unobserve = observer!.observe(
+                    el.value as HTMLElement,
+                    async () => {
+                      unobserve?.()
+                      unobserve = null
 
-                    const path = typeof to.value === 'string' ? to.value : router.resolve(to.value).fullPath
-                    await Promise.all([
-                      nuxtApp.hooks.callHook('link:prefetch', path).catch(() => {}),
-                      !isExternal.value && preloadRouteComponents(to.value as string, router).catch(() => {}),
-                    ])
-                    prefetched.value = true
-                  })
+                      const path =
+                        typeof to.value === 'string'
+                          ? to.value
+                          : router.resolve(to.value).fullPath
+                      await Promise.all([
+                        nuxtApp.hooks
+                          .callHook('link:prefetch', path)
+                          .catch(() => {}),
+                        !isExternal.value &&
+                          preloadRouteComponents(
+                            to.value as string,
+                            router,
+                          ).catch(() => {}),
+                      ])
+                      prefetched.value = true
+                    },
+                  )
                 }
               })
             })
           })
           onBeforeUnmount(() => {
-            if (idleId)
-              cancelIdleCallback(idleId)
+            if (idleId) cancelIdleCallback(idleId)
             unobserve?.()
             unobserve = null
           })
@@ -259,7 +313,8 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
             ref: elRef,
             to: to.value,
             activeClass: props.activeClass || options.activeClass,
-            exactActiveClass: props.exactActiveClass || options.exactActiveClass,
+            exactActiveClass:
+              props.exactActiveClass || options.exactActiveClass,
             replace: props.replace,
             ariaCurrentValue: props.ariaCurrentValue,
             custom: props.custom,
@@ -269,7 +324,8 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
           // may render fragment or text root nodes (#14897, #19375)
           if (!props.custom) {
             if (prefetched.value)
-              routerLinkProps.class = props.prefetchedClass || options.prefetchedClass
+              routerLinkProps.class =
+                props.prefetchedClass || options.prefetchedClass
 
             routerLinkProps.rel = props.rel
           }
@@ -284,37 +340,44 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
 
         // Resolves `to` value if it's a route location object
         // converts `""` to `null` to prevent the attribute from being added as empty (`href=""`)
-        const href = typeof to.value === 'object' ? router.resolve(to.value)?.href ?? null : to.value || null
+        const href =
+          typeof to.value === 'object'
+            ? router.resolve(to.value)?.href ?? null
+            : to.value || null
 
         // Resolves `target` value
         const target = props.target || null
 
         // Resolves `rel`
         checkPropConflicts(props, 'noRel', 'rel')
-        const rel = (props.noRel)
+        const rel = props.noRel
           ? null
-          // converts `""` to `null` to prevent the attribute from being added as empty (`rel=""`)
-          : firstNonUndefined<string | null>(props.rel, options.externalRelAttribute, href ? DEFAULT_EXTERNAL_REL_ATTRIBUTE : '') || null
+          : // converts `""` to `null` to prevent the attribute from being added as empty (`rel=""`)
+            firstNonUndefined<string | null>(
+              props.rel,
+              options.externalRelAttribute,
+              href ? DEFAULT_EXTERNAL_REL_ATTRIBUTE : '',
+            ) || null
 
         const navigate = () => navigateTo(href, { replace: props.replace })
 
         // https://router.vuejs.org/api/#custom
         if (props.custom) {
-          if (!slots.default)
-            return null
+          if (!slots.default) return null
 
           return slots.default({
             href,
             navigate,
             get route() {
-              if (!href)
-                return undefined
+              if (!href) return undefined
 
               const url = parseURL(href)
               return {
                 path: url.pathname,
                 fullPath: url.pathname,
-                get query() { return parseQuery(url.search) },
+                get query() {
+                  return parseQuery(url.search)
+                },
                 hash: url.hash,
                 // stub properties for compat with vue-router
                 params: {},
@@ -333,9 +396,16 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
           })
         }
 
-        return h('a', {
-          ref: el, href, rel, target,
-        }, slots.default?.())
+        return h(
+          'a',
+          {
+            ref: el,
+            href,
+            rel,
+            target,
+          },
+          slots.default?.(),
+        )
       }
     },
   }) as unknown as DefineComponent<NuxtLinkProps>
@@ -348,12 +418,10 @@ type CallbackFn = () => void
 type ObserveFn = (element: Element, callback: CallbackFn) => () => void
 
 function useObserver(): { observe: ObserveFn } | undefined {
-  if (import.meta.server)
-    return
+  if (import.meta.server) return
 
   const nuxtApp = useNuxtApp()
-  if (nuxtApp._observer)
-    return nuxtApp._observer
+  if (nuxtApp._observer) return nuxtApp._observer
 
   let observer: IntersectionObserver | null = null
 
@@ -365,8 +433,7 @@ function useObserver(): { observe: ObserveFn } | undefined {
         for (const entry of entries) {
           const callback = callbacks.get(entry.target)
           const isVisible = entry.isIntersecting || entry.intersectionRatio > 0
-          if (isVisible && callback)
-            callback()
+          if (isVisible && callback) callback()
         }
       })
     }
@@ -382,20 +449,21 @@ function useObserver(): { observe: ObserveFn } | undefined {
     }
   }
 
-  const _observer = nuxtApp._observer = {
+  const _observer = (nuxtApp._observer = {
     observe,
-  }
+  })
 
   return _observer
 }
 
 function isSlowConnection() {
-  if (import.meta.server)
-    return
+  if (import.meta.server) return
 
   // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection
-  const cn = (navigator as any).connection as { saveData: boolean; effectiveType: string } | null
-  if (cn && (cn.saveData || /2g/.test(cn.effectiveType)))
-    return true
+  const cn = (navigator as any).connection as {
+    saveData: boolean
+    effectiveType: string
+  } | null
+  if (cn && (cn.saveData || /2g/.test(cn.effectiveType))) return true
   return false
 }

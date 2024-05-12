@@ -5,9 +5,7 @@ defineProps({
 </script>
 
 <template>
-  <div>
-    About Storybook Nuxt Playground with Nuxt Image
-  </div>
+  <div>About Storybook Nuxt Playground with Nuxt Image</div>
   <div>
     {{ msg }}
   </div>

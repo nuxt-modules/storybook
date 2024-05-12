@@ -9,12 +9,8 @@
     "resolveJsonModule": true,
     "strict": true,
     "paths": {
-      "#app": [
-        "./node_modules/nuxt/dist/app"
-      ],
-      "#app/entry": [
-        "./node_modules/nuxt/dist/app/entry"
-      ]
+      "#app": ["./node_modules/nuxt/dist/app"],
+      "#app/entry": ["./node_modules/nuxt/dist/app/entry"]
     }
   },
   "include": ["src/**/*"]

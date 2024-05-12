@@ -3,7 +3,11 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
 
 import type { PresetProperty } from '@storybook/types'
-import { type UserConfig as ViteConfig, mergeConfig, searchForWorkspaceRoot } from 'vite'
+import {
+  type UserConfig as ViteConfig,
+  mergeConfig,
+  searchForWorkspaceRoot,
+} from 'vite'
 import type { Nuxt } from '@nuxt/schema'
 import vuePlugin from '@vitejs/plugin-vue'
 
@@ -11,10 +15,8 @@ import replace from '@rollup/plugin-replace'
 import type { StorybookConfig } from './types'
 import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
 
-const packageDir = resolve(fileURLToPath(
-  import.meta.url), '../..')
-const distDir = resolve(fileURLToPath(
-  import.meta.url), '../..', 'dist')
+const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
+const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
 
 const dirs = [distDir, packageDir, pluginsDir, componentsDir]
 
@@ -42,26 +44,31 @@ function extendComponents(nuxt: Nuxt) {
 async function extendComposables(nuxt: Nuxt) {
   const { addImportsSources } = await import('@nuxt/kit')
   nuxt.options.build.transpile.push(composablesDir)
-  addImportsSources({ imports: ['useRouter'], from: join(composablesDir, 'router') })
+  addImportsSources({
+    imports: ['useRouter'],
+    from: join(composablesDir, 'router'),
+  })
 }
 
 async function defineNuxtConfig(baseConfig: Record<string, any>) {
-  const { loadNuxt, buildNuxt, addPlugin, extendPages } = await import('@nuxt/kit')
+  const { loadNuxt, buildNuxt, addPlugin, extendPages } = await import(
+    '@nuxt/kit'
+  )
 
   nuxt = await loadNuxt({
     rootDir: baseConfig.root,
     ready: false,
     dev: false,
 
-
     overrides: {
       buildDir: '.nuxt-storybook',
     },
-
   })
 
   if ((nuxt.options.builder as string) !== '@nuxt/vite-builder')
-    throw new Error(`Storybook-Nuxt does not support '${nuxt.options.builder}' for now.`)
+    throw new Error(
+      `Storybook-Nuxt does not support '${nuxt.options.builder}' for now.`,
+    )
 
   let extendedConfig: ViteConfig = {}
   nuxt.options.build.transpile.push(join(packageDir, 'preview'))
@@ -93,14 +100,15 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
           const plugins = baseConfig.plugins
 
           // Find the index of the plugin with name 'vite:vue'
-          const index = plugins.findIndex((plugin: any) => plugin.name === 'vite:vue')
+          const index = plugins.findIndex(
+            (plugin: any) => plugin.name === 'vite:vue',
+          )
 
           // Check if the plugin was found
           if (index !== -1) {
             // Replace the plugin with the new one using vuePlugin()
             plugins[index] = vuePlugin()
-          }
-          else {
+          } else {
             plugins.push(vuePlugin())
           }
           baseConfig.plugins = plugins
@@ -119,24 +127,27 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
       viteConfig: extendedConfig,
       nuxt,
     }
-  }
-  catch (e: any) {
+  } catch (e: any) {
     throw new Error(e)
   }
 }
-export const core: PresetProperty<'core', StorybookConfig> = async (config: any) => {
-  return ({
+export const core: PresetProperty<'core', StorybookConfig> = async (
+  config: any,
+) => {
+  return {
     ...config,
     builder: '@storybook/builder-vite',
     renderer: '@storybook/vue3',
-  })
+  }
 }
 /**
  *
  * @param entry preview entries
  * @returns preview entries with nuxt runtime
  */
-export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (entry = []) => {
+export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
+  entry = [],
+) => {
   return [...entry, resolve(packageDir, 'preview')]
 }
 
@@ -146,29 +157,36 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
 ) => {
   const getStorybookViteConfig = async (c: Record<string, any>, o: any) => {
     // const pkgPath = await getPackageDir('@storybook/vue3-vite')
-    const presetURL = pathToFileURL(join(await getPackageDir('@storybook/vue3-vite'), 'preset.js'))
+    const presetURL = pathToFileURL(
+      join(await getPackageDir('@storybook/vue3-vite'), 'preset.js'),
+    )
     const { viteFinal: ViteFile } = await import(presetURL.href)
 
-    if (!ViteFile)
-      throw new Error('ViteFile not found')
+    if (!ViteFile) throw new Error('ViteFile not found')
     return ViteFile(c, o)
   }
-  const nuxtConfig = await defineNuxtConfig(await getStorybookViteConfig(config, options))
+  const nuxtConfig = await defineNuxtConfig(
+    await getStorybookViteConfig(config, options),
+  )
 
   return mergeConfig(nuxtConfig.viteConfig, {
     // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
     define: {
-      '__NUXT__': JSON.stringify({ config: nuxtConfig.nuxt.options.runtimeConfig }),
+      __NUXT__: JSON.stringify({
+        config: nuxtConfig.nuxt.options.runtimeConfig,
+      }),
       'import.meta.client': 'true',
     },
 
-    plugins: [replace({
-      values: {
-        'import.meta.server': 'false',
-        'import.meta.client': 'true',
-      },
-      preventAssignment: true,
-    })],
+    plugins: [
+      replace({
+        values: {
+          'import.meta.server': 'false',
+          'import.meta.client': 'true',
+        },
+        preventAssignment: true,
+      }),
+    ],
     server: {
       cors: true,
       proxy: {
@@ -186,11 +204,14 @@ async function getPackageDir(frameworkPackageName: any) {
 
   try {
     const require = createRequire(import.meta.url)
-    const packageDir = dirname(require.resolve(join(frameworkPackageName, 'package.json'), { paths: [process.cwd()] }))
+    const packageDir = dirname(
+      require.resolve(join(frameworkPackageName, 'package.json'), {
+        paths: [process.cwd()],
+      }),
+    )
 
     return packageDir
-  }
-  catch (e) {
+  } catch (e) {
     // logger.error(e)
   }
   throw new Error(`Cannot find ${frameworkPackageName},`)
@@ -200,8 +221,7 @@ export function getNuxtProxyConfig(nuxt: Nuxt) {
   const port = nuxt.options.runtimeConfig.app.port ?? 3000
   const route = '^/(_nuxt|_ipx|_icon|__nuxt_devtools__)'
   const proxy = {
-    [route]:
-    {
+    [route]: {
       target: `http://localhost:${port}`,
       changeOrigin: true,
       secure: false,
