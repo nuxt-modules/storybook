@@ -1,6 +1,6 @@
 # Playground
 
-View intermediate state of Vite plugins at http://localhost:6006/\_\_inspect
+View intermediate state of Vite plugins at `http://localhost:6006/__inspect`.
 
 ---
 
