@@ -100,7 +100,9 @@ async function defineNuxtConfig(baseConfig: {
 
     nuxt.hook('vite:extendConfig', (config, { isClient }) => {
       if (isClient) {
-        const plugins = baseConfig.plugins
+        extendedConfig = mergeConfig(config, baseConfig)
+
+        const plugins = extendedConfig.plugins || []
 
         // Find the index of the plugin with name 'vite:vue'
         const index = plugins.findIndex((plugin) => plugin.name === 'vite:vue')
@@ -110,10 +112,10 @@ async function defineNuxtConfig(baseConfig: {
           // Replace the plugin with the new one using vuePlugin()
           plugins[index] = vuePlugin()
         } else {
-          plugins.push(vuePlugin())
+          plugins.unshift(vuePlugin())
         }
-        baseConfig.plugins = plugins
-        extendedConfig = mergeConfig(config, baseConfig)
+
+        extendedConfig.plugins = plugins
       }
     })
   })
