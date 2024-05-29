@@ -33,6 +33,12 @@ export interface ModuleOptions {
    * @default nuxt.options.logLevel
    */
   logLevel: LogLevel
+
+  /**
+   * Eanble the module
+   * @default true
+   */
+  enabled: boolean
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -48,9 +54,10 @@ export default defineNuxtModule<ModuleOptions>({
     route: '/_storybook',
     port: 6006,
     logLevel: nuxt.options.logLevel === 'silent' ? 0 : 3,
+    enabled: true,
   }),
   async setup(options, nuxt) {
-    if (import.meta.env?.__STORYBOOK__) return
+    if (import.meta.env?.__STORYBOOK__ || !options.enabled) return
 
     logger.level = options.logLevel
 
