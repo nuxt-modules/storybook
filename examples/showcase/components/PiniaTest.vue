@@ -21,7 +21,7 @@ const counter = useCounter()
     <p>
       This is an example store to test out devtools. Try one of the following
       with the devtools open:
-      <br />
+      <br >
     </p>
 
     <ol>
@@ -46,13 +46,13 @@ const counter = useCounter()
 
     <p>Increment the Store:</p>
 
-    <PiniaButton data-testid="increment" @click="counter.increment()">
+    <button data-testid="increment" @click="counter.increment()">
       +1
-    </PiniaButton>
-    <PiniaButton @click="counter.increment(10)"> +10 </PiniaButton>
-    <PiniaButton @click="counter.increment(100)"> +100 </PiniaButton>
-    <PiniaButton @click="counter.n++"> Direct Increment </PiniaButton>
-    <PiniaButton
+    </button>
+    <button @click="counter.increment(10)"> +10 </button>
+    <button @click="counter.increment(100)"> +100 </button>
+    <button @click="counter.n++"> Direct Increment </button>
+    <button
       @click="
         counter.$patch((state) => {
           state.n++
@@ -61,19 +61,19 @@ const counter = useCounter()
       "
     >
       Direct patch
-    </PiniaButton>
+    </button>
 
     <p>Other actions:</p>
 
-    <PiniaButton @click="counter.fail"> Test Errors </PiniaButton>
-    <PiniaButton @click="counter.decrementToZero()">
+    <button @click="counter.fail"> Test Errors </button>
+    <button @click="counter.decrementToZero()">
       Decrement to zero
-    </PiniaButton>
-    <PiniaButton @click="counter.changeMe()">
+    </button>
+    <button @click="counter.changeMe()">
       <code>counter.changeMe()</code>
-    </PiniaButton>
+    </button>
 
-    <hr />
+    <hr >
 
     <pre>{{ counter.$state }}</pre>
   </div>
