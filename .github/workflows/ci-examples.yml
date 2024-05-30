@@ -52,7 +52,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build module
+      - name: Build
         run: pnpm build
 
       - name: Build example
