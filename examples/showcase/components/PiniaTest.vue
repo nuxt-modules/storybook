@@ -21,7 +21,7 @@ const counter = useCounter()
     <p>
       This is an example store to test out devtools. Try one of the following
       with the devtools open:
-      <br >
+      <br />
     </p>
 
     <ol>
@@ -73,7 +73,7 @@ const counter = useCounter()
       <code>counter.changeMe()</code>
     </PiniaButton>
 
-    <hr >
+    <hr />
 
     <pre>{{ counter.$state }}</pre>
   </div>
