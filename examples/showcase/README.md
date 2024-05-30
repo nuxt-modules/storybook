@@ -6,6 +6,9 @@ This example shows how to use various Nuxt features and modules in combination w
 
 - Add Nuxt pages to Storybook
 
+## Modules
+- [Nuxt Image](https://image.nuxt.com)
+
 ---
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
