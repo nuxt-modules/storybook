@@ -46,13 +46,13 @@ const counter = useCounter()
 
     <p>Increment the Store:</p>
 
-    <PinButton data-testid="increment" @click="counter.increment()">
+    <PiniaButton data-testid="increment" @click="counter.increment()">
       +1
-    </PinButton>
-    <PinButton @click="counter.increment(10)"> +10 </PinButton>
-    <PinButton @click="counter.increment(100)"> +100 </PinButton>
-    <PinButton @click="counter.n++"> Direct Increment </PinButton>
-    <PinButton
+    </PiniaButton>
+    <PiniaButton @click="counter.increment(10)"> +10 </PiniaButton>
+    <PiniaButton @click="counter.increment(100)"> +100 </PiniaButton>
+    <PiniaButton @click="counter.n++"> Direct Increment </PiniaButton>
+    <PiniaButton
       @click="
         counter.$patch((state) => {
           state.n++
@@ -61,17 +61,17 @@ const counter = useCounter()
       "
     >
       Direct patch
-    </PinButton>
+    </PiniaButton>
 
     <p>Other actions:</p>
 
-    <PinButton @click="counter.fail"> Test Errors </PinButton>
-    <PinButton @click="counter.decrementToZero()">
+    <PiniaButton @click="counter.fail"> Test Errors </PiniaButton>
+    <PiniaButton @click="counter.decrementToZero()">
       Decrement to zero
-    </PinButton>
-    <PinButton @click="counter.changeMe()">
+    </PiniaButton>
+    <PiniaButton @click="counter.changeMe()">
       <code>counter.changeMe()</code>
-    </PinButton>
+    </PiniaButton>
 
     <hr >
 
