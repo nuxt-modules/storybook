@@ -21,7 +21,7 @@ const counter = useCounter()
     <p>
       This is an example store to test out devtools. Try one of the following
       with the devtools open:
-      <br >
+      <br />
     </p>
 
     <ol>
@@ -46,12 +46,10 @@ const counter = useCounter()
 
     <p>Increment the Store:</p>
 
-    <button data-testid="increment" @click="counter.increment()">
-      +1
-    </button>
-    <button @click="counter.increment(10)"> +10 </button>
-    <button @click="counter.increment(100)"> +100 </button>
-    <button @click="counter.n++"> Direct Increment </button>
+    <button data-testid="increment" @click="counter.increment()">+1</button>
+    <button @click="counter.increment(10)">+10</button>
+    <button @click="counter.increment(100)">+100</button>
+    <button @click="counter.n++">Direct Increment</button>
     <button
       @click="
         counter.$patch((state) => {
@@ -65,15 +63,13 @@ const counter = useCounter()
 
     <p>Other actions:</p>
 
-    <button @click="counter.fail"> Test Errors </button>
-    <button @click="counter.decrementToZero()">
-      Decrement to zero
-    </button>
+    <button @click="counter.fail">Test Errors</button>
+    <button @click="counter.decrementToZero()">Decrement to zero</button>
     <button @click="counter.changeMe()">
       <code>counter.changeMe()</code>
     </button>
 
-    <hr >
+    <hr />
 
     <pre>{{ counter.$state }}</pre>
   </div>
