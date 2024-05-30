@@ -27,6 +27,10 @@ jobs:
             buildScript: example:tailwind:build
             storybookBuildScript: example:tailwind:storybook:build
             projectToken: chpt_fbfe47dc27d4064
+          - package: Vuetify
+            buildScript: example:vuetify:build
+            storybookBuildScript: example:vuetify:storybook:build
+            projectToken: chpt_7664ea4a69a7210
           - package: Showcase
             buildScript: example:showcase:build
             storybookBuildScript: example:showcase:storybook:build
