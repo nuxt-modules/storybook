@@ -1,13 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-import MyPre from '~/components/Pre.vue'
-import MyButton from '~/components/MyButton.vue'
+import CustomComponent from './CustomComponent.vue'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 
+/**
+ * Shows how to use custom components (defined in the `components` folder) in a story.
+ */
 const meta = {
-  title: 'Components/NuxtLink ',
-  component: MyButton,
+  title: 'Features/Custom Components',
+  component: CustomComponent,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],
   argTypes: {
@@ -15,7 +17,7 @@ const meta = {
     onClick: { action: 'clicked' },
   },
   args: { primary: false }, // default value
-} satisfies Meta<typeof MyButton>
+} satisfies Meta<typeof CustomComponent>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -25,14 +27,13 @@ type Story = StoryObj<typeof meta>
  * to learn how to use render functions.
  */
 
-export const Primary: Story = {
+export const SimpleComponent: Story = {
   args: { primary: true, label: 'Primary' },
 }
 
-export const PreLink: Story = {
+export const CustomTemplate: Story = {
   args: { primary: true, label: 'My Story' },
   render: () => ({
-    components: { MyPre },
-    template: '<my-pre> Hello</my-pre>',
+    template: '<my-button>Hello</my-button>',
   }),
 }
