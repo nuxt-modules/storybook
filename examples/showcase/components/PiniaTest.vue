@@ -1,6 +1,5 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import PiniaLogo from '~/components/PiniaLogo.vue'
+import PiniaLogo from './PiniaLogo.vue'
 
 defineProps({
   msg: {
@@ -22,7 +21,7 @@ const counter = useCounter()
     <p>
       This is an example store to test out devtools. Try one of the following
       with the devtools open:
-      <br />
+      <br >
     </p>
 
     <ol>
@@ -74,7 +73,7 @@ const counter = useCounter()
       <code>counter.changeMe()</code>
     </PinButton>
 
-    <hr />
+    <hr >
 
     <pre>{{ counter.$state }}</pre>
   </div>
