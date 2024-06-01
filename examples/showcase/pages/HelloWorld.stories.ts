@@ -8,6 +8,10 @@ const meta = {
 
 export default meta
 
-export const HelloWorldStory = {
+export const Page = {
   args: {},
+}
+
+export const PageWithProps = {
+  args: { name: 'John Doe' },
 }
