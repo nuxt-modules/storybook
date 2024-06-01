@@ -105,7 +105,9 @@ async function defineNuxtConfig(baseConfig: {
         const plugins = extendedConfig.plugins || []
 
         // Find the index of the plugin with name 'vite:vue'
-        const index = plugins.findIndex((plugin) => plugin.name === 'vite:vue')
+        const index = plugins.findIndex(
+          (plugin) => plugin && 'name' in plugin && plugin.name === 'vite:vue',
+        )
 
         // Check if the plugin was found
         if (index !== -1) {
