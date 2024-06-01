@@ -97,46 +97,52 @@ async function defineNuxtConfig(baseConfig: {
         path: '/iframe.html',
       })
     })
-
-    nuxt.hook('vite:extendConfig', (config, { isClient }) => {
-      if (isClient) {
-        extendedConfig = mergeConfig(config, baseConfig)
-
-        const plugins = extendedConfig.plugins || []
-
-        // Find the index of the plugin with name 'vite:vue'
-        const index = plugins.findIndex(
-          (plugin) => plugin && 'name' in plugin && plugin.name === 'vite:vue',
-        )
-
-        // Check if the plugin was found
-        if (index !== -1) {
-          // Replace the plugin with the new one using vuePlugin()
-          plugins[index] = vuePlugin()
-        } else {
-          // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
-          // and transforms global vue components before nuxt:components:imports.
-          plugins.unshift(vuePlugin())
-        }
-
-        extendedConfig.plugins = plugins
-      }
-    })
   })
 
+  // Get Vite config from Nuxt
+  // https://nuxt.com/docs/api/kit/examples#accessing-nuxt-vite-config
   await nuxt.ready()
+  return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>(
+    (resolve, reject) => {
+      nuxt.hook('vite:extendConfig', (config, { isClient }) => {
+        if (isClient) {
+          extendedConfig = mergeConfig(config, baseConfig)
 
-  try {
-    await buildNuxt(nuxt)
+          const plugins = extendedConfig.plugins || []
 
-    return {
-      viteConfig: extendedConfig,
-      nuxt,
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    throw new Error(e)
-  }
+          // Find the index of the plugin with name 'vite:vue'
+          const index = plugins.findIndex(
+            (plugin) =>
+              plugin && 'name' in plugin && plugin.name === 'vite:vue',
+          )
+
+          // Check if the plugin was found
+          if (index !== -1) {
+            // Replace the plugin with the new one using vuePlugin()
+            plugins[index] = vuePlugin()
+          } else {
+            // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
+            // and transforms global vue components before nuxt:components:imports.
+            plugins.unshift(vuePlugin())
+          }
+
+          extendedConfig.plugins = plugins
+          resolve({
+            viteConfig: extendedConfig,
+            nuxt,
+          })
+          // Stop the build process, as we don't need to build the Nuxt app
+          throw new Error('_stop_')
+        }
+      })
+
+      buildNuxt(nuxt).catch((err) => {
+        if (!err.toString().includes('_stop_')) {
+          reject(err)
+        }
+      })
+    },
+  ).finally(() => nuxt.close())
 }
 export const core: PresetProperty<'core', StorybookConfig> = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
