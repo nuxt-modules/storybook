@@ -64,12 +64,14 @@ async function defineNuxtConfig(baseConfig: {
   )
 
   nuxt = await loadNuxt({
-    rootDir: baseConfig.root,
+    cwd: baseConfig.root,
     ready: false,
     dev: false,
-
     overrides: {
-      buildDir: '.nuxt-storybook',
+      // @ts-expect-error: this is actually correct, but would require to use generated types
+      appId: 'nuxt-app',
+      buildId: 'storybook',
+      ssr: false,
     },
   })
 
@@ -104,7 +106,7 @@ async function defineNuxtConfig(baseConfig: {
   await nuxt.ready()
   return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>(
     (resolve, reject) => {
-      nuxt.hook('vite:extendConfig', (config, { isClient }) => {
+      nuxt.hook('vite:configResolved', (config, { isClient }) => {
         if (isClient) {
           extendedConfig = mergeConfig(config, baseConfig)
 
