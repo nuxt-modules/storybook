@@ -100,20 +100,26 @@ async function defineNuxtConfig(baseConfig: {
 
     nuxt.hook('vite:extendConfig', (config, { isClient }) => {
       if (isClient) {
-        const plugins = baseConfig.plugins
+        extendedConfig = mergeConfig(config, baseConfig)
+
+        const plugins = extendedConfig.plugins || []
 
         // Find the index of the plugin with name 'vite:vue'
-        const index = plugins.findIndex((plugin) => plugin.name === 'vite:vue')
+        const index = plugins.findIndex(
+          (plugin) => plugin && 'name' in plugin && plugin.name === 'vite:vue',
+        )
 
         // Check if the plugin was found
         if (index !== -1) {
           // Replace the plugin with the new one using vuePlugin()
           plugins[index] = vuePlugin()
         } else {
-          plugins.push(vuePlugin())
+          // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
+          // and transforms global vue components before nuxt:components:imports.
+          plugins.unshift(vuePlugin())
         }
-        baseConfig.plugins = plugins
-        extendedConfig = mergeConfig(config, baseConfig)
+
+        extendedConfig.plugins = plugins
       }
     })
   })
