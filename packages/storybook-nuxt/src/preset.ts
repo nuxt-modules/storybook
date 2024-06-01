@@ -112,6 +112,8 @@ async function defineNuxtConfig(baseConfig: {
           // Replace the plugin with the new one using vuePlugin()
           plugins[index] = vuePlugin()
         } else {
+          // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
+          // and transforms global vue components before nuxt:components:imports.
           plugins.unshift(vuePlugin())
         }
 
