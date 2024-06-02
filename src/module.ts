@@ -35,7 +35,7 @@ export interface ModuleOptions {
   logLevel: LogLevel
 
   /**
-   * Eanble the module
+   * Enable the module
    * @default true
    */
   enabled: boolean
