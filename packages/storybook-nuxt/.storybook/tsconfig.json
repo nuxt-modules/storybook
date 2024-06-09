@@ -1,0 +1,29 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "incremental": false,
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "moduleResolution": "Node",
+    "target": "ES2020",
+    "module": "CommonJS",
+    "skipLibCheck": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "strictBindCallApply": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "noUnusedLocals": true,
+
+    "strict": true
+  },
+  "exclude": ["dist", "**/dist", "node_modules", "**/node_modules"],
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true,
+    "compilerOptions": {
+      "types": ["node"]
+    }
+  }
+}
