@@ -21,7 +21,7 @@
 - Make sure the vue vite plugin is always present ([22e27fb](https://github.com/nuxt-modules/storybook/commit/22e27fb))
 - Re-enable ssr ([7d849d1](https://github.com/nuxt-modules/storybook/commit/7d849d1))
 - Change builddir ([b2e6dfd](https://github.com/nuxt-modules/storybook/commit/b2e6dfd))
-- Fix TypeError when reading '__STORYBOOK__' property of undefined ([#539](https://github.com/nuxt-modules/storybook/pull/539))
+- Fix TypeError when reading `__STORYBOOK__` property of undefined ([#539](https://github.com/nuxt-modules/storybook/pull/539))
 - Relax version constraints of dependencies ([#438](https://github.com/nuxt-modules/storybook/pull/438))
 - **deps:** Update dependency @storybook-vue/nuxt to v0.2.7 ([#544](https://github.com/nuxt-modules/storybook/pull/544))
 - **deps:** Update lock file ([#551](https://github.com/nuxt-modules/storybook/pull/551))
@@ -89,7 +89,7 @@
 - Clément Ollivier ([@clemcode](http://github.com/clemcode))
 - L.Rain ([@baixiaoyu2997](http://github.com/baixiaoyu2997))
 - ChakAs3 ([@chakAs3](http://github.com/chakAs3))
-- MiniDigger  < Martin>
+- MiniDigger < Martin>
 
 ## v8.0.0
 
