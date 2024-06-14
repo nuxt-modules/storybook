@@ -32,8 +32,6 @@ export default defineBuildConfig({
     '@storybook/types',
     '@storybook/vue3',
     '@vue/shared',
-    '@unhead/vue',
-    '@nuxt/devtools-kit',
     '#app/composables/state',
     '#app/entry',
     '#build/plugins',

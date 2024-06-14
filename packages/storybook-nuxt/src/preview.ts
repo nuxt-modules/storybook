@@ -17,6 +17,7 @@ async function nuxtAppEntry() {
 
 nuxtAppEntry().then((app) => {
   logger.log('nuxtAppEntry done', app)
+  // @ts-expect-error: void should never be returned (fix this in the future)
   app()
     .then(() => {
       logger.log('nuxtAppEntry app done')

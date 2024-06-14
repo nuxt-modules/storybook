@@ -28,7 +28,12 @@ let nuxt: Nuxt
  */
 function extendComponents(nuxt: Nuxt) {
   nuxt.hook('components:extend', (components) => {
-    const nuxtLink = components.find(({ name }) => name === 'NuxtLink')
+    const nuxtLink = components.find(
+      ({ pascalName }) => pascalName === 'NuxtLink',
+    )
+    if (!nuxtLink) {
+      throw new Error('NuxtLink component not found')
+    }
     nuxtLink.filePath = join(runtimeDir, 'components/nuxt-link')
     nuxtLink.shortPath = join(runtimeDir, 'components/nuxt-link')
     nuxt.options.build.transpile.push(nuxtLink.filePath)
@@ -50,19 +55,23 @@ async function extendComposables(nuxt: Nuxt) {
   })
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function defineNuxtConfig(baseConfig: Record<string, any>) {
+async function defineNuxtConfig(baseConfig: {
+  root: string | undefined
+  plugins: { name: string }[]
+}) {
   const { loadNuxt, buildNuxt, addPlugin, extendPages } = await import(
     '@nuxt/kit'
   )
 
   nuxt = await loadNuxt({
-    rootDir: baseConfig.root,
+    cwd: baseConfig.root,
     ready: false,
     dev: false,
-
     overrides: {
-      buildDir: '.nuxt-storybook',
+      // @ts-expect-error: this is actually correct, but would require to use generated types
+      appId: 'nuxt-app',
+      buildId: 'storybook',
+      ssr: false,
     },
   })
 
@@ -90,42 +99,57 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
         path: '/iframe.html',
       })
     })
-
-    nuxt.hook('vite:extendConfig', (config, { isClient }) => {
-      if (isClient) {
-        const plugins = baseConfig.plugins
-
-        // Find the index of the plugin with name 'vite:vue'
-        const index = plugins.findIndex((plugin) => plugin.name === 'vite:vue')
-
-        // Check if the plugin was found
-        if (index !== -1) {
-          // Replace the plugin with the new one using vuePlugin()
-          plugins[index] = vuePlugin()
-        } else {
-          plugins.push(vuePlugin())
-        }
-        baseConfig.plugins = plugins
-        extendedConfig = mergeConfig(config, baseConfig)
-      }
-    })
   })
 
+  // Get Vite config from Nuxt
+  // https://nuxt.com/docs/api/kit/examples#accessing-nuxt-vite-config
   await nuxt.ready()
+  return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>(
+    (resolve, reject) => {
+      nuxt.hook('vite:configResolved', (config, { isClient }) => {
+        if (isClient) {
+          extendedConfig = mergeConfig(config, baseConfig)
 
-  try {
-    await buildNuxt(nuxt)
+          const plugins = extendedConfig.plugins || []
 
-    return {
-      viteConfig: extendedConfig,
-      nuxt,
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    throw new Error(e)
-  }
+          // Find the index of the plugin with name 'vite:vue'
+          const index = plugins.findIndex(
+            (plugin) =>
+              plugin && 'name' in plugin && plugin.name === 'vite:vue',
+          )
+
+          // Check if the plugin was found
+          if (index !== -1) {
+            // Replace the plugin with the new one using vuePlugin()
+            plugins[index] = vuePlugin()
+          } else {
+            // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
+            // and transforms global vue components before nuxt:components:imports.
+            plugins.unshift(vuePlugin())
+          }
+
+          extendedConfig.plugins = plugins
+          resolve({
+            viteConfig: extendedConfig,
+            nuxt,
+          })
+          // Stop the build process, as we don't need to build the Nuxt app
+          throw new Error('_stop_')
+        }
+      })
+
+      buildNuxt(nuxt).catch((err) => {
+        if (!err.toString().includes('_stop_')) {
+          reject(err)
+        }
+      })
+    },
+  ).finally(() => nuxt.close())
 }
-export const core: PresetProperty<'core', StorybookConfig> = async (config) => {
+export const core: PresetProperty<'core', StorybookConfig> = async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  config: any,
+) => {
   return {
     ...config,
     builder: '@storybook/builder-vite',
@@ -143,6 +167,7 @@ export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
   return [...entry, resolve(packageDir, 'preview')]
 }
 
+// @ts-expect-error: viteFinal can be a function, but it's not typed as such
 export const viteFinal: StorybookConfig['viteFinal'] = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: Record<string, any>,
