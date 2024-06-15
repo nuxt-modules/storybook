@@ -68,7 +68,6 @@ async function defineNuxtConfig(baseConfig: {
     ready: false,
     dev: false,
     overrides: {
-      // @ts-expect-error: this is actually correct, but would require to use generated types
       appId: 'nuxt-app',
       buildId: 'storybook',
       ssr: false,
