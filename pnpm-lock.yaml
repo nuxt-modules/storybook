@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@nuxthq/studio': ^1.1.0
+  '@nuxthq/studio': ^2.0.0
 
 importers:
 
@@ -1857,8 +1857,8 @@ packages:
     peerDependencies:
       vue: ^3.3.4
 
-  '@nuxthq/studio@1.1.2':
-    resolution: {integrity: sha512-YVEiIuU+5cLZ0qdLsRAYuFE395XoYf87UTR5xwxxpw9++uhlyLiQyO7JIXTTWIOdEiMHt8frrrLJBBPd5tHAeQ==}
+  '@nuxthq/studio@2.0.0':
+    resolution: {integrity: sha512-ZbzobFPul9KIxF+Obyu4mZCmVsoLqksCbKzTrYgQFGUTgQOvMfCJNGYOw6mzlKXaozPt56Yhd2GphcPvGE15Rw==}
 
   '@nuxtjs/color-mode@3.4.0':
     resolution: {integrity: sha512-rS51nG3zW8ksOwNubIP3BPQ+vBL0r2M6td1kkB/VaR1e1uVtNfWlBPfZjb604bgNCE2AeRNqaI0CrxkfnQ6h6Q==}
@@ -10520,7 +10520,7 @@ snapshots:
       '@nuxt-themes/tokens': 1.9.1(magicast@0.3.4)(postcss@8.4.38)(rollup@3.29.4)(vue@3.4.29(typescript@5.4.5))
       '@nuxt-themes/typography': 0.11.0(magicast@0.3.4)(postcss@8.4.38)(rollup@3.29.4)(vue@3.4.29(typescript@5.4.5))
       '@nuxt/content': 2.12.1(ioredis@5.4.1)(magicast@0.3.4)(nuxt@3.12.1(@opentelemetry/api@1.9.0)(@parcel/watcher@2.4.1)(@types/node@20.14.2)(@unocss/reset@0.59.4)(change-case@4.1.2)(encoding@0.1.13)(eslint@9.5.0)(floating-vue@5.2.2(@nuxt/kit@3.12.1(magicast@0.3.4)(rollup@3.29.4))(vue@3.4.29(typescript@5.4.5)))(fuse.js@6.6.2)(ioredis@5.4.1)(magicast@0.3.4)(rollup@3.29.4)(terser@5.31.1)(typescript@5.4.5)(unocss@0.59.4(postcss@8.4.38)(rollup@3.29.4)(vite@5.3.1(@types/node@20.14.2)(terser@5.31.1)))(vite@5.3.1(@types/node@20.14.2)(terser@5.31.1)))(rollup@3.29.4)(vue@3.4.29(typescript@5.4.5))
-      '@nuxthq/studio': 1.1.2(magicast@0.3.4)(rollup@3.29.4)
+      '@nuxthq/studio': 2.0.0(magicast@0.3.4)(rollup@3.29.4)
       '@vueuse/integrations': 10.11.0(change-case@4.1.2)(focus-trap@7.5.4)(fuse.js@6.6.2)(vue@3.4.29(typescript@5.4.5))
       '@vueuse/nuxt': 10.9.0(magicast@0.3.4)(nuxt@3.12.1(@opentelemetry/api@1.9.0)(@parcel/watcher@2.4.1)(@types/node@20.14.2)(@unocss/reset@0.59.4)(change-case@4.1.2)(encoding@0.1.13)(eslint@9.5.0)(floating-vue@5.2.2(@nuxt/kit@3.12.1(magicast@0.3.4)(rollup@3.29.4))(vue@3.4.29(typescript@5.4.5)))(fuse.js@6.6.2)(ioredis@5.4.1)(magicast@0.3.4)(rollup@3.29.4)(terser@5.31.1)(typescript@5.4.5)(unocss@0.59.4(postcss@8.4.38)(rollup@3.29.4)(vite@5.3.1(@types/node@20.14.2)(terser@5.31.1)))(vite@5.3.1(@types/node@20.14.2)(terser@5.31.1)))(rollup@3.29.4)(vue@3.4.29(typescript@5.4.5))
       focus-trap: 7.5.4
@@ -11322,7 +11322,7 @@ snapshots:
       - vti
       - vue-tsc
 
-  '@nuxthq/studio@1.1.2(magicast@0.3.4)(rollup@3.29.4)':
+  '@nuxthq/studio@2.0.0(magicast@0.3.4)(rollup@3.29.4)':
     dependencies:
       '@nuxt/kit': 3.12.1(magicast@0.3.4)(rollup@3.29.4)
       defu: 6.1.4
