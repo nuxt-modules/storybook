@@ -68,7 +68,6 @@ async function defineNuxtConfig(baseConfig: {
     ready: false,
     dev: false,
     overrides: {
-      // @ts-expect-error: this is actually correct, but would require to use generated types
       appId: 'nuxt-app',
       buildId: 'storybook',
       ssr: false,
@@ -188,6 +187,12 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   const nuxtConfig = await defineNuxtConfig(
     await getStorybookViteConfig(config, options),
   )
+  // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
+  // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
+  nuxtConfig.viteConfig.optimizeDeps!.include =
+    nuxtConfig.viteConfig.optimizeDeps!.include!.filter(
+      (dep) => !nuxtConfig.viteConfig.optimizeDeps!.exclude!.includes(dep),
+    )
 
   return mergeConfig(nuxtConfig.viteConfig, {
     // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
