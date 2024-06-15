@@ -7,4 +7,7 @@ export default defineNuxtConfig({
       routes: ['/'],
     },
   },
+  future: {
+    compatibilityVersion: 4,
+  },
 })
