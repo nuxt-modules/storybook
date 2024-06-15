@@ -33,7 +33,11 @@ export const SimpleComponent: Story = {
 
 export const CustomTemplate: Story = {
   args: { primary: true, label: 'My Story' },
-  render: () => ({
-    template: '<my-button>Hello</my-button>',
+  render: (args) => ({
+    components: { CustomComponent },
+    setup() {
+      return { args }
+    },
+    template: '<custom-component v-bind="args">Hello</custom-component>',
   }),
 }
