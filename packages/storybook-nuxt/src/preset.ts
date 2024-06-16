@@ -160,6 +160,12 @@ function mergeViteConfig(
   }
 
   extendedConfig.plugins = plugins
+  // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
+  // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
+  extendedConfig.optimizeDeps!.include =
+    extendedConfig.optimizeDeps!.include!.filter(
+      (dep) => !extendedConfig.optimizeDeps!.exclude!.includes(dep),
+    )
   return mergeConfig(extendedConfig, {
     // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
     define: {
@@ -233,12 +239,6 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     storybookViteConfig.root,
   )
   const finalViteConfig = mergeViteConfig(config, nuxtConfig, nuxt)
-  // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
-  // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
-  finalViteConfig.optimizeDeps!.include =
-    finalViteConfig.optimizeDeps!.include!.filter(
-      (dep) => !finalViteConfig.optimizeDeps!.exclude!.includes(dep),
-    )
   // Write all vite configs to logs
   const fs = await import('node:fs')
   fs.mkdirSync(join(options.outputDir, 'logs'), { recursive: true })
