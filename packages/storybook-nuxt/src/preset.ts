@@ -180,10 +180,10 @@ function mergeViteConfig(
     ],
     server: {
       cors: true,
-      /*proxy: {
+      proxy: {
         ...getPreviewProxy(),
         ...getNuxtProxyConfig(nuxt).proxy,
-      },*/
+      },
       fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
     },
     envPrefix: ['NUXT_'],
