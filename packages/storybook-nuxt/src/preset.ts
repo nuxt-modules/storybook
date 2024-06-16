@@ -166,7 +166,6 @@ export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
   return [...entry, resolve(packageDir, 'preview')]
 }
 
-// @ts-expect-error: viteFinal can be a function, but it's not typed as such
 export const viteFinal: StorybookConfig['viteFinal'] = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: Record<string, any>,
