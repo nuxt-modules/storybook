@@ -14,13 +14,12 @@ import vuePlugin from '@vitejs/plugin-vue'
 import replace from '@rollup/plugin-replace'
 import type { StorybookConfig } from './types'
 import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
+import stringify from 'json-stable-stringify'
 
 const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
 
 const dirs = [distDir, packageDir, pluginsDir, componentsDir]
-
-let nuxt: Nuxt
 
 /**
  * extend nuxt-link component to use storybook router
@@ -28,7 +27,12 @@ let nuxt: Nuxt
  */
 function extendComponents(nuxt: Nuxt) {
   nuxt.hook('components:extend', (components) => {
-    const nuxtLink = components.find(({ name }) => name === 'NuxtLink')
+    const nuxtLink = components.find(
+      ({ pascalName }) => pascalName === 'NuxtLink',
+    )
+    if (!nuxtLink) {
+      throw new Error('NuxtLink component not found')
+    }
     nuxtLink.filePath = join(runtimeDir, 'components/nuxt-link')
     nuxtLink.shortPath = join(runtimeDir, 'components/nuxt-link')
     nuxt.options.build.transpile.push(nuxtLink.filePath)
@@ -50,19 +54,35 @@ async function extendComposables(nuxt: Nuxt) {
   })
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function defineNuxtConfig(baseConfig: Record<string, any>) {
-  const { loadNuxt, buildNuxt, addPlugin, extendPages } = await import(
-    '@nuxt/kit'
-  )
+async function loadNuxtViteConfig(root: string | undefined) {
+  const { loadNuxt, tryUseNuxt, buildNuxt, addPlugin, extendPages } =
+    await import('@nuxt/kit')
 
+  let nuxt = tryUseNuxt()
+  if (nuxt) {
+    // Nuxt is already started in the current process (i.e. in dev mode)
+    // We assume that we are called from the Nuxt module, which means that
+    // Nuxt is in the "load module" state and we can access the Vite config later via the hook
+    const nuxtRes = nuxt
+    return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>((resolve) => {
+      nuxtRes.hook('vite:configResolved', (config, { isClient }) => {
+        if (isClient) {
+          resolve({
+            viteConfig: config,
+            nuxt: nuxtRes,
+          })
+        }
+      })
+    })
+  }
   nuxt = await loadNuxt({
-    rootDir: baseConfig.root,
+    cwd: root,
     ready: false,
     dev: false,
-
     overrides: {
-      buildDir: '.nuxt-storybook',
+      appId: 'nuxt-app',
+      buildId: 'storybook',
+      ssr: false,
     },
   })
 
@@ -70,8 +90,6 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     throw new Error(
       `Storybook-Nuxt does not support '${nuxt.options.builder}' for now.`,
     )
-
-  let extendedConfig: ViteConfig = {}
   nuxt.options.build.transpile.push(join(packageDir, 'preview'))
 
   nuxt.hook('modules:done', () => {
@@ -90,42 +108,98 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
         path: '/iframe.html',
       })
     })
-
-    nuxt.hook('vite:extendConfig', (config, { isClient }) => {
-      if (isClient) {
-        const plugins = baseConfig.plugins
-
-        // Find the index of the plugin with name 'vite:vue'
-        const index = plugins.findIndex((plugin) => plugin.name === 'vite:vue')
-
-        // Check if the plugin was found
-        if (index !== -1) {
-          // Replace the plugin with the new one using vuePlugin()
-          plugins[index] = vuePlugin()
-        } else {
-          plugins.push(vuePlugin())
-        }
-        baseConfig.plugins = plugins
-        extendedConfig = mergeConfig(config, baseConfig)
-      }
-    })
   })
 
+  // Get Vite config from Nuxt
+  // https://nuxt.com/docs/api/kit/examples#accessing-nuxt-vite-config
   await nuxt.ready()
+  return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>(
+    (resolve, reject) => {
+      nuxt.hook('vite:configResolved', (config, { isClient }) => {
+        if (isClient) {
+          resolve({
+            viteConfig: config,
+            nuxt,
+          })
+          // Stop the build process, as we don't need to build the Nuxt app
+          throw new Error('_stop_')
+        }
+      })
 
-  try {
-    await buildNuxt(nuxt)
-
-    return {
-      viteConfig: extendedConfig,
-      nuxt,
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    throw new Error(e)
-  }
+      buildNuxt(nuxt).catch((err) => {
+        if (!err.toString().includes('_stop_')) {
+          reject(err)
+        }
+      })
+    },
+  ).finally(() => nuxt.close())
 }
-export const core: PresetProperty<'core', StorybookConfig> = async (config) => {
+
+function mergeViteConfig(
+  storybookConfig: ViteConfig,
+  nuxtConfig: ViteConfig,
+  nuxt: Nuxt,
+): ViteConfig {
+  const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
+
+  const plugins = extendedConfig.plugins || []
+
+  // Find the index of the plugin with name 'vite:vue'
+  const index = plugins.findIndex(
+    (plugin) => plugin && 'name' in plugin && plugin.name === 'vite:vue',
+  )
+
+  // Check if the plugin was found
+  if (index !== -1) {
+    // Replace the plugin with the new one using vuePlugin()
+    plugins[index] = vuePlugin()
+  } else {
+    // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
+    // and transforms global vue components before nuxt:components:imports.
+    plugins.unshift(vuePlugin())
+  }
+
+  extendedConfig.plugins = plugins
+  // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
+  // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
+  extendedConfig.optimizeDeps!.include =
+    extendedConfig.optimizeDeps!.include!.filter(
+      (dep) => !extendedConfig.optimizeDeps!.exclude!.includes(dep),
+    )
+  return mergeConfig(extendedConfig, {
+    // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
+    define: {
+      __NUXT__: JSON.stringify({
+        config: nuxt.options.runtimeConfig,
+      }),
+      'import.meta.client': 'true',
+    },
+
+    plugins: [
+      replace({
+        values: {
+          'import.meta.server': 'false',
+          'import.meta.client': 'true',
+        },
+        preventAssignment: true,
+      }),
+    ],
+    server: {
+      cors: true,
+      proxy: {
+        ...getPreviewProxy(),
+        ...getNuxtProxyConfig(nuxt).proxy,
+      },
+      fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
+    },
+    envPrefix: ['NUXT_'],
+  })
+}
+
+export const core: PresetProperty<'core', StorybookConfig> = async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  config: any,
+) => {
   return {
     ...config,
     builder: '@storybook/builder-vite',
@@ -160,38 +234,28 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     if (!ViteFile) throw new Error('ViteFile not found')
     return ViteFile(c, o)
   }
-  const nuxtConfig = await defineNuxtConfig(
-    await getStorybookViteConfig(config, options),
+  const storybookViteConfig = await getStorybookViteConfig(config, options)
+  const { viteConfig: nuxtConfig, nuxt } = await loadNuxtViteConfig(
+    storybookViteConfig.root,
+  )
+  const finalViteConfig = mergeViteConfig(config, nuxtConfig, nuxt)
+  // Write all vite configs to logs
+  const fs = await import('node:fs')
+  fs.mkdirSync(join(options.outputDir, 'logs'), { recursive: true })
+  fs.writeFileSync(
+    join(options.outputDir, 'logs', 'vite-storybook.config.js'),
+    stringify(storybookViteConfig, { space: '  ' }),
+  )
+  fs.writeFileSync(
+    join(options.outputDir, 'logs', 'vite-nuxt.config.js'),
+    stringify(nuxtConfig, { space: '  ' }),
+  )
+  fs.writeFileSync(
+    join(options.outputDir, 'logs', 'vite-final.config.js'),
+    stringify(finalViteConfig, { space: '  ' }),
   )
 
-  return mergeConfig(nuxtConfig.viteConfig, {
-    // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
-    define: {
-      __NUXT__: JSON.stringify({
-        config: nuxtConfig.nuxt.options.runtimeConfig,
-      }),
-      'import.meta.client': 'true',
-    },
-
-    plugins: [
-      replace({
-        values: {
-          'import.meta.server': 'false',
-          'import.meta.client': 'true',
-        },
-        preventAssignment: true,
-      }),
-    ],
-    server: {
-      cors: true,
-      proxy: {
-        ...getPreviewProxy(),
-        ...getNuxtProxyConfig(nuxt).proxy,
-      },
-      fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
-    },
-    envPrefix: ['NUXT_'],
-  })
+  return finalViteConfig
 }
 
 async function getPackageDir(frameworkPackageName: string) {

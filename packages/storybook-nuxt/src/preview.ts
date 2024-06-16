@@ -6,13 +6,8 @@ document.body.appendChild(vueAppRootContainer)
 // entry()
 const logger = console
 async function nuxtAppEntry() {
-  const nuxtApp = () =>
-    import('#app/entry').then((m) => m.default).catch(() => {})
-  // i
-  const vueAppPromise = nuxtApp().catch((_error) => {
-    // consola.error('Error while mounting app:', error)
-  })
-  return vueAppPromise
+  const nuxtApp = () => import('#app/entry').then((m) => m.default)
+  return nuxtApp()
 }
 
 nuxtAppEntry().then((app) => {
