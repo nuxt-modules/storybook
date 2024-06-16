@@ -64,12 +64,13 @@ async function defineNuxtConfig(baseConfig: {
   )
 
   nuxt = await loadNuxt({
-    rootDir: baseConfig.root,
+    cwd: baseConfig.root,
     ready: false,
     dev: false,
-
     overrides: {
-      buildDir: '.nuxt-storybook',
+      appId: 'nuxt-app',
+      buildId: 'storybook',
+      ssr: false,
     },
   })
 
@@ -97,40 +98,52 @@ async function defineNuxtConfig(baseConfig: {
         path: '/iframe.html',
       })
     })
-
-    nuxt.hook('vite:extendConfig', (config, { isClient }) => {
-      if (isClient) {
-        const plugins = baseConfig.plugins
-
-        // Find the index of the plugin with name 'vite:vue'
-        const index = plugins.findIndex((plugin) => plugin.name === 'vite:vue')
-
-        // Check if the plugin was found
-        if (index !== -1) {
-          // Replace the plugin with the new one using vuePlugin()
-          plugins[index] = vuePlugin()
-        } else {
-          plugins.push(vuePlugin())
-        }
-        baseConfig.plugins = plugins
-        extendedConfig = mergeConfig(config, baseConfig)
-      }
-    })
   })
 
+  // Get Vite config from Nuxt
+  // https://nuxt.com/docs/api/kit/examples#accessing-nuxt-vite-config
   await nuxt.ready()
+  return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>(
+    (resolve, reject) => {
+      nuxt.hook('vite:configResolved', (config, { isClient }) => {
+        if (isClient) {
+          extendedConfig = mergeConfig(config, baseConfig)
 
-  try {
-    await buildNuxt(nuxt)
+          const plugins = extendedConfig.plugins || []
 
-    return {
-      viteConfig: extendedConfig,
-      nuxt,
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    throw new Error(e)
-  }
+          // Find the index of the plugin with name 'vite:vue'
+          const index = plugins.findIndex(
+            (plugin) =>
+              plugin && 'name' in plugin && plugin.name === 'vite:vue',
+          )
+
+          // Check if the plugin was found
+          if (index !== -1) {
+            // Replace the plugin with the new one using vuePlugin()
+            plugins[index] = vuePlugin()
+          } else {
+            // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
+            // and transforms global vue components before nuxt:components:imports.
+            plugins.unshift(vuePlugin())
+          }
+
+          extendedConfig.plugins = plugins
+          resolve({
+            viteConfig: extendedConfig,
+            nuxt,
+          })
+          // Stop the build process, as we don't need to build the Nuxt app
+          throw new Error('_stop_')
+        }
+      })
+
+      buildNuxt(nuxt).catch((err) => {
+        if (!err.toString().includes('_stop_')) {
+          reject(err)
+        }
+      })
+    },
+  ).finally(() => nuxt.close())
 }
 export const core: PresetProperty<'core', StorybookConfig> = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -153,7 +166,6 @@ export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
   return [...entry, resolve(packageDir, 'preview')]
 }
 
-// @ts-expect-error: viteFinal can be a function, but it's not typed as such
 export const viteFinal: StorybookConfig['viteFinal'] = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: Record<string, any>,
@@ -174,6 +186,12 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   const nuxtConfig = await defineNuxtConfig(
     await getStorybookViteConfig(config, options),
   )
+  // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
+  // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
+  nuxtConfig.viteConfig.optimizeDeps!.include =
+    nuxtConfig.viteConfig.optimizeDeps!.include!.filter(
+      (dep) => !nuxtConfig.viteConfig.optimizeDeps!.exclude!.includes(dep),
+    )
 
   return mergeConfig(nuxtConfig.viteConfig, {
     // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
