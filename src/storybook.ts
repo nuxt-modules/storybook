@@ -14,22 +14,22 @@ import storybookPackageJson from '@storybook/core-server/package.json'
 
 const buildLogger = logger.withTag('build')
 
-function printError(error: unknown) {
+function printError(error: {
+  error?: Error
+  stats?: { compilation?: { errors: Error[] } }
+  close?: boolean
+  compilation?: { errors: Error[] }
+}) {
   if (error instanceof Error) {
-    if ((error as any).error) {
-      buildLogger.error((error as any).error)
-    } else if (
-      (error as any).stats &&
-      (error as any).stats.compilation.errors
-    ) {
-      ;(error as any).stats.compilation.errors.forEach((e: any) =>
-        buildLogger.log(e),
-      )
+    if (error.error) {
+      buildLogger.error(error.error)
+    } else if (error.stats?.compilation?.errors) {
+      error.stats.compilation.errors.forEach((e) => buildLogger.log(e))
     } else {
-      buildLogger.error(error as any)
+      buildLogger.error(error)
     }
   } else if (error.compilation?.errors) {
-    error.compilation.errors.forEach((e: any) => buildLogger.log(e))
+    error.compilation.errors.forEach((e) => buildLogger.log(e))
   }
 
   buildLogger.warn(
@@ -68,7 +68,11 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     'dev',
     {
       cliOptions: {},
-      presetOptions: storybookOptions,
+      presetOptions: {
+        ...storybookOptions,
+        corePresets: [],
+        overridePresets: [],
+      },
       printError,
     },
     () => buildDevStandalone(storybookOptions),
