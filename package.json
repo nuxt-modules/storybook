@@ -27,12 +27,15 @@
     "dev:build": "nuxi build playground",
     "playground:storybook:build": "cd playground && pnpm run build-storybook",
     "playground:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name playground:storybook:build --project-token=chpt_d7cf5e98426e11e",
+    "example:starter:dev": "nuxi dev examples/starter",
     "example:starter:build": "nuxi build examples/starter",
     "example:starter:storybook:build": "cd examples/starter && pnpm run build-storybook",
     "example:starter:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:starter:storybook:build --project-token=chpt_dc04103f8a32bfa",
+    "example:tailwind:dev": "nuxi dev examples/tailwind",
     "example:tailwind:build": "nuxi build examples/tailwind",
     "example:tailwind:storybook:build": "cd examples/tailwind && pnpm run build-storybook",
     "example:tailwind:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:tailwind:storybook:build --project-token=chpt_fbfe47dc27d4064",
+    "example:showcase:dev": "nuxi dev examples/showcase",
     "example:showcase:build": "nuxi build examples/showcase",
     "example:showcase:storybook:build": "cd examples/showcase && pnpm run build-storybook",
     "example:showcase:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:showcase:storybook:build --project-token=chpt_a53adf402cb628c",
@@ -49,7 +52,7 @@
     "test:watch": "vitest watch",
     "test:coverage": "vitest --coverage"
   },
-  "packageManager": "pnpm@9.1.4",
+  "packageManager": "pnpm@9.3.0",
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.27",
     "@nuxt/content": "^2.10.0",
@@ -93,6 +96,9 @@
         "webpack",
         "vue"
       ]
+    },
+    "overrides": {
+      "@nuxthq/studio": "^1.1.0"
     }
   },
   "release-it": {
