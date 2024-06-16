@@ -1,7 +1,11 @@
 import { defineBuildConfig } from 'unbuild'
 export default defineBuildConfig({
-  // Workaround for https://github.com/sindresorhus/globby/issues/260
-  externals: ['globby'],
+  externals: [
+    // Workaround for https://github.com/sindresorhus/globby/issues/260
+    'globby',
+    // Esbuild cannot be bundled
+    'esbuild',
+  ],
   // Ignore warnings
   failOnWarn: false,
 })

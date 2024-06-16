@@ -1,7 +1,6 @@
 import { resolve } from 'node:path'
 import type { Nuxt } from 'nuxt/schema'
 import { getPort } from 'get-port-please'
-import { extendViteConfig } from '@nuxt/kit'
 import type { ModuleOptions } from './module'
 import { withTrailingSlash } from 'ufo'
 import { colors, logger } from './logger'
