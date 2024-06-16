@@ -8,6 +8,7 @@ import type {
   DecoratorFunction,
 } from '@storybook/vue3'
 import type { FrameworkOptions as FrameworkOptionsVue } from '@storybook/vue3-vite'
+import type { StorybookConfigVite } from '@storybook/builder-vite'
 
 declare let STORYBOOK_VUE_GLOBAL_PLUGINS: string[]
 declare let STORYBOOK_VUE_GLOBAL_MIXINS: string[]
