@@ -16,16 +16,19 @@ declare let STORYBOOK_VUE_GLOBAL_MIXINS: string[]
 type FrameworkName = '@storybook-vue/nuxt'
 type BuilderName = '@storybook/builder-vite'
 
-export type FrameworkOptions = NuxtOptions & FrameworkOptionsVue
-
 type StorybookConfigFramework = {
-  framework: FrameworkName | { name: FrameworkName; options: FrameworkOptions }
-  core?: StorybookConfigBase['core'] & { builder?: BuilderName }
-  typescript?: StorybookConfigBase['typescript']
-  previewAnnotations?: StorybookConfigBase['previewAnnotations']
-  stories?: StorybookConfigBase['stories']
-  addons?: StorybookConfigBase['addons']
-  docs?: StorybookConfigBase['docs']
+  framework:
+    | FrameworkName
+    | { name: FrameworkName; options: FrameworkOptionsVue }
+  core?: Omit<StorybookConfigBase['core'], 'builder'> & {
+    builder?:
+      | BuilderName
+      | {
+          name: BuilderName
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          options?: Record<string, any>
+        }
+  }
 }
 
 /**
@@ -37,7 +40,5 @@ export type StorybookConfig = Omit<
 > &
   StorybookConfigVite &
   StorybookConfigFramework
-
-export interface NuxtOptions {}
 
 export { Meta, StoryFn, StoryObj, Preview, VueRenderer, DecoratorFunction }
