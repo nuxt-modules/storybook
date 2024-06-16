@@ -1,107 +1,91 @@
 import { resolve } from 'node:path'
-import { existsSync } from 'node:fs'
-import { startSubprocess } from '@nuxt/devtools-kit'
 import type { Nuxt } from 'nuxt/schema'
 import { getPort } from 'get-port-please'
-import { extendViteConfig, logger } from '@nuxt/kit'
 import type { ModuleOptions } from './module'
 import { withTrailingSlash } from 'ufo'
-import { colors } from './logger'
+import { colors, logger } from './logger'
+import {
+  cache as storybookCache,
+  type PackageJson,
+} from '@storybook/core-common'
+import { buildDevStandalone, withTelemetry } from '@storybook/core-server'
+import storybookPackageJson from '@storybook/core-server/package.json'
+
+const buildLogger = logger.withTag('build')
+
+function printError(error: {
+  error?: Error
+  stats?: { compilation?: { errors: Error[] } }
+  close?: boolean
+  compilation?: { errors: Error[] }
+}) {
+  if (error instanceof Error) {
+    if (error.error) {
+      buildLogger.error(error.error)
+    } else if (error.stats?.compilation?.errors) {
+      error.stats.compilation.errors.forEach((e) => buildLogger.log(e))
+    } else {
+      buildLogger.error(error)
+    }
+  } else if (error.compilation?.errors) {
+    error.compilation.errors.forEach((e) => buildLogger.log(e))
+  }
+
+  buildLogger.warn(
+    error.close
+      ? `
+          FATAL broken build!, will close the process,
+          Fix the error below and restart storybook.
+        `
+      : `
+          Broken build, fix the error above.
+          You may need to refresh the browser.
+        `,
+  )
+}
 
 export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
-  const STORYBOOK_ROUTE = options.route
-  const STORYBOOK_PORT = await getPort({
+  const storybookRoute = options.route
+  const storybookServerPort = await getPort({
     ports: [options.port || 6006, 6007, 6008, 6009, 6010],
   })
-  const STORYBOOK_HOST = options.host
-  const STORYBOOK_URL =
-    STORYBOOK_HOST + (STORYBOOK_PORT == 80 ? '' : `:${STORYBOOK_PORT}`)
 
   const projectDir = resolve(nuxt.options.rootDir)
-  const args = isStorybookConfigured(projectDir)
-    ? ['storybook', 'dev', '--port', `${STORYBOOK_PORT}`, '--ci']
-    : [
-        'storybook-nuxt',
-        'init',
-        '--start',
-        '--port',
-        `${STORYBOOK_PORT}`,
-        '--ci',
-      ]
 
-  logger.verbose(' ')
-  logger.verbose(
-    isStorybookConfigured(projectDir)
-      ? '📚  Storybook is configured'
-      : '📚  Storybook is not installed',
-  )
-  logger.verbose('')
+  const storybookOptions = {
+    port: storybookServerPort,
+    configDir: resolve(projectDir, './.storybook'),
+    configType: 'DEVELOPMENT',
+    cache: storybookCache,
+    packageJson: storybookPackageJson as PackageJson,
+  } satisfies Parameters<typeof buildDevStandalone>[0]
 
   if (!nuxt.options.dev) return
 
-  nuxt.hook('app:resolve', async () => {
-    const _process = startSubprocess(
-      {
-        command: 'npx',
-        args,
-        cwd: projectDir,
+  logger.verbose('Starting Storybook')
+  const result = await withTelemetry(
+    'dev',
+    {
+      cliOptions: {},
+      presetOptions: {
+        ...storybookOptions,
+        corePresets: [],
+        overridePresets: [],
       },
-      {
-        id: 'nuxt-storybook-module:client',
-        name: 'Storybook Server Terminal',
-      },
-      nuxt,
-    )
-    _process.getProcess().stdout?.pipe(process.stdout)
-    _process.getProcess().stderr?.pipe(process.stderr)
-
-    nuxt.hook('close', () => {
-      logger.verbose(' ⚠️ Closing Storybook  ')
-      return _process.terminate()
-    })
-
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    logger.verbose('ℹ️ Storybook ready  ')
-  })
-
-  const storybookProxy = {
-    target: STORYBOOK_URL,
-    changeOrigin: true,
-    followRedirects: true,
-    secure: false,
-    rewrite: (path: string) => path.replace(STORYBOOK_ROUTE, ''),
+      printError,
+    },
+    () => buildDevStandalone(storybookOptions),
+  )
+  if (!result) {
+    logger.error('Failed to start Storybook')
+    return
   }
-
-  extendViteConfig((config) => {
-    config.optimizeDeps ??= {}
-    config.optimizeDeps.include = config.optimizeDeps.include || []
-
-    config.server ??= {}
-    config.server.proxy ??= {}
-
-    config.server.proxy[STORYBOOK_ROUTE] = storybookProxy
-    config.server.proxy['/@vite/client'] = storybookProxy
-    config.server.proxy['/virtual:/@storybook'] = storybookProxy
-    config.server.proxy['/node_modules'] = storybookProxy
-    config.server.proxy['/.storybook'] = storybookProxy
-    config.server.proxy['/stores'] = storybookProxy
-
-    config.server.proxy['/stories'] = storybookProxy
-    config.server.proxy['/assets'] = storybookProxy
-    config.server.proxy['/@id'] = storybookProxy
-    config.server.proxy['/@fs'] = storybookProxy
-    config.server.proxy['/app.vue'] = storybookProxy
-    config.server.proxy['/.nuxt'] = storybookProxy
-    config.server.proxy['/app.config.mjs'] = storybookProxy
-
-    config.server.proxy['/i18n.options.mjs'] = storybookProxy
-    config.server.proxy['/i18n.config.ts'] = storybookProxy
-    config.server.proxy['/components'] = storybookProxy
-    config.server.proxy['/composables'] = storybookProxy
-    config.server.proxy['/layouts'] = storybookProxy
-    config.server.proxy['/pages'] = storybookProxy
-    config.server.proxy['/storybook-server-channel'] = storybookProxy
-  })
+  logger.log(
+    `  ➜ Storybook: ${colors.underline(withTrailingSlash(result.address))}`,
+  )
+  logger.verbose(
+    `  ➜ Storybook: ${colors.underline(withTrailingSlash(result.networkAddress))}`,
+  )
 
   nuxt.hook('build:done', () => {
     logger.verbose(' ')
@@ -111,10 +95,6 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     import.meta.env = import.meta.env || {}
     import.meta.env.__STORYBOOK__ = JSON.stringify(options)
   })
-
-  logger.log(
-    `  ➜ Storybook: ${colors.underline(withTrailingSlash(STORYBOOK_URL))}`,
-  )
 
   nuxt.hook('devtools:customTabs', (tabs) => {
     tabs.push({
@@ -128,18 +108,8 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
       view: {
         type: 'iframe',
         // absolute URL to the iframes
-        src: `${STORYBOOK_ROUTE}/`,
+        src: `${storybookRoute}/`,
       },
     })
   })
-}
-
-function isStorybookConfigured(rootDir: string) {
-  const isTypeScriptProject = existsSync(resolve(rootDir, 'tsconfig.json'))
-  const configFileExtension = isTypeScriptProject ? 'ts' : 'js'
-  const sbMain = existsSync(
-    resolve(rootDir, `.storybook/main.${configFileExtension}`),
-  )
-
-  return sbMain
 }
