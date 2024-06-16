@@ -88,41 +88,6 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     `  ➜ Storybook: ${colors.underline(withTrailingSlash(result.networkAddress))}`,
   )
 
-  const storybookProxy = {
-    target: result.address,
-    changeOrigin: true,
-    followRedirects: true,
-    secure: false,
-    rewrite: (path: string) => path.replace(storybookRoute, ''),
-  }
-
-  extendViteConfig((config) => {
-    // config.optimizeDeps ??= {}
-    // config.optimizeDeps.include = config.optimizeDeps.include || []
-    config.server ??= {}
-    config.server.proxy ??= {}
-    config.server.proxy[storybookRoute] = storybookProxy
-    // config.server.proxy['/@vite/client'] = storybookProxy
-    // config.server.proxy['/virtual:/@storybook'] = storybookProxy
-    // config.server.proxy['/node_modules'] = storybookProxy
-    // config.server.proxy['/.storybook'] = storybookProxy
-    // config.server.proxy['/stores'] = storybookProxy
-    // config.server.proxy['/stories'] = storybookProxy
-    // config.server.proxy['/assets'] = storybookProxy
-    // config.server.proxy['/@id'] = storybookProxy
-    // config.server.proxy['/@fs'] = storybookProxy
-    // config.server.proxy['/app.vue'] = storybookProxy
-    // config.server.proxy['/.nuxt'] = storybookProxy
-    // config.server.proxy['/app.config.mjs'] = storybookProxy
-    // config.server.proxy['/i18n.options.mjs'] = storybookProxy
-    // config.server.proxy['/i18n.config.ts'] = storybookProxy
-    // config.server.proxy['/components'] = storybookProxy
-    // config.server.proxy['/composables'] = storybookProxy
-    // config.server.proxy['/layouts'] = storybookProxy
-    // config.server.proxy['/pages'] = storybookProxy
-    config.server.proxy['/storybook-server-channel'] = storybookProxy
-  })
-
   nuxt.hook('build:done', () => {
     logger.verbose(' ')
     logger.verbose('✔ Storybook build done  ')
