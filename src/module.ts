@@ -47,6 +47,10 @@ export default defineNuxtModule<ModuleOptions>({
     configKey: 'storybook',
     compatibility: {
       nuxt: '>=3.0.0',
+      builder: {
+        // Not compatible with webpack
+        webpack: false,
+      },
     },
   },
   defaults: (nuxt) => ({
