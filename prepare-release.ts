@@ -10,10 +10,11 @@
  *
  * This is mostly meant as workaround for the lack of monorepo support in changelogen
  * https://github.com/unjs/changelogen/issues/85
+ *
+ * It is mostly based on https://github.com/nuxt/nuxt/blob/main/scripts/update-changelog.ts
  */
 
 import { inc } from 'semver'
-import { generateMarkDown } from 'changelogen'
 import { consola } from 'consola'
 import { existsSync, promises as fsp } from 'node:fs'
 import { resolve } from 'pathe'
@@ -23,6 +24,7 @@ import {
   determineSemverChange,
   getGitDiff,
   loadChangelogConfig,
+  generateMarkDown,
   parseCommits,
 } from 'changelogen'
 import { execSync } from 'node:child_process'
@@ -42,6 +44,7 @@ export async function loadPackage(dir: string) {
   const save = () =>
     fsp.writeFile(pkgPath, JSON.stringify(data, null, 2) + '\n')
 
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   const updateDeps = (reviver: (dep: Dep) => Dep | void) => {
     for (const type of [
       'dependencies',
@@ -54,6 +57,7 @@ export async function loadPackage(dir: string) {
       }
       for (const e of Object.entries(data[type])) {
         const dep: Dep = { name: e[0], range: e[1] as string, type }
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete data[type][dep.name]
         const updated = reviver(dep) || dep
         data[updated.type] = data[updated.type] || {}
@@ -194,7 +198,7 @@ async function writeChangelog(changelog: string) {
     changelogMD = '# Changelog\n\n'
   }
 
-  const lastEntry = changelogMD.match(/^###?\s+.*$/m)
+  const lastEntry = changelogMD.match(/^###?\s+(?:\S.*)?$/m)
 
   if (lastEntry) {
     changelogMD =
@@ -226,7 +230,7 @@ function checkGitBranch() {
   }
 
   // Check if branch is outdated with remote
-  const isOutdatedRE = new RegExp(`\\Wmain\\W.*(?:can be fast-forwarded)`, 'i')
+  const isOutdatedRE = /\Wmain\W.*can be fast-forwarded/i
   const isOutdatedGit = isOutdatedRE.test(
     execSync('git remote update && git status -uno').toString(),
   )
