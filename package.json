@@ -31,7 +31,7 @@
     "lint:eslint": "eslint --report-unused-disable-directives .",
     "lint:prettier": "prettier --check .",
     "prepack": "pnpm build",
-    "release": "pnpm changelogen --release --push && pnpm publish",
+    "release": "pnpm jiti prepare-release.ts && pnpm publish --recursive",
     "prepare": "nuxi prepare playground",
     "docs:build": "(cd docs && nuxi build)",
     "docs:generate": "nuxi generate docs",
