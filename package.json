@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-storybook",
+  "name": "@nuxtjs/storybook",
   "version": "",
   "license": "MIT",
   "repository": "nuxt-modules/storybook",
@@ -33,7 +33,8 @@
     "prepack": "pnpm build",
     "release": "pnpm jiti prepare-release.ts && pnpm publish --recursive",
     "prepare": "nuxi prepare playground",
-    "docs:build": "(cd docs && nuxi build)",
+    "docs:dev": "nuxi dev docs",
+    "docs:build": "nuxi build docs",
     "docs:generate": "nuxi generate docs",
     "test": "vitest run",
     "test:watch": "vitest watch",
