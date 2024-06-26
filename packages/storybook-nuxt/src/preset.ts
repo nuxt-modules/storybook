@@ -28,7 +28,12 @@ let nuxt: Nuxt
  */
 function extendComponents(nuxt: Nuxt) {
   nuxt.hook('components:extend', (components) => {
-    const nuxtLink = components.find(({ name }) => name === 'NuxtLink')
+    const nuxtLink = components.find(
+      ({ pascalName }) => pascalName === 'NuxtLink',
+    )
+    if (!nuxtLink) {
+      throw new Error('NuxtLink component not found')
+    }
     nuxtLink.filePath = join(runtimeDir, 'components/nuxt-link')
     nuxtLink.shortPath = join(runtimeDir, 'components/nuxt-link')
     nuxt.options.build.transpile.push(nuxtLink.filePath)
@@ -50,8 +55,10 @@ async function extendComposables(nuxt: Nuxt) {
   })
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function defineNuxtConfig(baseConfig: Record<string, any>) {
+async function defineNuxtConfig(baseConfig: {
+  root: string | undefined
+  plugins: { name: string }[]
+}) {
   const { loadNuxt, buildNuxt, addPlugin, extendPages } = await import(
     '@nuxt/kit'
   )
@@ -93,20 +100,26 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
 
     nuxt.hook('vite:extendConfig', (config, { isClient }) => {
       if (isClient) {
-        const plugins = baseConfig.plugins
+        extendedConfig = mergeConfig(config, baseConfig)
+
+        const plugins = extendedConfig.plugins || []
 
         // Find the index of the plugin with name 'vite:vue'
-        const index = plugins.findIndex((plugin) => plugin.name === 'vite:vue')
+        const index = plugins.findIndex(
+          (plugin) => plugin && 'name' in plugin && plugin.name === 'vite:vue',
+        )
 
         // Check if the plugin was found
         if (index !== -1) {
           // Replace the plugin with the new one using vuePlugin()
           plugins[index] = vuePlugin()
         } else {
-          plugins.push(vuePlugin())
+          // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
+          // and transforms global vue components before nuxt:components:imports.
+          plugins.unshift(vuePlugin())
         }
-        baseConfig.plugins = plugins
-        extendedConfig = mergeConfig(config, baseConfig)
+
+        extendedConfig.plugins = plugins
       }
     })
   })
@@ -125,7 +138,10 @@ async function defineNuxtConfig(baseConfig: Record<string, any>) {
     throw new Error(e)
   }
 }
-export const core: PresetProperty<'core', StorybookConfig> = async (config) => {
+export const core: PresetProperty<'core', StorybookConfig> = async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  config: any,
+) => {
   return {
     ...config,
     builder: '@storybook/builder-vite',
@@ -143,6 +159,7 @@ export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
   return [...entry, resolve(packageDir, 'preview')]
 }
 
+// @ts-expect-error: viteFinal can be a function, but it's not typed as such
 export const viteFinal: StorybookConfig['viteFinal'] = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: Record<string, any>,
