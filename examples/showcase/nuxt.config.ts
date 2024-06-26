@@ -11,5 +11,7 @@ export default defineNuxtConfig({
       host: 'localhost',
       port: 3000,
     },
+  vue: {
+    runtimeCompiler: true,
   },
 })
