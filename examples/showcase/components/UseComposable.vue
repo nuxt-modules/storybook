@@ -5,5 +5,5 @@ const { config } = useMyComposable()
 <template>
   <h1>Using composable</h1>
   <h5>runtime config :</h5>
-  <pre>{{ JSON.stringify(config, null, 2) }}</pre>
+  <pre>{{ config }}</pre>
 </template>

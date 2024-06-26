@@ -55,8 +55,9 @@ async function extendComposables(nuxt: Nuxt) {
 }
 
 async function loadNuxtViteConfig(root: string | undefined) {
-  const { loadNuxt, tryUseNuxt, buildNuxt, addPlugin, extendPages } =
-    await import('@nuxt/kit')
+  const { loadNuxt, tryUseNuxt, buildNuxt, extendPages } = await import(
+    '@nuxt/kit'
+  )
 
   let nuxt = tryUseNuxt()
   if (nuxt) {
@@ -97,10 +98,6 @@ async function loadNuxtViteConfig(root: string | undefined) {
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
     // nuxt.options.build.transpile.push('@storybook-vue/nuxt')
-    addPlugin({
-      src: join(pluginsDir, 'storybook'),
-      mode: 'client',
-    })
     // Add iframe page
     extendPages((pages) => {
       pages.push({
@@ -207,9 +204,8 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
   }
 }
 /**
- *
- * @param entry preview entries
- * @returns preview entries with nuxt runtime
+ * This is needed to correctly load the `preview.js` file,
+ * see https://github.com/storybookjs/storybook/blob/main/docs/contribute/framework.md#4-author-the-framework-itself
  */
 export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
   entry = [],
