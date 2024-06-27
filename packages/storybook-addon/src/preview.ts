@@ -37,12 +37,10 @@ setup(async (vueApp, storyContext) => {
     vueApp,
     globalName: nuxtAppName,
   })
-  nuxtCtx.set(nuxt)
-
   await applyPlugins(nuxt, plugins)
-
   await nuxt.hooks.callHook('app:created', vueApp)
   await nuxt.hooks.callHook('app:beforeMount', vueApp)
+  nuxtCtx.set(nuxt, true)
 
   // TODO: The following are usually called after the app is mounted
   // but currently storybook doesn't provide a hook to do that
