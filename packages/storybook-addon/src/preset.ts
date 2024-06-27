@@ -239,15 +239,15 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   const fs = await import('node:fs')
   fs.mkdirSync(join(options.outputDir, 'logs'), { recursive: true })
   fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-storybook.config.js'),
+    join(options.outputDir, 'logs', 'vite-storybook.config.json'),
     stringify(storybookViteConfig, { space: '  ' }),
   )
   fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-nuxt.config.js'),
+    join(options.outputDir, 'logs', 'vite-nuxt.config.json'),
     stringify(nuxtConfig, { space: '  ' }),
   )
   fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-final.config.js'),
+    join(options.outputDir, 'logs', 'vite-final.config.json'),
     stringify(finalViteConfig, { space: '  ' }),
   )
 
