@@ -12,7 +12,9 @@ import { setup } from '@storybook/vue3'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
 
-import '#build/fetch.mjs'
+// This is used to overwrite the fetch function, not sure if it's necessary for Storybook
+// It doesn't work with the current setup
+// import '#build/fetch.mjs'
 import '#build/css'
 // @ts-expect-error virtual file
 import plugins from '#build/plugins'
