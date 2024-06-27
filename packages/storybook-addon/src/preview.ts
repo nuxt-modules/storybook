@@ -9,6 +9,7 @@
  */
 
 import { setup } from '@storybook/vue3'
+import type { ObjectPlugin, Plugin } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
 
@@ -18,6 +19,8 @@ import { getContext } from 'unctx'
 import '#build/css'
 // @ts-expect-error virtual file
 import plugins from '#build/plugins'
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const pluginsTyped: Array<Plugin & ObjectPlugin<any>> = plugins
 
 setup(async (vueApp, storyContext) => {
   // We key the Nuxt apps to the id of the story
@@ -39,7 +42,16 @@ setup(async (vueApp, storyContext) => {
     vueApp,
     globalName: nuxtAppName,
   })
-  await applyPlugins(nuxt, plugins)
+  await applyPlugins(
+    nuxt,
+    // The revive plugin deletes the nuxt context (window.__NUXT__)
+    // which leads to problems down the line
+    // So we don't apply it here, although that's probably not the best solution
+    // https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/app/plugins/revive-payload.client.ts
+    pluginsTyped.filter(
+      (plugin) => plugin.name === 'nuxt:revive-payload:client',
+    ),
+  )
   await nuxt.hooks.callHook('app:created', vueApp)
   await nuxt.hooks.callHook('app:beforeMount', vueApp)
   nuxtCtx.set(nuxt, true)
