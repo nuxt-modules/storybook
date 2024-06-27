@@ -1,15 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-import MyComponent from '~/pages/about.vue'
+import UseComposable from './UseComposable.vue'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 
+/**
+ * Shows how to use a composable in a component
+ */
 const meta = {
-  title: 'Pages/About ',
-  component: MyComponent,
+  title: 'Features/Use Composable',
+  component: UseComposable,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],
-} satisfies Meta<typeof MyComponent>
+} satisfies Meta<typeof UseComposable>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -19,6 +22,6 @@ type Story = StoryObj<typeof meta>
  * to learn how to use render functions.
  */
 
-export const AboutPage: Story = {
-  args: { msg: 'Storybook ❤️‍🔥 Nuxt ❤️‍🔥 Router' },
+export const UseComposableStory: Story = {
+  args: {},
 }

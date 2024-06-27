@@ -1,0 +1,53 @@
+{
+  "name": "@nuxtjs/storybook",
+  "version": "8.1.1",
+  "description": "Storybook module for Nuxt",
+  "license": "MIT",
+  "homepage": "https://storybook.nuxtjs.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuxt-modules/storybook.git",
+    "directory": "packages/nuxt-module"
+  },
+  "bugs": {
+    "url": "https://github.com/nuxt-modules/storybook/issues"
+  },
+  "keywords": [
+    "storybook",
+    "nuxt",
+    "vite",
+    "vue3"
+  ],
+  "author": {
+    "name": "ChakAs3",
+    "email": "javachakir@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare",
+    "build": "nuxt-module-build build"
+  },
+  "dependencies": {
+    "@nuxt/devtools-kit": "^1.0.8",
+    "@nuxt/kit": "^3.12.0",
+    "@storybook-vue/nuxt": "workspace:*",
+    "chalk": "^5.0.0",
+    "consola": "^3.2.3",
+    "defu": "^6.1.4",
+    "get-port-please": "^3.1.2",
+    "storybook": "^8.0.6",
+    "ufo": "^1.5.3"
+  }
+}
