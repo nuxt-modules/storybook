@@ -1,4 +1,6 @@
 packages:
-  - 'docs'
-  - 'playground'
-  - 'examples/*'
+  - docs
+  - playground
+  - examples/**
+  - packages/**
+  - '!packages/storybook-nuxt/playground'
