@@ -9,6 +9,7 @@ This example shows how to use various Nuxt features and modules in combination w
 ## Modules
 
 - [Pinia](https://pinia.esm.dev/)
+- [Nuxt Image](https://image.nuxt.com)
 
 ---
 
