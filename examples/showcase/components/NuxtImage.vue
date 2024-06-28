@@ -8,7 +8,7 @@
       class="rounded"
     />
     <br />
-    <h4>responsive image with nuxt-image component:</h4>
+    <h4>Responsive image with nuxt-image component:</h4>
     <NuxtPicture
       src="/images/sb-nuxt-logo.jpg"
       width="1204"
