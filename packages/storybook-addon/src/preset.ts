@@ -15,6 +15,7 @@ import replace from '@rollup/plugin-replace'
 import type { StorybookConfig } from './types'
 import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
 import stringify from 'json-stable-stringify'
+import nuxtRuntimeConfigPlugin from './runtimeConfig'
 
 const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
@@ -166,9 +167,6 @@ function mergeViteConfig(
   return mergeConfig(extendedConfig, {
     // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
     define: {
-      __NUXT__: JSON.stringify({
-        config: nuxt.options.runtimeConfig,
-      }),
       'import.meta.client': 'true',
     },
 
@@ -180,6 +178,7 @@ function mergeViteConfig(
         },
         preventAssignment: true,
       }),
+      nuxtRuntimeConfigPlugin(nuxt.options.runtimeConfig),
     ],
     server: {
       cors: true,
