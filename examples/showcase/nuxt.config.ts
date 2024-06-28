@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/storybook'],
+  future: {
+    compatibilityVersion: 4,
+  },
   runtimeConfig: {
     // For testing runtimeConfig in useMyComposable
     app: {
