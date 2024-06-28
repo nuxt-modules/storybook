@@ -12,10 +12,9 @@ import { setup } from '@storybook/vue3'
 import type { ObjectPlugin, Plugin } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
+import { $fetch } from 'ofetch'
 // @ts-expect-error virtual file
 import { runtimeConfig } from 'virtual:nuxt-runtime-config'
-// Set $fetch via this import
-import '#build/fetch.mjs'
 
 // This is used to overwrite the fetch function, not sure if it's necessary for Storybook
 // It doesn't work with the current setup
@@ -52,6 +51,13 @@ setup(async (vueApp, storyContext) => {
     },
     data: {},
     state: {},
+  }
+  // Set $fetch
+  // based on https://github.com/nuxt/nuxt/blob/356173134280b66c5902e5129d2f5ee73b799352/packages/nuxt/src/core/templates.ts#L390-L403
+  if (!globalThis.$fetch) {
+    globalThis.$fetch = $fetch.create({
+      baseURL: '/',
+    })
   }
 
   const nuxt = createNuxtApp({
