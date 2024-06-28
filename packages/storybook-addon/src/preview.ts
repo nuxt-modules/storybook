@@ -12,6 +12,8 @@ import { setup } from '@storybook/vue3'
 import type { ObjectPlugin, Plugin } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
+// @ts-expect-error virtual file
+import { runtimeConfig } from 'virtual:nuxt-runtime-config'
 
 // This is used to overwrite the fetch function, not sure if it's necessary for Storybook
 // It doesn't work with the current setup
@@ -38,20 +40,23 @@ setup(async (vueApp, storyContext) => {
     return
   }
 
+  // Provide the config of the Nuxt app
+  window.__NUXT__ = {
+    serverRendered: false,
+    config: {
+      public: {},
+      app: { baseURL: '/' },
+      ...runtimeConfig,
+    },
+    data: {},
+    state: {},
+  }
+
   const nuxt = createNuxtApp({
     vueApp,
     globalName: nuxtAppName,
   })
-  await applyPlugins(
-    nuxt,
-    // The revive plugin deletes the nuxt context (window.__NUXT__)
-    // which leads to problems down the line
-    // So we don't apply it here, although that's probably not the best solution
-    // https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/app/plugins/revive-payload.client.ts
-    pluginsTyped.filter(
-      (plugin) => plugin.name === 'nuxt:revive-payload:client',
-    ),
-  )
+  await applyPlugins(nuxt, pluginsTyped)
   await nuxt.hooks.callHook('app:created', vueApp)
   await nuxt.hooks.callHook('app:beforeMount', vueApp)
   nuxtCtx.set(nuxt, true)

@@ -212,28 +212,6 @@ export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
   return [...entry, resolve(packageDir, 'preview')]
 }
 
-/**
- * Script added to the head of the preview iframe
- */
-export const previewHead: StorybookConfig['previewHead'] = async (head) => {
-  return `
-    ${head}
-    <script type="module">
-      import { runtimeConfig } from 'virtual:nuxt-runtime-config'
-      window.__NUXT__ = {
-        serverRendered: false,
-        config: {
-          public: {},
-          app: { baseURL: '/' },
-          ... runtimeConfig,
-        },
-        data: {},
-        state: {},
-      }
-    </script>
- `
-}
-
 export const viteFinal: StorybookConfig['viteFinal'] = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: Record<string, any>,
