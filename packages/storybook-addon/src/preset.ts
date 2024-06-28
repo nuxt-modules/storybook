@@ -15,6 +15,7 @@ import replace from '@rollup/plugin-replace'
 import type { StorybookConfig } from './types'
 import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
 import stringify from 'json-stable-stringify'
+import nuxtRuntimeConfigPlugin from './runtimeConfig'
 
 const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
@@ -166,9 +167,6 @@ function mergeViteConfig(
   return mergeConfig(extendedConfig, {
     // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
     define: {
-      __NUXT__: JSON.stringify({
-        config: nuxt.options.runtimeConfig,
-      }),
       'import.meta.client': 'true',
     },
 
@@ -180,6 +178,7 @@ function mergeViteConfig(
         },
         preventAssignment: true,
       }),
+      nuxtRuntimeConfigPlugin(nuxt.options.runtimeConfig),
     ],
     server: {
       cors: true,
@@ -239,15 +238,15 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   const fs = await import('node:fs')
   fs.mkdirSync(join(options.outputDir, 'logs'), { recursive: true })
   fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-storybook.config.js'),
+    join(options.outputDir, 'logs', 'vite-storybook.config.json'),
     stringify(storybookViteConfig, { space: '  ' }),
   )
   fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-nuxt.config.js'),
+    join(options.outputDir, 'logs', 'vite-nuxt.config.json'),
     stringify(nuxtConfig, { space: '  ' }),
   )
   fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-final.config.js'),
+    join(options.outputDir, 'logs', 'vite-final.config.json'),
     stringify(finalViteConfig, { space: '  ' }),
   )
 
