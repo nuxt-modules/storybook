@@ -14,7 +14,7 @@ import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
 // @ts-expect-error virtual file
 import { runtimeConfig } from 'virtual:nuxt-runtime-config'
-// Set globalThis.$fetch via this import
+// Set $fetch via this import
 import '#build/fetch.mjs'
 
 // This is used to overwrite the fetch function, not sure if it's necessary for Storybook
