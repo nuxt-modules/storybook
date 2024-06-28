@@ -15,6 +15,7 @@ import replace from '@rollup/plugin-replace'
 import type { StorybookConfig } from './types'
 import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
 import stringify from 'json-stable-stringify'
+import nuxtRuntimeConfigPlugin from './runtimeConfig'
 
 const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
@@ -166,9 +167,6 @@ function mergeViteConfig(
   return mergeConfig(extendedConfig, {
     // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
     define: {
-      __NUXT__: JSON.stringify({
-        config: nuxt.options.runtimeConfig,
-      }),
       'import.meta.client': 'true',
     },
 
@@ -180,6 +178,7 @@ function mergeViteConfig(
         },
         preventAssignment: true,
       }),
+      nuxtRuntimeConfigPlugin(nuxt.options.runtimeConfig),
     ],
     server: {
       cors: true,
@@ -211,6 +210,28 @@ export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
   entry = [],
 ) => {
   return [...entry, resolve(packageDir, 'preview')]
+}
+
+/**
+ * Script added to the head of the preview iframe
+ */
+export const previewHead: StorybookConfig['previewHead'] = async (head) => {
+  return `
+    ${head}
+    <script type="module">
+      import { runtimeConfig } from 'virtual:nuxt-runtime-config'
+      window.__NUXT__ = {
+        serverRendered: false,
+        config: {
+          public: {},
+          app: { baseURL: '/' },
+          ... runtimeConfig,
+        },
+        data: {},
+        state: {},
+      }
+    </script>
+ `
 }
 
 export const viteFinal: StorybookConfig['viteFinal'] = async (
