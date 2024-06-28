@@ -12,6 +12,15 @@ const meta = {
   component: MyNuxtLink,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],
+  argTypes: {
+    default: {
+      control: 'text',
+      description: 'Link text',
+    },
+  },
+  args: {
+    default: 'Nuxt Link',
+  },
 } satisfies Meta<typeof MyNuxtLink>
 
 export default meta
@@ -22,6 +31,22 @@ type Story = StoryObj<typeof meta>
  * to learn how to use render functions.
  */
 
-export const MyNuxtLinkStory: Story = {
+export const NuxtLinkInCustomComponent: Story = {
   args: {},
+  render(args) {
+    return {
+      components: { MyNuxtLink },
+      setup: () => ({ args }),
+      template: '<my-nuxt-link>{{ args.default }}</my-nuxt-link>',
+    }
+  },
+}
+export const NuxtLinkInTemplate: Story = {
+  args: {},
+  render(args) {
+    return {
+      setup: () => ({ args }),
+      template: '<NuxtLink>{{ args.default }}</NuxtLink>',
+    }
+  },
 }
