@@ -1,7 +1,6 @@
 {
-  "name": "@nuxtjs/storybook",
-  "version": "8.1.1",
-  "description": "Storybook module for Nuxt",
+  "name": "nuxt-storybook",
+  "version": "",
   "license": "MIT",
   "repository": "nuxt-modules/storybook",
   "author": {
@@ -9,21 +8,9 @@
     "email": "javachakir@gmail.com"
   },
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
-    }
-  },
-  "main": "./dist/module.cjs",
-  "types": "./dist/types.d.ts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "dev": "nuxi dev playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "dev:prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && nuxi prepare playground",
     "dev:build": "nuxi build playground",
     "playground:storybook:build": "cd playground && pnpm run build-storybook",
     "playground:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name playground:storybook:build --project-token=chpt_d7cf5e98426e11e",
@@ -43,14 +30,14 @@
     "example:showcase:build": "nuxi build examples/showcase",
     "example:showcase:storybook:build": "cd examples/showcase && pnpm run build-storybook",
     "example:showcase:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:showcase:storybook:build --project-token=chpt_a53adf402cb628c",
-    "build": "nuxt-module-build build && pnpm run --recursive --filter=./packages/* --parallel build",
+    "build": "pnpm run --recursive --filter=./packages/* --parallel build",
     "lint": "pnpm lint:eslint && pnpm lint:prettier",
     "lint:eslint": "eslint --report-unused-disable-directives .",
     "lint:prettier": "prettier --check .",
     "prepack": "pnpm build",
-    "release": "pnpm changelogen --release --push && pnpm publish",
+    "release": "pnpm jiti prepare-release.ts && pnpm publish --recursive",
     "prepare": "nuxi prepare playground",
-    "build:docs": "(cd docs && nuxi build)",
+    "docs:build": "(cd docs && nuxi build)",
     "docs:generate": "nuxi generate docs",
     "test": "vitest run",
     "test:watch": "vitest watch",
@@ -76,17 +63,6 @@
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
     "vitest": "^1.2.0"
-  },
-  "dependencies": {
-    "@nuxt/devtools-kit": "^1.0.8",
-    "@nuxt/kit": "^3.11.2",
-    "@storybook-vue/nuxt": "^0.2.6",
-    "chalk": "^5.0.0",
-    "consola": "^3.2.3",
-    "defu": "^6.1.4",
-    "get-port-please": "^3.1.2",
-    "storybook": "^8.0.6",
-    "ufo": "^1.5.3"
   },
   "publishConfig": {
     "access": "public"

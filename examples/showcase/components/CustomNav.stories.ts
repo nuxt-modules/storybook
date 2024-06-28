@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { useRouter } from 'vue-router'
 
-import MyNuxtPage from '~/components/MyNuxtPage.vue'
+import CustomNav from './CustomNav.vue'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 
 const meta = {
-  title: 'Pages/App ',
-  component: MyNuxtPage,
+  title: 'Features/Router',
+  component: CustomNav,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],
-} satisfies Meta<typeof MyNuxtPage>
+} satisfies Meta<typeof CustomNav>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -24,12 +24,12 @@ export const Home: Story = {
   args: {},
   render(args) {
     return {
-      components: { MyNuxtPage },
+      components: { CustomNav },
       setup() {
         useRouter().push('/')
         return { args }
       },
-      template: '<div><MyNuxtPage /></div>',
+      template: '<div><CustomNav /></div>',
     }
   },
 }

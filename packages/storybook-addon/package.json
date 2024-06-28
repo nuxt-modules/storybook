@@ -1,17 +1,16 @@
 {
   "name": "@storybook-vue/nuxt",
-  "type": "module",
-  "version": "0.2.7",
-  "packageManager": "pnpm@9.3.0",
-  "description": "Storybook for Nuxt and Vite: Develop Vue3 components in isolation with Hot Reloading.",
+  "version": "0.2.8",
+  "description": "Storybook addon for Nuxt and Vite",
   "license": "MIT",
-  "homepage": "https://github.com/storybook-vue/storybook-nuxt",
+  "homepage": "https://storybook.nuxtjs.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/storybook-vue/storybook-nuxt.git"
+    "url": "git+https://github.com/nuxt-modules/storybook.git",
+    "directory": "packages/storybook-addon"
   },
   "bugs": {
-    "url": "https://github.com/storybook-vue/storybook-nuxt/issues"
+    "url": "https://github.com/nuxt-modules/storybook/issues"
   },
   "keywords": [
     "storybook",
@@ -19,6 +18,7 @@
     "vite",
     "vue3"
   ],
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -54,7 +54,7 @@
   },
   "scripts": {
     "build": "unbuild",
-    "build:watch": "unbuild --stub",
+    "dev:prepare": "unbuild --stub",
     "test": "vitest run",
     "dev": "unbuild && cd playground && storybook dev -p 6006",
     "prepack": "unbuild",

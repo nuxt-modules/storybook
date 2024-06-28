@@ -1,6 +1,5 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import PiniaLogo from '~/components/PiniaLogo.vue'
+import PiniaLogo from './PiniaLogo.vue'
 
 defineProps({
   msg: {
@@ -47,13 +46,11 @@ const counter = useCounter()
 
     <p>Increment the Store:</p>
 
-    <PinButton data-testid="increment" @click="counter.increment()">
-      +1
-    </PinButton>
-    <PinButton @click="counter.increment(10)"> +10 </PinButton>
-    <PinButton @click="counter.increment(100)"> +100 </PinButton>
-    <PinButton @click="counter.n++"> Direct Increment </PinButton>
-    <PinButton
+    <button data-testid="increment" @click="counter.increment()">+1</button>
+    <button @click="counter.increment(10)">+10</button>
+    <button @click="counter.increment(100)">+100</button>
+    <button @click="counter.n++">Direct Increment</button>
+    <button
       @click="
         counter.$patch((state) => {
           state.n++
@@ -62,17 +59,15 @@ const counter = useCounter()
       "
     >
       Direct patch
-    </PinButton>
+    </button>
 
     <p>Other actions:</p>
 
-    <PinButton @click="counter.fail"> Test Errors </PinButton>
-    <PinButton @click="counter.decrementToZero()">
-      Decrement to zero
-    </PinButton>
-    <PinButton @click="counter.changeMe()">
+    <button @click="counter.fail">Test Errors</button>
+    <button @click="counter.decrementToZero()">Decrement to zero</button>
+    <button @click="counter.changeMe()">
       <code>counter.changeMe()</code>
-    </PinButton>
+    </button>
 
     <hr />
 
