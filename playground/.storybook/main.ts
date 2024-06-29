@@ -21,7 +21,12 @@ const config: StorybookConfig = {
   viteFinal: (config) => {
     // For debugging purposes
     // View intermediate state of Vite plugins at http://localhost:6006/__inspect
-    config.plugins.push(Inspect())
+    config.plugins.push(
+      Inspect({
+        build: true,
+        outputDir: 'storybook-static/.vite-inspect',
+      }),
+    )
     return config
   },
 }
