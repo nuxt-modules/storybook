@@ -29,12 +29,9 @@ export default defineNuxtConfig({
   site: {
     url: 'https://storybook.nuxtjs.org/',
   },
-  /*
-   * TODO: Currently leads to out of memory errors during prerendering
   routeRules: {
     '/api/search.json': { prerender: true },
   },
-  */
   devtools: {
     enabled: true,
   },
