@@ -34,7 +34,7 @@
     "release": "pnpm jiti prepare-release.ts && pnpm publish --recursive",
     "prepare": "nuxi prepare playground",
     "docs:build": "(cd docs && nuxi build)",
-    "docs:generate": "nuxi generate docs",
+    "docs:generate": "pnpm run --filter=./docs/** generate",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:coverage": "vitest --coverage"

@@ -26,6 +26,9 @@ export default defineNuxtConfig({
   colorMode: {
     disableTransition: true,
   },
+  site: {
+    url: 'https://storybook.nuxtjs.org/',
+  },
   routeRules: {
     '/api/search.json': { prerender: true },
   },
