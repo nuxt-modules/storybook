@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import type { ParsedContent } from '@nuxt/content'
 import type { NuxtError } from '#app'
