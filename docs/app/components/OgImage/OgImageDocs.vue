@@ -1,22 +1,24 @@
 <script lang="ts" setup>
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 })
 
 defineProps({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 })
 </script>
 
 <template>
-  <div class="w-full h-full flex flex-col justify-center text-center bg-slate-900 p-8">
+  <div
+    class="w-full h-full flex flex-col justify-center text-center bg-slate-900 p-8"
+  >
     <div class="relative">
       <h1 class="text-8xl mb-4 text-white">
         {{ title }}
