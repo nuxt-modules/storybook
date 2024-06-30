@@ -1,4 +1,4 @@
-import CustomLayoutPage from './HelloWorld.vue'
+import CustomLayoutPage from './CustomLayout.vue'
 import { NuxtLayout } from '#components'
 import { provide } from 'vue'
 import { PageRouteSymbol } from '#app/components/injections'
