@@ -1,0 +1,20 @@
+<!-- eslint-disable vue/multi-word-component-names -->
+<script setup lang="ts">
+import type { NavItem } from '@nuxt/content'
+
+const navigation = inject<Ref<NavItem[]>>('navigation')
+</script>
+
+<template>
+  <UContainer>
+    <UPage>
+      <template #left>
+        <UAside>
+          <UNavigationTree :links="mapContentNavigation(navigation)" />
+        </UAside>
+      </template>
+
+      <slot />
+    </UPage>
+  </UContainer>
+</template>
