@@ -1,11 +1,15 @@
 <script setup>
 import { ref } from 'vue'
 
-const msg = ref('Hello World!')
+const msg = ref('Hello World')
+
+const { name } = defineProps({
+  name: { type: String, default: 'Nuxt Developer' },
+})
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <h1>{{ msg }} from {{ name }}</h1>
   <input v-model="msg" />
 </template>
 
