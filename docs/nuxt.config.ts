@@ -6,7 +6,8 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/ui',
     '@nuxt/fonts',
-    '@nuxthq/studio',
+    // Temporarily disabled due to out-of-memory issues during prerendering
+    // '@nuxthq/studio',
     'nuxt-og-image',
   ],
   hooks: {
