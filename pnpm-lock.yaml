@@ -213,6 +213,10 @@ importers:
       ufo:
         specifier: ^1.5.3
         version: 1.5.3
+    devDependencies:
+      '@nuxt/module-builder':
+        specifier: ^0.7.0
+        version: 0.7.1(@nuxt/kit@3.12.2(magicast@0.3.4)(rollup@4.18.0))(nuxi@3.12.0)(sass@1.77.6)(typescript@5.5.2)
 
   packages/storybook-addon:
     dependencies:
@@ -233,7 +237,7 @@ importers:
         version: 8.1.9(encoding@0.1.13)(prettier@3.3.2)(vue@3.4.31(typescript@5.5.2))
       '@storybook/vue3-vite':
         specifier: ^8.0.0
-        version: 8.1.9(encoding@0.1.13)(prettier@3.3.2)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)(terser@5.31.1))(vue@3.4.31(typescript@5.5.2))
+        version: 8.1.9(encoding@0.1.13)(prettier@3.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)(terser@5.31.1))(vue@3.4.31(typescript@5.5.2))
       json-stable-stringify:
         specifier: ^1.1.1
         version: 1.1.1
@@ -1836,6 +1840,13 @@ packages:
   '@nuxt/kit@3.12.2':
     resolution: {integrity: sha512-5kOqEzfc3FsAncjK2je7vuq4/QsR5ypViTnop52mlFLf0Ku1NMCrWCSWYowAh4P0yqTACMAZYa+HdRZHscU84g==}
     engines: {node: ^14.18.0 || >=16.10.0}
+
+  '@nuxt/module-builder@0.7.1':
+    resolution: {integrity: sha512-lVnmciTt5k2wfZ9SANAj8IBm0k2z3EA0/AFZVas5a8xFXT5JwEnsPCIUkvlEg6qBjdGNYu9G3DK7ofU3R+M7cg==}
+    hasBin: true
+    peerDependencies:
+      '@nuxt/kit': ^3.12.1
+      nuxi: ^3.12.0
 
   '@nuxt/schema@3.12.2':
     resolution: {integrity: sha512-IRBuOEPOIe1CANKnO2OUiqZ1Hp/0htPkLaigK7WT6ef/SdIFZUd68Tqqejqy2AFrbgU9G80k3U7eg2XUdaiQlQ==}
@@ -8705,6 +8716,16 @@ packages:
   ts-map@1.0.3:
     resolution: {integrity: sha512-vDWbsl26LIcPGmDpoVzjEP6+hvHZkBkLW7JpvwbCv/5IYPJlsbzCVXY3wsCeAxAUeTclNOUZxnLdGh3VBD/J6w==}
 
+  tsconfck@3.1.1:
+    resolution: {integrity: sha512-00eoI6WY57SvZEVjm13stEVE90VkEdJAFGgpFLTsZbJyW/LwFQ7uQxJHWpZ2hzSWgCPKc9AnBnNP+0X7o3hAmQ==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+    peerDependencies:
+      typescript: ^5.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
 
@@ -11522,6 +11543,25 @@ snapshots:
       - rollup
       - supports-color
 
+  '@nuxt/module-builder@0.7.1(@nuxt/kit@3.12.2(magicast@0.3.4)(rollup@4.18.0))(nuxi@3.12.0)(sass@1.77.6)(typescript@5.5.2)':
+    dependencies:
+      '@nuxt/kit': 3.12.2(magicast@0.3.4)(rollup@4.18.0)
+      citty: 0.1.6
+      consola: 3.2.3
+      defu: 6.1.4
+      magic-regexp: 0.8.0
+      mlly: 1.7.1
+      nuxi: 3.12.0
+      pathe: 1.1.2
+      pkg-types: 1.1.2
+      tsconfck: 3.1.1(typescript@5.5.2)
+      unbuild: 2.0.0(sass@1.77.6)(typescript@5.5.2)
+      untyped: 1.4.2
+    transitivePeerDependencies:
+      - sass
+      - supports-color
+      - typescript
+
   '@nuxt/schema@3.12.2(rollup@3.29.4)':
     dependencies:
       compatx: 0.1.8
@@ -12892,7 +12932,7 @@ snapshots:
       '@storybook/codemod': 8.1.9
       '@storybook/core-common': 8.1.9(encoding@0.1.13)(prettier@3.3.2)
       '@storybook/core-events': 8.1.9
-      '@storybook/core-server': 8.1.9(encoding@0.1.13)(prettier@3.3.2)
+      '@storybook/core-server': 8.1.9(encoding@0.1.13)(prettier@3.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@storybook/csf-tools': 8.1.9
       '@storybook/node-logger': 8.1.9
       '@storybook/telemetry': 8.1.9(encoding@0.1.13)(prettier@3.3.2)
@@ -13015,7 +13055,7 @@ snapshots:
       '@storybook/csf': 0.1.8
       ts-dedent: 2.2.0
 
-  '@storybook/core-server@8.1.9(encoding@0.1.13)(prettier@3.3.2)':
+  '@storybook/core-server@8.1.9(encoding@0.1.13)(prettier@3.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@aw-web-design/x-default-browser': 1.4.126
       '@babel/core': 7.24.7
@@ -13235,10 +13275,10 @@ snapshots:
       '@types/express': 4.17.21
       file-system-cache: 2.3.0
 
-  '@storybook/vue3-vite@8.1.9(encoding@0.1.13)(prettier@3.3.2)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)(terser@5.31.1))(vue@3.4.31(typescript@5.5.2))':
+  '@storybook/vue3-vite@8.1.9(encoding@0.1.13)(prettier@3.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)(terser@5.31.1))(vue@3.4.31(typescript@5.5.2))':
     dependencies:
       '@storybook/builder-vite': 8.1.9(encoding@0.1.13)(prettier@3.3.2)(typescript@5.5.2)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)(terser@5.31.1))
-      '@storybook/core-server': 8.1.9(encoding@0.1.13)(prettier@3.3.2)
+      '@storybook/core-server': 8.1.9(encoding@0.1.13)(prettier@3.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@storybook/types': 8.1.9
       '@storybook/vue3': 8.1.9(encoding@0.1.13)(prettier@3.3.2)(vue@3.4.31(typescript@5.5.2))
       find-package-json: 1.2.0
@@ -20787,6 +20827,10 @@ snapshots:
   ts-interface-checker@0.1.13: {}
 
   ts-map@1.0.3: {}
+
+  tsconfck@3.1.1(typescript@5.5.2):
+    optionalDependencies:
+      typescript: 5.5.2
 
   tslib@1.14.1: {}
 
