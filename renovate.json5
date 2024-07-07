@@ -9,6 +9,15 @@
     // Use "chore" type for all commit messages
     ":semanticCommitTypeAll(chore)"
   ],
+  "packageRules": [
+    {
+      // Bump all @storybook/* packages so that always the latest version is used
+      "matchPackagePatterns": ["storybook", "@storybook/"],
+      "groupName": "storybook packages",
+      "groupSlug": "storybook",
+      "rangeStrategy": "bump"
+    }
+  ],
   "postUpdateOptions": [
     // Run pnpm dedupe after pnpm-lock.yaml updates
     "pnpmDedupe"
