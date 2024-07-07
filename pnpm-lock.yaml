@@ -213,6 +213,9 @@ importers:
       ufo:
         specifier: ^1.5.3
         version: 1.5.3
+      vite:
+        specifier: ^5.2.2
+        version: 5.3.3(@types/node@20.14.10)(sass@1.77.6)(terser@5.31.1)
     devDependencies:
       '@nuxt/module-builder':
         specifier: ^0.8.0
