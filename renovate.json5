@@ -12,7 +12,7 @@
   "packageRules": [
     {
       // Bump all @storybook/* packages so that always the latest version is used
-      "matchPackagePatterns": ["storybook", "@storybook/"],
+      "matchPackagePatterns": ["storybook", "@storybook/*"],
       "groupName": "storybook packages",
       "groupSlug": "storybook",
       "rangeStrategy": "bump"
