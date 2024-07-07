@@ -10,6 +10,8 @@ import {
 } from '@storybook/core-common'
 import { buildDevStandalone, withTelemetry } from '@storybook/core-server'
 import storybookPackageJson from '@storybook/core-server/package.json'
+import { generateConfigFiles } from './config'
+import fs from 'node:fs'
 
 const buildLogger = logger.withTag('build')
 
@@ -51,10 +53,15 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
   })
 
   const projectDir = resolve(nuxt.options.rootDir)
+  let configDir = resolve(projectDir, './.storybook')
+  if (!fs.existsSync(configDir)) {
+    configDir = resolve(nuxt.options.buildDir, './.storybook')
+    generateConfigFiles(configDir)
+  }
 
   const storybookOptions = {
     port: storybookServerPort,
-    configDir: resolve(projectDir, './.storybook'),
+    configDir: configDir,
     configType: 'DEVELOPMENT',
     cache: storybookCache,
     packageJson: storybookPackageJson as PackageJson,
