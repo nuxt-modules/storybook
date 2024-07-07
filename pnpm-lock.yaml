@@ -205,7 +205,7 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2
       storybook:
-        specifier: ^8.0.6
+        specifier: ^8.1.11
         version: 8.1.11(@babel/preset-env@7.24.7(@babel/core@7.24.7))(encoding@0.1.13)
       ufo:
         specifier: ^1.5.3
@@ -227,13 +227,13 @@ importers:
         specifier: ^3.11.1
         version: 3.12.3(@types/node@20.14.10)(eslint@9.6.0)(magicast@0.3.4)(optionator@0.9.4)(rollup@3.29.4)(sass@1.77.6)(terser@5.31.1)(typescript@5.5.3)(vue-tsc@2.0.24(typescript@5.5.3))(vue@3.4.31(typescript@5.5.3))
       '@storybook/builder-vite':
-        specifier: ^8.0.0
+        specifier: ^8.1.11
         version: 8.1.11(encoding@0.1.13)(prettier@3.3.2)(typescript@5.5.3)(vite@5.3.3(@types/node@20.14.10)(sass@1.77.6)(terser@5.31.1))
       '@storybook/vue3':
-        specifier: ^8.0.0
+        specifier: ^8.1.11
         version: 8.1.11(encoding@0.1.13)(prettier@3.3.2)(vue@3.4.31(typescript@5.5.3))
       '@storybook/vue3-vite':
-        specifier: ^8.0.0
+        specifier: ^8.1.11
         version: 8.1.11(encoding@0.1.13)(prettier@3.3.2)(vite@5.3.3(@types/node@20.14.10)(sass@1.77.6)(terser@5.31.1))(vue@3.4.31(typescript@5.5.3))
       json-stable-stringify:
         specifier: ^1.1.1
@@ -249,7 +249,7 @@ importers:
         version: 4.4.0(vue@3.4.31(typescript@5.5.3))
     devDependencies:
       '@storybook/types':
-        specifier: ^8.0.0
+        specifier: ^8.1.11
         version: 8.1.11
       '@types/json-stable-stringify':
         specifier: ^1.0.36
@@ -282,13 +282,13 @@ importers:
         specifier: workspace:*
         version: link:../packages/nuxt-module
       '@storybook/addon-essentials':
-        specifier: ^8.0.8
+        specifier: ^8.1.11
         version: 8.1.11(@types/react@18.3.3)(encoding@0.1.13)(prettier@3.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@storybook/addon-interactions':
-        specifier: ^8.0.8
+        specifier: ^8.1.11
         version: 8.1.11(vitest@1.6.0(@types/node@20.14.10)(jsdom@24.1.0)(sass@1.77.6)(terser@5.31.1))
       '@storybook/addon-links':
-        specifier: ^8.0.8
+        specifier: ^8.1.11
         version: 8.1.11(react@18.3.1)
       nuxt:
         specifier: ^3.11.1
