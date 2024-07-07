@@ -1,9 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/storybook'],
+  modules: ['@nuxtjs/storybook', '@nuxt/image', '@pinia/nuxt'],
   future: {
     compatibilityVersion: 4,
+  },  
+  pinia: {
+    autoImports: ['defineStore', 'acceptHMRUpdate'],
+  },
+  imports: {
+    dirs: ['./stores'],
   },
   runtimeConfig: {
     // For testing runtimeConfig in useMyComposable

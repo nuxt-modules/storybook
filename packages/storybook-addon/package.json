@@ -56,7 +56,7 @@
     "build": "unbuild",
     "dev:prepare": "unbuild --stub",
     "test": "vitest run",
-    "dev": "unbuild && cd playground && storybook dev -p 6006",
+    "dev": "unbuild",
     "prepack": "unbuild",
     "release": "pnpm changelogen --release --push && pnpm publish"
   },

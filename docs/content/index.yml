@@ -1,0 +1,37 @@
+title: 'Storybook Integration for Nuxt'
+description: Add Storybook to your Nuxt application in seconds.
+navigation: false
+hero:
+  title: 'Add Storybook to your Nuxt application'
+  description: 'Easily integrate Storybook in your Nuxt application to build, document and test your components.'
+  orientation: horizontal
+  links:
+    - label: Get started
+      icon: i-heroicons-arrow-right-20-solid
+      trailing: true
+      to: '/getting-started/setup'
+      size: lg
+  code: |
+    ```bash [Terminal]
+    npx nuxi@latest module add storybook
+    ```
+features:
+  items:
+    - title: 'Zero Configuration'
+      description: 'This module enables a quick and easy setup of Storybook in your Nuxt application.'
+      icon: 'i-heroicons-bolt-20-solid'
+    - title: 'Auto-run Storybook'
+      description: 'Storybook will automatically run when you start your Nuxt application in development mode.'
+      icon: 'i-heroicons-play-20-solid'
+    - title: 'Storybook Viewer'
+      description: 'Discover your storybook directly from the Nuxt Devtools, no need to jump between tabs.'
+      icon: 'i-heroicons-sparkles-20-solid'
+    - title: 'Customizable'
+      description: 'Customize Storybook to fit your needs in your App Config.'
+      icon: 'i-heroicons-cog-6-tooth-20-solid'
+    - title: 'Chromatic Integration'
+      description: 'Supports deploying your Storybook to Chromatic to keep track of your component changes.'
+      icon: 'i-simple-icons-chromatic'
+    - title: 'Open Source'
+      description: 'Storybook is one of the fastest growing frontend communities. Join thousands fellow developers leveling up their skills together.'
+      icon: 'i-simple-icons-storybook'

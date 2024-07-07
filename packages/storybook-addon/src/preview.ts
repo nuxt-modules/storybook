@@ -12,6 +12,7 @@ import { setup } from '@storybook/vue3'
 import type { ObjectPlugin, Plugin } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
+import { $fetch } from 'ofetch'
 // @ts-expect-error virtual file
 import { runtimeConfig } from 'virtual:nuxt-runtime-config'
 
@@ -41,6 +42,7 @@ setup(async (vueApp, storyContext) => {
   }
 
   // Provide the config of the Nuxt app
+  // @ts-expect-error: internal Nuxt property
   window.__NUXT__ = {
     serverRendered: false,
     config: {
@@ -50,6 +52,13 @@ setup(async (vueApp, storyContext) => {
     },
     data: {},
     state: {},
+  }
+  // Set $fetch
+  // based on https://github.com/nuxt/nuxt/blob/356173134280b66c5902e5129d2f5ee73b799352/packages/nuxt/src/core/templates.ts#L390-L403
+  if (!globalThis.$fetch) {
+    globalThis.$fetch = $fetch.create({
+      baseURL: '/',
+    })
   }
 
   const nuxt = createNuxtApp({
