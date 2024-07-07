@@ -9,7 +9,7 @@ import {
   type PackageJson,
 } from '@storybook/core-common'
 import { buildDevStandalone, withTelemetry } from '@storybook/core-server'
-import storybookPackageJson from '@storybook/core-server/package.json'
+import storybookPackageJson from '@storybook/core-server/package.json' with { type: 'json' }
 
 const buildLogger = logger.withTag('build')
 
