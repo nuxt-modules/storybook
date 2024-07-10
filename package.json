@@ -39,7 +39,7 @@
     "test:watch": "vitest watch",
     "test:coverage": "vitest --coverage"
   },
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.5.0",
   "devDependencies": {
     "@nuxt/eslint-config": "^0.3.6",
     "@nuxt/test-utils": "^3.9.0",
@@ -47,6 +47,7 @@
     "changelogen": "^0.5.5",
     "chromatic": "^11.3.0",
     "eslint": "^9.0.0",
+    "jiti": "^1.21.6",
     "jsdom": "^24.0.0",
     "nuxt": "^3.11.1",
     "prettier": "^3.2.5",

@@ -214,7 +214,7 @@ async function writeChangelog(changelog: string) {
 }
 
 function checkGitBranch() {
-  const isDirtyGit = !!execSync('git status --porcelain')
+  const isDirtyGit = execSync('git status --porcelain').toString().trim()
   if (isDirtyGit) {
     consola.error(`Git repo isn't clean.`)
     process.exit(1)
@@ -250,7 +250,6 @@ async function main() {
   await writeChangelog(changelog)
   execSync('pnpm lint:prettier --write')
 
-  execSync(`git checkout -b v${newVersion}`)
   execSync(`git commit -am "chore(release): bump version to ${newVersion}"`)
 }
 
