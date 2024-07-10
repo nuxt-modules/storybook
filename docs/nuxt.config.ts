@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   extends: ['@nuxt/ui-pro'],
+
   modules: [
     '@nuxt/content',
     '@nuxt/eslint',
@@ -9,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxthq/studio',
     'nuxt-og-image',
   ],
+
   hooks: {
     // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
     'components:extend': (components) => {
@@ -19,28 +21,37 @@ export default defineNuxtConfig({
       globals.forEach((c) => (c.global = true))
     },
   },
+
   ui: {
     icons: ['heroicons', 'simple-icons'],
   },
+
   uiPro: { license: 'oss' },
+
   colorMode: {
     disableTransition: true,
   },
+
   site: {
     url: 'https://storybook.nuxtjs.org/',
   },
+
   routeRules: {
     '/api/search.json': { prerender: true },
   },
+
   devtools: {
     enabled: true,
   },
+
   typescript: {
     strict: false,
   },
+
   future: {
     compatibilityVersion: 4,
   },
+
   eslint: {
     config: {
       stylistic: {
@@ -49,4 +60,13 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  // Workaround for https://github.com/nuxt/content/issues/2688
+  nitro: {
+    prerender: {
+      routes: ['/'],
+    },
+  },
+
+  compatibilityDate: '2024-07-10',
 })
