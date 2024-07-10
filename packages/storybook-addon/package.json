@@ -57,8 +57,7 @@
     "dev:prepare": "unbuild --stub",
     "test": "vitest run",
     "dev": "unbuild",
-    "prepack": "unbuild",
-    "release": "pnpm changelogen --release --push && pnpm publish"
+    "prepack": "unbuild"
   },
   "peerDependencies": {
     "nuxt": "^3.6 || ^3.7 || ^3.8",
