@@ -250,7 +250,6 @@ async function main() {
   await writeChangelog(changelog)
   execSync('pnpm lint:prettier --write')
 
-  execSync(`git checkout -b v${newVersion}`)
   execSync(`git commit -am "chore(release): bump version to ${newVersion}"`)
 }
 
