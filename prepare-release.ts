@@ -214,7 +214,7 @@ async function writeChangelog(changelog: string) {
 }
 
 function checkGitBranch() {
-  const isDirtyGit = !!execSync('git status --porcelain')
+  const isDirtyGit = execSync('git status --porcelain').toString().trim()
   if (isDirtyGit) {
     consola.error(`Git repo isn't clean.`)
     process.exit(1)
