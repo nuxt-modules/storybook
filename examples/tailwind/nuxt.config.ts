@@ -2,4 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/storybook', '@nuxtjs/tailwindcss'],
+  future: {
+    compatibilityVersion: 4,
+  },
 })

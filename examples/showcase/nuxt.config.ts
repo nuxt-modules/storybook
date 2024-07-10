@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/storybook', '@nuxt/image', '@pinia/nuxt'],
+  future: {
+    compatibilityVersion: 4,
+  },  
   pinia: {
     autoImports: ['defineStore', 'acceptHMRUpdate'],
   },

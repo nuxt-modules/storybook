@@ -6,4 +6,7 @@ export default defineNuxtConfig({
     // Very verbose logs for debugging
     logLevel: Number.POSITIVE_INFINITY,
   },
+  future: {
+    compatibilityVersion: 4,
+  },
 })
