@@ -33,6 +33,7 @@
     "prepack": "pnpm build",
     "release": "pnpm jiti prepare-release.ts && pnpm publish --recursive",
     "prepare": "pnpm run --filter=./playground/** prepare",
+    "docs:dev": "pnpm run --filter=./docs/** dev",
     "docs:build": "pnpm run --filter=./docs/** build",
     "docs:generate": "pnpm run --filter=./docs/** generate",
     "test": "vitest run",
