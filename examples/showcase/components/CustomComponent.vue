@@ -22,10 +22,13 @@ const props = withDefaults(
      * background color of the button
      */
     backgroundColor?: string
-
-    union?: string | number | boolean
   }>(),
-  { primary: false },
+  {
+    primary: false,
+    label: '',
+    size: 'medium',
+    backgroundColor: 'transparent',
+  },
 )
 
 const emit = defineEmits<{
@@ -51,7 +54,7 @@ function onClick() {
 <template>
   <div class="storybook sb-column">
     <button :class="classes" :style="style" @click="onClick">
-      {{ label ?? '' }} <slot />
+      {{ label }} <slot />
     </button>
   </div>
 </template>
