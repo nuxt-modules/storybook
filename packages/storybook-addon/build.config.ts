@@ -35,6 +35,7 @@ export default defineBuildConfig({
     '#app/composables/state',
     '#app/entry',
     '#build/plugins',
+    '#build/css',
+    'virtual:nuxt-runtime-config',
   ],
-  failOnWarn: false,
 })
