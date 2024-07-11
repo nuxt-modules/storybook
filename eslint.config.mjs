@@ -9,4 +9,8 @@ export default createConfigForNuxt({
   dirs: {
     src: ['./playground'],
   },
+}).override('nuxt/vue/rules', {
+  rules: {
+    'vue/html-self-closing': 'off',
+  },
 })
