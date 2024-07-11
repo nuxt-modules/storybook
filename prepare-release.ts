@@ -251,6 +251,8 @@ async function main() {
   execSync('pnpm lint:prettier --write')
 
   execSync(`git commit -am "chore(release): bump version to ${newVersion}"`)
+
+  execSync(`git tag -a v${newVersion} -m "v${newVersion}"`)
 }
 
 main().catch((err) => {
