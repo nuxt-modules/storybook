@@ -12,13 +12,13 @@
     "build-storybook": "storybook build"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^1.1.5",
+    "@nuxt/devtools": "1.1.5",
     "@nuxtjs/storybook": "workspace:*",
     "@storybook/addon-essentials": "^8.1.11",
     "@storybook/addon-interactions": "^8.1.11",
     "@storybook/addon-links": "^8.1.11",
-    "nuxt": "^3.12.2",
+    "nuxt": "3.12.2",
     "storybook": "^8.1.11",
-    "vite-plugin-inspect": "^0.8.4"
+    "vite-plugin-inspect": "0.8.4"
   }
 }
