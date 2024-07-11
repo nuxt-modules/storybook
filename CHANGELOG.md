@@ -1,5 +1,17 @@
 # Changelog
 
+## v8.1.2
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v0.2.10...v8.1.2)
+
+### 🏡 Chore
+
+- Fix linter and update lock file ([#686](https://github.com/nuxt-modules/storybook/pull/686))
+
+### ❤️ Contributors
+
+- Tobias Diez <code@tobiasdiez.de>
+
 ## v8.1.1
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v8.1.0...v8.1.1)
