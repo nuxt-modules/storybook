@@ -15,6 +15,7 @@ import replace from '@rollup/plugin-replace'
 import type { StorybookConfig } from './types'
 import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
 import stringify from 'json-stable-stringify'
+import nuxtRuntimeConfigPlugin from './runtimeConfig'
 
 const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
@@ -55,8 +56,9 @@ async function extendComposables(nuxt: Nuxt) {
 }
 
 async function loadNuxtViteConfig(root: string | undefined) {
-  const { loadNuxt, tryUseNuxt, buildNuxt, addPlugin, extendPages } =
-    await import('@nuxt/kit')
+  const { loadNuxt, tryUseNuxt, buildNuxt, extendPages } = await import(
+    '@nuxt/kit'
+  )
 
   let nuxt = tryUseNuxt()
   if (nuxt) {
@@ -97,10 +99,6 @@ async function loadNuxtViteConfig(root: string | undefined) {
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
     // nuxt.options.build.transpile.push('@storybook-vue/nuxt')
-    addPlugin({
-      src: join(pluginsDir, 'storybook'),
-      mode: 'client',
-    })
     // Add iframe page
     extendPages((pages) => {
       pages.push({
@@ -169,9 +167,6 @@ function mergeViteConfig(
   return mergeConfig(extendedConfig, {
     // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
     define: {
-      __NUXT__: JSON.stringify({
-        config: nuxt.options.runtimeConfig,
-      }),
       'import.meta.client': 'true',
     },
 
@@ -183,6 +178,7 @@ function mergeViteConfig(
         },
         preventAssignment: true,
       }),
+      nuxtRuntimeConfigPlugin(nuxt.options.runtimeConfig),
     ],
     server: {
       cors: true,
@@ -207,9 +203,8 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
   }
 }
 /**
- *
- * @param entry preview entries
- * @returns preview entries with nuxt runtime
+ * This is needed to correctly load the `preview.js` file,
+ * see https://github.com/storybookjs/storybook/blob/main/docs/contribute/framework.md#4-author-the-framework-itself
  */
 export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
   entry = [],
@@ -243,15 +238,15 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   const fs = await import('node:fs')
   fs.mkdirSync(join(options.outputDir, 'logs'), { recursive: true })
   fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-storybook.config.js'),
+    join(options.outputDir, 'logs', 'vite-storybook.config.json'),
     stringify(storybookViteConfig, { space: '  ' }),
   )
   fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-nuxt.config.js'),
+    join(options.outputDir, 'logs', 'vite-nuxt.config.json'),
     stringify(nuxtConfig, { space: '  ' }),
   )
   fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-final.config.js'),
+    join(options.outputDir, 'logs', 'vite-final.config.json'),
     stringify(finalViteConfig, { space: '  ' }),
   )
 
