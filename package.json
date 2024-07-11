@@ -50,7 +50,7 @@
     "eslint": "^9.0.0",
     "jiti": "^1.21.6",
     "jsdom": "^24.0.0",
-    "nuxt": "^3.11.1",
+    "nuxt": "^3.12.2",
     "prettier": "^3.2.5",
     "release-it": "^17.2.0",
     "typescript": "^5.3.3",
@@ -61,9 +61,6 @@
   },
   "pnpm": {
     "peerDependencyRules": {
-      "allowedVersions": {
-        "vue": "^3.2.45"
-      },
       "ignoreMissing": [
         "webpack",
         "vue"
