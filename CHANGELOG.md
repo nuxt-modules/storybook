@@ -1,5 +1,19 @@
 # Changelog
 
+## v8.1.5
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.1.4...v8.1.5)
+
+### 🏡 Chore
+
+- Fix prettier errors ([#701](https://github.com/nuxt-modules/storybook/pull/701))
+- Build nuxt module before release ([#702](https://github.com/nuxt-modules/storybook/pull/702))
+
+### ❤️ Contributors
+
+- Tobias Diez <code@tobiasdiez.de>
+- Olga Bulat ([@obulat](http://github.com/obulat))
+
 ## v8.1.4
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v0.2.10...v8.1.4)
