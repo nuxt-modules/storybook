@@ -37,7 +37,8 @@
   ],
   "scripts": {
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare",
-    "build": "nuxt-module-build build"
+    "build": "nuxt-module-build build",
+    "prepack": "nuxt-module-build build"
   },
   "dependencies": {
     "@nuxt/devtools-kit": "^1.0.8",
