@@ -30,6 +30,7 @@
     "lint": "pnpm lint:eslint && pnpm lint:prettier",
     "lint:eslint": "eslint --max-warnings=0 --report-unused-disable-directives .",
     "lint:prettier": "prettier --check .",
+    "lint:fix": "pnpm lint:eslint --fix && pnpm lint:prettier --write",
     "prepack": "pnpm build",
     "release": "pnpm jiti prepare-release.ts && pnpm publish --recursive",
     "prepare": "pnpm run --filter=./playground/** prepare",
