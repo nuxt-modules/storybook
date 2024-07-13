@@ -26,8 +26,8 @@ const props = withDefaults(
   {
     primary: false,
     label: '',
-    size: 'medium',
-    backgroundColor: 'transparent',
+    size: undefined,
+    backgroundColor: undefined,
   },
 )
 
