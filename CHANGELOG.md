@@ -1,5 +1,61 @@
 # Changelog
 
+## v8.1.5
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.1.4...v8.1.5)
+
+### 🏡 Chore
+
+- Fix prettier errors ([#701](https://github.com/nuxt-modules/storybook/pull/701))
+- Build nuxt module before release ([#702](https://github.com/nuxt-modules/storybook/pull/702))
+
+### ❤️ Contributors
+
+- Tobias Diez <code@tobiasdiez.de>
+- Olga Bulat ([@obulat](http://github.com/obulat))
+
+## v8.1.4
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v0.2.10...v8.1.4)
+
+### 🏡 Chore
+
+- Fix linter and update lock file ([#686](https://github.com/nuxt-modules/storybook/pull/686))
+- **release:** Bump version to 8.1.2 ([114c6db](https://github.com/nuxt-modules/storybook/commit/114c6db))
+- Align dependency specifications across packages ([#693](https://github.com/nuxt-modules/storybook/pull/693))
+- Tell renovate to pin all development and doc dependencies ([#692](https://github.com/nuxt-modules/storybook/pull/692))
+- Mark a few more imports as external to fix build warnings ([#695](https://github.com/nuxt-modules/storybook/pull/695))
+- Add tag creation in prepare-release script ([#697](https://github.com/nuxt-modules/storybook/pull/697))
+- Fix linting warnings ([#687](https://github.com/nuxt-modules/storybook/pull/687))
+- Only checkout the latest commit in CI ([#688](https://github.com/nuxt-modules/storybook/pull/688))
+
+### ❤️ Contributors
+
+- Olga Bulat ([@obulat](http://github.com/obulat))
+- Tobias Diez <code@tobiasdiez.de>
+- ChakAs3 ([@chakAs3](http://github.com/chakAs3))
+
+## v8.1.3
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v0.2.10...v8.1.3)
+
+### 🏡 Chore
+
+- Fix linter and update lock file ([#686](https://github.com/nuxt-modules/storybook/pull/686))
+- **release:** Bump version to 8.1.2 ([114c6db](https://github.com/nuxt-modules/storybook/commit/114c6db))
+- Align dependency specifications across packages ([#693](https://github.com/nuxt-modules/storybook/pull/693))
+- Tell renovate to pin all development and doc dependencies ([#692](https://github.com/nuxt-modules/storybook/pull/692))
+- Mark a few more imports as external to fix build warnings ([#695](https://github.com/nuxt-modules/storybook/pull/695))
+- Add tag creation in prepare-release script ([#697](https://github.com/nuxt-modules/storybook/pull/697))
+- Fix linting warnings ([#687](https://github.com/nuxt-modules/storybook/pull/687))
+- Only checkout the latest commit in CI ([#688](https://github.com/nuxt-modules/storybook/pull/688))
+
+### ❤️ Contributors
+
+- Olga Bulat ([@obulat](http://github.com/obulat))
+- Tobias Diez <code@tobiasdiez.de>
+- ChakAs3 ([@chakAs3](http://github.com/chakAs3))
+
 ## v8.1.2
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v0.2.10...v8.1.2)

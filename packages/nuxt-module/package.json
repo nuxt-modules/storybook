@@ -1,6 +1,6 @@
 {
   "name": "@nuxtjs/storybook",
-  "version": "8.1.2",
+  "version": "8.1.5",
   "description": "Storybook module for Nuxt",
   "license": "MIT",
   "homepage": "https://storybook.nuxtjs.org",
@@ -37,19 +37,20 @@
   ],
   "scripts": {
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare",
-    "build": "nuxt-module-build build"
+    "build": "nuxt-module-build build",
+    "prepack": "nuxt-module-build build"
   },
   "dependencies": {
     "@nuxt/devtools-kit": "^1.0.8",
     "@nuxt/kit": "^3.12.0",
     "@storybook-vue/nuxt": "workspace:*",
-    "@storybook/core-common": "^8.2.1",
-    "@storybook/core-server": "^8.2.1",
+    "@storybook/core-common": "^8.2.2",
+    "@storybook/core-server": "^8.2.2",
     "chalk": "^5.0.0",
     "consola": "^3.2.3",
     "defu": "^6.1.4",
     "get-port-please": "^3.1.2",
-    "storybook": "^8.2.1",
+    "storybook": "^8.2.2",
     "ufo": "^1.5.3"
   },
   "devDependencies": {
