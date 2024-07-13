@@ -11,6 +11,8 @@
     // Pin all dev dependencies following https://docs.renovatebot.com/dependency-pinning/
     ':pinDevDependencies',
   ],
+  // Don't ignore 'examples' directories
+  ignorePaths: ['**/node_modules/**'],
   packageRules: [
     {
       // Bump all @storybook/* packages so that always the latest version is used
