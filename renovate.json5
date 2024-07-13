@@ -13,8 +13,8 @@
   ],
   packageRules: [
     {
-      // Pin all docs dependencies following https://docs.renovatebot.com/dependency-pinning/
-      matchFileNames: ['docs/package.json'],
+      // Pin all dependencies following https://docs.renovatebot.com/dependency-pinning/
+      matchFileNames: ['docs/package.json', 'examples/**/package.json'],
       rangeStrategy: 'pin',
     },
     {
