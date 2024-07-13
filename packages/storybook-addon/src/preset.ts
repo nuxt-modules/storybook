@@ -160,10 +160,20 @@ function mergeViteConfig(
   extendedConfig.plugins = plugins
   // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
   // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
-  extendedConfig.optimizeDeps!.include =
-    extendedConfig.optimizeDeps!.include!.filter(
-      (dep) => !extendedConfig.optimizeDeps!.exclude!.includes(dep),
+  extendedConfig.optimizeDeps = extendedConfig.optimizeDeps || {}
+  extendedConfig.optimizeDeps.include =
+    extendedConfig.optimizeDeps.include || []
+  extendedConfig.optimizeDeps.include =
+    extendedConfig.optimizeDeps.include.filter(
+      (dep) => !extendedConfig.optimizeDeps?.exclude?.includes(dep),
     )
+
+  // Add lodash/kebabCase, since it is still a cjs module
+  // Imported in https://github.com/storybookjs/storybook/blob/480359d5e340d97476131781c69b4b5e3b724f57/code/renderers/vue3/src/docs/sourceDecorator.ts#L18
+  extendedConfig.optimizeDeps.include.push(
+    '@nuxtjs/storybook > @storybook-vue/nuxt > @storybook/vue3 > lodash/kebabCase',
+  )
+
   return mergeConfig(extendedConfig, {
     // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
     define: {
@@ -237,6 +247,7 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   // Write all vite configs to logs
   const fs = await import('node:fs')
   fs.mkdirSync(join(options.outputDir, 'logs'), { recursive: true })
+  console.debug(`Writing Vite configs to ${options.outputDir}/logs/...`)
   fs.writeFileSync(
     join(options.outputDir, 'logs', 'vite-storybook.config.json'),
     stringify(storybookViteConfig, { space: '  ' }),
