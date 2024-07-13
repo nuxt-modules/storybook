@@ -13,16 +13,16 @@
   ],
   packageRules: [
     {
-      // Pin all dependencies following https://docs.renovatebot.com/dependency-pinning/
-      matchFileNames: ['docs/package.json', 'examples/**/package.json'],
-      rangeStrategy: 'pin',
-    },
-    {
       // Bump all @storybook/* packages so that always the latest version is used
       matchPackagePatterns: ['storybook', '@storybook/*'],
       groupName: 'storybook packages',
       groupSlug: 'storybook',
       rangeStrategy: 'bump',
+    },
+    {
+      // Pin all dependencies following https://docs.renovatebot.com/dependency-pinning/
+      matchFileNames: ['docs/package.json', 'examples/**/package.json'],
+      rangeStrategy: 'pin',
     },
   ],
   postUpdateOptions: [
