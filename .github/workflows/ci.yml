@@ -39,14 +39,3 @@ jobs:
 
       - name: Build
         run: pnpm build
-
-      - name: Nightly release
-        if: |
-          github.event_name == 'push' &&
-          matrix.node == 20 &&
-          matrix.os == 'ubuntu-latest' &&
-          !contains(github.event.head_commit.message, '[skip-release]') &&
-          !startsWith(github.event.head_commit.message, 'docs')
-        run: pnpm publish --recursive --tag next --access public --report-summary --no-git-checks --force
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPMJS_TOKEN}}
