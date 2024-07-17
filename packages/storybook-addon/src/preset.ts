@@ -208,8 +208,8 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
 ) => {
   return {
     ...config,
-    builder: '@storybook/builder-vite',
-    renderer: '@storybook/vue3',
+    builder: await getPackageDir('@storybook/builder-vite'),
+    renderer: await getPackageDir('@storybook/vue3'),
   }
 }
 /**
@@ -230,7 +230,6 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
 ) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getStorybookViteConfig = async (c: Record<string, any>, o: any) => {
-    // const pkgPath = await getPackageDir('@storybook/vue3-vite')
     const presetURL = pathToFileURL(
       join(await getPackageDir('@storybook/vue3-vite'), 'preset.js'),
     )
@@ -265,8 +264,6 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
 }
 
 async function getPackageDir(frameworkPackageName: string) {
-  //   const packageJsonPath = join(frameworkPackageName, 'package.json')
-
   try {
     const require = createRequire(import.meta.url)
     const packageDir = dirname(
@@ -274,12 +271,10 @@ async function getPackageDir(frameworkPackageName: string) {
         paths: [process.cwd()],
       }),
     )
-
     return packageDir
   } catch (e) {
-    // logger.error(e)
+    throw new Error(`Cannot find ${frameworkPackageName}`, { cause: e })
   }
-  throw new Error(`Cannot find ${frameworkPackageName},`)
 }
 
 export function getNuxtProxyConfig(nuxt: Nuxt) {
