@@ -12,6 +12,7 @@
     "dev": "pnpm run --filter=./playground/** dev",
     "dev:prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && pnpm run prepare",
     "dev:build": "pnpm run --filter=./playground/** build",
+    "playground:storybook:dev": "pnpm run --filter=./playground/** storybook",
     "playground:storybook:build": "cd playground && pnpm run build-storybook",
     "playground:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name playground:storybook:build --project-token=chpt_d7cf5e98426e11e",
     "example:starter:dev": "pnpm run --filter=./examples/starter/** examples/starter dev",

@@ -1,8 +1,14 @@
-import { dirname, join, resolve } from 'node:path'
+import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
+import { resolve, normalize } from 'pathe'
+import { resolvePathSync } from 'mlly'
 
-import type { PresetProperty } from '@storybook/types'
+import type {
+  //Options,
+  PresetProperty,
+  PreviewAnnotation,
+} from '@storybook/types'
 import {
   type UserConfig as ViteConfig,
   mergeConfig,
@@ -212,14 +218,69 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
     renderer: await getPackageDir('@storybook/vue3'),
   }
 }
+
+export interface Resolver {
+  resolve(...path: string[]): string
+  resolveModule(id: string, options?: { paths?: string[] }): string
+}
+function createResolver(base: string | URL): Resolver {
+  if (!base) {
+    throw new Error('`base` argument is missing for createResolver(base)!')
+  }
+
+  base = base.toString()
+  if (base.startsWith('file://')) {
+    base = dirname(fileURLToPath(base))
+  }
+
+  return {
+    resolve: (...path) => resolve(base as string, ...path),
+    resolveModule(id, options) {
+      const paths = options?.paths ?? []
+      paths.concat([base as string])
+      return resolvePathSync(id, { url: paths })
+    },
+  }
+}
+
 /**
  * This is needed to correctly load the `preview.js` file,
  * see https://github.com/storybookjs/storybook/blob/main/docs/contribute/framework.md#4-author-the-framework-itself
  */
-export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
-  entry = [],
-) => {
-  return [...entry, resolve(packageDir, 'preview')]
+export const previewAnnotations = async (
+  entry: PreviewAnnotation[] = [],
+  //options: Options,
+): Promise<PreviewAnnotation[]> => {
+  const resolver = createResolver(import.meta.url)
+
+  // TODO: Get the correct root path
+  //const projectRoot = join(options.configDir, '..')
+
+  return [
+    ...entry.map((entry) => {
+      console.log(entry)
+      // @storybook/vue3
+      if (typeof entry === 'string' && entry.includes('vue3')) {
+        return {
+          bare: normalize(entry), //relative(projectRoot, entry),
+          absolute: '',
+        }
+      } else {
+        return entry
+      }
+    }),
+    {
+      bare: resolver.resolve('./preview'), //relative(projectRoot, resolver.resolve('./preview.ts')),
+      absolute: '',
+    },
+    //{
+    // We need to use bare here otherwise storybook will strip the absolute path,
+    // leading to a wrong import
+    // https://github.com/storybookjs/storybook/blob/3590a1cade2fe24608b3ce0246d5d58692c89883/code/builders/builder-vite/src/utils/process-preview-annotation.ts#L30-L35
+    //bare: await resolveModule(packageDir, 'preview'),
+    //absolute: '', // Unimportant, only used by webpack
+    //},
+  ]
 }
 
 export const viteFinal: StorybookConfig['viteFinal'] = async (
@@ -263,18 +324,22 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   return finalViteConfig
 }
 
-async function getPackageDir(frameworkPackageName: string) {
+async function getPackageDir(packageName: string) {
   try {
     const require = createRequire(import.meta.url)
-    const packageDir = dirname(
-      require.resolve(join(frameworkPackageName, 'package.json'), {
-        paths: [process.cwd()],
-      }),
-    )
-    return packageDir
+    return dirname(require.resolve(join(packageName, 'package.json')))
   } catch (e) {
-    throw new Error(`Cannot find ${frameworkPackageName}`, { cause: e })
+    throw new Error(`Cannot find ${packageName}`, { cause: e })
   }
+}
+
+/**
+ * We specify a few storybook modules, which are then resolved by storybook.
+ * However, we need to make sure that they are resolved as dependencies of this package,
+ * since they are not installed in the root.
+ */
+export async function resolveModule(packageName: string, module: string) {
+  return join(await getPackageDir(packageName), module)
 }
 
 export function getNuxtProxyConfig(nuxt: Nuxt) {
