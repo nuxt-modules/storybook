@@ -52,5 +52,5 @@ jobs:
           pnpm add $packages
 
       - name: Build Storybook
-        run: pnpm storybook build
+        run: pnpm build-storybook
         working-directory: /tmp/example
