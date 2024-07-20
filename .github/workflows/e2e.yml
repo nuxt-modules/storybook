@@ -43,8 +43,9 @@ jobs:
           NODE_ENV: 'production'
 
       - name: Create Sample Project
+        shell: pwsh
         run: |
-          packages=$(find packages -name "*.tgz")
+          $packages=Get-ChildItem -Path packages -Recurse -Filter "*.tgz"
           pnpm dlx nuxt init /tmp/example --packageManager pnpm
           cd /tmp/example
           pnpm dlx storybook@0.0.0-pr-28607-sha-b9bf7d39 init
