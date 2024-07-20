@@ -43,13 +43,14 @@ jobs:
           NODE_ENV: 'production'
 
       - name: Create temporary folder
-        id: create-temp-folder
+        shell: pwsh
         run: |
-          if [[ "$RUNNER_OS" == "Linux" || "$RUNNER_OS" == "macOS" ]]; then
-            echo "TEMP_DIR=$(mktemp -d)" >> $GITHUB_ENV
-          else
-            echo "TEMP_DIR=$(New-Item -ItemType Directory -Path $env:TEMP -Name 'tempdir' | Select-Object -ExpandProperty FullName)" >> $GITHUB_ENV
-        shell: bash
+          if ($env:RUNNER_OS -eq 'Linux' -or $env:RUNNER_OS -eq 'macOS') {
+            $tempDir = New-TemporaryFile | Remove-Item -Force -PassThru | Split-Path
+          } else {
+            $tempDir = New-Item -ItemType Directory -Path $env:TEMP -Name 'tempdir' | Select-Object -ExpandProperty FullName
+          }
+          echo "TEMP_DIR=$tempDir" >> $env:GITHUB_ENV
 
       - name: Create Sample Project
         shell: pwsh
