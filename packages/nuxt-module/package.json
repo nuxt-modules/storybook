@@ -35,6 +35,9 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare",
     "build": "nuxt-module-build build",

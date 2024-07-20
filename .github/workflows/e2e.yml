@@ -1,0 +1,55 @@
+name: E2E tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  e2e-test:
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.os }}-${{ matrix.node }}
+      cancel-in-progress: true
+    name: "E2E Test"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Keep this in sync with the oldest Node.js version supported by the storybook
+        node: [18, 19, 20]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build packages
+        run: pnpm package
+        env:
+          NODE_ENV: "production"
+
+      - name: Create Sample Project
+        run: |
+          packages = $(ls packages/**/*.tgz)
+          pnpm dlx nuxt init /tmp/example --packageManager pnpm
+          cd /tmp/example
+          pnpm dlx storybook@0.0.0-pr-28607-sha-b9bf7d39 init
+          pnpm add $packages
+
+      - name: Build Storybook
+        run: pnpm storybook build
+        working-directory: /tmp/example
