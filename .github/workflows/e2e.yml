@@ -47,7 +47,7 @@ jobs:
         run: |
           $packages=Get-ChildItem -Path packages -Recurse -Filter "*.tgz"
           echo "$packages"
-          Make-Item -Path ${{ runner.temp }}/example -ItemType Directory
+          New-Item -Path ${{ runner.temp }}/example -ItemType Directory
           pnpm dlx nuxt init ${{ runner.temp }}/example --packageManager pnpm
           cd ${{ runner.temp }}/example
           pnpm dlx storybook@0.0.0-pr-28607-sha-b9bf7d39 init
