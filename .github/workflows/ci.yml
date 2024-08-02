@@ -56,4 +56,3 @@ jobs:
         run: pnpm publish --recursive --filter=./packages/nuxt-module --tag nightly --provenance --access public --report-summary --no-git-checks --force
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
