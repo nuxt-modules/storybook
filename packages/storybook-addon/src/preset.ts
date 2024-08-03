@@ -2,13 +2,9 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
 import { resolve, normalize } from 'pathe'
-import { resolvePathSync } from 'mlly'
+import { resolvePath } from 'mlly'
 
-import type {
-  //Options,
-  PresetProperty,
-  PreviewAnnotation,
-} from '@storybook/types'
+import type { PresetProperty, PreviewAnnotation } from '@storybook/types'
 import {
   type UserConfig as ViteConfig,
   mergeConfig,
@@ -220,9 +216,39 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
 }
 
 export interface Resolver {
+  /**
+   * Resolves the given path segments to an absolute path, using the provided base path.
+   *
+   * The resulting path is normalized, and trailing slashes are removed unless the path gets resolved to the root directory.
+   *
+   * @param path A sequence of paths or path segments.
+   * @throws {TypeError} if any of the arguments is not a string.
+   */
   resolve(...path: string[]): string
-  resolveModule(id: string, options?: { paths?: string[] }): string
+  /**
+   * Asynchronously resolves a module path to a local file path, using the provided base path.
+   *
+   * @param id - The identifier or path of the module to resolve.
+   * @returns A promise to resolve to the file path, or `null` if the module could not be resolved.
+   */
+  resolveModule(
+    id: string,
+    options?: { paths?: string[] },
+  ): Promise<string | null>
 }
+/**
+ * Creates a resolver that can resolve paths and modules relative to a base path.
+ *
+ * @example
+ * ```js
+ * const resolver = createResolver(import.meta.url)
+ * const path = resolver.resolve('preview')
+ * const modulePath = await resolver.resolveModule('module-name')
+ * ```
+ *
+ * @param base - The base path to resolve paths and modules relative to.
+ * @returns A resolver object.
+ */
 function createResolver(base: string | URL): Resolver {
   if (!base) {
     throw new Error('`base` argument is missing for createResolver(base)!')
@@ -234,11 +260,11 @@ function createResolver(base: string | URL): Resolver {
   }
 
   return {
-    resolve: (...path) => resolve(base as string, ...path),
-    resolveModule(id, options) {
-      const paths = options?.paths ?? []
+    resolve: (...path) => resolve(base, ...path),
+    async resolveModule(id, options) {
+      const paths = options?.paths ?? [base]
       paths.concat([base as string])
-      return resolvePathSync(id, { url: paths })
+      return await resolvePath(id, { url: paths }).catch(() => null)
     },
   }
 }
@@ -249,20 +275,20 @@ function createResolver(base: string | URL): Resolver {
  */
 export const previewAnnotations = async (
   entry: PreviewAnnotation[] = [],
-  //options: Options,
 ): Promise<PreviewAnnotation[]> => {
   const resolver = createResolver(import.meta.url)
 
-  // TODO: Get the correct root path
-  //const projectRoot = join(options.configDir, '..')
-
+  // Problem: Storybook does not correctly resolve some modules to an absolute path to the correct deep path in node_modules.
+  // Solution:
+  // We need to make sure that they are resolved as dependencies of this package, since they are not installed in the root.
+  // We need to use bare here otherwise storybook will strip the absolute path, leading to a wrong import
+  // https://github.com/storybookjs/storybook/blob/3590a1cade2fe24608b3ce0246d5d58692c89883/code/builders/builder-vite/src/utils/process-preview-annotation.ts#L30-L35
   return [
     ...entry.map((entry) => {
-      console.log(entry)
-      // @storybook/vue3
+      // Handle @storybook/vue3
       if (typeof entry === 'string' && entry.includes('vue3')) {
         return {
-          bare: normalize(entry), //relative(projectRoot, entry),
+          bare: normalize(entry),
           absolute: '',
         }
       } else {
@@ -270,16 +296,9 @@ export const previewAnnotations = async (
       }
     }),
     {
-      bare: resolver.resolve('./preview'), //relative(projectRoot, resolver.resolve('./preview.ts')),
+      bare: resolver.resolve('preview'),
       absolute: '',
     },
-    //{
-    // We need to use bare here otherwise storybook will strip the absolute path,
-    // leading to a wrong import
-    // https://github.com/storybookjs/storybook/blob/3590a1cade2fe24608b3ce0246d5d58692c89883/code/builders/builder-vite/src/utils/process-preview-annotation.ts#L30-L35
-    //bare: await resolveModule(packageDir, 'preview'),
-    //absolute: '', // Unimportant, only used by webpack
-    //},
   ]
 }
 
@@ -331,15 +350,6 @@ async function getPackageDir(packageName: string) {
   } catch (e) {
     throw new Error(`Cannot find ${packageName}`, { cause: e })
   }
-}
-
-/**
- * We specify a few storybook modules, which are then resolved by storybook.
- * However, we need to make sure that they are resolved as dependencies of this package,
- * since they are not installed in the root.
- */
-export async function resolveModule(packageName: string, module: string) {
-  return join(await getPackageDir(packageName), module)
 }
 
 export function getNuxtProxyConfig(nuxt: Nuxt) {
