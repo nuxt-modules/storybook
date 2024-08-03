@@ -42,6 +42,7 @@ setup(async (vueApp, storyContext) => {
   }
 
   // Provide the config of the Nuxt app
+  // @ts-expect-error internal Nuxt property
   window.__NUXT__ = {
     serverRendered: false,
     config: {
