@@ -53,6 +53,6 @@ jobs:
           matrix.os == 'ubuntu-latest' &&
           !contains(github.event.head_commit.message, '[skip-release]') &&
           !startsWith(github.event.head_commit.message, 'docs')
-        run: pnpm publish --recursive --filter=./packages/nuxt-module --tag nightly --provenance --access public --report-summary --no-git-checks --force
+        run: pnpm publish --recursive --tag nightly --provenance --access public --report-summary --no-git-checks --force
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
