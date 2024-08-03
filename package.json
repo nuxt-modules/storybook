@@ -12,6 +12,7 @@
     "dev": "pnpm run --filter=./playground/** dev",
     "dev:prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && pnpm run prepare",
     "dev:build": "pnpm run --filter=./playground/** build",
+    "playground:storybook:dev": "pnpm run --filter=./playground/** storybook",
     "playground:storybook:build": "cd playground && pnpm run build-storybook",
     "playground:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name playground:storybook:build --project-token=chpt_d7cf5e98426e11e",
     "example:starter:dev": "pnpm run --filter=./examples/starter/** examples/starter dev",
@@ -43,19 +44,19 @@
   },
   "packageManager": "pnpm@9.6.0",
   "devDependencies": {
-    "@nuxt/eslint-config": "0.3.13",
-    "@nuxt/test-utils": "3.13.1",
-    "@vitest/coverage-v8": "2.0.4",
+    "@nuxt/eslint-config": "0.4.0",
+    "@nuxt/test-utils": "3.14.0",
+    "@vitest/coverage-v8": "2.0.5",
     "changelogen": "0.5.5",
-    "chromatic": "11.5.6",
-    "eslint": "9.7.0",
+    "chromatic": "11.7.0",
+    "eslint": "9.8.0",
     "jiti": "1.21.6",
     "jsdom": "24.1.1",
     "nuxt": "3.12.4",
     "prettier": "3.3.3",
     "release-it": "17.6.0",
     "typescript": "5.5.4",
-    "vitest": "2.0.4"
+    "vitest": "2.0.5"
   },
   "publishConfig": {
     "access": "public"
