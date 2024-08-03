@@ -1,8 +1,10 @@
-import { dirname, join, resolve } from 'node:path'
+import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
+import { resolve, normalize } from 'pathe'
+import { resolvePath } from 'mlly'
 
-import type { PresetProperty } from '@storybook/types'
+import type { PresetProperty, PreviewAnnotation } from '@storybook/types'
 import {
   type UserConfig as ViteConfig,
   mergeConfig,
@@ -212,14 +214,92 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
     renderer: await getPackageDir('@storybook/vue3'),
   }
 }
+
+export interface Resolver {
+  /**
+   * Resolves the given path segments to an absolute path, using the provided base path.
+   *
+   * The resulting path is normalized, and trailing slashes are removed unless the path gets resolved to the root directory.
+   *
+   * @param path A sequence of paths or path segments.
+   * @throws {TypeError} if any of the arguments is not a string.
+   */
+  resolve(...path: string[]): string
+  /**
+   * Asynchronously resolves a module path to a local file path, using the provided base path.
+   *
+   * @param id - The identifier or path of the module to resolve.
+   * @returns A promise to resolve to the file path, or `null` if the module could not be resolved.
+   */
+  resolveModule(
+    id: string,
+    options?: { paths?: string[] },
+  ): Promise<string | null>
+}
+/**
+ * Creates a resolver that can resolve paths and modules relative to a base path.
+ *
+ * @example
+ * ```js
+ * const resolver = createResolver(import.meta.url)
+ * const path = resolver.resolve('preview')
+ * const modulePath = await resolver.resolveModule('module-name')
+ * ```
+ *
+ * @param base - The base path to resolve paths and modules relative to.
+ * @returns A resolver object.
+ */
+function createResolver(base: string | URL): Resolver {
+  if (!base) {
+    throw new Error('`base` argument is missing for createResolver(base)!')
+  }
+
+  base = base.toString()
+  if (base.startsWith('file://')) {
+    base = dirname(fileURLToPath(base))
+  }
+
+  return {
+    resolve: (...path) => resolve(base, ...path),
+    async resolveModule(id, options) {
+      const paths = options?.paths ?? [base]
+      paths.concat([base as string])
+      return await resolvePath(id, { url: paths }).catch(() => null)
+    },
+  }
+}
+
 /**
  * This is needed to correctly load the `preview.js` file,
  * see https://github.com/storybookjs/storybook/blob/main/docs/contribute/framework.md#4-author-the-framework-itself
  */
-export const previewAnnotations: StorybookConfig['previewAnnotations'] = async (
-  entry = [],
-) => {
-  return [...entry, resolve(packageDir, 'preview')]
+export const previewAnnotations = async (
+  entry: PreviewAnnotation[] = [],
+): Promise<PreviewAnnotation[]> => {
+  const resolver = createResolver(import.meta.url)
+
+  // Problem: Storybook does not correctly resolve some modules to an absolute path to the correct deep path in node_modules.
+  // Solution:
+  // We need to make sure that they are resolved as dependencies of this package, since they are not installed in the root.
+  // We need to use bare here otherwise storybook will strip the absolute path, leading to a wrong import
+  // https://github.com/storybookjs/storybook/blob/3590a1cade2fe24608b3ce0246d5d58692c89883/code/builders/builder-vite/src/utils/process-preview-annotation.ts#L30-L35
+  return [
+    ...entry.map((entry) => {
+      // Handle @storybook/vue3
+      if (typeof entry === 'string' && entry.includes('vue3')) {
+        return {
+          bare: normalize(entry),
+          absolute: '',
+        }
+      } else {
+        return entry
+      }
+    }),
+    {
+      bare: resolver.resolve('preview'),
+      absolute: '',
+    },
+  ]
 }
 
 export const viteFinal: StorybookConfig['viteFinal'] = async (
@@ -263,17 +343,12 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   return finalViteConfig
 }
 
-async function getPackageDir(frameworkPackageName: string) {
+async function getPackageDir(packageName: string) {
   try {
     const require = createRequire(import.meta.url)
-    const packageDir = dirname(
-      require.resolve(join(frameworkPackageName, 'package.json'), {
-        paths: [process.cwd()],
-      }),
-    )
-    return packageDir
+    return dirname(require.resolve(join(packageName, 'package.json')))
   } catch (e) {
-    throw new Error(`Cannot find ${frameworkPackageName}`, { cause: e })
+    throw new Error(`Cannot find ${packageName}`, { cause: e })
   }
 }
 
