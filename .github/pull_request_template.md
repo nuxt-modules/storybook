@@ -1,4 +1,4 @@
-<!---
+<!--
 ☝️ PR title should follow conventional commits (https://conventionalcommits.org).
 In particular, the title should start with one of the following types:
 
