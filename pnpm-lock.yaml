@@ -34,13 +34,16 @@ importers:
         version: 24.1.1
       nuxt:
         specifier: 3.12.4
-        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
+        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
       prettier:
         specifier: 3.3.3
         version: 3.3.3
       release-it:
         specifier: 17.6.0
         version: 17.6.0(typescript@5.5.4)
+      semver:
+        specifier: ^7.6.3
+        version: 7.6.3
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -67,7 +70,7 @@ importers:
         version: 1.4.0(focus-trap@7.5.4)(magicast@0.3.4)(rollup@4.18.1)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue@3.4.35(typescript@5.5.4))
       nuxt:
         specifier: 3.12.4
-        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
+        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
       nuxt-og-image:
         specifier: 3.0.0-rc.64
         version: 3.0.0-rc.64(@nuxt/devtools@1.3.9(rollup@4.18.1)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)))(@unocss/webpack@0.61.3(rollup@4.18.1)(webpack@5.92.1(esbuild@0.21.5)))(@vue/compiler-core@3.4.35)(fuse.js@6.6.2)(magicast@0.3.4)(nuxt@3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4)))(postcss@8.4.40)(rollup@4.18.1)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue@3.4.35(typescript@5.5.4))(webpack@5.92.1(esbuild@0.21.5))
@@ -95,7 +98,7 @@ importers:
         version: 0.5.2(magicast@0.3.4)(rollup@4.18.1)(typescript@5.5.4)(vue@3.4.35(typescript@5.5.4))
       nuxt:
         specifier: 3.12.4
-        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
+        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
       vue:
         specifier: 3.4.35
         version: 3.4.35(typescript@5.5.4)
@@ -111,25 +114,25 @@ importers:
         version: link:../../packages/nuxt-module
       '@storybook/addon-essentials':
         specifier: 8.2.7
-        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/addon-links':
         specifier: 8.2.7
-        version: 8.2.7(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/blocks':
         specifier: 8.2.7
-        version: 8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/test':
         specifier: 8.2.7
-        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))
+        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))
       storybook:
         specifier: 8.2.7
-        version: 8.2.7(@babel/preset-env@7.24.7)
+        version: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
   examples/starter:
     dependencies:
       nuxt:
         specifier: 3.12.4
-        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
+        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
       vue:
         specifier: 3.4.35
         version: 3.4.35(typescript@5.5.4)
@@ -145,19 +148,19 @@ importers:
         version: link:../../packages/nuxt-module
       '@storybook/addon-essentials':
         specifier: 8.2.7
-        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/addon-links':
         specifier: 8.2.7
-        version: 8.2.7(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/blocks':
         specifier: 8.2.7
-        version: 8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/test':
         specifier: 8.2.7
-        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))
+        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))
       storybook:
         specifier: 8.2.7
-        version: 8.2.7(@babel/preset-env@7.24.7)
+        version: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
   examples/tailwind:
     dependencies:
@@ -166,7 +169,7 @@ importers:
         version: 6.12.1(magicast@0.3.4)(rollup@4.18.1)
       nuxt:
         specifier: 3.12.4
-        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
+        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
       vue:
         specifier: 3.4.35
         version: 3.4.35(typescript@5.5.4)
@@ -182,37 +185,37 @@ importers:
         version: link:../../packages/nuxt-module
       '@storybook/addon-essentials':
         specifier: 8.2.7
-        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/addon-links':
         specifier: 8.2.7
-        version: 8.2.7(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/blocks':
         specifier: 8.2.7
-        version: 8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/test':
         specifier: 8.2.7
-        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))
+        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))
       storybook:
         specifier: 8.2.7
-        version: 8.2.7(@babel/preset-env@7.24.7)
+        version: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
   packages/nuxt-module:
     dependencies:
       '@nuxt/devtools-kit':
         specifier: ^1.0.8
-        version: 1.3.9(magicast@0.3.4)(rollup@3.29.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
+        version: 1.3.9(magicast@0.3.4)(rollup@4.18.1)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
       '@nuxt/kit':
         specifier: ^3.12.0
-        version: 3.12.4(magicast@0.3.4)(rollup@3.29.4)
+        version: 3.12.4(magicast@0.3.4)(rollup@4.18.1)
       '@storybook-vue/nuxt':
         specifier: workspace:*
         version: link:../storybook-addon
       '@storybook/core-common':
         specifier: ^8.2.7
-        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/core-server':
         specifier: ^8.2.7
-        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       chalk:
         specifier: ^5.0.0
         version: 5.3.0
@@ -227,14 +230,14 @@ importers:
         version: 3.1.2
       storybook:
         specifier: ^8.2.7
-        version: 8.2.7(@babel/preset-env@7.24.7)
+        version: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       ufo:
         specifier: ^1.5.3
         version: 1.5.4
     devDependencies:
       '@nuxt/module-builder':
         specifier: 0.8.1
-        version: 0.8.1(@nuxt/kit@3.12.4(magicast@0.3.4)(rollup@3.29.4))(nuxi@3.12.0)(sass@1.77.7)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))
+        version: 0.8.1(@nuxt/kit@3.12.4(magicast@0.3.4)(rollup@4.18.1))(nuxi@3.12.0)(sass@1.77.7)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))
       unbuild:
         specifier: 2.0.0
         version: 2.0.0(sass@1.77.7)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))
@@ -246,16 +249,16 @@ importers:
     dependencies:
       '@nuxt/kit':
         specifier: ^3.12.2
-        version: 3.12.4(magicast@0.3.4)(rollup@4.18.1)
+        version: 3.12.4(magicast@0.3.4)(rollup@3.29.4)
       '@nuxt/schema':
         specifier: ^3.12.2
-        version: 3.12.4(rollup@4.18.1)
+        version: 3.12.4(rollup@3.29.4)
       '@nuxt/vite-builder':
         specifier: ^3.12.2
-        version: 3.12.4(@types/node@22.1.0)(eslint@9.8.0)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))(vue@3.4.35(typescript@5.5.4))
+        version: 3.12.4(@types/node@22.1.0)(eslint@9.8.0)(magicast@0.3.4)(optionator@0.9.4)(rollup@3.29.4)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))(vue@3.4.35(typescript@5.5.4))
       '@rollup/plugin-replace':
         specifier: ^5.0.7
-        version: 5.0.7(rollup@4.18.1)
+        version: 5.0.7(rollup@3.29.4)
       '@storybook/builder-vite':
         specifier: ^8.2.7
         version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
@@ -304,7 +307,7 @@ importers:
         version: 0.5.5(magicast@0.3.4)
       nuxt:
         specifier: 3.12.4
-        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
+        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@3.29.4)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -322,19 +325,19 @@ importers:
         version: link:../packages/nuxt-module
       '@storybook/addon-essentials':
         specifier: ^8.2.7
-        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/addon-interactions':
         specifier: ^8.2.7
-        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))
+        version: 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))
       '@storybook/addon-links':
         specifier: ^8.2.7
-        version: 8.2.7(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))
+        version: 8.2.7(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       nuxt:
         specifier: 3.12.4
-        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
+        version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
       storybook:
         specifier: ^8.2.7
-        version: 8.2.7(@babel/preset-env@7.24.7)
+        version: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       vite-plugin-inspect:
         specifier: 0.8.5
         version: 0.8.5(@nuxt/kit@3.12.4(magicast@0.3.4)(rollup@4.18.1))(rollup@4.18.1)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
@@ -1890,7 +1893,7 @@ packages:
       h3: '*'
       happy-dom: ^9.10.9 || ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0
       jsdom: ^22.0.0 || ^23.0.0 || ^24.0.0
-      nitropack: '*'
+      nitropack: 2.8.1
       playwright-core: ^1.43.1
       vite: '*'
       vitest: ^0.34.6 || ^1.0.0 || ^2.0.0
@@ -10110,6 +10113,52 @@ snapshots:
       rc9: 2.1.2
       semver: 7.6.3
 
+  '@nuxt/devtools@1.3.9(rollup@3.29.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))':
+    dependencies:
+      '@antfu/utils': 0.7.10
+      '@nuxt/devtools-kit': 1.3.9(magicast@0.3.4)(rollup@3.29.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
+      '@nuxt/devtools-wizard': 1.3.9
+      '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@3.29.4)
+      '@vue/devtools-core': 7.3.3(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
+      '@vue/devtools-kit': 7.3.3
+      birpc: 0.2.17
+      consola: 3.2.3
+      cronstrue: 2.50.0
+      destr: 2.0.3
+      error-stack-parser-es: 0.1.4
+      execa: 7.2.0
+      fast-glob: 3.3.2
+      fast-npm-meta: 0.1.1
+      flatted: 3.3.1
+      get-port-please: 3.1.2
+      hookable: 5.5.3
+      image-meta: 0.2.1
+      is-installed-globally: 1.0.0
+      launch-editor: 2.8.0
+      local-pkg: 0.5.0
+      magicast: 0.3.4
+      nypm: 0.3.9
+      ohash: 1.1.3
+      pathe: 1.1.2
+      perfect-debounce: 1.0.0
+      pkg-types: 1.1.3
+      rc9: 2.1.2
+      scule: 1.3.0
+      semver: 7.6.3
+      simple-git: 3.25.0
+      sirv: 2.0.4
+      unimport: 3.9.1(rollup@3.29.4)
+      vite: 5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)
+      vite-plugin-inspect: 0.8.5(@nuxt/kit@3.12.4(magicast@0.3.4)(rollup@3.29.4))(rollup@3.29.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
+      vite-plugin-vue-inspector: 5.1.2(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
+      which: 3.0.1
+      ws: 8.18.0
+    transitivePeerDependencies:
+      - bufferutil
+      - rollup
+      - supports-color
+      - utf-8-validate
+
   '@nuxt/devtools@1.3.9(rollup@4.18.1)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))':
     dependencies:
       '@antfu/utils': 0.7.10
@@ -10365,9 +10414,9 @@ snapshots:
       - rollup
       - supports-color
 
-  '@nuxt/module-builder@0.8.1(@nuxt/kit@3.12.4(magicast@0.3.4)(rollup@3.29.4))(nuxi@3.12.0)(sass@1.77.7)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))':
+  '@nuxt/module-builder@0.8.1(@nuxt/kit@3.12.4(magicast@0.3.4)(rollup@4.18.1))(nuxi@3.12.0)(sass@1.77.7)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))':
     dependencies:
-      '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@3.29.4)
+      '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@4.18.1)
       citty: 0.1.6
       consola: 3.2.3
       defu: 6.1.4
@@ -10417,6 +10466,30 @@ snapshots:
       unimport: 3.9.1(rollup@4.18.1)
       untyped: 1.4.2
     transitivePeerDependencies:
+      - rollup
+      - supports-color
+
+  '@nuxt/telemetry@2.5.4(magicast@0.3.4)(rollup@3.29.4)':
+    dependencies:
+      '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@3.29.4)
+      ci-info: 4.0.0
+      consola: 3.2.3
+      create-require: 1.1.1
+      defu: 6.1.4
+      destr: 2.0.3
+      dotenv: 16.4.5
+      git-url-parse: 14.1.0
+      is-docker: 3.0.0
+      jiti: 1.21.6
+      mri: 1.2.0
+      nanoid: 5.0.7
+      ofetch: 1.3.4
+      parse-git-config: 3.0.0
+      pathe: 1.1.2
+      rc9: 2.1.2
+      std-env: 3.7.0
+    transitivePeerDependencies:
+      - magicast
       - rollup
       - supports-color
 
@@ -10561,7 +10634,123 @@ snapshots:
       - vite
       - vue
 
-  '@nuxt/vite-builder@3.12.4(@types/node@22.1.0)(eslint@9.8.0)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))(vue@3.4.35(typescript@5.5.4))':
+  '@nuxt/vite-builder@3.12.4(@types/node@22.1.0)(eslint@9.8.0)(magicast@0.3.4)(optionator@0.9.4)(rollup@3.29.4)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))(vue@3.4.35(typescript@5.5.4))':
+    dependencies:
+      '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@3.29.4)
+      '@rollup/plugin-replace': 5.0.7(rollup@3.29.4)
+      '@vitejs/plugin-vue': 5.1.2(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue@3.4.35(typescript@5.5.4))
+      '@vitejs/plugin-vue-jsx': 4.0.0(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue@3.4.35(typescript@5.5.4))
+      autoprefixer: 10.4.19(postcss@8.4.40)
+      clear: 0.1.0
+      consola: 3.2.3
+      cssnano: 7.0.4(postcss@8.4.40)
+      defu: 6.1.4
+      esbuild: 0.23.0
+      escape-string-regexp: 5.0.0
+      estree-walker: 3.0.3
+      externality: 1.0.2
+      get-port-please: 3.1.2
+      h3: 1.12.0
+      knitwork: 1.1.0
+      magic-string: 0.30.10
+      mlly: 1.7.1
+      ohash: 1.1.3
+      pathe: 1.1.2
+      perfect-debounce: 1.0.0
+      pkg-types: 1.1.3
+      postcss: 8.4.40
+      rollup-plugin-visualizer: 5.12.0(rollup@3.29.4)
+      std-env: 3.7.0
+      strip-literal: 2.1.0
+      ufo: 1.5.4
+      unenv: 1.10.0
+      unplugin: 1.12.0
+      vite: 5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)
+      vite-node: 2.0.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)
+      vite-plugin-checker: 0.7.2(eslint@9.8.0)(optionator@0.9.4)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
+      vue: 3.4.35(typescript@5.5.4)
+      vue-bundle-renderer: 2.1.0
+    transitivePeerDependencies:
+      - '@biomejs/biome'
+      - '@types/node'
+      - eslint
+      - less
+      - lightningcss
+      - magicast
+      - meow
+      - optionator
+      - rollup
+      - sass
+      - stylelint
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - typescript
+      - uWebSockets.js
+      - vls
+      - vti
+      - vue-tsc
+
+  '@nuxt/vite-builder@3.12.4(@types/node@22.1.0)(eslint@9.8.0)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))(vue@3.4.35(typescript@5.5.4))':
+    dependencies:
+      '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@4.18.1)
+      '@rollup/plugin-replace': 5.0.7(rollup@4.18.1)
+      '@vitejs/plugin-vue': 5.1.2(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue@3.4.35(typescript@5.5.4))
+      '@vitejs/plugin-vue-jsx': 4.0.0(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue@3.4.35(typescript@5.5.4))
+      autoprefixer: 10.4.19(postcss@8.4.40)
+      clear: 0.1.0
+      consola: 3.2.3
+      cssnano: 7.0.4(postcss@8.4.40)
+      defu: 6.1.4
+      esbuild: 0.23.0
+      escape-string-regexp: 5.0.0
+      estree-walker: 3.0.3
+      externality: 1.0.2
+      get-port-please: 3.1.2
+      h3: 1.12.0
+      knitwork: 1.1.0
+      magic-string: 0.30.10
+      mlly: 1.7.1
+      ohash: 1.1.3
+      pathe: 1.1.2
+      perfect-debounce: 1.0.0
+      pkg-types: 1.1.3
+      postcss: 8.4.40
+      rollup-plugin-visualizer: 5.12.0(rollup@4.18.1)
+      std-env: 3.7.0
+      strip-literal: 2.1.0
+      ufo: 1.5.4
+      unenv: 1.10.0
+      unplugin: 1.12.0
+      vite: 5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)
+      vite-node: 2.0.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)
+      vite-plugin-checker: 0.7.2(eslint@9.8.0)(optionator@0.9.4)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
+      vue: 3.4.35(typescript@5.5.4)
+      vue-bundle-renderer: 2.1.0
+    transitivePeerDependencies:
+      - '@biomejs/biome'
+      - '@types/node'
+      - eslint
+      - less
+      - lightningcss
+      - magicast
+      - meow
+      - optionator
+      - rollup
+      - sass
+      - stylelint
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - typescript
+      - uWebSockets.js
+      - vls
+      - vti
+      - vue-tsc
+
+  '@nuxt/vite-builder@3.12.4(@types/node@22.1.0)(eslint@9.8.0)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vue@3.4.35(typescript@5.5.4))':
     dependencies:
       '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@4.18.1)
       '@rollup/plugin-replace': 5.0.7(rollup@4.18.1)
@@ -11117,76 +11306,76 @@ snapshots:
 
   '@socket.io/component-emitter@3.1.2': {}
 
-  '@storybook/addon-actions@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/addon-actions@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       '@storybook/global': 5.0.0
       '@types/uuid': 9.0.8
       dequal: 2.0.3
       polished: 4.3.1
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       uuid: 9.0.1
 
-  '@storybook/addon-backgrounds@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/addon-backgrounds@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       '@storybook/global': 5.0.0
       memoizerific: 1.11.3
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       ts-dedent: 2.2.0
 
-  '@storybook/addon-controls@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/addon-controls@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       dequal: 2.0.3
       lodash: 4.17.21
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       ts-dedent: 2.2.0
 
-  '@storybook/addon-docs@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/addon-docs@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       '@babel/core': 7.24.7
       '@mdx-js/react': 3.0.1(@types/react@18.3.3)(react@18.3.1)
-      '@storybook/blocks': 8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))
-      '@storybook/csf-plugin': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
+      '@storybook/blocks': 8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      '@storybook/csf-plugin': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/global': 5.0.0
-      '@storybook/react-dom-shim': 8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))
+      '@storybook/react-dom-shim': 8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@types/react': 18.3.3
       fs-extra: 11.2.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       rehype-external-links: 3.0.0
       rehype-slug: 6.0.0
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       ts-dedent: 2.2.0
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/addon-essentials@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/addon-essentials@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
-      '@storybook/addon-actions': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
-      '@storybook/addon-backgrounds': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
-      '@storybook/addon-controls': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
-      '@storybook/addon-docs': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
-      '@storybook/addon-highlight': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
-      '@storybook/addon-measure': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
-      '@storybook/addon-outline': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
-      '@storybook/addon-toolbars': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
-      '@storybook/addon-viewport': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      '@storybook/addon-actions': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      '@storybook/addon-backgrounds': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      '@storybook/addon-controls': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      '@storybook/addon-docs': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      '@storybook/addon-highlight': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      '@storybook/addon-measure': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      '@storybook/addon-outline': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      '@storybook/addon-toolbars': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      '@storybook/addon-viewport': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       ts-dedent: 2.2.0
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/addon-highlight@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/addon-highlight@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       '@storybook/global': 5.0.0
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
-  '@storybook/addon-interactions@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))':
+  '@storybook/addon-interactions@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))':
     dependencies:
       '@storybook/global': 5.0.0
-      '@storybook/instrumenter': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
-      '@storybook/test': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))
+      '@storybook/instrumenter': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      '@storybook/test': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))
       polished: 4.3.1
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       ts-dedent: 2.2.0
     transitivePeerDependencies:
       - '@jest/globals'
@@ -11195,37 +11384,37 @@ snapshots:
       - jest
       - vitest
 
-  '@storybook/addon-links@8.2.7(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/addon-links@8.2.7(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       '@storybook/csf': 0.1.11
       '@storybook/global': 5.0.0
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       ts-dedent: 2.2.0
     optionalDependencies:
       react: 18.3.1
 
-  '@storybook/addon-measure@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/addon-measure@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       '@storybook/global': 5.0.0
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       tiny-invariant: 1.3.3
 
-  '@storybook/addon-outline@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/addon-outline@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       '@storybook/global': 5.0.0
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       ts-dedent: 2.2.0
 
-  '@storybook/addon-toolbars@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/addon-toolbars@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
-  '@storybook/addon-viewport@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/addon-viewport@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       memoizerific: 1.11.3
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
-  '@storybook/blocks@8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/blocks@8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       '@storybook/csf': 0.1.11
       '@storybook/global': 5.0.0
@@ -11238,7 +11427,7 @@ snapshots:
       memoizerific: 1.11.3
       polished: 4.3.1
       react-colorful: 5.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       telejson: 7.2.0
       ts-dedent: 2.2.0
       util-deprecate: 1.0.2
@@ -11248,7 +11437,7 @@ snapshots:
 
   '@storybook/builder-vite@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))':
     dependencies:
-      '@storybook/csf-plugin': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
+      '@storybook/csf-plugin': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@types/find-cache-dir': 3.2.1
       browser-assert: 1.2.1
       es-module-lexer: 1.5.4
@@ -11256,7 +11445,7 @@ snapshots:
       find-cache-dir: 3.3.2
       fs-extra: 11.2.0
       magic-string: 0.30.10
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       ts-dedent: 2.2.0
       vite: 5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)
     optionalDependencies:
@@ -11274,7 +11463,7 @@ snapshots:
       '@types/cross-spawn': 6.0.6
       cross-spawn: 7.0.3
       globby: 14.0.2
-      jscodeshift: 0.15.2(@babel/preset-env@7.24.7)
+      jscodeshift: 0.15.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       lodash: 4.17.21
       prettier: 3.3.3
       recast: 0.23.9
@@ -11286,15 +11475,15 @@ snapshots:
 
   '@storybook/components@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
-  '@storybook/core-common@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/core-common@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
-  '@storybook/core-server@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/core-server@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
   '@storybook/core@8.2.7':
     dependencies:
@@ -11314,9 +11503,9 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@storybook/csf-plugin@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/csf-plugin@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       unplugin: 1.12.0
 
   '@storybook/csf@0.1.11':
@@ -11330,37 +11519,37 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@storybook/instrumenter@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/instrumenter@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       '@storybook/global': 5.0.0
       '@vitest/utils': 1.6.0
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       util: 0.12.5
 
   '@storybook/manager-api@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
   '@storybook/preview-api@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
-  '@storybook/react-dom-shim@8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7))':
+  '@storybook/react-dom-shim@8.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
-  '@storybook/test@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))':
+  '@storybook/test@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))':
     dependencies:
       '@storybook/csf': 0.1.11
-      '@storybook/instrumenter': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7))
+      '@storybook/instrumenter': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@testing-library/dom': 10.1.0
       '@testing-library/jest-dom': 6.4.5(vitest@2.0.5(@types/node@22.1.0)(jsdom@24.1.1)(sass@1.77.7)(terser@5.31.3))
       '@testing-library/user-event': 14.5.2(@testing-library/dom@10.1.0)
       '@vitest/expect': 1.6.0
       '@vitest/spy': 1.6.0
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       util: 0.12.5
     transitivePeerDependencies:
       - '@jest/globals'
@@ -11371,11 +11560,11 @@ snapshots:
 
   '@storybook/theming@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
   '@storybook/types@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
   '@storybook/vue3-vite@8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue@3.4.35(typescript@5.5.4))':
     dependencies:
@@ -11383,7 +11572,7 @@ snapshots:
       '@storybook/vue3': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(vue@3.4.35(typescript@5.5.4))
       find-package-json: 1.2.0
       magic-string: 0.30.10
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       typescript: 5.5.4
       vite: 5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)
       vue-component-meta: 2.0.26(typescript@5.5.4)
@@ -11403,7 +11592,7 @@ snapshots:
       '@storybook/theming': 8.2.7(storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@vue/compiler-core': 3.4.35
       lodash: 4.17.21
-      storybook: 8.2.7(@babel/preset-env@7.24.7)
+      storybook: 8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.4.35(typescript@5.5.4)
@@ -12144,6 +12333,19 @@ snapshots:
       '@eslint/config-array': 0.17.1
       '@nodelib/fs.walk': 2.0.0
 
+  '@vue-macros/common@1.10.4(rollup@3.29.4)(vue@3.4.35(typescript@5.5.4))':
+    dependencies:
+      '@babel/types': 7.24.9
+      '@rollup/pluginutils': 5.1.0(rollup@3.29.4)
+      '@vue/compiler-sfc': 3.4.35
+      ast-kit: 0.12.2
+      local-pkg: 0.5.0
+      magic-string-ast: 0.6.2
+    optionalDependencies:
+      vue: 3.4.35(typescript@5.5.4)
+    transitivePeerDependencies:
+      - rollup
+
   '@vue-macros/common@1.10.4(rollup@4.18.1)(vue@3.4.35(typescript@5.5.4))':
     dependencies:
       '@babel/types': 7.24.9
@@ -12368,7 +12570,7 @@ snapshots:
       '@vueuse/core': 10.11.0(vue@3.4.35(typescript@5.5.4))
       '@vueuse/metadata': 10.11.0
       local-pkg: 0.5.0
-      nuxt: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
+      nuxt: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4))
       vue-demi: 0.14.8(vue@3.4.35(typescript@5.5.4))
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -14905,7 +15107,7 @@ snapshots:
 
   jsbn@1.1.0: {}
 
-  jscodeshift@0.15.2(@babel/preset-env@7.24.7):
+  jscodeshift@0.15.2(@babel/preset-env@7.24.7(@babel/core@7.24.7)):
     dependencies:
       '@babel/core': 7.24.7
       '@babel/parser': 7.24.7
@@ -16026,14 +16228,226 @@ snapshots:
       - vue
       - webpack
 
-  nuxt@3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4)):
+  nuxt@3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@3.29.4)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4)):
+    dependencies:
+      '@nuxt/devalue': 2.0.2
+      '@nuxt/devtools': 1.3.9(rollup@3.29.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
+      '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@3.29.4)
+      '@nuxt/schema': 3.12.4(rollup@3.29.4)
+      '@nuxt/telemetry': 2.5.4(magicast@0.3.4)(rollup@3.29.4)
+      '@nuxt/vite-builder': 3.12.4(@types/node@22.1.0)(eslint@9.8.0)(magicast@0.3.4)(optionator@0.9.4)(rollup@3.29.4)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))(vue@3.4.35(typescript@5.5.4))
+      '@unhead/dom': 1.9.16
+      '@unhead/ssr': 1.9.16
+      '@unhead/vue': 1.9.16(vue@3.4.35(typescript@5.5.4))
+      '@vue/shared': 3.4.35
+      acorn: 8.12.1
+      c12: 1.11.1(magicast@0.3.4)
+      chokidar: 3.6.0
+      compatx: 0.1.8
+      consola: 3.2.3
+      cookie-es: 1.1.0
+      defu: 6.1.4
+      destr: 2.0.3
+      devalue: 5.0.0
+      errx: 0.1.0
+      esbuild: 0.23.0
+      escape-string-regexp: 5.0.0
+      estree-walker: 3.0.3
+      globby: 14.0.2
+      h3: 1.12.0
+      hookable: 5.5.3
+      ignore: 5.3.1
+      jiti: 1.21.6
+      klona: 2.0.6
+      knitwork: 1.1.0
+      magic-string: 0.30.10
+      mlly: 1.7.1
+      nitropack: 2.9.7(encoding@0.1.13)(magicast@0.3.4)
+      nuxi: 3.12.0
+      nypm: 0.3.9
+      ofetch: 1.3.4
+      ohash: 1.1.3
+      pathe: 1.1.2
+      perfect-debounce: 1.0.0
+      pkg-types: 1.1.3
+      radix3: 1.1.2
+      scule: 1.3.0
+      semver: 7.6.3
+      std-env: 3.7.0
+      strip-literal: 2.1.0
+      ufo: 1.5.4
+      ultrahtml: 1.5.3
+      uncrypto: 0.1.3
+      unctx: 2.3.1
+      unenv: 1.10.0
+      unimport: 3.9.1(rollup@3.29.4)
+      unplugin: 1.12.0
+      unplugin-vue-router: 0.10.1(rollup@3.29.4)(vue-router@4.4.2(vue@3.4.35(typescript@5.5.4)))(vue@3.4.35(typescript@5.5.4))
+      unstorage: 1.10.2(ioredis@5.4.1)
+      untyped: 1.4.2
+      vue: 3.4.35(typescript@5.5.4)
+      vue-bundle-renderer: 2.1.0
+      vue-devtools-stub: 0.1.0
+      vue-router: 4.4.2(vue@3.4.35(typescript@5.5.4))
+    optionalDependencies:
+      '@parcel/watcher': 2.4.1
+      '@types/node': 22.1.0
+    transitivePeerDependencies:
+      - '@azure/app-configuration'
+      - '@azure/cosmos'
+      - '@azure/data-tables'
+      - '@azure/identity'
+      - '@azure/keyvault-secrets'
+      - '@azure/storage-blob'
+      - '@biomejs/biome'
+      - '@capacitor/preferences'
+      - '@libsql/client'
+      - '@netlify/blobs'
+      - '@planetscale/database'
+      - '@upstash/redis'
+      - '@vercel/kv'
+      - better-sqlite3
+      - bufferutil
+      - drizzle-orm
+      - encoding
+      - eslint
+      - idb-keyval
+      - ioredis
+      - less
+      - lightningcss
+      - magicast
+      - meow
+      - optionator
+      - rollup
+      - sass
+      - stylelint
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - typescript
+      - uWebSockets.js
+      - utf-8-validate
+      - vite
+      - vls
+      - vti
+      - vue-tsc
+      - xml2js
+
+  nuxt@3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)):
     dependencies:
       '@nuxt/devalue': 2.0.2
       '@nuxt/devtools': 1.3.9(rollup@4.18.1)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
       '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@4.18.1)
       '@nuxt/schema': 3.12.4(rollup@4.18.1)
       '@nuxt/telemetry': 2.5.4(magicast@0.3.4)(rollup@4.18.1)
-      '@nuxt/vite-builder': 3.12.4(@types/node@22.1.0)(eslint@9.8.0)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))(vue@3.4.35(typescript@5.5.4))
+      '@nuxt/vite-builder': 3.12.4(@types/node@22.1.0)(eslint@9.8.0)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vue@3.4.35(typescript@5.5.4))
+      '@unhead/dom': 1.9.16
+      '@unhead/ssr': 1.9.16
+      '@unhead/vue': 1.9.16(vue@3.4.35(typescript@5.5.4))
+      '@vue/shared': 3.4.35
+      acorn: 8.12.1
+      c12: 1.11.1(magicast@0.3.4)
+      chokidar: 3.6.0
+      compatx: 0.1.8
+      consola: 3.2.3
+      cookie-es: 1.1.0
+      defu: 6.1.4
+      destr: 2.0.3
+      devalue: 5.0.0
+      errx: 0.1.0
+      esbuild: 0.23.0
+      escape-string-regexp: 5.0.0
+      estree-walker: 3.0.3
+      globby: 14.0.2
+      h3: 1.12.0
+      hookable: 5.5.3
+      ignore: 5.3.1
+      jiti: 1.21.6
+      klona: 2.0.6
+      knitwork: 1.1.0
+      magic-string: 0.30.10
+      mlly: 1.7.1
+      nitropack: 2.9.7(encoding@0.1.13)(magicast@0.3.4)
+      nuxi: 3.12.0
+      nypm: 0.3.9
+      ofetch: 1.3.4
+      ohash: 1.1.3
+      pathe: 1.1.2
+      perfect-debounce: 1.0.0
+      pkg-types: 1.1.3
+      radix3: 1.1.2
+      scule: 1.3.0
+      semver: 7.6.3
+      std-env: 3.7.0
+      strip-literal: 2.1.0
+      ufo: 1.5.4
+      ultrahtml: 1.5.3
+      uncrypto: 0.1.3
+      unctx: 2.3.1
+      unenv: 1.10.0
+      unimport: 3.9.1(rollup@4.18.1)
+      unplugin: 1.12.0
+      unplugin-vue-router: 0.10.1(rollup@4.18.1)(vue-router@4.4.2(vue@3.4.35(typescript@5.5.4)))(vue@3.4.35(typescript@5.5.4))
+      unstorage: 1.10.2(ioredis@5.4.1)
+      untyped: 1.4.2
+      vue: 3.4.35(typescript@5.5.4)
+      vue-bundle-renderer: 2.1.0
+      vue-devtools-stub: 0.1.0
+      vue-router: 4.4.2(vue@3.4.35(typescript@5.5.4))
+    optionalDependencies:
+      '@parcel/watcher': 2.4.1
+      '@types/node': 22.1.0
+    transitivePeerDependencies:
+      - '@azure/app-configuration'
+      - '@azure/cosmos'
+      - '@azure/data-tables'
+      - '@azure/identity'
+      - '@azure/keyvault-secrets'
+      - '@azure/storage-blob'
+      - '@biomejs/biome'
+      - '@capacitor/preferences'
+      - '@libsql/client'
+      - '@netlify/blobs'
+      - '@planetscale/database'
+      - '@upstash/redis'
+      - '@vercel/kv'
+      - better-sqlite3
+      - bufferutil
+      - drizzle-orm
+      - encoding
+      - eslint
+      - idb-keyval
+      - ioredis
+      - less
+      - lightningcss
+      - magicast
+      - meow
+      - optionator
+      - rollup
+      - sass
+      - stylelint
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - typescript
+      - uWebSockets.js
+      - utf-8-validate
+      - vite
+      - vls
+      - vti
+      - vue-tsc
+      - xml2js
+
+  nuxt@3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(encoding@0.1.13)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))(vue-tsc@2.0.29(typescript@5.5.4)):
+    dependencies:
+      '@nuxt/devalue': 2.0.2
+      '@nuxt/devtools': 1.3.9(rollup@4.18.1)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3))
+      '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@4.18.1)
+      '@nuxt/schema': 3.12.4(rollup@4.18.1)
+      '@nuxt/telemetry': 2.5.4(magicast@0.3.4)(rollup@4.18.1)
+      '@nuxt/vite-builder': 3.12.4(@types/node@22.1.0)(eslint@9.8.0)(magicast@0.3.4)(rollup@4.18.1)(sass@1.77.7)(terser@5.31.3)(typescript@5.5.4)(vue-tsc@2.0.29(typescript@5.5.4))(vue@3.4.35(typescript@5.5.4))
       '@unhead/dom': 1.9.16
       '@unhead/ssr': 1.9.16
       '@unhead/vue': 1.9.16(vue@3.4.35(typescript@5.5.4))
@@ -17197,6 +17611,15 @@ snapshots:
     optionalDependencies:
       '@babel/code-frame': 7.24.7
 
+  rollup-plugin-visualizer@5.12.0(rollup@3.29.4):
+    dependencies:
+      open: 8.4.2
+      picomatch: 2.3.1
+      source-map: 0.7.4
+      yargs: 17.7.2
+    optionalDependencies:
+      rollup: 3.29.4
+
   rollup-plugin-visualizer@5.12.0(rollup@4.18.1):
     dependencies:
       open: 8.4.2
@@ -17553,7 +17976,7 @@ snapshots:
 
   stdin-discarder@0.2.2: {}
 
-  storybook@8.2.7(@babel/preset-env@7.24.7):
+  storybook@8.2.7(@babel/preset-env@7.24.7(@babel/core@7.24.7)):
     dependencies:
       '@babel/core': 7.24.7
       '@babel/types': 7.24.9
@@ -17573,7 +17996,7 @@ snapshots:
       fs-extra: 11.2.0
       giget: 1.2.3
       globby: 14.0.2
-      jscodeshift: 0.15.2(@babel/preset-env@7.24.7)
+      jscodeshift: 0.15.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       leven: 3.1.0
       ora: 5.4.1
       prettier: 3.3.3
@@ -18180,6 +18603,27 @@ snapshots:
 
   unpipe@1.0.0: {}
 
+  unplugin-vue-router@0.10.1(rollup@3.29.4)(vue-router@4.4.2(vue@3.4.35(typescript@5.5.4)))(vue@3.4.35(typescript@5.5.4)):
+    dependencies:
+      '@babel/types': 7.24.9
+      '@rollup/pluginutils': 5.1.0(rollup@3.29.4)
+      '@vue-macros/common': 1.10.4(rollup@3.29.4)(vue@3.4.35(typescript@5.5.4))
+      ast-walker-scope: 0.6.1
+      chokidar: 3.6.0
+      fast-glob: 3.3.2
+      json5: 2.2.3
+      local-pkg: 0.5.0
+      mlly: 1.7.1
+      pathe: 1.1.2
+      scule: 1.3.0
+      unplugin: 1.12.0
+      yaml: 2.4.5
+    optionalDependencies:
+      vue-router: 4.4.2(vue@3.4.35(typescript@5.5.4))
+    transitivePeerDependencies:
+      - rollup
+      - vue
+
   unplugin-vue-router@0.10.1(rollup@4.18.1)(vue-router@4.4.2(vue@3.4.35(typescript@5.5.4)))(vue@3.4.35(typescript@5.5.4)):
     dependencies:
       '@babel/types': 7.24.9
@@ -18374,6 +18818,24 @@ snapshots:
       optionator: 0.9.4
       typescript: 5.5.4
       vue-tsc: 2.0.29(typescript@5.5.4)
+
+  vite-plugin-inspect@0.8.5(@nuxt/kit@3.12.4(magicast@0.3.4)(rollup@3.29.4))(rollup@3.29.4)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)):
+    dependencies:
+      '@antfu/utils': 0.7.10
+      '@rollup/pluginutils': 5.1.0(rollup@3.29.4)
+      debug: 4.3.5
+      error-stack-parser-es: 0.1.4
+      fs-extra: 11.2.0
+      open: 10.1.0
+      perfect-debounce: 1.0.0
+      picocolors: 1.0.1
+      sirv: 2.0.4
+      vite: 5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)
+    optionalDependencies:
+      '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@3.29.4)
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
 
   vite-plugin-inspect@0.8.5(@nuxt/kit@3.12.4(magicast@0.3.4)(rollup@4.18.1))(rollup@4.18.1)(vite@5.3.5(@types/node@22.1.0)(sass@1.77.7)(terser@5.31.3)):
     dependencies:
