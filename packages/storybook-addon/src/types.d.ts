@@ -1,12 +1,4 @@
 import type { StorybookConfig as StorybookConfigBase } from '@storybook/types'
-import type {
-  Preview,
-  StoryFn,
-  StoryObj,
-  VueRenderer,
-  Meta,
-  DecoratorFunction,
-} from '@storybook/vue3'
 import type { FrameworkOptions as FrameworkOptionsVue } from '@storybook/vue3-vite'
 import type {
   StorybookConfigVite,
@@ -46,5 +38,3 @@ export type StorybookConfig = Omit<
 > &
   StorybookConfigVite &
   StorybookConfigFramework
-
-export { Meta, StoryFn, StoryObj, Preview, VueRenderer, DecoratorFunction }
