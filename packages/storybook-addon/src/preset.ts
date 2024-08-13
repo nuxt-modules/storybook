@@ -158,8 +158,15 @@ function mergeViteConfig(
     // and transforms global vue components before nuxt:components:imports.
     plugins.unshift(vuePlugin())
   }
-
   extendedConfig.plugins = plugins
+
+  // Storybook uses the runtime-included build of Vue
+  // This makes sense but is currently not working with the playground
+  // TODO: Figure out what goes wrong and re-enable this
+  if (extendedConfig.resolve?.alias && 'vue' in extendedConfig.resolve.alias) {
+    delete extendedConfig.resolve.alias['vue']
+  }
+
   // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
   // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
   extendedConfig.optimizeDeps = extendedConfig.optimizeDeps || {}

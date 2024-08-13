@@ -62,5 +62,3 @@ jobs:
           projectToken: ${{ matrix.projectToken }}
           buildScriptName: ${{ matrix.storybookBuildScript }}
           debug: true
-        env:
-          NODE_OPTIONS: --max-old-space-size=8192
