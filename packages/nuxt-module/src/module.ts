@@ -4,6 +4,8 @@ import { logger } from './logger'
 
 import { setupStorybook } from './storybook'
 
+export type * from '@storybook-vue/nuxt'
+
 export interface ModuleOptions {
   /**
    * The route where the Storybook application will be available in development mode.

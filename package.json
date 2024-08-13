@@ -27,7 +27,7 @@
     "example:showcase:build": "pnpm run --filter=./examples/showcase/** build",
     "example:showcase:storybook:build": "pnpm run --filter=./examples/showcase/** build-storybook",
     "example:showcase:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:showcase:storybook:build --project-token=chpt_a53adf402cb628c",
-    "build": "pnpm run --recursive --filter=./packages/* --parallel build",
+    "build": "pnpm run --recursive --filter=./packages/* build",
     "package": "cd ./packages/storybook-addon && pnpm pack && cd ../nuxt-module && pnpm pack",
     "lint": "pnpm lint:eslint && pnpm lint:prettier",
     "lint:eslint": "eslint --max-warnings=0 --report-unused-disable-directives .",
