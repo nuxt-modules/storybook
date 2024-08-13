@@ -4,7 +4,7 @@
  * https://github.com/storybookjs/storybook/blob/main/docs/configure/index.md#configure-story-rendering
  *
  * We use it to load the Nuxt app in the preview iframe.
- * This should contain the same setup as the what Nuxt does in the background.
+ * This should contain the same setup as what Nuxt does in the background.
  * https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/app/entry.ts
  */
 
@@ -34,14 +34,21 @@ setup(async (vueApp, storyContext) => {
   if (!key) {
     throw new Error('StoryContext is not provided')
   }
-  const nuxtAppName = `nuxt-app-${key}`
-  const nuxtCtx = getContext(nuxtAppName)
-  if (nuxtCtx.tryUse()) {
+
+  // This is the `nuxtApp._name`, it's the same for all stories.
+  const appId = 'nuxt-app'
+  const globalCtx = getContext(appId)
+
+  // This is the `nuxtApp.globalName`, it's different for each story.
+  const storyNuxtAppName = `nuxt-app-${key}`
+  const storyNuxtCtx = getContext(storyNuxtAppName)
+  if (storyNuxtCtx.tryUse()) {
     // Nothing to do, the Nuxt app is already created
     return
   }
 
   // Provide the config of the Nuxt app
+  // @ts-expect-error internal Nuxt property
   window.__NUXT__ = {
     serverRendered: false,
     config: {
@@ -62,12 +69,14 @@ setup(async (vueApp, storyContext) => {
 
   const nuxt = createNuxtApp({
     vueApp,
-    globalName: nuxtAppName,
+    globalName: storyNuxtAppName,
   })
+
+  globalCtx.set(nuxt, true)
+
   await applyPlugins(nuxt, pluginsTyped)
   await nuxt.hooks.callHook('app:created', vueApp)
   await nuxt.hooks.callHook('app:beforeMount', vueApp)
-  nuxtCtx.set(nuxt, true)
 
   // TODO: The following are usually called after the app is mounted
   // but currently storybook doesn't provide a hook to do that

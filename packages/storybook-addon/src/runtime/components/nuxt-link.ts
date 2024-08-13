@@ -344,7 +344,7 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
         // converts `""` to `null` to prevent the attribute from being added as empty (`href=""`)
         const href =
           typeof to.value === 'object'
-            ? router.resolve(to.value)?.href ?? null
+            ? (router.resolve(to.value)?.href ?? null)
             : to.value || null
 
         // Resolves `target` value

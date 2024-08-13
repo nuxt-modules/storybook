@@ -1,9 +1,5 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<script setup>
-defineProps({
-  message: String,
-})
-</script>
+<script setup></script>
 
 <template>
   <v-container>

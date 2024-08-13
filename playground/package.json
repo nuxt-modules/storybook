@@ -7,16 +7,17 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "prepare": "nuxt prepare",
     "storybook": "storybook dev --port 6006",
     "build-storybook": "storybook build"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^1.1.5",
     "@nuxtjs/storybook": "workspace:*",
-    "@storybook/addon-essentials": "^8.0.8",
-    "@storybook/addon-interactions": "^8.0.8",
-    "@storybook/addon-links": "^8.0.8",
-    "nuxt": "^3.11.1",
-    "vite-plugin-inspect": "^0.8.4"
+    "@storybook/addon-essentials": "^8.2.8",
+    "@storybook/addon-interactions": "^8.2.8",
+    "@storybook/addon-links": "^8.2.8",
+    "nuxt": "3.12.4",
+    "storybook": "^8.2.8",
+    "vite-plugin-inspect": "0.8.5"
   }
 }

@@ -4,12 +4,8 @@ import { getPort } from 'get-port-please'
 import type { ModuleOptions } from './module'
 import { withTrailingSlash } from 'ufo'
 import { colors, logger } from './logger'
-import {
-  cache as storybookCache,
-  type PackageJson,
-} from '@storybook/core-common'
+import { cache as storybookCache } from '@storybook/core-common'
 import { buildDevStandalone, withTelemetry } from '@storybook/core-server'
-import storybookPackageJson from '@storybook/core-server/package.json'
 
 const buildLogger = logger.withTag('build')
 
@@ -57,7 +53,10 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     configDir: resolve(projectDir, './.storybook'),
     configType: 'DEVELOPMENT',
     cache: storybookCache,
-    packageJson: storybookPackageJson as PackageJson,
+    packageJson: { version: '8.2.7' },
+    // Don't check for storybook updates (we're using the latest version)
+    versionUpdates: false,
+    quiet: options.logLevel < 4, // 4 = debug
   } satisfies Parameters<typeof buildDevStandalone>[0]
 
   if (!nuxt.options.dev) return

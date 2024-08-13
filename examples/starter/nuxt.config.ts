@@ -2,4 +2,6 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/storybook'],
+
+  compatibilityDate: '2024-08-03',
 })

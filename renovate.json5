@@ -1,0 +1,34 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
+    // Group all minor and patch updates together
+    'group:allNonMajor',
+    // Schedule updates to run every weekend
+    'schedule:weekends',
+    // Use "chore" type for all commit messages
+    ':semanticCommitTypeAll(chore)',
+    // Pin all dev dependencies following https://docs.renovatebot.com/dependency-pinning/
+    ':pinDevDependencies',
+  ],
+  // Don't ignore 'examples' directories
+  ignorePaths: ['**/node_modules/**'],
+  packageRules: [
+    {
+      // Bump all @storybook/* packages so that always the latest version is used
+      matchPackagePatterns: ['storybook', '@storybook/*'],
+      groupName: 'storybook packages',
+      groupSlug: 'storybook',
+      rangeStrategy: 'bump',
+    },
+    {
+      // Pin all dependencies following https://docs.renovatebot.com/dependency-pinning/
+      matchFileNames: ['docs/package.json', 'examples/**/package.json'],
+      rangeStrategy: 'pin',
+    },
+  ],
+  postUpdateOptions: [
+    // Run pnpm dedupe after pnpm-lock.yaml updates
+    'pnpmDedupe',
+  ],
+}

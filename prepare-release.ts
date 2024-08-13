@@ -214,7 +214,7 @@ async function writeChangelog(changelog: string) {
 }
 
 function checkGitBranch() {
-  const isDirtyGit = !!execSync('git status --porcelain')
+  const isDirtyGit = execSync('git status --porcelain').toString().trim()
   if (isDirtyGit) {
     consola.error(`Git repo isn't clean.`)
     process.exit(1)
@@ -240,7 +240,7 @@ function checkGitBranch() {
   }
 }
 
-async function main() {
+async function prepareRelease() {
   checkGitBranch()
   const { commits, newVersion } = await bumpVersion()
   const changelog = await generateMarkDown(
@@ -250,8 +250,40 @@ async function main() {
   await writeChangelog(changelog)
   execSync('pnpm lint:prettier --write')
 
-  execSync(`git checkout -b v${newVersion}`)
   execSync(`git commit -am "chore(release): bump version to ${newVersion}"`)
+
+  execSync(`git tag -a v${newVersion} -m "v${newVersion}"`)
+}
+
+async function prepareNightly() {
+  const workspace = await loadWorkspace(process.cwd())
+
+  const commit = execSync('git rev-parse --short HEAD')
+    .toString('utf-8')
+    .trim()
+    .slice(0, 8)
+  const date = Math.round(Date.now() / (1000 * 60))
+
+  const bumpType = await determineBumpType()
+
+  for (const pkg of workspace.packages.filter((p) => !p.data.private)) {
+    const newVersion = inc(pkg.data.version, bumpType || 'patch')
+    workspace.setVersion(pkg.data.name, `${newVersion}-${date}.${commit}`, {
+      updateDeps: true,
+    })
+  }
+
+  await workspace.save()
+}
+
+async function main() {
+  const isNightly = process.argv.includes('--nightly')
+
+  if (isNightly) {
+    await prepareNightly()
+  } else {
+    await prepareRelease()
+  }
 }
 
 main().catch((err) => {

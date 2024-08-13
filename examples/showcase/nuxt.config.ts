@@ -2,12 +2,15 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/storybook', '@nuxt/image', '@pinia/nuxt'],
+
   pinia: {
     autoImports: ['defineStore', 'acceptHMRUpdate'],
   },
+
   imports: {
     dirs: ['./stores'],
   },
+
   runtimeConfig: {
     // For testing runtimeConfig in useMyComposable
     app: {
@@ -18,7 +21,10 @@ export default defineNuxtConfig({
       port: 3000,
     },
   },
+
   vue: {
     runtimeCompiler: true,
   },
+
+  compatibilityDate: '2024-08-03',
 })
