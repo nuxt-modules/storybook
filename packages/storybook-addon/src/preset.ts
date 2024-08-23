@@ -140,6 +140,15 @@ function mergeViteConfig(
   nuxtConfig: ViteConfig,
   nuxt: Nuxt,
 ): ViteConfig {
+  // Storybook uses the runtime-included build of Vue
+  // This makes sense but is currently not working with the playground
+  // TODO: Figure out what goes wrong and re-enable this
+  if (
+    storybookConfig.resolve?.alias &&
+    'vue' in storybookConfig.resolve.alias
+  ) {
+    delete storybookConfig.resolve.alias['vue']
+  }
   const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
 
   const plugins = extendedConfig.plugins || []
@@ -158,14 +167,18 @@ function mergeViteConfig(
     // and transforms global vue components before nuxt:components:imports.
     plugins.unshift(vuePlugin())
   }
-  extendedConfig.plugins = plugins
 
-  // Storybook uses the runtime-included build of Vue
-  // This makes sense but is currently not working with the playground
-  // TODO: Figure out what goes wrong and re-enable this
-  if (extendedConfig.resolve?.alias && 'vue' in extendedConfig.resolve.alias) {
-    delete extendedConfig.resolve.alias['vue']
+  const indexDocgen = plugins.findIndex(
+    (plugin) =>
+      plugin &&
+      'name' in plugin &&
+      plugin.name === 'storybook:vue-docgen-plugin',
+  )
+  if (indexDocgen !== -1) {
+    plugins.splice(indexDocgen, 1)
   }
+
+  extendedConfig.plugins = plugins
 
   // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
   // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
@@ -334,7 +347,7 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     storybookViteConfig.root,
   )
 
-  const finalViteConfig = mergeViteConfig(storybookViteConfig, nuxtConfig, nuxt)
+  const finalViteConfig = mergeViteConfig(config, nuxtConfig, nuxt)
 
   if (options.outputDir != null) {
     // Write all vite configs to logs

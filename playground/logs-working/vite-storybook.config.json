@@ -1,0 +1,71 @@
+{
+  "base": "./",
+  "build": {
+    "emptyOutDir": false,
+    "outDir": "D:\\Programming\\nuxt-storybook\\playground\\storybook-static",
+    "rollupOptions": {
+      "external": [
+        "./sb-preview/runtime.js",
+        {
+        }
+      ]
+    }
+  },
+  "cacheDir": "D:\\Programming\\nuxt-storybook\\playground\\node_modules\\.cache\\storybook\\default\\sb-vite",
+  "configFile": false,
+  "envPrefix": [
+    "VITE_",
+    "STORYBOOK_"
+  ],
+  "plugins": [
+    {
+      "enforce": "pre",
+      "name": "storybook:code-generator-plugin"
+    },
+    {
+      "enforce": "pre",
+      "name": "plugin-csf",
+      "rollup": {
+        "name": "plugin-csf"
+      },
+      "vite": {
+        "enforce": "pre",
+        "name": "plugin-csf"
+      }
+    },
+    {
+      "enforce": "post",
+      "name": "storybook:inject-export-order-plugin"
+    },
+    {
+      "enforce": "post",
+      "name": "storybook:strip-hmr-boundary-plugin"
+    },
+    {
+      "enforce": "post",
+      "name": "storybook:allow-storybook-dir"
+    },
+    {
+      "enforce": "post",
+      "name": "storybook:external-globals-plugin"
+    },
+    {
+      "enforce": "post",
+      "name": "storybook:rollup-plugin-webpack-stats"
+    },
+    {
+      "name": "storybook:vue-docgen-plugin"
+    }
+  ],
+  "resolve": {
+    "alias": {
+      "assert": "D:\\Programming\\nuxt-storybook\\node_modules\\.pnpm\\browser-assert@1.2.1\\node_modules\\browser-assert\\lib\\assert.js"
+    },
+    "conditions": [
+      "storybook",
+      "stories",
+      "test"
+    ]
+  },
+  "root": "D:\\Programming\\nuxt-storybook\\playground"
+}
