@@ -57,6 +57,9 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     // Don't check for storybook updates (we're using the latest version)
     versionUpdates: false,
     quiet: options.logLevel < 4, // 4 = debug
+    https: Boolean(options.https),
+    sslCert: typeof options.https === 'object' ? options.https.cert : undefined,
+    sslKey: typeof options.https === 'object' ? options.https.key : undefined,
   } satisfies Parameters<typeof buildDevStandalone>[0]
 
   if (!nuxt.options.dev) return
