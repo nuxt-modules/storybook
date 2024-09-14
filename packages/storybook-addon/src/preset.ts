@@ -328,7 +328,7 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     storybookViteConfig.root,
   )
 
-  const finalViteConfig = mergeViteConfig(config, nuxtConfig, nuxt)
+  const finalViteConfig = mergeViteConfig(storybookViteConfig, nuxtConfig, nuxt)
 
   if (options.outputDir != null) {
     // Write all vite configs to logs
