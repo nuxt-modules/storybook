@@ -35,13 +35,9 @@ setup(async (vueApp, storyContext) => {
     throw new Error('StoryContext is not provided')
   }
 
-  // This is the `nuxtApp._name`, it's the same for all stories.
-  const appId = 'nuxt-app'
-  const globalCtx = getContext(appId)
-
-  // This is the `nuxtApp.globalName`, it's different for each story.
-  const storyNuxtAppName = `nuxt-app-${key}`
-  const storyNuxtCtx = getContext(storyNuxtAppName)
+  // Create a new nuxt app for each story
+  const storyNuxtAppId = `nuxt-app-${key}`
+  const storyNuxtCtx = getContext(storyNuxtAppId)
   if (storyNuxtCtx.tryUse()) {
     // Nothing to do, the Nuxt app is already created
     return
@@ -68,11 +64,14 @@ setup(async (vueApp, storyContext) => {
   }
 
   const nuxt = createNuxtApp({
+    id: storyNuxtAppId,
     vueApp,
-    globalName: storyNuxtAppName,
   })
 
-  globalCtx.set(nuxt, true)
+  // Provide the Nuxt app as context
+  storyNuxtCtx.set(nuxt, true)
+  // ...also for calls of useNuxtApp with the default key
+  getContext('nuxt-app').set(nuxt, true)
 
   await applyPlugins(nuxt, pluginsTyped)
   await nuxt.hooks.callHook('app:created', vueApp)
