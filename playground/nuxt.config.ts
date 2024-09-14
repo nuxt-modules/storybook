@@ -8,9 +8,5 @@ export default defineNuxtConfig({
     logLevel: Number.POSITIVE_INFINITY,
   },
 
-  vue: {
-    runtimeCompiler: true,
-  },
-
   compatibilityDate: '2024-08-03',
 })

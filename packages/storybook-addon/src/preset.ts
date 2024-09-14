@@ -140,15 +140,6 @@ function mergeViteConfig(
   nuxtConfig: ViteConfig,
   nuxt: Nuxt,
 ): ViteConfig {
-  // Storybook uses the runtime-included build of Vue
-  // This makes sense but is currently not working with the playground
-  // TODO: Figure out what goes wrong and re-enable this
-  if (
-    storybookConfig.resolve?.alias &&
-    'vue' in storybookConfig.resolve.alias
-  ) {
-    delete storybookConfig.resolve.alias['vue']
-  }
   const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
 
   const plugins = extendedConfig.plugins || []
@@ -166,16 +157,6 @@ function mergeViteConfig(
     // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
     // and transforms global vue components before nuxt:components:imports.
     plugins.unshift(vuePlugin())
-  }
-
-  const indexDocgen = plugins.findIndex(
-    (plugin) =>
-      plugin &&
-      'name' in plugin &&
-      plugin.name === 'storybook:vue-docgen-plugin',
-  )
-  if (indexDocgen !== -1) {
-    plugins.splice(indexDocgen, 1)
   }
 
   extendedConfig.plugins = plugins

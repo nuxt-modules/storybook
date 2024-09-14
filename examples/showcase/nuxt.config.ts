@@ -22,9 +22,5 @@ export default defineNuxtConfig({
     },
   },
 
-  vue: {
-    runtimeCompiler: true,
-  },
-
   compatibilityDate: '2024-08-03',
 })
