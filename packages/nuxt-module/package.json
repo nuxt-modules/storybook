@@ -30,10 +30,14 @@
       "require": "./dist/module.cjs"
     }
   },
+  "bin":{
+    "storybook": "./bin/storybook.mjs"
+  },
   "main": "./dist/module.cjs",
   "types": "./dist/types.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "bin"
   ],
   "engines": {
     "node": ">=18.0.0"
@@ -47,8 +51,11 @@
     "@nuxt/devtools-kit": "^1.0.8",
     "@nuxt/kit": "^3.12.0",
     "@storybook-vue/nuxt": "workspace:*",
+    "@storybook/addon-essentials": "^8.3.0",
+    "@storybook/blocks": "^8.3.0",
     "@storybook/core-common": "^8.3.0",
     "@storybook/core-server": "^8.3.0",
+    "@storybook/test": "^8.3.0",
     "chalk": "^5.0.0",
     "consola": "^3.2.3",
     "defu": "^6.1.4",
