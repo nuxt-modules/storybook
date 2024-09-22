@@ -7,5 +7,6 @@ export default defineVitestConfig({
       // Don't fail the test if typecheck of source files fails for the moment
       ignoreSourceErrors: true,
     },
+    include: ['test/*.spec.ts'],
   },
 })
