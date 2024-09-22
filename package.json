@@ -41,7 +41,8 @@
     "docs:generate": "pnpm run --filter=./docs/** generate",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "test:playwright": "pnpm exec playwright test"
   },
   "packageManager": "pnpm@9.10.0",
   "devDependencies": {
