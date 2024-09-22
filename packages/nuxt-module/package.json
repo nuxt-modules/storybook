@@ -30,10 +30,14 @@
       "require": "./dist/module.cjs"
     }
   },
+  "bin": {
+    "storybook": "./bin/storybook.mjs"
+  },
   "main": "./dist/module.cjs",
   "types": "./dist/types.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "bin"
   ],
   "engines": {
     "node": ">=18.0.0"
