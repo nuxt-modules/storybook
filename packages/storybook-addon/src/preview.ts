@@ -60,6 +60,7 @@ setup(async (vueApp, storyContext) => {
   if (!globalThis.$fetch) {
     globalThis.$fetch = $fetch.create({
       baseURL: '/',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any
   }
 
