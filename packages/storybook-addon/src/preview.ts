@@ -60,7 +60,7 @@ setup(async (vueApp, storyContext) => {
   if (!globalThis.$fetch) {
     globalThis.$fetch = $fetch.create({
       baseURL: '/',
-    })
+    }) as any
   }
 
   const nuxt = createNuxtApp({
