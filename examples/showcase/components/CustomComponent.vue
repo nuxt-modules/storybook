@@ -52,9 +52,10 @@ function onClick() {
 </script>
 
 <template>
-  <div class="storybook sb-column">
+  <div v-test="test" class="storybook sb-column">
     <button :class="classes" :style="style" @click="onClick">
-      {{ label }} <slot />
+      {{ label }}
+      <slot />
     </button>
   </div>
 </template>

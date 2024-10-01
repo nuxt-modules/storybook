@@ -21,7 +21,11 @@ export default defineNuxtConfig({
       port: 3000,
     },
   },
-
+  vite: {
+    optimizeDeps: {
+      include: ['jsdoc-type-pratt-parser'],
+    },
+  },
   vue: {
     runtimeCompiler: true,
   },
