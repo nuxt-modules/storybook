@@ -1,5 +1,22 @@
 # Changelog
 
+## v8.3.2
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.1...v8.3.2)
+
+### 📖 Documentation
+
+- Module will not automatically generate a basic configuration ([#797](https://github.com/nuxt-modules/storybook/pull/797))
+
+### 🏡 Chore
+
+- **ci:** Update CI workflow to use nightly-release change the script name ([#806](https://github.com/nuxt-modules/storybook/pull/806))
+
+### ❤️ Contributors
+
+- Chakir QATAB ([@chakAs3](http://github.com/chakAs3))
+- Luca-smartpricing ([@luca-smartpricing](http://github.com/luca-smartpricing))
+
 ## v8.3.1
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.0...v8.3.1)
