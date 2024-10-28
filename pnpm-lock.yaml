@@ -110,8 +110,8 @@ importers:
         version: 4.4.5(vue@3.5.11(typescript@5.6.2))
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: 2.0.2
-        version: 2.0.2(react@18.3.1)
+        specifier: 3.1.0
+        version: 3.1.0(react@18.3.1)(storybook@8.3.0)
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
@@ -144,8 +144,8 @@ importers:
         version: 4.4.5(vue@3.5.11(typescript@5.6.2))
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: 2.0.2
-        version: 2.0.2(react@18.3.1)
+        specifier: 3.1.0
+        version: 3.1.0(react@18.3.1)(storybook@8.3.0)
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
@@ -181,8 +181,8 @@ importers:
         version: 4.4.5(vue@3.5.11(typescript@5.6.2))
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: 2.0.2
-        version: 2.0.2(react@18.3.1)
+        specifier: 3.1.0
+        version: 3.1.0(react@18.3.1)(storybook@8.3.0)
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
@@ -545,9 +545,11 @@ packages:
   '@capsizecss/unpack@2.2.0':
     resolution: {integrity: sha512-IBBiVmEFSTt+wMkhy063mboZvIvqkndVYu+l62iwOcOW4nf0VJa8+reZ4RgL1FcyfjVIjMkBwKIhydgZHPILCQ==}
 
-  '@chromatic-com/storybook@2.0.2':
-    resolution: {integrity: sha512-7bPIliISedeIpnVKbzktysFYW5n56bN91kxuOj1XXKixmjbUHRUMvcXd4K2liN6MiR5ZqJtmtcPsZ6CebbGlEA==}
+  '@chromatic-com/storybook@3.1.0':
+    resolution: {integrity: sha512-AM8jDwoBNNwJKgmoWkHIOhu4ObsxvDtOzZC9tPCVEW6P+pFwg5xjSZAQglIE2c8/SsEPSduNdxBt31ES3iDwoA==}
     engines: {node: '>=16.0.0', yarn: '>=1.22.18'}
+    peerDependencies:
+      storybook: ^8.3.0
 
   '@cloudflare/kv-asset-handler@0.3.4':
     resolution: {integrity: sha512-YLPHc8yASwjNkmcDMQMY35yiWjoKAKnhUbPRszBRS0YgH+IXtsMp61j+yTcnCE3oO2DgP0U3iejLC8FTtKDC8Q==}
@@ -2145,6 +2147,11 @@ packages:
       vite-plugin-glimmerx:
         optional: true
 
+  '@storybook/channels@8.3.6':
+    resolution: {integrity: sha512-6ahY0n1A19diR5cI63lhDEpMaDsq7LFtMOgWab2NwCsdXoEAl6anvDptyPWW60umN3HrDzSKFdpRx4imOEjlWw==}
+    peerDependencies:
+      storybook: ^8.3.6
+
   '@storybook/components@8.3.0':
     resolution: {integrity: sha512-SO/iTkmWp3aYCIy8DEhRMoOn6K7lcKTPNC/YjTvOFFzwq/CLq86WNqz6aX+wV5n6MvWTs7evSwMoz7lp4Lc4sw==}
     peerDependencies:
@@ -2202,6 +2209,11 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       storybook: ^8.3.0
+
+  '@storybook/telemetry@8.3.6':
+    resolution: {integrity: sha512-fhpbZok7mPeujjFxAKo2vuqhfjhv5BO/mHH7Z8QtgsYqeR7px56arDRgV6CngBZWgFvrQ2wBS0HPV4nB6YWvJQ==}
+    peerDependencies:
+      storybook: ^8.3.6
 
   '@storybook/test@8.3.0':
     resolution: {integrity: sha512-d8y8ST8YY/pSjTxBcWitKM7YbbupN8D0obVlciZRt6WW3o8WUz6iwMuzuJuiUVwtxiRtdKL9jygC5M+aaCpFYQ==}
@@ -3122,6 +3134,18 @@ packages:
 
   chromatic@11.11.0:
     resolution: {integrity: sha512-mwmYsNMsZlRLtlfFUEtac5zhoVRhc+O/lsuMdOpwkiDQiKX6WdSNIhic+dkLenfuzao2r18s50nphcOgFoatBg==}
+    hasBin: true
+    peerDependencies:
+      '@chromatic-com/cypress': ^0.*.* || ^1.0.0
+      '@chromatic-com/playwright': ^0.*.* || ^1.0.0
+    peerDependenciesMeta:
+      '@chromatic-com/cypress':
+        optional: true
+      '@chromatic-com/playwright':
+        optional: true
+
+  chromatic@11.16.1:
+    resolution: {integrity: sha512-pdpURz0tLp2EJSwfDUHJAf8xufkL/FGZmNuyebv03WkTOZPUAxBMZ19/Y6sFST6MQvUGy/2VI5eNWnfWLDLwhQ==}
     hasBin: true
     peerDependencies:
       '@chromatic-com/cypress': ^0.*.* || ^1.0.0
@@ -7812,12 +7836,16 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@chromatic-com/storybook@2.0.2(react@18.3.1)':
+  '@chromatic-com/storybook@3.1.0(react@18.3.1)(storybook@8.3.0)':
     dependencies:
-      chromatic: 11.11.0
+      '@storybook/channels': 8.3.6(storybook@8.3.0)
+      '@storybook/telemetry': 8.3.6(storybook@8.3.0)
+      '@storybook/types': 8.3.0(storybook@8.3.0)
+      chromatic: 11.16.1
       filesize: 10.1.4
       jsonfile: 6.1.0
       react-confetti: 6.1.0(react@18.3.1)
+      storybook: 8.3.0
       strip-ansi: 7.1.0
     transitivePeerDependencies:
       - '@chromatic-com/cypress'
@@ -9713,6 +9741,10 @@ snapshots:
       - supports-color
       - webpack-sources
 
+  '@storybook/channels@8.3.6(storybook@8.3.0)':
+    dependencies:
+      storybook: 8.3.0
+
   '@storybook/components@8.3.0(storybook@8.3.0)':
     dependencies:
       storybook: 8.3.0
@@ -9780,6 +9812,10 @@ snapshots:
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+      storybook: 8.3.0
+
+  '@storybook/telemetry@8.3.6(storybook@8.3.0)':
+    dependencies:
       storybook: 8.3.0
 
   '@storybook/test@8.3.0(storybook@8.3.0)':
@@ -10943,6 +10979,8 @@ snapshots:
   chownr@2.0.0: {}
 
   chromatic@11.11.0: {}
+
+  chromatic@11.16.1: {}
 
   chrome-launcher@1.1.2:
     dependencies:
