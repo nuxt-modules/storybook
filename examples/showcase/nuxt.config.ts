@@ -26,5 +26,5 @@ export default defineNuxtConfig({
     runtimeCompiler: true,
   },
 
-  compatibilityDate: '2024-07-13',
+  compatibilityDate: '2024-08-03',
 })

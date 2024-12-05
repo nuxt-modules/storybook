@@ -4,6 +4,8 @@ import { logger } from './logger'
 
 import { setupStorybook } from './storybook'
 
+export type * from '@storybook-vue/nuxt'
+
 export interface ModuleOptions {
   /**
    * The route where the Storybook application will be available in development mode.
@@ -39,6 +41,21 @@ export interface ModuleOptions {
    * @default true
    */
   enabled: boolean
+
+  /**
+   * Whether to enable HTTPS.
+   *
+   * @default false
+   *
+   * @example
+   * ```
+   * https: {
+   *   key: './server.key',
+   *   cert: './server.crt'
+   * }
+   * ```
+   */
+  https: boolean | { key: string; cert: string }
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -59,6 +76,7 @@ export default defineNuxtModule<ModuleOptions>({
     port: 6006,
     logLevel: nuxt.options.logLevel === 'silent' ? 0 : 3,
     enabled: true,
+    https: false,
   }),
   async setup(options, nuxt) {
     if (import.meta.env?.__STORYBOOK__ || !options.enabled) return

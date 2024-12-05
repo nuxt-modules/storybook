@@ -1,5 +1,106 @@
 # Changelog
 
+## v8.3.2
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.1...v8.3.2)
+
+### 📖 Documentation
+
+- Module will not automatically generate a basic configuration ([#797](https://github.com/nuxt-modules/storybook/pull/797))
+
+### 🏡 Chore
+
+- **ci:** Update CI workflow to use nightly-release change the script name ([#806](https://github.com/nuxt-modules/storybook/pull/806))
+
+### ❤️ Contributors
+
+- Chakir QATAB ([@chakAs3](http://github.com/chakAs3))
+- Luca-smartpricing ([@luca-smartpricing](http://github.com/luca-smartpricing))
+
+## v8.3.1
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.0...v8.3.1)
+
+## v8.3.0
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.2.0...v8.3.0)
+
+### 🚀 Enhancements
+
+- Exposing the https options for Storybook dev server ([#772](https://github.com/nuxt-modules/storybook/pull/772))
+
+### 🩹 Fixes
+
+- ⚠️ Properly handle context when using multiple nuxt instances ([#762](https://github.com/nuxt-modules/storybook/pull/762))
+- Remove Storybook version from `storybook.ts` ([#778](https://github.com/nuxt-modules/storybook/pull/778))
+- Suppress fetch type warning ([#787](https://github.com/nuxt-modules/storybook/pull/787))
+
+### 🏡 Chore
+
+- Remove unused jsdom dev dependency ([#766](https://github.com/nuxt-modules/storybook/pull/766))
+- Add github bug report template ([#769](https://github.com/nuxt-modules/storybook/pull/769))
+- Add GitHub funding information ([#770](https://github.com/nuxt-modules/storybook/pull/770))
+- Add playwright tests ([#783](https://github.com/nuxt-modules/storybook/pull/783))
+- Pin @storybook/\* packages ([#785](https://github.com/nuxt-modules/storybook/pull/785))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️ Properly handle context when using multiple nuxt instances ([#762](https://github.com/nuxt-modules/storybook/pull/762))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Tobias Diez <code@tobiasdiez.de>
+- Olga Bulat ([@obulat](http://github.com/obulat))
+- Brandon ([@brandondv](http://github.com/brandondv))
+
+## v8.2.0
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.1.5...v8.2.0)
+
+### 🚀 Enhancements
+
+- Export types also from `@nuxtjs/storybook` ([#749](https://github.com/nuxt-modules/storybook/pull/749))
+
+### 🩹 Fixes
+
+- Update Vite configs to include lodash/kebabCase in optimizeDeps ([#715](https://github.com/nuxt-modules/storybook/pull/715))
+- Fix error due to import json attribute (and deactivate storybook version check) ([#722](https://github.com/nuxt-modules/storybook/pull/722))
+- Resolve module not found error '@storybook/builder-vite' ([#724](https://github.com/nuxt-modules/storybook/pull/724))
+- Correctly load the storybook preview annotation ([#726](https://github.com/nuxt-modules/storybook/pull/726))
+- Remove Nuxt context conflict ([#723](https://github.com/nuxt-modules/storybook/pull/723))
+- Update storybook version to 8.2.7 ([#739](https://github.com/nuxt-modules/storybook/pull/739))
+
+### 📖 Documentation
+
+- Add instructions for opting in and out of nightly builds ([#748](https://github.com/nuxt-modules/storybook/pull/748))
+- Nightly release dependency package name ([#750](https://github.com/nuxt-modules/storybook/pull/750))
+
+### 🏡 Chore
+
+- Fix build and chromatic ([#708](https://github.com/nuxt-modules/storybook/pull/708))
+- Pin dependencies in examples ([#709](https://github.com/nuxt-modules/storybook/pull/709))
+- Update renovate config to not ignore 'examples' directories ([#711](https://github.com/nuxt-modules/storybook/pull/711))
+- Remove unused nightly release from CI ([#719](https://github.com/nuxt-modules/storybook/pull/719))
+- Fix devtools in playground ([#727](https://github.com/nuxt-modules/storybook/pull/727))
+- Add e2e tests ([#729](https://github.com/nuxt-modules/storybook/pull/729))
+- Fix typescript error ([#734](https://github.com/nuxt-modules/storybook/pull/734))
+- Try to fix nightly release ([#735](https://github.com/nuxt-modules/storybook/pull/735))
+- Try to publish nightly versions for all packages ([#736](https://github.com/nuxt-modules/storybook/pull/736))
+- **vscode:** Remove `eslint.experimental.useFlatConfig` ([#730](https://github.com/nuxt-modules/storybook/pull/730))
+- Improve PR template ([#737](https://github.com/nuxt-modules/storybook/pull/737))
+- Set compatibilityDate in nuxt.config.ts files ([#738](https://github.com/nuxt-modules/storybook/pull/738))
+- Increase version before publishing nightly ([#745](https://github.com/nuxt-modules/storybook/pull/745))
+- Update fetch-depth in CI workflow to fix nightly release ([#747](https://github.com/nuxt-modules/storybook/pull/747))
+- Add chromatic as sponsor ([e8837c4](https://github.com/nuxt-modules/storybook/commit/e8837c4))
+
+### ❤️ Contributors
+
+- Tobias Diez <code@tobiasdiez.de>
+- Hugo Torzuoli ([@HZooly](http://github.com/HZooly))
+- Olga Bulat ([@obulat](http://github.com/obulat))
+- Gangan ([@shinGangan](http://github.com/shinGangan))
+
 ## v8.1.5
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v8.1.4...v8.1.5)
