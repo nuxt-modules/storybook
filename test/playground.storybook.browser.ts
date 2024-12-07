@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test('no errors', async ({ page }) => {
   await page.goto('http://localhost:6006/iframe.html')
-  await page.locator('.sb-nopreview').waitFor() // That's the normal for the iframe with no story selected
+  await page.locator('.sb-show-nopreview').waitFor() // That's the normal for the iframe with no story selected
   await page.locator('.sb-preparing-story').waitFor({ state: 'hidden' })
   await page.locator('.sb-preparing-docs').waitFor({ state: 'hidden' })
 
