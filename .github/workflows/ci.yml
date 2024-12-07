@@ -49,6 +49,20 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: pnpm test:playwright
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-${{ runner.os }}-${{ matrix.node }}
+          path: playwright-report/
+          retention-days: 30
+
       - name: Nightly release
         if: |
           github.event_name == 'push' &&
@@ -56,6 +70,6 @@ jobs:
           matrix.os == 'ubuntu-latest' &&
           !contains(github.event.head_commit.message, '[skip-release]') &&
           !startsWith(github.event.head_commit.message, 'docs')
-        run: pnpm prerelease
+        run: pnpm nightly-release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}

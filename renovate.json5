@@ -15,14 +15,14 @@
   ignorePaths: ['**/node_modules/**'],
   packageRules: [
     {
-      // Bump all @storybook/* packages so that always the latest version is used
+      // Pin all @storybook/* packages because even minor updates can break things for us
       matchPackagePatterns: ['storybook', '@storybook/*'],
       groupName: 'storybook packages',
       groupSlug: 'storybook',
-      rangeStrategy: 'bump',
+      rangeStrategy: 'pin',
     },
     {
-      // Pin all dependencies following https://docs.renovatebot.com/dependency-pinning/
+      // Pin all dependencies (for docs and examples) following https://docs.renovatebot.com/dependency-pinning/
       matchFileNames: ['docs/package.json', 'examples/**/package.json'],
       rangeStrategy: 'pin',
     },

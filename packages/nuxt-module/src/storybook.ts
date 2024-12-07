@@ -53,7 +53,6 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     configDir: resolve(projectDir, './.storybook'),
     configType: 'DEVELOPMENT',
     cache: storybookCache,
-    packageJson: { version: '8.2.7' },
     // Don't check for storybook updates (we're using the latest version)
     versionUpdates: false,
     quiet: options.logLevel < 4, // 4 = debug

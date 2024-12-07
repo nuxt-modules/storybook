@@ -171,10 +171,12 @@ function mergeViteConfig(
       (dep) => !extendedConfig.optimizeDeps?.exclude?.includes(dep),
     )
 
-  // Add lodash/kebabCase, since it is still a cjs module
-  // Imported in https://github.com/storybookjs/storybook/blob/480359d5e340d97476131781c69b4b5e3b724f57/code/renderers/vue3/src/docs/sourceDecorator.ts#L18
   extendedConfig.optimizeDeps.include.push(
+    // Add lodash/kebabCase, since it is still a cjs module
+    // Imported in https://github.com/storybookjs/storybook/blob/480359d5e340d97476131781c69b4b5e3b724f57/code/renderers/vue3/src/docs/sourceDecorator.ts#L18
     '@nuxtjs/storybook > @storybook-vue/nuxt > @storybook/vue3 > lodash/kebabCase',
+    // Workaround for https://github.com/nuxt-modules/storybook/issues/776
+    'storybook > @storybook/core > jsdoc-type-pratt-parser',
   )
 
   return mergeConfig(extendedConfig, {
@@ -363,7 +365,7 @@ async function getPackageDir(packageName: string) {
 
 export function getNuxtProxyConfig(nuxt: Nuxt) {
   const port = nuxt.options.runtimeConfig.app.port ?? 3000
-  const route = '^/(_nuxt|_ipx|_icon|__nuxt_devtools__)'
+  const route = '^/(_nuxt|_ipx|_icon|__nuxt_devtools__|__nuxt_island)'
   const proxy = {
     [route]: {
       target: `http://localhost:${port}`,
