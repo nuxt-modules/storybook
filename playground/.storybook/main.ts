@@ -15,6 +15,9 @@ const config: StorybookConfig = {
     name: '@storybook-vue/nuxt',
     options: {},
   },
+  docs: {
+    autodocs: 'tag',
+  },
   viteFinal: (config) => {
     // For debugging purposes
     // View intermediate state of Vite plugins at http://localhost:6006/__inspect
