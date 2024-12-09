@@ -1,12 +1,19 @@
 import type { StorybookConfig as StorybookConfigBase } from '@storybook/types'
 import type { FrameworkOptions as FrameworkOptionsVue } from '@storybook/vue3-vite'
-import type { StorybookConfigVite } from '@storybook/builder-vite'
+import type {
+  StorybookConfigVite,
+  BuilderOptions as BuilderOptionsVite,
+} from '@storybook/builder-vite'
 
 declare let STORYBOOK_VUE_GLOBAL_PLUGINS: string[]
 declare let STORYBOOK_VUE_GLOBAL_MIXINS: string[]
 
 type FrameworkName = '@storybook-vue/nuxt'
 type BuilderName = '@storybook/builder-vite'
+
+type BuilderOptions = BuilderOptionsVite & {
+  outputDir?: string
+}
 
 type StorybookConfigFramework = {
   framework:
@@ -17,8 +24,7 @@ type StorybookConfigFramework = {
       | BuilderName
       | {
           name: BuilderName
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          options?: Record<string, any>
+          options?: BuilderOptions
         }
   }
 }
