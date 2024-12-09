@@ -159,6 +159,16 @@ function mergeViteConfig(
     plugins.unshift(vuePlugin())
   }
 
+  // Remove the 'storybook:vue-template-compilation' plugin because it yields out-of-memory issues
+  const templatePluginIndex = plugins?.findIndex(
+    (plugin) =>
+      plugin &&
+      'name' in plugin &&
+      plugin.name === 'storybook:vue-template-compilation',
+  )
+  if (templatePluginIndex !== -1) {
+    plugins.splice(templatePluginIndex, 1)
+  }
   extendedConfig.plugins = plugins
 
   // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
