@@ -6,7 +6,7 @@
 function handleClick() {
   alert('Button clicked!')
 }
-</script >
+</script>
 
 <style scoped>
 button {
