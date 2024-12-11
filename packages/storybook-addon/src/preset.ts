@@ -87,6 +87,10 @@ async function loadNuxtViteConfig(root: string | undefined) {
       appId: 'nuxt-app',
       buildId: 'storybook',
       ssr: false,
+      // Enable runtime compiler to support Vue templates in stories
+      vue: {
+        runtimeCompiler: true,
+      },
     },
   })
 
@@ -160,6 +164,7 @@ function mergeViteConfig(
   }
 
   // Remove the 'storybook:vue-template-compilation' plugin because it yields out-of-memory issues
+  // Instead, we use Nuxt's runtime compiler to support Vue templates in stories
   const templatePluginIndex = plugins?.findIndex(
     (plugin) =>
       plugin &&
