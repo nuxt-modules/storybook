@@ -15,6 +15,7 @@ useSeoMeta({
 
 <template>
   <div>
+    <GradientBackground />
     <ULandingHero v-if="page.hero" v-bind="page.hero" class="py-4">
       <template #headline>
         <UBadge
