@@ -22,17 +22,20 @@ import { runtimeConfig } from 'virtual:nuxt-runtime-config'
 import '#build/css'
 // @ts-expect-error virtual file
 import plugins from '#build/plugins'
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const pluginsTyped: Array<Plugin & ObjectPlugin<any>> = plugins
+
 
 setup(async (vueApp, storyContext) => {
   // We key the Nuxt apps to the id of the story
   // This is not totally correct, since the storybook vue renderer actually uses the canvas element
   // Also this doesn't allow to "forceRemount"
   // TODO: Improve this (needs PR to storybook to pass the necessary infos to this function)
-  console.log('Setting up Nuxt app for story')
-
-  const key = storyContext?.id
+  
+  // use storyContext.canvasElement.id as key as it's unique for each rendered story
+  // storyContext.id is same for 2 stories in Docs mode, Primary story and the first story in stories are the same story and have the same id
+  const key = storyContext?.canvasElement.id
   if (!key) {
     throw new Error('StoryContext is not provided')
   }
@@ -42,8 +45,9 @@ setup(async (vueApp, storyContext) => {
   const storyNuxtCtx = getContext(storyNuxtAppId)
   if (storyNuxtCtx.tryUse()) {
     // Nothing to do, the Nuxt app is already created
-    console.log('Reusing Nuxt app for story', key)
-   //  return
+    // We still have to recreate the Nuxt app for each story because Storybook recreates the Vue app every time
+    // TODO : may we can destroy the Nuxt app when the Vue app is destroyed, it should the the case ?
+    // return
   }
 
   // Provide the config of the Nuxt app
