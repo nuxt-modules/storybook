@@ -8,14 +8,11 @@ const meta = {
   title: 'Plugins/I18n',
   component: MyComponent,
   argTypes: {
-
     lang: { control: 'select', options: ['en', 'fr', 'ar'] },
-
   },
 
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],
-
 } satisfies Meta<typeof MyComponent>
 
 export default meta

@@ -1,92 +1,92 @@
 {
-    "name": "nuxt-storybook",
-    "version": "",
-    "license": "MIT",
-    "repository": "nuxt-modules/storybook",
-    "author": {
-        "name": "ChakAs3",
-        "email": "javachakir@gmail.com"
-    },
-    "type": "module",
-    "scripts": {
-        "dev": "pnpm run --filter=./playground/** dev",
-        "dev:prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && pnpm run prepare",
-        "dev:build": "pnpm run --filter=./playground/** build",
-        "playground:storybook:dev": "pnpm run --filter=./playground/** storybook",
-        "playground:storybook:build": "cd playground && pnpm run build-storybook",
-        "playground:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name playground:storybook:build --project-token=chpt_d7cf5e98426e11e",
-        "example:starter:dev": "pnpm run --filter=./examples/starter/** dev",
-        "example:starter:build": "pnpm run --filter=./examples/starter/** build",
-        "example:starter:storybook:build": "pnpm run --filter=./examples/starter/** build-storybook",
-        "example:starter:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:starter:storybook:build --project-token=chpt_dc04103f8a32bfa",
-        "example:tailwind:dev": "pnpm run --filter=./examples/tailwind/** dev",
-        "example:tailwind:build": "pnpm run --filter=./examples/tailwind/** build",
-        "example:tailwind:storybook:build": "pnpm run --filter=./examples/tailwind/** build-storybook",
-        "example:tailwind:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:tailwind:storybook:build --project-token=chpt_fbfe47dc27d4064",
-        "example:showcase:dev": "pnpm run --filter=./examples/showcase/** dev",
-        "example:showcase:build": "pnpm run --filter=./examples/showcase/** build",
-        "example:showcase:storybook:build": "pnpm run --filter=./examples/showcase/** build-storybook",
-        "example:showcase:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:showcase:storybook:build --project-token=chpt_a53adf402cb628c",
-        "build": "pnpm run --recursive --filter=./packages/* build",
-        "package": "cd ./packages/storybook-addon && pnpm pack && cd ../nuxt-module && pnpm pack",
-        "lint": "pnpm lint:eslint && pnpm lint:prettier",
-        "lint:eslint": "eslint --max-warnings=0 --report-unused-disable-directives .",
-        "lint:prettier": "prettier --check .",
-        "lint:fix": "pnpm lint:eslint --fix && pnpm lint:prettier --write",
-        "release": "pnpm jiti prepare-release.ts && pnpm publish --recursive  && git push --follow-tags",
-        "nightly-release": "pnpm jiti prepare-release.ts --nightly && pnpm publish --recursive --tag nightly --access public --no-git-checks --provenance --report-summary",
-        "prepare": "pnpm run --filter=./playground/** prepare",
-        "docs:dev": "pnpm run --filter=./docs/** dev",
-        "docs:build": "pnpm run --filter=./docs/** build",
-        "docs:generate": "pnpm run --filter=./docs/** generate",
-        "test": "vitest run",
-        "test:watch": "vitest watch",
-        "test:coverage": "vitest --coverage",
-        "test:playwright": "pnpm exec playwright test"
-    },
-    "packageManager": "pnpm@9.15.0",
-    "devDependencies": {
-        "@nuxt/eslint-config": "0.7.2",
-        "@nuxt/test-utils": "3.15.1",
-        "@vitest/coverage-v8": "2.1.8",
-        "@playwright/test": "1.49.0",
-        "@types/node": "22.10.1",
-        "changelogen": "0.5.7",
-        "chromatic": "11.20.0",
-        "eslint": "9.16.0",
-        "jiti": "2.4.1",
-        "nuxt": "3.14.1592",
-        "prettier": "3.4.2",
-        "release-it": "17.10.0",
-        "semver": "7.6.3",
-        "typescript": "5.7.2",
-        "vitest": "2.1.8"
-    },
-    "publishConfig": {
-        "access": "public"
-    },
-    "pnpm": {
-        "peerDependencyRules": {
-            "ignoreMissing": [
-                "webpack",
-                "vue"
-            ]
-        }
-    },
-    "release-it": {
-        "git": {
-            "commitMessage": "chore(release): release v${version}"
-        },
-        "github": {
-            "release": true,
-            "releaseName": "v${version}"
-        },
-        "hooks": {
-            "after:bump": "npx changelogen@latest --no-commit --no-tag --output --r $(node -p \"require('./package.json').version\")"
-        }
-    },
-    "prettier": {
-        "semi": false,
-        "singleQuote": true
+  "name": "nuxt-storybook",
+  "version": "",
+  "license": "MIT",
+  "repository": "nuxt-modules/storybook",
+  "author": {
+    "name": "ChakAs3",
+    "email": "javachakir@gmail.com"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm run --filter=./playground/** dev",
+    "dev:prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && pnpm run prepare",
+    "dev:build": "pnpm run --filter=./playground/** build",
+    "playground:storybook:dev": "pnpm run --filter=./playground/** storybook",
+    "playground:storybook:build": "cd playground && pnpm run build-storybook",
+    "playground:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name playground:storybook:build --project-token=chpt_d7cf5e98426e11e",
+    "example:starter:dev": "pnpm run --filter=./examples/starter/** dev",
+    "example:starter:build": "pnpm run --filter=./examples/starter/** build",
+    "example:starter:storybook:build": "pnpm run --filter=./examples/starter/** build-storybook",
+    "example:starter:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:starter:storybook:build --project-token=chpt_dc04103f8a32bfa",
+    "example:tailwind:dev": "pnpm run --filter=./examples/tailwind/** dev",
+    "example:tailwind:build": "pnpm run --filter=./examples/tailwind/** build",
+    "example:tailwind:storybook:build": "pnpm run --filter=./examples/tailwind/** build-storybook",
+    "example:tailwind:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:tailwind:storybook:build --project-token=chpt_fbfe47dc27d4064",
+    "example:showcase:dev": "pnpm run --filter=./examples/showcase/** dev",
+    "example:showcase:build": "pnpm run --filter=./examples/showcase/** build",
+    "example:showcase:storybook:build": "pnpm run --filter=./examples/showcase/** build-storybook",
+    "example:showcase:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:showcase:storybook:build --project-token=chpt_a53adf402cb628c",
+    "build": "pnpm run --recursive --filter=./packages/* build",
+    "package": "cd ./packages/storybook-addon && pnpm pack && cd ../nuxt-module && pnpm pack",
+    "lint": "pnpm lint:eslint && pnpm lint:prettier",
+    "lint:eslint": "eslint --max-warnings=0 --report-unused-disable-directives .",
+    "lint:prettier": "prettier --check .",
+    "lint:fix": "pnpm lint:eslint --fix && pnpm lint:prettier --write",
+    "release": "pnpm jiti prepare-release.ts && pnpm publish --recursive  && git push --follow-tags",
+    "nightly-release": "pnpm jiti prepare-release.ts --nightly && pnpm publish --recursive --tag nightly --access public --no-git-checks --provenance --report-summary",
+    "prepare": "pnpm run --filter=./playground/** prepare",
+    "docs:dev": "pnpm run --filter=./docs/** dev",
+    "docs:build": "pnpm run --filter=./docs/** build",
+    "docs:generate": "pnpm run --filter=./docs/** generate",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest --coverage",
+    "test:playwright": "pnpm exec playwright test"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "devDependencies": {
+    "@nuxt/eslint-config": "0.7.2",
+    "@nuxt/test-utils": "3.15.1",
+    "@vitest/coverage-v8": "2.1.8",
+    "@playwright/test": "1.49.0",
+    "@types/node": "22.10.1",
+    "changelogen": "0.5.7",
+    "chromatic": "11.20.0",
+    "eslint": "9.16.0",
+    "jiti": "2.4.1",
+    "nuxt": "3.14.1592",
+    "prettier": "3.4.2",
+    "release-it": "17.10.0",
+    "semver": "7.6.3",
+    "typescript": "5.7.2",
+    "vitest": "2.1.8"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "webpack",
+        "vue"
+      ]
     }
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore(release): release v${version}"
+    },
+    "github": {
+      "release": true,
+      "releaseName": "v${version}"
+    },
+    "hooks": {
+      "after:bump": "npx changelogen@latest --no-commit --no-tag --output --r $(node -p \"require('./package.json').version\")"
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  }
 }

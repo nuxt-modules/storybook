@@ -200,7 +200,7 @@ function mergeViteConfig(
         vue: 'vue/dist/vue.esm-bundler.js',
       },
     },
-   
+
     plugins: [
       replace({
         values: {
