@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import './button.css'
+import '../assets/button.css'
 
 const props = defineProps<{
   lang: string
@@ -8,7 +8,7 @@ const props = defineProps<{
 const { t, locale } = useI18n()
 const rtl = computed(() => props.lang === 'ar')
 locale.value = props.lang
-watch(() => props.lang, (lang: any) => {
+watch(() => props.lang, (lang: unknown) => {
   locale.value = lang
 })
 </script>
