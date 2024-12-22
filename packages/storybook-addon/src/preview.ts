@@ -30,6 +30,8 @@ setup(async (vueApp, storyContext) => {
   // This is not totally correct, since the storybook vue renderer actually uses the canvas element
   // Also this doesn't allow to "forceRemount"
   // TODO: Improve this (needs PR to storybook to pass the necessary infos to this function)
+  console.log('Setting up Nuxt app for story')
+
   const key = storyContext?.id
   if (!key) {
     throw new Error('StoryContext is not provided')
@@ -40,7 +42,8 @@ setup(async (vueApp, storyContext) => {
   const storyNuxtCtx = getContext(storyNuxtAppId)
   if (storyNuxtCtx.tryUse()) {
     // Nothing to do, the Nuxt app is already created
-    return
+    console.log('Reusing Nuxt app for story', key)
+   //  return
   }
 
   // Provide the config of the Nuxt app
