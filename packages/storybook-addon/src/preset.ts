@@ -190,7 +190,7 @@ function mergeViteConfig(
   )
 
   return mergeConfig(extendedConfig, {
-    build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
+    // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
     define: {
       'import.meta.client': 'true',
     },
