@@ -85,11 +85,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     logger.verbose('🔌  Storybook Module Setup')
 
-    if (nuxt.options.dev) {
-      // Enable runtimeCompiler for Vue to support templates in stories
-      nuxt.options.vue.runtimeCompiler = true
-    }
-
     setupStorybook(options, nuxt)
   },
 })

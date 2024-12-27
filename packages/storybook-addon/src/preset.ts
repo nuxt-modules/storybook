@@ -87,10 +87,6 @@ async function loadNuxtViteConfig(root: string | undefined) {
       appId: 'nuxt-app',
       buildId: 'storybook',
       ssr: false,
-      // Enable runtime compiler to support Vue templates in stories
-      vue: {
-        runtimeCompiler: true,
-      },
     },
   })
 
