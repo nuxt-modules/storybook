@@ -41,12 +41,6 @@ setup(async (vueApp, storyContext) => {
   // Create a new nuxt app for each story
   const storyNuxtAppId = `nuxt-app-${key}`
   const storyNuxtCtx = getContext(storyNuxtAppId)
-  if (storyNuxtCtx.tryUse()) {
-    // Nothing to do, the Nuxt app is already created
-    // We still have to recreate the Nuxt app for each story because Storybook recreates the Vue app every time
-    // TODO : Maybe we should destroy the Nuxt app when the Vue app is destroyed, if it is not the case already ?
-    // return
-  }
 
   // Provide the config of the Nuxt app
   // @ts-expect-error internal Nuxt property
