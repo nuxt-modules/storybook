@@ -10,7 +10,13 @@
     ':semanticCommitTypeAll(chore)',
     // Pin all dev dependencies following https://docs.renovatebot.com/dependency-pinning/
     ':pinDevDependencies',
+    // Update lock files: https://docs.renovatebot.com/presets-default/#maintainlockfilesmonthly
+    ':maintainLockFilesMonthly',
+    // Automerge all updates once they pass tests: https://docs.renovatebot.com/presets-default/#automergeall
+    ':automergeAll',
   ],
+  // Always squash PRs: https://docs.renovatebot.com/configuration-options/#automergestrategy
+  automergeStrategy: 'squash',
   // Don't ignore 'examples' directories
   ignorePaths: ['**/node_modules/**'],
   packageRules: [
