@@ -50,7 +50,7 @@ jobs:
           New-Item -Path ${{ runner.temp }}/example -ItemType Directory
           pnpm nuxt init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
           cd ${{ runner.temp }}/example
-          pnpm dlx storybook init
+          pnpm storybook init
           pnpm add $packages
 
       - name: Build Storybook
