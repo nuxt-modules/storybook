@@ -1,5 +1,25 @@
 # Changelog
 
+## v8.3.3
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.2...v8.3.3)
+
+### 🩹 Fixes
+
+- Use storybook vitest config as base ([#740](https://github.com/nuxt-modules/storybook/pull/740))
+- Readd vue-tempate-compilation plugin ([#831](https://github.com/nuxt-modules/storybook/pull/831))
+- Nuxt App created only when story vue app rendered first time, ([#830](https://github.com/nuxt-modules/storybook/pull/830))
+
+### 🏡 Chore
+
+- Add test for using decorators in stories ([#823](https://github.com/nuxt-modules/storybook/pull/823))
+
+### ❤️ Contributors
+
+- Chakir QATAB ([@chakAs3](http://github.com/chakAs3))
+- Tobias Diez <code@tobiasdiez.de>
+- Ryan Leckey ([@mehcode](http://github.com/mehcode))
+
 ## v8.3.2
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.1...v8.3.2)

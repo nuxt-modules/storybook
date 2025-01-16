@@ -160,6 +160,7 @@ function mergeViteConfig(
   }
 
   extendedConfig.plugins = plugins
+
   // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
   // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
   extendedConfig.optimizeDeps = extendedConfig.optimizeDeps || {}
@@ -170,10 +171,12 @@ function mergeViteConfig(
       (dep) => !extendedConfig.optimizeDeps?.exclude?.includes(dep),
     )
 
-  // Add lodash/kebabCase, since it is still a cjs module
-  // Imported in https://github.com/storybookjs/storybook/blob/480359d5e340d97476131781c69b4b5e3b724f57/code/renderers/vue3/src/docs/sourceDecorator.ts#L18
   extendedConfig.optimizeDeps.include.push(
+    // Add lodash/kebabCase, since it is still a cjs module
+    // Imported in https://github.com/storybookjs/storybook/blob/480359d5e340d97476131781c69b4b5e3b724f57/code/renderers/vue3/src/docs/sourceDecorator.ts#L18
     '@nuxtjs/storybook > @storybook-vue/nuxt > @storybook/vue3 > lodash/kebabCase',
+    // Workaround for https://github.com/nuxt-modules/storybook/issues/776
+    'storybook > @storybook/core > jsdoc-type-pratt-parser',
   )
 
   return mergeConfig(extendedConfig, {
@@ -303,42 +306,50 @@ export const previewAnnotations = async (
 }
 
 export const viteFinal: StorybookConfig['viteFinal'] = async (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  config: Record<string, any>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  options: any,
+  config,
+  options,
 ) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getStorybookViteConfig = async (c: Record<string, any>, o: any) => {
     const presetURL = pathToFileURL(
       join(await getPackageDir('@storybook/vue3-vite'), 'preset.js'),
     )
-    const { viteFinal: ViteFile } = await import(presetURL.href)
+    const { viteFinal: vueViteFinal } = await import(presetURL.href)
 
-    if (!ViteFile) throw new Error('ViteFile not found')
-    return ViteFile(c, o)
+    if (!vueViteFinal) {
+      throw new Error(
+        'unexpected contents in package @storybook/vue3-vite: viteFinal not found',
+      )
+    }
+
+    return (vueViteFinal as NonNullable<StorybookConfig['viteFinal']>)(c, o)
   }
+
   const storybookViteConfig = await getStorybookViteConfig(config, options)
   const { viteConfig: nuxtConfig, nuxt } = await loadNuxtViteConfig(
     storybookViteConfig.root,
   )
-  const finalViteConfig = mergeViteConfig(config, nuxtConfig, nuxt)
-  // Write all vite configs to logs
-  const fs = await import('node:fs')
-  fs.mkdirSync(join(options.outputDir, 'logs'), { recursive: true })
-  console.debug(`Writing Vite configs to ${options.outputDir}/logs/...`)
-  fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-storybook.config.json'),
-    stringify(storybookViteConfig, { space: '  ' }),
-  )
-  fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-nuxt.config.json'),
-    stringify(nuxtConfig, { space: '  ' }),
-  )
-  fs.writeFileSync(
-    join(options.outputDir, 'logs', 'vite-final.config.json'),
-    stringify(finalViteConfig, { space: '  ' }),
-  )
+
+  const finalViteConfig = mergeViteConfig(storybookViteConfig, nuxtConfig, nuxt)
+
+  if (options.outputDir != null) {
+    // Write all vite configs to logs
+    const fs = await import('node:fs')
+    fs.mkdirSync(join(options.outputDir, 'logs'), { recursive: true })
+    console.debug(`Writing Vite configs to ${options.outputDir}/logs/...`)
+    fs.writeFileSync(
+      join(options.outputDir, 'logs', 'vite-storybook.config.json'),
+      stringify(storybookViteConfig, { space: '  ' }),
+    )
+    fs.writeFileSync(
+      join(options.outputDir, 'logs', 'vite-nuxt.config.json'),
+      stringify(nuxtConfig, { space: '  ' }),
+    )
+    fs.writeFileSync(
+      join(options.outputDir, 'logs', 'vite-final.config.json'),
+      stringify(finalViteConfig, { space: '  ' }),
+    )
+  }
 
   return finalViteConfig
 }

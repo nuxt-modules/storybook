@@ -11,19 +11,21 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@pinia/nuxt": "0.5.5",
     "@nuxt/image": "1.8.1",
-    "nuxt": "3.13.2",
-    "vue": "3.5.11",
-    "vue-router": "4.4.5"
+    "@pinia/nuxt": "0.9.0",
+    "nuxt": "3.14.1592",
+    "pinia": "2.3.0",
+    "vue": "3.5.13",
+    "vue-router": "4.5.0",
+    "@nuxtjs/i18n": "8.3.1"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "3.1.0",
+    "@chromatic-com/storybook": "3.2.3",
     "@nuxtjs/storybook": "latest",
-    "@storybook/addon-essentials": "8.3.0",
-    "@storybook/addon-links": "8.3.0",
-    "@storybook/blocks": "8.3.0",
-    "@storybook/test": "8.3.0",
-    "storybook": "8.3.0"
+    "@storybook/addon-essentials": "8.4.7",
+    "@storybook/addon-links": "8.4.7",
+    "@storybook/blocks": "8.4.7",
+    "@storybook/test": "8.4.7",
+    "storybook": "8.4.7"
   }
 }

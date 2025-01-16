@@ -11,17 +11,18 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "nuxt": "3.13.2",
-    "vue": "3.5.11",
-    "vue-router": "4.4.5"
+    "nuxt": "3.14.1592",
+    "vue": "3.5.13",
+    "vue-router": "4.5.0"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "3.1.0",
+    "@chromatic-com/storybook": "3.2.3",
     "@nuxtjs/storybook": "latest",
-    "@storybook/addon-essentials": "8.3.0",
-    "@storybook/addon-links": "8.3.0",
-    "@storybook/blocks": "8.3.0",
-    "@storybook/test": "8.3.0",
-    "storybook": "8.3.0"
+    "@storybook/addon-essentials": "8.4.7",
+    "@storybook/addon-interactions": "8.4.7",
+    "@storybook/blocks": "8.4.7",
+    "@storybook/test": "8.4.7",
+    "@storybook/vue3": "8.4.7",
+    "storybook": "8.4.7"
   }
 }

@@ -61,4 +61,6 @@ jobs:
           # exitOnceUploaded: true
           projectToken: ${{ matrix.projectToken }}
           buildScriptName: ${{ matrix.storybookBuildScript }}
+          # Fail workflow if changes are found
+          exitZeroOnChanges: false
           debug: true
