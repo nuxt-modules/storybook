@@ -116,8 +116,8 @@ importers:
         version: 4.5.0(vue@3.5.13(typescript@5.7.2))
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: 3.2.3
-        version: 3.2.3(react@18.3.1)(storybook@8.5.0(prettier@3.4.2))
+        specifier: 3.2.4
+        version: 3.2.4(react@18.3.1)(storybook@8.5.0(prettier@3.4.2))
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
@@ -150,8 +150,8 @@ importers:
         version: 4.5.0(vue@3.5.13(typescript@5.7.2))
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: 3.2.3
-        version: 3.2.3(react@18.3.1)(storybook@8.5.0(prettier@3.4.2))
+        specifier: 3.2.4
+        version: 3.2.4(react@18.3.1)(storybook@8.5.0(prettier@3.4.2))
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
@@ -190,8 +190,8 @@ importers:
         version: 4.5.0(vue@3.5.13(typescript@5.7.2))
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: 3.2.3
-        version: 3.2.3(react@18.3.1)(storybook@8.5.0(prettier@3.4.2))
+        specifier: 3.2.4
+        version: 3.2.4(react@18.3.1)(storybook@8.5.0(prettier@3.4.2))
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
@@ -536,8 +536,8 @@ packages:
   '@capsizecss/unpack@2.2.0':
     resolution: {integrity: sha512-IBBiVmEFSTt+wMkhy063mboZvIvqkndVYu+l62iwOcOW4nf0VJa8+reZ4RgL1FcyfjVIjMkBwKIhydgZHPILCQ==}
 
-  '@chromatic-com/storybook@3.2.3':
-    resolution: {integrity: sha512-3+hfANx79kIjP1qrOSLxpoAXOiYUA0S7A0WI0A24kASrv7USFNNW8etR5TjUilMb0LmqKUn3wDwUK2h6aceQ9g==}
+  '@chromatic-com/storybook@3.2.4':
+    resolution: {integrity: sha512-5/bOOYxfwZ2BktXeqcCpOVAoR6UCoeART5t9FVy22hoo8F291zOuX4y3SDgm10B1GVU/ZTtJWPT2X9wZFlxYLg==}
     engines: {node: '>=16.0.0', yarn: '>=1.22.18'}
     peerDependencies:
       storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
@@ -7655,7 +7655,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@chromatic-com/storybook@3.2.3(react@18.3.1)(storybook@8.5.0(prettier@3.4.2))':
+  '@chromatic-com/storybook@3.2.4(react@18.3.1)(storybook@8.5.0(prettier@3.4.2))':
     dependencies:
       chromatic: 11.20.0
       filesize: 10.1.4
