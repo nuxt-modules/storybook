@@ -2,7 +2,7 @@ title: 'Storybook Integration for Nuxt'
 description: Add Storybook to your Nuxt application in seconds.
 navigation: false
 hero:
-  title: 'Add Storybook to your Nuxt application'
+  title: 'Add <span class="text-french-rose-500">Storybook</span> to your Nuxt application'
   description: 'Easily integrate Storybook in your Nuxt application to build, document and test your components.'
   orientation: horizontal
   links:
@@ -13,7 +13,7 @@ hero:
       size: lg
   code: |
     ```bash [Terminal]
-    npx nuxi@latest module add storybook
+    npx storybook@latest init
     ```
 features:
   items:
