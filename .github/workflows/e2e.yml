@@ -21,6 +21,9 @@ jobs:
         # Keep this in sync with the oldest Node.js version supported by the storybook
         node: [18, 19, 20]
         os: [ubuntu-latest, windows-latest, macos-latest]
+    env:
+      # renovate: datasource=npm depName=storybook
+      STORYBOOK_VERSION: 8.6.8
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,7 +53,7 @@ jobs:
           New-Item -Path ${{ runner.temp }}/example -ItemType Directory
           pnpm nuxt init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
           cd ${{ runner.temp }}/example
-          pnpm storybook init
+          pnpm dlx storybook@${{ env.STORYBOOK_VERSION }} init
           pnpm add $packages
 
       - name: Build Storybook

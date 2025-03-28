@@ -14,6 +14,8 @@
     ':maintainLockFilesMonthly',
     // Automerge all updates once they pass tests: https://docs.renovatebot.com/presets-default/#automergeall
     ':automergeAll',
+    // Update `xyz_version` in github actions workflows: https://docs.renovatebot.com/presets-customManagers/#custommanagersgithubactionsversions
+    "customManagers:githubActionsVersions",
   ],
   // Always squash PRs: https://docs.renovatebot.com/configuration-options/#automergestrategy
   automergeStrategy: 'squash',
