@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         # Keep this in sync with the oldest Node.js version supported by the storybook
-        node: [18, 19, 20]
+        node: [20, 21]
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - name: Checkout
