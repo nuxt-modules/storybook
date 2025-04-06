@@ -1,11 +1,15 @@
 export default defineAppConfig({
   ui: {
-    primary: 'french-rose',
-    gray: 'slate',
+    colors: {
+      primary: 'french-rose',
+      neutral: 'slate',
+    },
+  },
+  uiPro: {
     footer: {
-      bottom: {
-        left: 'text-sm text-gray-500 dark:text-gray-400',
-        wrapper: 'border-t border-gray-200 dark:border-gray-800',
+      slots: {
+        root: 'border-t border-(--ui-border)',
+        left: 'text-sm text-(--ui-text-muted)',
       },
     },
   },
@@ -13,6 +17,8 @@ export default defineAppConfig({
     siteName: 'Nuxt Storybook',
   },
   header: {
+    title: '',
+    to: '/',
     logo: {
       alt: '',
       light: '',
@@ -54,7 +60,7 @@ export default defineAppConfig({
       edit: 'https://github.com/nuxt-modules/storybook/edit/main/docs/content',
       links: [
         {
-          icon: 'i-heroicons-star',
+          icon: 'i-lucide-star',
           label: 'Star on GitHub',
           to: 'https://github.com/nuxt-modules/storybook',
           target: '_blank',
