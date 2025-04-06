@@ -1,22 +1,18 @@
 import type { StorybookConfig } from '@storybook-vue/nuxt'
-import Inspect from 'vite-plugin-inspect'
 
 const config: StorybookConfig = {
   stories: [
-    '../stories/**/*.mdx',
-    '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../components/**/*.mdx',
+    '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
   addons: [
-    '@storybook/addon-links',
     '@storybook/addon-essentials',
+    '@chromatic-com/storybook',
     '@storybook/addon-interactions',
   ],
   framework: {
     name: '@storybook-vue/nuxt',
     options: {},
-  },
-  docs: {
-    autodocs: 'tag',
   },
   viteFinal: (config) => {
     // For debugging purposes
