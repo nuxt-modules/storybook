@@ -1,8 +1,11 @@
 <script lang="ts" setup>
-const props = withDefaults(defineProps<{ title?: string, description?: string, headline?: string }>(), {
-  title: 'title',
-  description: 'description'
-})
+const props = withDefaults(
+  defineProps<{ title?: string; description?: string; headline?: string }>(),
+  {
+    title: 'title',
+    description: 'description',
+  },
+)
 
 const title = computed(() => (props.title || '').slice(0, 60))
 const description = computed(() => (props.description || '').slice(0, 200))
@@ -34,10 +37,7 @@ const description = computed(() => (props.description || '').slice(0, 200))
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >
-          <feFlood
-            flood-opacity="0"
-            result="BackgroundImageFix"
-          />
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
