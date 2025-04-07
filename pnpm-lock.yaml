@@ -125,8 +125,8 @@ importers:
         version: 4.5.0(vue@3.5.13(typescript@5.8.3))
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: 3.2.6
-        version: 3.2.6(react@18.3.1)(storybook@8.6.12(prettier@3.5.3))
+        specifier: next
+        version: 4.0.0-next.4(react@18.3.1)(storybook@8.6.12(prettier@3.5.3))
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
@@ -159,8 +159,8 @@ importers:
         version: 4.5.0(vue@3.5.13(typescript@5.8.3))
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: 3.2.6
-        version: 3.2.6(react@18.3.1)(storybook@9.0.0-alpha.17(prettier@3.5.3))
+        specifier: next
+        version: 4.0.0-next.4(react@18.3.1)(storybook@9.0.0-alpha.17(prettier@3.5.3))
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
@@ -199,8 +199,8 @@ importers:
         version: 4.5.0(vue@3.5.13(typescript@5.8.3))
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: 3.2.6
-        version: 3.2.6(react@18.3.1)(storybook@9.0.0-alpha.17(prettier@3.5.3))
+        specifier: next
+        version: 4.0.0-next.4(react@18.3.1)(storybook@9.0.0-alpha.17(prettier@3.5.3))
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
@@ -352,8 +352,8 @@ importers:
         version: 4.5.0(vue@3.5.13(typescript@5.8.3))
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: 3.2.6
-        version: 3.2.6(react@18.3.1)(storybook@9.0.0-alpha.17(prettier@3.5.3))
+        specifier: next
+        version: 4.0.0-next.4(react@18.3.1)(storybook@9.0.0-alpha.17(prettier@3.5.3))
       '@nuxtjs/i18n':
         specifier: 9.5.2
         version: 9.5.2(@vue/compiler-dom@3.5.13)(eslint@9.24.0(jiti@2.4.2))(magicast@0.3.5)(rollup@4.39.0)(vue@3.5.13(typescript@5.8.3))
@@ -532,11 +532,11 @@ packages:
   '@capsizecss/unpack@2.2.0':
     resolution: {integrity: sha512-IBBiVmEFSTt+wMkhy063mboZvIvqkndVYu+l62iwOcOW4nf0VJa8+reZ4RgL1FcyfjVIjMkBwKIhydgZHPILCQ==}
 
-  '@chromatic-com/storybook@3.2.6':
-    resolution: {integrity: sha512-FDmn5Ry2DzQdik+eq2sp/kJMMT36Ewe7ONXUXM2Izd97c7r6R/QyGli8eyh/F0iyqVvbLveNYFyF0dBOJNwLqw==}
+  '@chromatic-com/storybook@4.0.0-next.4':
+    resolution: {integrity: sha512-Pu5pE6PcqRQkrjXtrRUhzNhOjWMv3sGunG0pP+N3v/nlOey9Ab8pWn9XGmhhfmACNiW+x9IpM0XruXyeQLH0kw==}
     engines: {node: '>=16.0.0', yarn: '>=1.22.18'}
     peerDependencies:
-      storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
+      storybook: ^9.0.0 || ^9.0.0-alpha.12 || ^0.0.0-0
 
   '@clack/core@0.4.1':
     resolution: {integrity: sha512-Pxhij4UXg8KSr7rPek6Zowm+5M22rbd2g1nfojHJkxp5YkFqiZ2+YLEM/XGVIzvGOcM0nqjIFxrpDwWRZYWYjA==}
@@ -7879,7 +7879,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@chromatic-com/storybook@3.2.6(react@18.3.1)(storybook@8.6.12(prettier@3.5.3))':
+  '@chromatic-com/storybook@4.0.0-next.4(react@18.3.1)(storybook@8.6.12(prettier@3.5.3))':
     dependencies:
       chromatic: 11.28.0
       filesize: 10.1.4
@@ -7892,7 +7892,7 @@ snapshots:
       - '@chromatic-com/playwright'
       - react
 
-  '@chromatic-com/storybook@3.2.6(react@18.3.1)(storybook@9.0.0-alpha.17(prettier@3.5.3))':
+  '@chromatic-com/storybook@4.0.0-next.4(react@18.3.1)(storybook@9.0.0-alpha.17(prettier@3.5.3))':
     dependencies:
       chromatic: 11.28.0
       filesize: 10.1.4
