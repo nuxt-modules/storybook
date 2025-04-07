@@ -130,21 +130,9 @@ importers:
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
-      '@storybook/addon-essentials':
-        specifier: 8.6.12
-        version: 8.6.12(@types/react@18.3.3)(storybook@8.6.12(prettier@3.5.3))
       '@storybook/addon-links':
         specifier: 8.6.12
         version: 8.6.12(react@18.3.1)(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/blocks':
-        specifier: 8.6.12
-        version: 8.6.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/test':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.12(prettier@3.5.3))
-      storybook:
-        specifier: 8.6.12
-        version: 8.6.12(prettier@3.5.3)
 
   examples/starter:
     dependencies:
@@ -164,24 +152,6 @@ importers:
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
-      '@storybook/addon-essentials':
-        specifier: 8.6.12
-        version: 8.6.12(@types/react@18.3.3)(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/addon-interactions':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/blocks':
-        specifier: 8.6.12
-        version: 8.6.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/test':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/vue3':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.12(prettier@3.5.3))(vue@3.5.13(typescript@5.8.3))
-      storybook:
-        specifier: 8.6.12
-        version: 8.6.12(prettier@3.5.3)
 
   examples/tailwind:
     dependencies:
@@ -204,21 +174,6 @@ importers:
       '@nuxtjs/storybook':
         specifier: latest
         version: link:../../packages/nuxt-module
-      '@storybook/addon-essentials':
-        specifier: 8.6.12
-        version: 8.6.12(@types/react@18.3.3)(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/addon-links':
-        specifier: 8.6.12
-        version: 8.6.12(react@18.3.1)(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/blocks':
-        specifier: 8.6.12
-        version: 8.6.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/test':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.12(prettier@3.5.3))
-      storybook:
-        specifier: 8.6.12
-        version: 8.6.12(prettier@3.5.3)
       tailwindcss:
         specifier: 3.4.17
         version: 3.4.17
@@ -283,9 +238,15 @@ importers:
       '@rollup/plugin-replace':
         specifier: ^6.0.0
         version: 6.0.2(rollup@4.39.0)
+      '@storybook/addon-essentials':
+        specifier: 8.6.12
+        version: 8.6.12(@types/react@18.3.3)(storybook@8.6.12(prettier@3.5.3))
       '@storybook/builder-vite':
         specifier: 8.6.12
         version: 8.6.12(storybook@8.6.12(prettier@3.5.3))(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.7)(terser@5.31.6)(yaml@2.7.1))
+      '@storybook/test':
+        specifier: 8.6.12
+        version: 8.6.12(storybook@8.6.12(prettier@3.5.3))
       '@storybook/vue3':
         specifier: 8.6.12
         version: 8.6.12(storybook@8.6.12(prettier@3.5.3))(vue@3.5.13(typescript@5.8.3))
@@ -366,18 +327,6 @@ importers:
       '@storybook/addon-interactions':
         specifier: 8.6.12
         version: 8.6.12(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/blocks':
-        specifier: 8.6.12
-        version: 8.6.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/test':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.12(prettier@3.5.3))
-      '@storybook/vue3':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.12(prettier@3.5.3))(vue@3.5.13(typescript@5.8.3))
-      storybook:
-        specifier: 8.6.12
-        version: 8.6.12(prettier@3.5.3)
       vite-plugin-inspect:
         specifier: 11.0.0
         version: 11.0.0(@nuxt/kit@3.16.2(magicast@0.3.5))(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.7)(terser@5.31.6)(yaml@2.7.1))
