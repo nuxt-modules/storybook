@@ -19,14 +19,17 @@ jobs:
       fail-fast: false
       matrix:
         # Keep this in sync with the oldest Node.js version supported by the storybook
-        node: [18, 19, 20]
+        node: [20, 21]
         os: [ubuntu-latest, windows-latest, macos-latest]
+    env:
+      # renovate: datasource=npm depName=storybook
+      STORYBOOK_VERSION: 8.6.8
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -48,9 +51,9 @@ jobs:
           $packages=Get-ChildItem -Path packages -Recurse -Filter "*.tgz"
           echo "$packages"
           New-Item -Path ${{ runner.temp }}/example -ItemType Directory
-          pnpm dlx nuxt init ${{ runner.temp }}/example --packageManager pnpm
+          pnpm nuxt init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
           cd ${{ runner.temp }}/example
-          pnpm dlx storybook@0.0.0-pr-28607-sha-b9bf7d39 init
+          pnpm dlx storybook@${{ env.STORYBOOK_VERSION }} init
           pnpm add $packages
 
       - name: Build Storybook

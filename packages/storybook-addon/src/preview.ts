@@ -30,7 +30,10 @@ setup(async (vueApp, storyContext) => {
   // This is not totally correct, since the storybook vue renderer actually uses the canvas element
   // Also this doesn't allow to "forceRemount"
   // TODO: Improve this (needs PR to storybook to pass the necessary infos to this function)
-  const key = storyContext?.id
+
+  // use storyContext.canvasElement.id as key as it's unique for each rendered story
+  // storyContext.id is same for 2 stories in Docs mode, Primary story and the first story in stories are the same story and have the same id
+  const key = storyContext?.canvasElement.id
   if (!key) {
     throw new Error('StoryContext is not provided')
   }
@@ -38,10 +41,6 @@ setup(async (vueApp, storyContext) => {
   // Create a new nuxt app for each story
   const storyNuxtAppId = `nuxt-app-${key}`
   const storyNuxtCtx = getContext(storyNuxtAppId)
-  if (storyNuxtCtx.tryUse()) {
-    // Nothing to do, the Nuxt app is already created
-    return
-  }
 
   // Provide the config of the Nuxt app
   // @ts-expect-error internal Nuxt property
@@ -60,7 +59,8 @@ setup(async (vueApp, storyContext) => {
   if (!globalThis.$fetch) {
     globalThis.$fetch = $fetch.create({
       baseURL: '/',
-    })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }) as any
   }
 
   const nuxt = createNuxtApp({

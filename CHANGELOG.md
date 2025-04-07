@@ -1,5 +1,79 @@
 # Changelog
 
+## v8.3.3
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.2...v8.3.3)
+
+### 🩹 Fixes
+
+- Use storybook vitest config as base ([#740](https://github.com/nuxt-modules/storybook/pull/740))
+- Readd vue-tempate-compilation plugin ([#831](https://github.com/nuxt-modules/storybook/pull/831))
+- Nuxt App created only when story vue app rendered first time, ([#830](https://github.com/nuxt-modules/storybook/pull/830))
+
+### 🏡 Chore
+
+- Add test for using decorators in stories ([#823](https://github.com/nuxt-modules/storybook/pull/823))
+
+### ❤️ Contributors
+
+- Chakir QATAB ([@chakAs3](http://github.com/chakAs3))
+- Tobias Diez <code@tobiasdiez.de>
+- Ryan Leckey ([@mehcode](http://github.com/mehcode))
+
+## v8.3.2
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.1...v8.3.2)
+
+### 📖 Documentation
+
+- Module will not automatically generate a basic configuration ([#797](https://github.com/nuxt-modules/storybook/pull/797))
+
+### 🏡 Chore
+
+- **ci:** Update CI workflow to use nightly-release change the script name ([#806](https://github.com/nuxt-modules/storybook/pull/806))
+
+### ❤️ Contributors
+
+- Chakir QATAB ([@chakAs3](http://github.com/chakAs3))
+- Luca-smartpricing ([@luca-smartpricing](http://github.com/luca-smartpricing))
+
+## v8.3.1
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.0...v8.3.1)
+
+## v8.3.0
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.2.0...v8.3.0)
+
+### 🚀 Enhancements
+
+- Exposing the https options for Storybook dev server ([#772](https://github.com/nuxt-modules/storybook/pull/772))
+
+### 🩹 Fixes
+
+- ⚠️ Properly handle context when using multiple nuxt instances ([#762](https://github.com/nuxt-modules/storybook/pull/762))
+- Remove Storybook version from `storybook.ts` ([#778](https://github.com/nuxt-modules/storybook/pull/778))
+- Suppress fetch type warning ([#787](https://github.com/nuxt-modules/storybook/pull/787))
+
+### 🏡 Chore
+
+- Remove unused jsdom dev dependency ([#766](https://github.com/nuxt-modules/storybook/pull/766))
+- Add github bug report template ([#769](https://github.com/nuxt-modules/storybook/pull/769))
+- Add GitHub funding information ([#770](https://github.com/nuxt-modules/storybook/pull/770))
+- Add playwright tests ([#783](https://github.com/nuxt-modules/storybook/pull/783))
+- Pin @storybook/\* packages ([#785](https://github.com/nuxt-modules/storybook/pull/785))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️ Properly handle context when using multiple nuxt instances ([#762](https://github.com/nuxt-modules/storybook/pull/762))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Tobias Diez <code@tobiasdiez.de>
+- Olga Bulat ([@obulat](http://github.com/obulat))
+- Brandon ([@brandondv](http://github.com/brandondv))
+
 ## v8.2.0
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v8.1.5...v8.2.0)

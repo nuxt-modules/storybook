@@ -10,19 +10,27 @@
     ':semanticCommitTypeAll(chore)',
     // Pin all dev dependencies following https://docs.renovatebot.com/dependency-pinning/
     ':pinDevDependencies',
+    // Update lock files: https://docs.renovatebot.com/presets-default/#maintainlockfilesmonthly
+    ':maintainLockFilesMonthly',
+    // Automerge all updates once they pass tests: https://docs.renovatebot.com/presets-default/#automergeall
+    ':automergeAll',
+    // Update `xyz_version` in github actions workflows: https://docs.renovatebot.com/presets-customManagers/#custommanagersgithubactionsversions
+    'customManagers:githubActionsVersions',
   ],
+  // Always squash PRs: https://docs.renovatebot.com/configuration-options/#automergestrategy
+  automergeStrategy: 'squash',
   // Don't ignore 'examples' directories
   ignorePaths: ['**/node_modules/**'],
   packageRules: [
     {
-      // Bump all @storybook/* packages so that always the latest version is used
+      // Pin all @storybook/* packages because even minor updates can break things for us
       matchPackagePatterns: ['storybook', '@storybook/*'],
       groupName: 'storybook packages',
       groupSlug: 'storybook',
-      rangeStrategy: 'bump',
+      rangeStrategy: 'pin',
     },
     {
-      // Pin all dependencies following https://docs.renovatebot.com/dependency-pinning/
+      // Pin all dependencies (for docs and examples) following https://docs.renovatebot.com/dependency-pinning/
       matchFileNames: ['docs/package.json', 'examples/**/package.json'],
       rangeStrategy: 'pin',
     },

@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         # Keep this in sync with the oldest Node.js version supported by the storybook
-        node: [18, 20]
+        node: [20.19.0, 22]
         os: [ubuntu-latest, windows-latest, macos-latest]
     permissions:
       contents: read
@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -49,6 +49,20 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: pnpm test:playwright
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-${{ runner.os }}-${{ matrix.node }}
+          path: playwright-report/
+          retention-days: 30
+
       - name: Nightly release
         if: |
           github.event_name == 'push' &&
@@ -56,6 +70,6 @@ jobs:
           matrix.os == 'ubuntu-latest' &&
           !contains(github.event.head_commit.message, '[skip-release]') &&
           !startsWith(github.event.head_commit.message, 'docs')
-        run: pnpm prerelease
+        run: pnpm nightly-release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
