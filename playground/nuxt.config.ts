@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   modules: [
     '../packages/nuxt-module/src/module',
@@ -16,6 +17,4 @@ export default defineNuxtConfig({
     locales: ['en', 'fr', 'ar'],
     defaultLocale: 'en',
   },
-
-  compatibilityDate: '2024-08-03',
 })
