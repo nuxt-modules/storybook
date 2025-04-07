@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook-vue/nuxt'
+import Inspect from 'vite-plugin-inspect'
 
 const config: StorybookConfig = {
   stories: [
