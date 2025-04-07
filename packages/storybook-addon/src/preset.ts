@@ -339,15 +339,15 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     console.debug(`Writing Vite configs to ${options.outputDir}/logs/...`)
     fs.writeFileSync(
       join(options.outputDir, 'logs', 'vite-storybook.config.json'),
-      stringify(storybookViteConfig, { space: '  ' }),
+      stringify(storybookViteConfig, { space: '  ' }) || '',
     )
     fs.writeFileSync(
       join(options.outputDir, 'logs', 'vite-nuxt.config.json'),
-      stringify(nuxtConfig, { space: '  ' }),
+      stringify(nuxtConfig, { space: '  ' }) || '',
     )
     fs.writeFileSync(
       join(options.outputDir, 'logs', 'vite-final.config.json'),
-      stringify(finalViteConfig, { space: '  ' }),
+      stringify(finalViteConfig, { space: '  ' }) || '',
     )
   }
 
@@ -365,7 +365,7 @@ async function getPackageDir(packageName: string) {
 
 export function getNuxtProxyConfig(nuxt: Nuxt) {
   const port = nuxt.options.runtimeConfig.app.port ?? 3000
-  const route = '^/(_nuxt|_ipx|_icon|__nuxt_devtools__|__nuxt_island)'
+  const route = '^/(_nuxt|_ipx|api/_nuxt_icon|__nuxt_devtools__|__nuxt_island)'
   const proxy = {
     [route]: {
       target: `http://localhost:${port}`,

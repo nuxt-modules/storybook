@@ -1,55 +1,53 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  extends: ['@nuxt/ui-pro'],
-
   modules: [
-    '@nuxt/content',
     '@nuxt/eslint',
-    '@nuxt/ui',
-    '@nuxt/fonts',
-    '@nuxthq/studio',
+    '@nuxt/image',
+    '@nuxt/ui-pro',
+    '@nuxt/content',
     'nuxt-og-image',
+    'nuxt-llms',
   ],
 
-  hooks: {
-    // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
-    'components:extend': (components) => {
-      const globals = components.filter((c) =>
-        ['UButton', 'UIcon'].includes(c.pascalName),
-      )
-
-      globals.forEach((c) => (c.global = true))
-    },
-  },
-
-  ui: {
-    icons: ['heroicons', 'simple-icons'],
+  fonts: {
+    // Google is not working in China
+    provider: 'bunny',
+    priority: ['bunny', 'google'],
   },
 
   uiPro: { license: 'oss' },
 
-  colorMode: {
-    disableTransition: true,
-  },
-
   site: {
     url: 'https://storybook.nuxtjs.org/',
-  },
-
-  routeRules: {
-    '/api/search.json': { prerender: true },
   },
 
   devtools: {
     enabled: true,
   },
 
-  typescript: {
-    strict: false,
+  css: ['~/assets/css/main.css'],
+
+  content: {
+    build: {
+      markdown: {
+        toc: {
+          searchDepth: 1,
+        },
+      },
+    },
   },
 
   future: {
     compatibilityVersion: 4,
+  },
+
+  compatibilityDate: '2024-07-11',
+
+  nitro: {
+    prerender: {
+      routes: ['/'],
+      crawlLinks: true,
+    },
   },
 
   eslint: {
@@ -61,12 +59,13 @@ export default defineNuxtConfig({
     },
   },
 
-  // Workaround for https://github.com/nuxt/content/issues/2688
-  nitro: {
-    prerender: {
-      routes: ['/'],
-    },
+  icon: {
+    provider: 'iconify',
   },
 
-  compatibilityDate: '2024-08-03',
+  llms: {
+    domain: 'https://storybook.nuxtjs.org/',
+    title: 'Storybook Nuxt Module - Documentation',
+    description: 'Nuxt module for Storybook',
+  },
 })

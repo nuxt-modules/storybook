@@ -44,21 +44,21 @@
     "prepack": "nuxt-module-build build"
   },
   "dependencies": {
-    "@nuxt/devtools-kit": "^1.0.8",
+    "@nuxt/devtools-kit": "^2.0.0",
     "@nuxt/kit": "^3.12.0",
     "@storybook-vue/nuxt": "workspace:*",
-    "@storybook/core-common": "8.6.8",
-    "@storybook/core-server": "8.6.8",
+    "@storybook/core-common": "8.6.12",
+    "@storybook/core-server": "8.6.12",
     "chalk": "^5.0.0",
     "consola": "^3.2.3",
     "defu": "^6.1.4",
     "get-port-please": "^3.1.2",
-    "storybook": "8.6.8",
+    "storybook": "8.6.12",
     "ufo": "^1.5.3"
   },
   "devDependencies": {
-    "@nuxt/module-builder": "0.8.4",
-    "vite": "6.0.3",
-    "unbuild": "3.0.1"
+    "@nuxt/module-builder": "1.0.0",
+    "vite": "6.2.5",
+    "unbuild": "3.5.0"
   }
 }

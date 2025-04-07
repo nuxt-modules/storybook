@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         # Keep this in sync with the oldest Node.js version supported by the storybook
-        node: [18, 20]
+        node: [20.19.0, 22]
         os: [ubuntu-latest, windows-latest, macos-latest]
     permissions:
       contents: read
@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
