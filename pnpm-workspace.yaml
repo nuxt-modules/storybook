@@ -3,3 +3,8 @@ packages:
   - playground
   - examples/**
   - packages/**
+
+onlyBuiltDependencies:
+  - sharp
+  - better-sqlite3
+  - esbuild

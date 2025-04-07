@@ -11,7 +11,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@nuxtjs/tailwindcss": "6.13.2",
+    "@nuxtjs/tailwindcss": "nightly",
     "nuxt": "3.16.2",
     "vue": "3.5.13",
     "vue-router": "4.5.0"
@@ -23,6 +23,7 @@
     "@storybook/addon-links": "8.6.12",
     "@storybook/blocks": "8.6.12",
     "@storybook/test": "8.6.12",
-    "storybook": "8.6.12"
+    "storybook": "8.6.12",
+    "tailwindcss": "3.4.17"
   }
 }

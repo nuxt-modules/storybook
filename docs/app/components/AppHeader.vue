@@ -1,32 +1,52 @@
 <script setup lang="ts">
-import type { NavItem } from '@nuxt/content'
+import type { ContentNavigationItem } from '@nuxt/content'
 
-const navigation = inject<NavItem[]>('navigation', [])
+const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
 const { header } = useAppConfig()
 </script>
 
 <template>
-  <UHeader>
-    <template #logo>
-      <template v-if="header?.logo?.dark || header?.logo?.light">
-        <UColorModeImage v-bind="{ class: 'h-6 w-auto', ...header?.logo }" />
+  <UHeader :ui="{ center: 'flex-1' }" :to="header?.to || '/'">
+    <UContentSearchButton
+      v-if="header?.search"
+      label="Search..."
+      variant="outline"
+      class="w-full"
+    >
+      <template #trailing>
+        <div class="flex items-center gap-0.5 ms-auto">
+          <UKbd value="meta" />
+          <UKbd value="k" />
+        </div>
       </template>
-      <template v-else>
-        <Logo />
-      </template>
+    </UContentSearchButton>
+
+    <template
+      v-if="header?.logo?.dark || header?.logo?.light || header?.title"
+      #title
+    >
+      <UColorModeImage
+        v-if="header?.logo?.dark || header?.logo?.light"
+        :light="header?.logo?.light!"
+        :dark="header?.logo?.dark!"
+        :alt="header?.logo?.alt"
+        class="h-6 w-auto shrink-0"
+      />
+
+      <span v-else-if="header?.title">
+        {{ header.title }}
+      </span>
     </template>
 
-    <template v-if="header?.search" #center>
-      <UContentSearchButton class="hidden lg:flex" />
+    <template v-else #left>
+      <NuxtLink :to="header?.to || '/'">
+        <Logo class="w-auto shrink-0" />
+      </NuxtLink>
     </template>
 
     <template #right>
-      <UContentSearchButton
-        v-if="header?.search"
-        :label="null"
-        class="lg:hidden"
-      />
+      <UContentSearchButton v-if="header?.search" class="lg:hidden" />
 
       <UColorModeButton v-if="header?.colorMode" />
 
@@ -34,13 +54,13 @@ const { header } = useAppConfig()
         <UButton
           v-for="(link, index) of header.links"
           :key="index"
-          v-bind="{ color: 'gray', variant: 'ghost', ...link }"
+          v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
         />
       </template>
     </template>
 
-    <template #panel>
-      <UNavigationTree :links="mapContentNavigation(navigation)" />
+    <template #body>
+      <UContentNavigation highlight :navigation="navigation" />
     </template>
   </UHeader>
 </template>
