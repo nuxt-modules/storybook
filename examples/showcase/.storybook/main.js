@@ -5,11 +5,7 @@ const config = {
     '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)',
     '../pages/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
-  addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@chromatic-com/storybook',
-  ],
+  addons: ['@storybook/addon-links', '@chromatic-com/storybook'],
   framework: {
     name: '@storybook-vue/nuxt',
     options: {},

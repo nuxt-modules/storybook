@@ -1,2 +1,2 @@
-export * from '@storybook/vue3'
-export * from './types.d'
+export * from '@storybook/vue3-vite'
+export type { StorybookConfig } from './types.d'

@@ -1,4 +1,4 @@
-import type { StorybookConfig as StorybookConfigBase } from '@storybook/types'
+import type { StorybookConfig as StorybookConfigBase } from 'storybook/internal/types'
 import type { FrameworkOptions as FrameworkOptionsVue } from '@storybook/vue3-vite'
 import type {
   StorybookConfigVite,
