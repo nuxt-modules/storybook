@@ -6,7 +6,7 @@ const config: StorybookConfig = {
     '../components/**/*.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
-  addons: ['@chromatic-com/storybook'],
+  addons: ['@storybook/addon-docs', '@chromatic-com/storybook'],
   framework: {
     name: '@storybook-vue/nuxt',
     options: {},
@@ -14,7 +14,7 @@ const config: StorybookConfig = {
   viteFinal: (config) => {
     // For debugging purposes
     // View intermediate state of Vite plugins at http://localhost:6006/__inspect
-    config.plugins.push(
+    config.plugins!.push(
       Inspect({
         build: true,
         outputDir: 'storybook-static/.vite-inspect',

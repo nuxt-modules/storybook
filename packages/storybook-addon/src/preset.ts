@@ -8,13 +8,8 @@ import type {
   PresetProperty,
   PreviewAnnotation,
 } from 'storybook/internal/types'
-import {
-  type UserConfig as ViteConfig,
-  mergeConfig,
-  searchForWorkspaceRoot,
-} from 'vite'
+import type { UserConfig as ViteConfig } from 'vite'
 import type { Nuxt } from '@nuxt/schema'
-import vuePlugin from '@vitejs/plugin-vue'
 
 import replace from '@rollup/plugin-replace'
 import type { StorybookConfig } from './types'
@@ -138,11 +133,16 @@ async function loadNuxtViteConfig(root: string | undefined) {
   ).finally(() => nuxt.close())
 }
 
-function mergeViteConfig(
+async function mergeViteConfig(
   storybookConfig: ViteConfig,
   nuxtConfig: ViteConfig,
   nuxt: Nuxt,
-): ViteConfig {
+): Promise<ViteConfig> {
+  const { mergeConfig, searchForWorkspaceRoot } = await import('vite')
+  const vuePluginImport = await import('@vitejs/plugin-vue')
+  const vuePlugin =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (vuePluginImport as any)?.default?.default ?? vuePluginImport.default
   const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
 
   const plugins = extendedConfig.plugins || []
@@ -217,7 +217,7 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
   return {
     ...config,
     builder: await getPackageDir('@storybook/builder-vite'),
-    renderer: await getPackageDir('@storybook/vue3-vite'),
+    renderer: await getPackageDir('@storybook/vue3'),
   }
 }
 
@@ -333,7 +333,11 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     storybookViteConfig.root,
   )
 
-  const finalViteConfig = mergeViteConfig(storybookViteConfig, nuxtConfig, nuxt)
+  const finalViteConfig = await mergeViteConfig(
+    storybookViteConfig,
+    nuxtConfig,
+    nuxt,
+  )
 
   if (options.outputDir != null) {
     // Write all vite configs to logs
