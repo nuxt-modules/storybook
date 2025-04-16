@@ -54,7 +54,8 @@ jobs:
           pnpm nuxt init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
           cd ${{ runner.temp }}/example
           pnpm dlx storybook@${{ env.STORYBOOK_VERSION }} init
-          pnpm add $packages
+          pnpm add $packages[1]
+          pnpm add $packages[0]
 
       - name: Build Storybook
         run: pnpm build-storybook
