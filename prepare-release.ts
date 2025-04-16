@@ -157,6 +157,7 @@ export async function getLatestCommits() {
     'describe',
     '--tags',
     '--abbrev=0',
+    '--always',
   ]).stdout
 
   return parseCommits(await getGitDiff(latestTag), config)
