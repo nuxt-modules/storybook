@@ -58,7 +58,8 @@ jobs:
           pnpm dlx storybook@${{ env.STORYBOOK_VERSION }} init
           pnpm list
           pnpm remove @nuxtjs/storybook
-          pnpm add -D $packages
+          pnpm add -D $packages[1]
+          pnpm add -D $packages[0]
           pnpm list --long
 
       - name: Build Storybook
