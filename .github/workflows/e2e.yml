@@ -41,7 +41,9 @@ jobs:
         run: pnpm install
 
       - name: Build packages
-        run: pnpm package
+        run: |
+          pnpm jiti prepare-release.ts --nightly
+          pnpm package
         env:
           NODE_ENV: 'production'
 
@@ -56,9 +58,8 @@ jobs:
           pnpm dlx storybook@${{ env.STORYBOOK_VERSION }} init
           pnpm list
           pnpm remove @nuxtjs/storybook
-          pnpm add -D $packages[0]
-          pnpm add -D $packages[1]
-          pnpm list
+          pnpm add -D $packages
+          pnpm list --long
 
       - name: Build Storybook
         run: pnpm build-storybook
