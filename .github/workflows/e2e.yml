@@ -55,7 +55,7 @@ jobs:
           cd ${{ runner.temp }}/example
           pnpm dlx storybook@${{ env.STORYBOOK_VERSION }} init
           pnpm list
-          pnpm remove -y @storybook-vue/nuxt @nuxtjs/storybook
+          pnpm remove @storybook-vue/nuxt @nuxtjs/storybook
           pnpm add -D $packages[1]
           pnpm add -D $packages[0]
           pnpm list
