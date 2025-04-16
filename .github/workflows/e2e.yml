@@ -50,7 +50,7 @@ jobs:
       - name: Create Sample Project
         shell: pwsh
         run: |
-          $packages=Get-ChildItem -Path packages -Recurse -Filter "*.tgz"
+          $packages=Get-ChildItem -Path packages -Recurse -Filter "*.tgz" | Sort-Object Name
           echo "$packages"
           New-Item -Path ${{ runner.temp }}/example -ItemType Directory
           pnpm nuxt init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
