@@ -8,7 +8,7 @@
  * https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/app/entry.ts
  */
 
-import { setup } from '@storybook/vue3'
+import { setup } from '@storybook/vue3-vite'
 import type { ObjectPlugin, Plugin } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
