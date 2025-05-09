@@ -1,1 +1,1 @@
-module.exports = require('./dist/preset.cjs')
+export * from './dist/preset.mjs'

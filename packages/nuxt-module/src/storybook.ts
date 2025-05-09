@@ -4,8 +4,11 @@ import { getPort } from 'get-port-please'
 import type { ModuleOptions } from './module'
 import { withTrailingSlash } from 'ufo'
 import { colors, logger } from './logger'
-import { cache as storybookCache } from '@storybook/core-common'
-import { buildDevStandalone, withTelemetry } from '@storybook/core-server'
+import { cache as storybookCache } from 'storybook/internal/common'
+import {
+  buildDevStandalone,
+  withTelemetry,
+} from 'storybook/internal/core-server'
 
 const buildLogger = logger.withTag('build')
 
