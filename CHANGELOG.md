@@ -1,5 +1,37 @@
 # Changelog
 
+## v8.3.4
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.3...v8.3.4)
+
+### 🩹 Fixes
+
+- Change server proxy preset for @nuxt/icon ([#836](https://github.com/nuxt-modules/storybook/pull/836))
+- Enable cycles option when stringifying objects ([#894](https://github.com/nuxt-modules/storybook/pull/894))
+
+### 📖 Documentation
+
+- Update installation instructions to use new Storybook CLI ([#659](https://github.com/nuxt-modules/storybook/pull/659))
+- Update logo and add gradient to landing page ([#837](https://github.com/nuxt-modules/storybook/pull/837))
+- Replace url property with host ([#875](https://github.com/nuxt-modules/storybook/pull/875))
+
+### 🏡 Chore
+
+- Fail workflow if chromatic finds changes in examples ([#843](https://github.com/nuxt-modules/storybook/pull/843))
+- Fix starter examples ([#845](https://github.com/nuxt-modules/storybook/pull/845))
+- Merge renovate PRs automatically ([#844](https://github.com/nuxt-modules/storybook/pull/844))
+- Update starter ([#846](https://github.com/nuxt-modules/storybook/pull/846))
+- Upgrade json-stable-stringify and remove obsolete `@types` package ([#879](https://github.com/nuxt-modules/storybook/pull/879))
+- Update tested Node versions in ci ([#881](https://github.com/nuxt-modules/storybook/pull/881))
+- Use locked version of storybook to create starter ([#847](https://github.com/nuxt-modules/storybook/pull/847))
+
+### ❤️ Contributors
+
+- Eugen Istoc <eugenistoc@gmail.com>
+- Tobias Diez <code@tobiasdiez.de>
+- Sawden ([@sawden](https://github.com/sawden))
+- Casper Tollefsen ([@CasperSocio](https://github.com/CasperSocio))
+
 ## v8.3.3
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.2...v8.3.3)
