@@ -1,5 +1,9 @@
 # Changelog
 
+## v8.3.5
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.4...v8.3.5)
+
 ## v8.3.4
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.3...v8.3.4)
