@@ -342,15 +342,15 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     console.debug(`Writing Vite configs to ${options.outputDir}/logs/...`)
     fs.writeFileSync(
       join(options.outputDir, 'logs', 'vite-storybook.config.json'),
-      stringify(storybookViteConfig, { space: '  ' }) || '',
+      stringify(storybookViteConfig, { space: '  ', cycles: true }) || '',
     )
     fs.writeFileSync(
       join(options.outputDir, 'logs', 'vite-nuxt.config.json'),
-      stringify(nuxtConfig, { space: '  ' }) || '',
+      stringify(nuxtConfig, { space: '  ', cycles: true }) || '',
     )
     fs.writeFileSync(
       join(options.outputDir, 'logs', 'vite-final.config.json'),
-      stringify(finalViteConfig, { space: '  ' }) || '',
+      stringify(finalViteConfig, { space: '  ', cycles: true }) || '',
     )
   }
 
