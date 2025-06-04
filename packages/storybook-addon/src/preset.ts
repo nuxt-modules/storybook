@@ -4,7 +4,10 @@ import { createRequire } from 'node:module'
 import { resolve, normalize } from 'pathe'
 import { resolvePath } from 'mlly'
 
-import type { PresetProperty, PreviewAnnotation } from '@storybook/types'
+import type {
+  PresetProperty,
+  PreviewAnnotation,
+} from 'storybook/internal/types'
 import {
   type UserConfig as ViteConfig,
   mergeConfig,
