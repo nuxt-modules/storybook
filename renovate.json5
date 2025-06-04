@@ -10,12 +10,18 @@
     ':semanticCommitTypeAll(chore)',
     // Pin all dev dependencies following https://docs.renovatebot.com/dependency-pinning/
     ':pinDevDependencies',
+    // Always widen peer dependency constraints: https://docs.renovatebot.com/presets-default/#widenpeerdependencies
+    ':widenPeerDependencies',
     // Update lock files: https://docs.renovatebot.com/presets-default/#maintainlockfilesmonthly
     ':maintainLockFilesMonthly',
     // Automerge all updates once they pass tests: https://docs.renovatebot.com/presets-default/#automergeall
     ':automergeAll',
     // Update `xyz_version` in github actions workflows: https://docs.renovatebot.com/presets-customManagers/#custommanagersgithubactionsversions
     'customManagers:githubActionsVersions',
+  ],
+  schedule: [
+    // Monthly, but give a 3-day window (due to throttling not all PRs may be created on the same day): https://docs.renovatebot.com/configuration-options/#schedule
+    'on the 2nd through 5th day of the month',
   ],
   // Always squash PRs: https://docs.renovatebot.com/configuration-options/#automergestrategy
   automergeStrategy: 'squash',
