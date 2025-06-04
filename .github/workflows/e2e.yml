@@ -40,12 +40,17 @@ jobs:
 
       - name: Install Verdaccio
         run: |
-          pnpm install -g verdaccio @kenan/npm-cli-login wait-on
+          pnpm install -g verdaccio wait-on
           verdaccio --listen 4873 &
           wait-on --log http://localhost:4873
-          npm-cli-login -u test -p test -e test@test.com -r http://localhost:4873
-          pnpm config set registry http://localhost:4873/
           curl http://localhost:4873
+          TOKEN_RES=$(curl -XPUT \
+                    -H "Content-type: application/json" \
+                    -d '{ "name": "test", "password": "test" }' \
+                    'http://localhost:4873/-/user/org.couchdb.user:test')
+          TOKEN=$(echo "$TOKEN_RES" | jq -r '.token')
+          pnpm config set //localhost:4873/:_authToken $TOKEN
+          pnpm config set registry http://localhost:4873/
 
       - name: Install dependencies
         run: pnpm install
