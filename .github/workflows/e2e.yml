@@ -43,20 +43,23 @@ jobs:
       - name: Build packages
         run: |
           pnpm jiti prepare-release.ts --nightly
-          pnpm --filter=./packages/nuxt-module deploy dist
+          pnpm package
         env:
           NODE_ENV: 'production'
 
       - name: Create Sample Project
         shell: pwsh
         run: |
+          $packages=Get-ChildItem -Path packages -Recurse -Filter "*.tgz" | Sort-Object Name
+          echo "$packages"
           New-Item -Path ${{ runner.temp }}/example -ItemType Directory
           pnpm nuxt init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
           cd ${{ runner.temp }}/example
           pnpm dlx storybook@${{ env.STORYBOOK_VERSION }} init
           pnpm list
           pnpm remove @nuxtjs/storybook
-          pnpm add ${{ github.workspace }}/dist
+          pnpm add -D $packages[1]
+          pnpm add -D $packages[0]
           pnpm list --long
 
       - name: Build Storybook
