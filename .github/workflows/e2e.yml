@@ -39,6 +39,7 @@ jobs:
           cache: pnpm
 
       - name: Install Verdaccio
+        shell: bash
         run: |
           pnpm install -g verdaccio wait-on
           verdaccio --listen 4873 &
