@@ -40,7 +40,7 @@ jobs:
 
       - name: Install Verdaccio
         run: |
-          pnpm install -g verdaccio npm-cli-login wait-on
+          pnpm install -g verdaccio @kenan/npm-cli-login wait-on
           nohup verdaccio &
           wait-on http://localhost:4873
           npm-cli-login -u test -p test -e test@test.com -r http://localhost:4873
