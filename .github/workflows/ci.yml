@@ -17,6 +17,10 @@ jobs:
         # Keep this in sync with the oldest Node.js version supported by the storybook
         node: [20.19.0, 22, 24]
         os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - node: 24
+            os: ubuntu-latest
+            release-nightly: true
     permissions:
       contents: read
       id-token: write
@@ -66,8 +70,7 @@ jobs:
       - name: Nightly release
         if: |
           github.event_name == 'push' &&
-          matrix.node == 20 &&
-          matrix.os == 'ubuntu-latest' &&
+          matrix.release-nightly &&
           !contains(github.event.head_commit.message, '[skip-release]') &&
           !startsWith(github.event.head_commit.message, 'docs')
         run: pnpm nightly-release
