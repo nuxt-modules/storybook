@@ -45,6 +45,7 @@ jobs:
           wait-on --log http://localhost:4873
           npm-cli-login -u test -p test -e test@test.com -r http://localhost:4873
           pnpm config set registry http://localhost:4873/
+          curl http://localhost:4873
 
       - name: Install dependencies
         run: pnpm install
