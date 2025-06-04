@@ -20,7 +20,6 @@ export default defineBuildConfig({
   },
   dependencies: [
     'vue-router',
-    '@storybook/vue3-vite',
     '@storybook/builder-vite',
     '@storybook/vue3-vite',
   ],
@@ -30,7 +29,6 @@ export default defineBuildConfig({
     'nuxt/app',
     'vue',
     'storybook/internal/types',
-    '@storybook/vue3-vite',
     '@vue/shared',
     '#app/composables/state',
     '#app/entry',
