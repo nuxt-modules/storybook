@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import type { Meta, StoryObj } from '@nuxtjs/storybook'
 
 import MyGlobalComp from './globalComp.global.vue'
 
