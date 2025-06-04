@@ -23,7 +23,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     env:
       # renovate: datasource=npm depName=storybook
-      STORYBOOK_VERSION: '9.0.0-alpha.17'
+      STORYBOOK_VERSION: '9.0.4'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
