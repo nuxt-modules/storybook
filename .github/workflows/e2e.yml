@@ -15,11 +15,7 @@ jobs:
       cancel-in-progress: true
     name: 'Starter'
     runs-on: ${{ matrix.os }}
-    services:
-      verdaccio:
-        image: verdaccio/verdaccio:6
-        ports:
-          - 4873:4873
+
     strategy:
       fail-fast: false
       matrix:
@@ -42,14 +38,21 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: pnpm
 
+      - name: Install Verdaccio
+        run: |
+            pnpm install -g verdaccio npm-cli-login wait-on
+            nohup verdaccio &
+            wait-on http://localhost:4873
+            npm-cli-login -u test -p test -e test@test.com -r http://localhost:4873
+            pnpm config set registry http://localhost:4873/
+
       - name: Install dependencies
         run: pnpm install
 
       - name: Build packages
         run: |
-          pnpm config set registry http://localhost:4873/
           pnpm jiti prepare-release.ts --nightly
-          pnpm publish --recursive --tag nightly --access public --no-git-checks --provenance --report-summary
+          pnpm publish --recursive --tag latest --no-git-checks --report-summary
         env:
           NODE_ENV: 'production'
 
