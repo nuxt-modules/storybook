@@ -217,7 +217,7 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
   return {
     ...config,
     builder: await getPackageDir('@storybook/builder-vite'),
-    renderer: await getPackageDir('@storybook/vue3-vite'),
+    renderer: await getPackageDir('@storybook/vue3'),
   }
 }
 
