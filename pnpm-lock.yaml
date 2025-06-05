@@ -196,8 +196,8 @@ importers:
         specifier: 9.0.4
         version: 9.0.4(@testing-library/dom@10.4.0)(prettier@3.5.3)
       tailwindcss:
-        specifier: 3.4.17
-        version: 3.4.17
+        specifier: 4.1.8
+        version: 4.1.8
 
   packages/nuxt-module:
     dependencies:
@@ -6420,6 +6420,9 @@ packages:
   tailwindcss@4.1.3:
     resolution: {integrity: sha512-2Q+rw9vy1WFXu5cIxlvsabCwhU2qUwodGq03ODhLJ0jW4ek5BUtoCsnLB0qG+m8AHgEsSJcJGDSDe06FXlP74g==}
 
+  tailwindcss@4.1.8:
+    resolution: {integrity: sha512-kjeW8gjdxasbmFKpVGrGd5T4i40mV5J2Rasw48QARfYeQ8YS9x02ON9SFWax3Qf616rt4Cp3nVNIj6Hd1mP3og==}
+
   tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
@@ -8717,8 +8720,8 @@ snapshots:
       pathe: 2.0.3
       reka-ui: 2.2.0(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2))
       scule: 1.3.0
-      tailwind-variants: 1.0.0(tailwindcss@4.1.3)
-      tailwindcss: 4.1.3
+      tailwind-variants: 1.0.0(tailwindcss@4.1.8)
+      tailwindcss: 4.1.8
       tinyglobby: 0.2.14
       typescript: 5.8.2
       unplugin: 2.2.2
@@ -15376,10 +15379,10 @@ snapshots:
 
   tailwind-merge@3.0.2: {}
 
-  tailwind-variants@1.0.0(tailwindcss@4.1.3):
+  tailwind-variants@1.0.0(tailwindcss@4.1.8):
     dependencies:
       tailwind-merge: 3.0.2
-      tailwindcss: 4.1.3
+      tailwindcss: 4.1.8
 
   tailwindcss@3.4.17:
     dependencies:
@@ -15409,6 +15412,8 @@ snapshots:
       - ts-node
 
   tailwindcss@4.1.3: {}
+
+  tailwindcss@4.1.8: {}
 
   tapable@2.2.1: {}
 
