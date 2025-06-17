@@ -1,5 +1,26 @@
 # Changelog
 
+## v8.4.0
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.5...v8.4.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Upgrade storybook to v9 ([#882](https://github.com/nuxt-modules/storybook/pull/882))
+
+### 🏡 Chore
+
+- Widen peer dependency constraints for renovate ([#902](https://github.com/nuxt-modules/storybook/pull/902))
+- Re-enable nightly release ([#903](https://github.com/nuxt-modules/storybook/pull/903))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Upgrade storybook to v9 ([#882](https://github.com/nuxt-modules/storybook/pull/882))
+
+### ❤️ Contributors
+
+- Tobias Diez <code@tobiasdiez.de>
+
 ## v8.3.5
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v8.3.4...v8.3.5)
