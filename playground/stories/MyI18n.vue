@@ -1,17 +1,20 @@
 <script lang="ts" setup>
 import './button.css'
+import type { Locale } from 'vue-i18n'
 
 const props = defineProps<{
-  lang: string
+  lang: Locale
   message?: string
 }>()
-const { t, locale } = useI18n()
-const rtl = computed(() => props.lang === 'ar')
-locale.value = props.lang
+
+const { t, locale, setLocale } = useI18n()
+const rtl = computed(() => locale.value === 'ar')
+
+setLocale(props.lang)
 watch(
   () => props.lang,
-  (lang: unknown) => {
-    locale.value = lang
+  async (lang) => {
+    await setLocale(lang)
   },
 )
 </script>
@@ -20,19 +23,19 @@ watch(
   <div class="storybook lang-selector">
     <button
       class="storybook-button storybook-button--small"
-      @click="locale = 'en'"
+      @click="setLocale('en')"
     >
       en
     </button>
     <button
       class="storybook-button storybook-button--small"
-      @click="locale = 'fr'"
+      @click="setLocale('fr')"
     >
       fr
     </button>
     <button
       class="storybook-button storybook-button--small"
-      @click="locale = 'ar'"
+      @click="setLocale('ar')"
     >
       ar
     </button>
@@ -43,5 +46,5 @@ watch(
     <div>{{ t('welcome', { name: 'I18n' }) }}</div>
   </div>
 
-  <p>language : {{ lang }}</p>
+  <p>language : {{ locale }}</p>
 </template>
