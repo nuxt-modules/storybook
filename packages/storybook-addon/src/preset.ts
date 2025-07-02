@@ -90,6 +90,9 @@ async function loadNuxtViteConfig(root: string | undefined) {
       appId: 'nuxt-app',
       buildId: 'storybook',
       ssr: false,
+      vite: {
+        mode: 'development',
+      },
     },
   })
 
