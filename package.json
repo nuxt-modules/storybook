@@ -68,10 +68,10 @@
   },
   "pnpm": {
     "overrides": {
-      "nuxt": "npm:nuxt-nightly@latest",
-      "@nuxt/kit": "npm:@nuxt/kit-nightly@latest",
-      "@nuxt/schema": "npm:@nuxt/schema-nightly@latest",
-      "@nuxt/vite-builder": "npm:@nuxt/vite-builder-nightly@latest"
+      "nuxt": "npm:nuxt-nightly@3x",
+      "@nuxt/kit": "npm:@nuxt/kit-nightly@3x",
+      "@nuxt/schema": "npm:@nuxt/schema-nightly@3x",
+      "@nuxt/vite-builder": "npm:@nuxt/vite-builder-nightly@3x"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
