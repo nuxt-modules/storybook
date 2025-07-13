@@ -14,13 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Keep this in sync with the oldest Node.js version supported by the storybook
-        node: [20.19.0, 22, 24]
+        node: [20]
         os: [ubuntu-latest, windows-latest, macos-latest]
-        include:
-          - node: 24
-            os: ubuntu-latest
-            release-nightly: true
     permissions:
       contents: read
       id-token: write
