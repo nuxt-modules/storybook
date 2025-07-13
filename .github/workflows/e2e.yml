@@ -73,7 +73,6 @@ jobs:
           New-Item -Path ${{ runner.temp }}/example -ItemType Directory
           pnpm nuxt init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
           cd ${{ runner.temp }}/example
-          pnpm i nuxt@npm:nuxt-nightly@3x
           pnpm dlx storybook@${{ env.STORYBOOK_VERSION }} init
           pnpm list --long
 
