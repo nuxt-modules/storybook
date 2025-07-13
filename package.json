@@ -67,12 +67,6 @@
     "access": "public"
   },
   "pnpm": {
-    "overrides": {
-      "nuxt": "npm:nuxt-nightly@3x",
-      "@nuxt/kit": "npm:@nuxt/kit-nightly@3x",
-      "@nuxt/schema": "npm:@nuxt/schema-nightly@3x",
-      "@nuxt/vite-builder": "npm:@nuxt/vite-builder-nightly@3x"
-    },
     "peerDependencyRules": {
       "ignoreMissing": [
         "webpack",
