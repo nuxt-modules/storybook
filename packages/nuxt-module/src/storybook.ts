@@ -1,4 +1,5 @@
-import { resolve } from 'node:path'
+import defu from 'defu'
+import { resolve, relative } from 'node:path'
 import type { Nuxt } from 'nuxt/schema'
 import { getPort } from 'get-port-please'
 import type { ModuleOptions } from './module'
@@ -50,10 +51,19 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
   })
 
   const projectDir = resolve(nuxt.options.rootDir)
+  const configDir = resolve(projectDir, '.storybook')
+
+  // hoist dependency and include .storybook in tsconfig
+  nuxt.options.typescript = defu(nuxt.options.typescript, {
+    hoist: ['@storybook-vue/nuxt'],
+    tsConfig: {
+      include: [relative(nuxt.options.buildDir, resolve(configDir, '**/*'))],
+    },
+  })
 
   const storybookOptions = {
     port: storybookServerPort,
-    configDir: resolve(projectDir, './.storybook'),
+    configDir,
     configType: 'DEVELOPMENT',
     cache: storybookCache,
     // Don't check for storybook updates (we're using the latest version)
