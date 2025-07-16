@@ -55,7 +55,6 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
 
   // hoist dependency and include .storybook in tsconfig
   nuxt.options.typescript = defu(nuxt.options.typescript, {
-    hoist: ['@storybook-vue/nuxt'],
     tsConfig: {
       include: [relative(nuxt.options.buildDir, resolve(configDir, '**/*'))],
     },
