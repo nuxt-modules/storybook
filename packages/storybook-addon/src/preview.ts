@@ -9,7 +9,7 @@
  */
 
 import { setup } from '@storybook/vue3-vite'
-import type { ObjectPlugin, Plugin } from 'nuxt/app'
+import type { ObjectPlugin, Plugin, NuxtApp } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
 import { $fetch } from 'ofetch'
@@ -25,7 +25,8 @@ import plugins from '#build/plugins'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const pluginsTyped: Array<Plugin & ObjectPlugin<any>> = plugins
 
-setup(async (vueApp, storyContext) => {
+setup(async (_vueApp, storyContext) => {
+  const vueApp = _vueApp as unknown as NuxtApp['vueApp']
   // We key the Nuxt apps to the id of the story
   // This is not totally correct, since the storybook vue renderer actually uses the canvas element
   // Also this doesn't allow to "forceRemount"
@@ -43,7 +44,6 @@ setup(async (vueApp, storyContext) => {
   const storyNuxtCtx = getContext(storyNuxtAppId)
 
   // Provide the config of the Nuxt app
-  // @ts-expect-error internal Nuxt property
   window.__NUXT__ = {
     serverRendered: false,
     config: {
