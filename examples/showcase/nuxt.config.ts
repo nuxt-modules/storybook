@@ -1,7 +1,21 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/storybook', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n'],
+  modules: [
+    '@nuxtjs/storybook',
+    '@nuxt/image',
+    '@pinia/nuxt',
+    '@nuxtjs/i18n',
+    '@nuxt/fonts',
+  ],
+
+  fonts: {
+    families: [
+      // { name: 'Roboto', provider: 'google' },
+      // { name: 'Manufacturing Consent', provider: 'google' },
+      // { name: 'Inter', provider: 'google' },
+    ],
+  },
 
   pinia: {
     autoImports: ['defineStore', 'acceptHMRUpdate'],
