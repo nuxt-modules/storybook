@@ -53,7 +53,7 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
   const projectDir = resolve(nuxt.options.rootDir)
   const configDir = resolve(projectDir, '.storybook')
 
-  // hoist dependency and include .storybook in tsconfig
+  // include .storybook in tsconfig
   nuxt.options.typescript = defu(nuxt.options.typescript, {
     tsConfig: {
       include: [relative(nuxt.options.buildDir, resolve(configDir, '**/*'))],
