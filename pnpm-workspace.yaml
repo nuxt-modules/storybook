@@ -5,6 +5,15 @@ packages:
   - packages/**
 
 onlyBuiltDependencies:
-  - sharp
+  - "@tailwindcss/oxide"
   - better-sqlite3
   - esbuild
+  - sharp
+
+ignoredBuiltDependencies:
+  - vue-demi
+
+peerDependencyRules:
+  ignoreMissing:
+    - vue
+    - webpack
