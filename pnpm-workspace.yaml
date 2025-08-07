@@ -4,14 +4,15 @@ packages:
   - examples/**
   - packages/**
 
+ignoredBuiltDependencies:
+  - vue-demi
+
 onlyBuiltDependencies:
-  - "@tailwindcss/oxide"
+  - '@tailwindcss/oxide'
   - better-sqlite3
   - esbuild
   - sharp
-
-ignoredBuiltDependencies:
-  - vue-demi
+  - unrs-resolver
 
 peerDependencyRules:
   ignoreMissing:
