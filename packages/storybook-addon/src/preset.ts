@@ -8,11 +8,8 @@ import type {
   PresetProperty,
   PreviewAnnotation,
 } from 'storybook/internal/types'
-import {
-  type UserConfig as ViteConfig,
-  mergeConfig,
-  searchForWorkspaceRoot,
-} from 'vite'
+import { mergeConfig, searchForWorkspaceRoot } from 'vite'
+import type { UserConfig as ViteConfig } from 'vite'
 import type { Nuxt } from '@nuxt/schema'
 import vuePlugin from '@vitejs/plugin-vue'
 
