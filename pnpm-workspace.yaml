@@ -4,7 +4,17 @@ packages:
   - examples/**
   - packages/**
 
+ignoredBuiltDependencies:
+  - vue-demi
+
 onlyBuiltDependencies:
-  - sharp
+  - '@tailwindcss/oxide'
   - better-sqlite3
   - esbuild
+  - sharp
+  - unrs-resolver
+
+peerDependencyRules:
+  ignoreMissing:
+    - vue
+    - webpack
