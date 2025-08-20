@@ -52,4 +52,16 @@
     // Run pnpm dedupe after pnpm-lock.yaml updates
     'pnpmDedupe',
   ],
+  customManagers: [
+    {
+      customType: 'regex',
+      managerFilePatterns: [
+        'docs/content/1.getting-started/1.setup.md',
+        'docs/content/index.md',
+      ],
+      matchStrings: ['storybook@(?<currentValue>.*?) init'],
+      depNameTemplate: 'storybook',
+      datasourceTemplate: 'npm',
+    },
+  ],
 }
