@@ -1,5 +1,17 @@
 # Changelog
 
+## v9.0.1
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v9.0.0...v9.0.1)
+
+### 📖 Documentation
+
+- Used pinned storybook for `init` ([#938](https://github.com/nuxt-modules/storybook/pull/938))
+
+### ❤️ Contributors
+
+- Tobias Diez <code@tobiasdiez.de>
+
 ## v9.0.0
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/push...v9.0.0)
