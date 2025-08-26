@@ -9,6 +9,8 @@
  */
 
 import { setup } from '@storybook/vue3-vite'
+import { createHead } from '@unhead/vue/client'
+
 import type { ObjectPlugin, Plugin, NuxtApp } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
@@ -68,14 +70,18 @@ setup(async (_vueApp, storyContext) => {
     vueApp,
   })
 
+  const head = createHead()
+  nuxt.vueApp.use(head as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+  nuxt._head = head
+
   // Provide the Nuxt app as context
   storyNuxtCtx.set(nuxt, true)
   // ...also for calls of useNuxtApp with the default key
   getContext('nuxt-app').set(nuxt, true)
 
-  await applyPlugins(nuxt, pluginsTyped)
-  await nuxt.hooks.callHook('app:created', vueApp)
-  await nuxt.hooks.callHook('app:beforeMount', vueApp)
+  applyPlugins(nuxt, pluginsTyped)
+    .then(() => nuxt.hooks.callHook('app:created', vueApp))
+    .then(() => nuxt.hooks.callHook('app:beforeMount', vueApp))
 
   // TODO: The following are usually called after the app is mounted
   // but currently storybook doesn't provide a hook to do that
