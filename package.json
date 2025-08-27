@@ -35,6 +35,7 @@
     "lint:prettier": "prettier --check .",
     "lint:fix": "pnpm lint:eslint --fix && pnpm lint:prettier --write",
     "release": "pnpm jiti prepare-release.ts && pnpm publish --recursive  && git push --follow-tags",
+    "release:major": "pnpm jiti prepare-release.ts --major && pnpm publish --recursive  && git push --follow-tags",
     "nightly-release": "pnpm jiti prepare-release.ts --nightly && pnpm publish --recursive --tag nightly --access public --no-git-checks --provenance --report-summary",
     "prepare": "pnpm run --filter=./playground/** prepare",
     "docs:dev": "pnpm run --filter=./docs/** dev",

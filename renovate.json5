@@ -16,8 +16,6 @@
     ':maintainLockFilesMonthly',
     // Automerge all updates once they pass tests: https://docs.renovatebot.com/presets-default/#automergeall
     ':automergeAll',
-    // Update `xyz_version` in github actions workflows: https://docs.renovatebot.com/presets-customManagers/#custommanagersgithubactionsversions
-    'customManagers:githubActionsVersions',
   ],
   schedule: [
     // Monthly, but give a 3-day window (due to throttling not all PRs may be created on the same day): https://docs.renovatebot.com/configuration-options/#schedule
@@ -51,5 +49,32 @@
   postUpdateOptions: [
     // Run pnpm dedupe after pnpm-lock.yaml updates
     'pnpmDedupe',
+  ],
+  customManagers: [
+    {
+      customType: 'regex',
+      managerFilePatterns: [
+        'docs/content/1.getting-started/1.setup.md',
+        'docs/content/index.md',
+      ],
+      matchStrings: ['storybook@(?<currentValue>.*?) init'],
+      depNameTemplate: 'storybook',
+      datasourceTemplate: 'npm',
+      depTypeTemplate: 'dependencies',
+    },
+    // Update `xyz_version` in github actions workflows:
+    // Same as the https://docs.renovatebot.com/presets-customManagers/#custommanagersgithubactionsversions
+    // but specifying a depType
+    {
+      customType: 'regex',
+      managerFilePatterns: [
+        '/(^|/)(workflow-templates|\\.(?:github|gitea|forgejo)/(?:workflows|actions))/.+\\.ya?ml$/',
+        '/(^|/)action\\.ya?ml$/',
+      ],
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>[a-zA-Z0-9-._]+?) depName=(?<depName>[^\\s]+?)(?: (?:lookupName|packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?\\s+[A-Za-z0-9_]+?_VERSION\\s*:\\s*["\']?(?<currentValue>.+?)["\']?\\s',
+      ],
+      depTypeTemplate: 'dependencies',
+    },
   ],
 }

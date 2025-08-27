@@ -1,5 +1,49 @@
 # Changelog
 
+## v9.0.1
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v9.0.0...v9.0.1)
+
+### 📖 Documentation
+
+- Used pinned storybook for `init` ([#938](https://github.com/nuxt-modules/storybook/pull/938))
+
+### ❤️ Contributors
+
+- Tobias Diez <code@tobiasdiez.de>
+
+## v9.0.0
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/push...v9.0.0)
+
+### 🩹 Fixes
+
+- Update `@nuxtjs/i18n` ([#908](https://github.com/nuxt-modules/storybook/pull/908))
+- 🐞 Fix semver range update in Renovate in peerDependencies breaking peer dependency compatability ([#910](https://github.com/nuxt-modules/storybook/pull/910))
+- Nuxt 4 compatibility ([#924](https://github.com/nuxt-modules/storybook/pull/924))
+- Resolve pnpm hoisting issue with StorybookConfig type imports ([#923](https://github.com/nuxt-modules/storybook/pull/923))
+- Include config dir in tsconfig ([#926](https://github.com/nuxt-modules/storybook/pull/926))
+
+### 📖 Documentation
+
+- Add warning about differences between running `storybook` with `nuxt` or on its own ([#906](https://github.com/nuxt-modules/storybook/pull/906))
+
+### 🏡 Chore
+
+- Dedupe dependencies ([#927](https://github.com/nuxt-modules/storybook/pull/927))
+- Update Node.js version to 22.17.1 in Netlify configuration ([#928](https://github.com/nuxt-modules/storybook/pull/928))
+- Add better-sqlite3 as dependency for docs ([#929](https://github.com/nuxt-modules/storybook/pull/929))
+- Add Manual Major Version Bump Capability ([#935](https://github.com/nuxt-modules/storybook/pull/935))
+
+### ❤️ Contributors
+
+- Chakir QATAB ([@chakAs3](https://github.com/chakAs3))
+- Bobbie Goede <bobbiegoede@gmail.com>
+- Tobias Diez <code@tobiasdiez.de>
+- Copilot ([@MicrosoftCopilot](https://github.com/MicrosoftCopilot))
+- Robigan ([@robigan](https://github.com/robigan))
+- Nestor Vera ([@hacknug](https://github.com/hacknug))
+
 ## v8.4.1
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v8.4.0...v8.4.1)
