@@ -1,10 +1,11 @@
+import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { $fetch, setup } from '@nuxt/test-utils'
 
 describe('ssr', async () => {
   await setup({
-    rootDir: fileURLToPath(new URL('../docs', import.meta.url)),
+    rootDir: resolve(dirname(fileURLToPath(import.meta.url)), '../docs'),
     setupTimeout: 1200000,
   })
 
