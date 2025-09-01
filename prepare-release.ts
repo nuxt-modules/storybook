@@ -146,6 +146,12 @@ export async function determineBumpType() {
   const config = await loadChangelogConfig(process.cwd())
   const commits = await getLatestCommits()
 
+  // Check for manual major bump flag
+  if (process.argv.includes('--major')) {
+    consola.info('🚀 Manual major bump requested')
+    return 'major'
+  }
+
   const bumpType = determineSemverChange(commits, config)
 
   return bumpType === 'major' ? 'minor' : bumpType

@@ -80,5 +80,7 @@ setup(async (_vueApp, storyContext) => {
   // TODO: The following are usually called after the app is mounted
   // but currently storybook doesn't provide a hook to do that
   // await nuxt.hooks.callHook('app:mounted', vueApp)
+
+  await nuxt.hooks.callHook('app:suspense:resolve')
   // await nextTick()
 })
