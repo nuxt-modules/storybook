@@ -1,10 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/storybook', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n'],
+  modules: ['@nuxtjs/storybook', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n', '@sidebase/nuxt-auth'],
 
   pinia: {
-    autoImports: ['defineStore', 'acceptHMRUpdate'],
+    storesDirs: ['./stores/**'],
   },
 
   i18n: {
