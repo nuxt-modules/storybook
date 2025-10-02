@@ -10,11 +10,11 @@ orientation: horizontal
 ---
   :::prose-pre
   ---
-  code: npx storybook@9.1.4 init
+  code: npx storybook@9.1.10 init
   filename: Terminal
   ---
   ```bash
-  npx storybook@9.1.4 init
+  npx storybook@9.1.10 init
   ```
   :::
 
