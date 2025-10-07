@@ -28,7 +28,7 @@ jobs:
           - node: 21
     env:
       # renovate: datasource=npm depName=storybook
-      STORYBOOK_VERSION: '9.1.2'
+      STORYBOOK_VERSION: '9.1.10'
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -37,7 +37,7 @@ jobs:
         uses: pnpm/action-setup@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node }}
           cache: pnpm
