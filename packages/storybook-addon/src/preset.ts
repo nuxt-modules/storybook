@@ -368,7 +368,8 @@ async function getPackageDir(packageName: string) {
 
 export function getNuxtProxyConfig(nuxt: Nuxt) {
   const port = nuxt.options.runtimeConfig.app.port ?? 3000
-  const route = '^/(_nuxt|_fonts|_ipx|api/_nuxt_icon|__nuxt_devtools__|__nuxt_island)'
+  const route =
+    '^/(_nuxt|_fonts|_ipx|api/_nuxt_icon|__nuxt_devtools__|__nuxt_island)'
   const proxy = {
     [route]: {
       target: `http://localhost:${port}`,
