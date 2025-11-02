@@ -16,6 +16,8 @@
     ':maintainLockFilesMonthly',
     // Automerge all updates once they pass tests: https://docs.renovatebot.com/presets-default/#automergeall
     ':automergeAll',
+    // Pin Github Actions versions: https://docs.renovatebot.com/presets-helpers/#helperspingithubactiondigeststosemver
+    'helpers:pinGitHubActionDigestsToSemver',
   ],
   schedule: [
     // Monthly, but give a 3-day window (due to throttling not all PRs may be created on the same day): https://docs.renovatebot.com/configuration-options/#schedule
