@@ -28,7 +28,7 @@ jobs:
           - node: 21
     env:
       # renovate: datasource=npm depName=storybook
-      STORYBOOK_VERSION: '9.1.10'
+      STORYBOOK_VERSION: '9.1.16'
     steps:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
