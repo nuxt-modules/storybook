@@ -1,6 +1,6 @@
-import { defineVitestConfig } from '@nuxt/test-utils/config'
+import { defineVitestProject } from '@nuxt/test-utils/config'
 
-export default defineVitestConfig({
+export default defineVitestProject({
   test: {
     typecheck: {
       enabled: true,
