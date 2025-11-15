@@ -41,7 +41,7 @@ https://github.com/storybook-vue/nuxt-storybook-module-demo
 
 📦 Extendable by Nuxt modules
 
-🚀 Supports Nuxt 3 / Storybook 8
+🚀 Supports Nuxt 4 / Storybook 10 (ESM-only)
 
 ## Known Limitations
 
