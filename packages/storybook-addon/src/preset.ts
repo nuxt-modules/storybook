@@ -202,7 +202,8 @@ function mergeViteConfig(
       cors: true,
       proxy: {
         ...getPreviewProxy(),
-        ...getNuxtProxyConfig(nuxt).proxy,
+        // Only proxy to Nuxt dev server when Nuxt is actually running in dev mode
+        ...(nuxt.options.dev ? getNuxtProxyConfig(nuxt).proxy : {}),
       },
       fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
     },
@@ -214,10 +215,23 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: any,
 ) => {
+  // Import and extend core from @storybook/vue3-vite preset
+  const presetURL = pathToFileURL(
+    join(await getPackageDir('@storybook/vue3-vite'), 'preset.js'),
+  )
+  const vue3VitePreset = await import(presetURL.href)
+  // core from vue3-vite is an object, not a function
+  const baseCore = vue3VitePreset.core || {
+    builder: '@storybook/builder-vite',
+    renderer: '@storybook/vue3',
+  }
+
+  // Storybook 10+ is ESM-only, so we return package names and let Storybook
+  // resolve them using its own ESM resolution. This works correctly with pnpm's
+  // strict module resolution and avoids "Directory import is not supported" errors.
   return {
+    ...baseCore,
     ...config,
-    builder: await getPackageDir('@storybook/builder-vite'),
-    renderer: await getPackageDir('@storybook/vue3'),
   }
 }
 
@@ -365,6 +379,8 @@ async function getPackageDir(packageName: string) {
     throw new Error(`Cannot find ${packageName}`, { cause: e })
   }
 }
+
+
 
 export function getNuxtProxyConfig(nuxt: Nuxt) {
   const port = nuxt.options.runtimeConfig.app.port ?? 3000

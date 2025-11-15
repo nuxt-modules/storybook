@@ -43,6 +43,26 @@ https://github.com/storybook-vue/nuxt-storybook-module-demo
 
 🚀 Supports Nuxt 3 / Storybook 8
 
+## Known Limitations
+
+### Nuxt 4.2.0+ Compatibility
+
+**This module currently requires Nuxt `^4.0.0 <4.2.0` (last tested version: 4.1.3).**
+
+Nuxt 4.2.0 introduced changes to Vite plugin environment compatibility ([PR #33445](https://github.com/nuxt/nuxt/pull/33445)) that break the integration with Storybook 10's ESM-only architecture. When using Nuxt 4.2.0+, the Nuxt dev server fails to serve `/_nuxt/*` assets correctly when Storybook is running.
+
+**Workaround:** Pin Nuxt to version `4.1.3` until this issue is resolved:
+
+```json
+{
+  "dependencies": {
+    "nuxt": "4.1.3"
+  }
+}
+```
+
+We're working with the Nuxt team to resolve this compatibility issue. See [issue #XXX](https://github.com/nuxt-modules/storybook/issues/XXX) for updates.
+
 ## Nuxt 2
 
 Nuxt 2 is supported with Storybook v6, you can check legacy code on the v4 branch.
