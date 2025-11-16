@@ -60,11 +60,12 @@
   },
   "devDependencies": {
     "@nuxt/module-builder": "1.0.2",
-    "storybook": "9.1.16",
+    "storybook": "10.0.7",
     "unbuild": "3.6.1",
     "vite": "7.1.4"
   },
   "peerDependencies": {
+    "nuxt": "^4.0.0 <4.2.0",
     "storybook": "~10.0.2"
   }
 }
