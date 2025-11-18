@@ -7,18 +7,10 @@ const config = {
   stories: [
     '../components/**/*.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-    '../pages/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
   core: {
     builder: '@storybook/builder-vite',
   },
-  addons: [
-    '@storybook/addon-docs',
-    '@storybook/addon-links',
-    '@chromatic-com/storybook',
-  ],
-  docs: {
-    autodocs: 'tag',
-  },
+  addons: ['@chromatic-com/storybook', '@storybook/addon-docs'],
 }
 export default config

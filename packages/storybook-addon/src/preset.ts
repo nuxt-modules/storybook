@@ -170,10 +170,6 @@ function mergeViteConfig(
     '@nuxtjs/storybook > @storybook-vue/nuxt > @storybook/vue3 > lodash/kebabCase',
     // Workaround for https://github.com/nuxt-modules/storybook/issues/776
     'storybook > @storybook/core > jsdoc-type-pratt-parser',
-    // Workaround for MIME type error with errx in Storybook 10 + Nuxt 4
-    // The errx package (stack trace utility from unjs) needs explicit optimization
-    // to prevent Vite from serving it with an empty MIME type in ESM-only environments
-    'errx',
   )
 
   return mergeConfig(extendedConfig, {
