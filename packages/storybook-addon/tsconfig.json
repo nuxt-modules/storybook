@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
+    "rootDir": ".",
     "target": "ESNext",
-    "module": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": ["vite/client"],
     "skipLibCheck": false,
     "moduleResolution": "Bundler",
@@ -13,5 +13,5 @@
       "#app/entry": ["./node_modules/nuxt/dist/app/entry"]
     }
   },
-  "include": ["src/**/*", "shim.d.ts"]
+  "include": ["src/**/*", "tsup.config.ts"]
 }

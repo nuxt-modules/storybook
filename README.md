@@ -41,11 +41,18 @@ https://github.com/storybook-vue/nuxt-storybook-module-demo
 
 📦 Extendable by Nuxt modules
 
-🚀 Supports Nuxt 3 / Storybook 8
+🚀 Supports Nuxt 4+ / Storybook 10+
 
-## Nuxt 2
+## Requirements
 
-Nuxt 2 is supported with Storybook v6, you can check legacy code on the v4 branch.
+- Node.js 20.19+, 22.12+, or 24+
+- Nuxt 4.0.0 or later
+- Storybook 10.0.0 or later (ESM-only)
+
+## Previous Versions
+
+- **Nuxt 3**: Use v9.x with Storybook 8 or 9
+- **Nuxt 2**: Use v4.x with Storybook v6 (check the v4 branch for legacy code)
 
 ## Contributing
 

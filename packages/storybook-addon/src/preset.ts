@@ -18,7 +18,7 @@ import vuePlugin from '@vitejs/plugin-vue'
 
 import replace from '@rollup/plugin-replace'
 import type { StorybookConfig } from './types'
-import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
+import { componentsDir, pluginsDir, runtimeDir } from './dirs'
 import stringify from 'json-stable-stringify'
 import nuxtRuntimeConfigPlugin from './runtimeConfig'
 
@@ -42,21 +42,6 @@ function extendComponents(nuxt: Nuxt) {
     nuxtLink.filePath = join(runtimeDir, 'components/nuxt-link')
     nuxtLink.shortPath = join(runtimeDir, 'components/nuxt-link')
     nuxt.options.build.transpile.push(nuxtLink.filePath)
-  })
-}
-
-/**
- * extend composables to override router ( fix undefined router  useNuxtApp )
- *
- * @param nuxt
- */
-
-async function extendComposables(nuxt: Nuxt) {
-  const { addImportsSources } = await import('@nuxt/kit')
-  nuxt.options.build.transpile.push(composablesDir)
-  addImportsSources({
-    imports: ['useRouter'],
-    from: join(composablesDir, 'router'),
   })
 }
 
@@ -90,6 +75,12 @@ async function loadNuxtViteConfig(root: string | undefined) {
       appId: 'nuxt-app',
       buildId: 'storybook',
       ssr: false,
+      experimental: {
+        // Disable app manifest to prevent 404 errors in Storybook preview
+        // Nuxt 3.8+ tries to fetch /_nuxt/builds/meta/{buildId}.json for build checking
+        // but Storybook doesn't generate this manifest, causing console errors
+        appManifest: false,
+      },
     },
   })
 
@@ -100,7 +91,6 @@ async function loadNuxtViteConfig(root: string | undefined) {
   nuxt.options.build.transpile.push(join(packageDir, 'preview'))
 
   nuxt.hook('modules:done', () => {
-    extendComposables(nuxt)
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
     // nuxt.options.build.transpile.push('@storybook-vue/nuxt')
@@ -180,6 +170,10 @@ function mergeViteConfig(
     '@nuxtjs/storybook > @storybook-vue/nuxt > @storybook/vue3 > lodash/kebabCase',
     // Workaround for https://github.com/nuxt-modules/storybook/issues/776
     'storybook > @storybook/core > jsdoc-type-pratt-parser',
+    // Workaround for MIME type error with errx in Storybook 10 + Nuxt 4
+    // The errx package (stack trace utility from unjs) needs explicit optimization
+    // to prevent Vite from serving it with an empty MIME type in ESM-only environments
+    'errx',
   )
 
   return mergeConfig(extendedConfig, {
@@ -202,7 +196,8 @@ function mergeViteConfig(
       cors: true,
       proxy: {
         ...getPreviewProxy(),
-        ...getNuxtProxyConfig(nuxt).proxy,
+        // Only proxy to Nuxt dev server when Nuxt is actually running in dev mode
+        ...(nuxt.options.dev ? getNuxtProxyConfig(nuxt).proxy : {}),
       },
       fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
     },
@@ -214,10 +209,11 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: any,
 ) => {
+  // Storybook 10 (ESM-only) requires fully resolved paths to entry points, not directories
   return {
     ...config,
-    builder: await getPackageDir('@storybook/builder-vite'),
-    renderer: await getPackageDir('@storybook/vue3'),
+    builder: import.meta.resolve('@storybook/builder-vite'),
+    renderer: import.meta.resolve('@storybook/vue3/preset'),
   }
 }
 
