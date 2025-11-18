@@ -1,3 +1,4 @@
+/* eslint-disable import/first */
 /**
  * This is loaded by the Storybook canvas preview iframe and applies to all stories.
  * https://github.com/storybookjs/storybook/blob/main/docs/contribute/framework.md#4-author-the-framework-itself

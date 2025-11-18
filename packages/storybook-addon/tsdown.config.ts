@@ -1,8 +1,8 @@
-import { defineConfig, type Options } from 'tsdown'
+import { defineConfig, type UserConfig } from 'tsdown'
 
 const NODE_TARGET = 'node20.19' // Minimum Node version supported by Storybook 10
 
-export default defineConfig(async (options) => {
+export default defineConfig(async () => {
   // reading the three types of entries from package.json, which has the following structure:
   // // {
   //  ...
@@ -20,10 +20,9 @@ export default defineConfig(async (options) => {
     bundler: { managerEntries = [], previewEntries = [], nodeEntries = [] },
   } = packageJson
 
-  const commonConfig: Options = {
-    splitting: true,
+  const commonConfig: UserConfig = {
     format: ['esm'],
-    treeShaking: true,
+    treeshake: true,
     target: NODE_TARGET,
     // The following packages are provided by Storybook and should always be externalized
     // Meaning they shouldn't be bundled with the addon, and they shouldn't be regular dependencies either
@@ -45,13 +44,10 @@ export default defineConfig(async (options) => {
       '@storybook/vue3',
       '@storybook/vue3-vite',
     ],
-    noExternal: [
-      'vue-router',
-      '@storybook-vue/nuxt',
-    ],
+    noExternal: ['vue-router', '@storybook-vue/nuxt'],
   }
 
-  const configs: Options[] = []
+  const configs: UserConfig[] = []
 
   // manager entries are entries meant to be loaded into the manager UI
   // they'll have manager-specific packages externalized and they won't be usable in node
