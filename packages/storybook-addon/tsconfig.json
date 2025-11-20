@@ -14,5 +14,5 @@
       "#app/entry": ["./node_modules/nuxt/dist/app/entry"]
     }
   },
-  "include": ["src/**/*", "tsup.config.ts"]
+  "include": ["src/**/*", "shim.d.ts", "tsdown.config.ts"]
 }
