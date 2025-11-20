@@ -19,7 +19,6 @@ const config = {
         mdxPluginOptions: {},
       },
     },
-    '@storybook/addon-links',
     '@chromatic-com/storybook',
   ],
   async viteFinal(config) {
