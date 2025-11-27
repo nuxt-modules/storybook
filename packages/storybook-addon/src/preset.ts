@@ -1,8 +1,25 @@
 import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
+
 import { resolve, normalize } from 'pathe'
 import { resolvePath } from 'mlly'
+import vuePlugin from '@vitejs/plugin-vue'
+import replace from '@rollup/plugin-replace'
+import stringify from 'json-stable-stringify'
+import {
+  type UserConfig as ViteConfig,
+  mergeConfig,
+  searchForWorkspaceRoot,
+} from 'vite'
+import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
+import nuxtRuntimeConfigPlugin from './runtimeConfig'
+import type { Nuxt } from '@nuxt/schema'
+import type {
+  PresetProperty,
+  PreviewAnnotation,
+} from 'storybook/internal/types'
+import type { StorybookConfig } from './types'
 
 /**
  * Resolves a module specifier to its file path.
@@ -18,24 +35,6 @@ async function resolveModule(specifier: string): Promise<string> {
   const require = createRequire(import.meta.url)
   return pathToFileURL(require.resolve(specifier)).href
 }
-
-import type {
-  PresetProperty,
-  PreviewAnnotation,
-} from 'storybook/internal/types'
-import {
-  type UserConfig as ViteConfig,
-  mergeConfig,
-  searchForWorkspaceRoot,
-} from 'vite'
-import type { Nuxt } from '@nuxt/schema'
-import vuePlugin from '@vitejs/plugin-vue'
-
-import replace from '@rollup/plugin-replace'
-import type { StorybookConfig } from './types'
-import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
-import stringify from 'json-stable-stringify'
-import nuxtRuntimeConfigPlugin from './runtimeConfig'
 
 const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
@@ -214,11 +213,7 @@ function mergeViteConfig(
     // Pre-bundle React dependencies for Storybook's docs addon
     // React packages need explicit optimization as they're used by addon-docs
     optimizeDeps: {
-      include: [
-        'react/jsx-runtime',
-        'react',
-        'react-dom/client',
-      ],
+      include: ['react/jsx-runtime', 'react', 'react-dom/client'],
     },
 
     plugins: [
