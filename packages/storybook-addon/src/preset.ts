@@ -4,6 +4,21 @@ import { createRequire } from 'node:module'
 import { resolve, normalize } from 'pathe'
 import { resolvePath } from 'mlly'
 
+/**
+ * Resolves a module specifier to its file path.
+ * Works in both ESM and CJS contexts by using createRequire as fallback.
+ * Essential for supporting backwards compatibility in Storybook
+ */
+async function resolveModule(specifier: string): Promise<string> {
+  // Try import.meta.resolve first (ESM)
+  if (typeof import.meta.resolve === 'function') {
+    return import.meta.resolve(specifier)
+  }
+  // Fallback for CJS: use createRequire
+  const require = createRequire(import.meta.url)
+  return pathToFileURL(require.resolve(specifier)).href
+}
+
 import type {
   PresetProperty,
   PreviewAnnotation,
@@ -18,7 +33,7 @@ import vuePlugin from '@vitejs/plugin-vue'
 
 import replace from '@rollup/plugin-replace'
 import type { StorybookConfig } from './types'
-import { componentsDir, pluginsDir, runtimeDir } from './dirs'
+import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
 import stringify from 'json-stable-stringify'
 import nuxtRuntimeConfigPlugin from './runtimeConfig'
 
@@ -42,6 +57,23 @@ function extendComponents(nuxt: Nuxt) {
     nuxtLink.filePath = join(runtimeDir, 'components/nuxt-link')
     nuxtLink.shortPath = join(runtimeDir, 'components/nuxt-link')
     nuxt.options.build.transpile.push(nuxtLink.filePath)
+  })
+}
+
+/**
+ * extend composables to override router ( fix undefined router  useNuxtApp )
+ *
+ * @param nuxt
+ */
+
+async function extendComposables(nuxt: Nuxt) {
+  const { addImportsSources } = await import('@nuxt/kit')
+  nuxt.options.build.transpile.push(composablesDir)
+  addImportsSources({
+    imports: ['useRouter'],
+    from: join(composablesDir, 'router'),
+    // Use higher priority to override Nuxt's built-in useRouter without warning
+    priority: 2,
   })
 }
 
@@ -91,6 +123,7 @@ async function loadNuxtViteConfig(root: string | undefined) {
   nuxt.options.build.transpile.push(join(packageDir, 'preview'))
 
   nuxt.hook('modules:done', () => {
+    extendComposables(nuxt)
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
     // nuxt.options.build.transpile.push('@storybook-vue/nuxt')
@@ -178,6 +211,16 @@ function mergeViteConfig(
       'import.meta.client': 'true',
     },
 
+    // Pre-bundle React dependencies for Storybook's docs addon
+    // React packages need explicit optimization as they're used by addon-docs
+    optimizeDeps: {
+      include: [
+        'react/jsx-runtime',
+        'react',
+        'react-dom/client',
+      ],
+    },
+
     plugins: [
       replace({
         values: {
@@ -206,10 +249,11 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
   config: any,
 ) => {
   // Storybook 10 (ESM-only) requires fully resolved paths to entry points, not directories
+  // Use resolveModule helper for ESM/CJS compatibility
   return {
     ...config,
-    builder: import.meta.resolve('@storybook/builder-vite'),
-    renderer: import.meta.resolve('@storybook/vue3/preset'),
+    builder: await resolveModule('@storybook/builder-vite'),
+    renderer: await resolveModule('@storybook/vue3/preset'),
   }
 }
 

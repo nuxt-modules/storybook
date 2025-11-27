@@ -1,1 +1,1 @@
-export * from './dist/preset.mjs'
+export * from './dist/preset.cjs'
