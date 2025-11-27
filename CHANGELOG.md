@@ -6,13 +6,10 @@
 
 - ⚡ **Storybook 10 Support** - Full compatibility with Storybook 10's ESM-only architecture
 - ⚡ **Nuxt 3 & 4 Support** - Works with both Nuxt 3.x and Nuxt 4.x
-- 📦 **Simplified Configuration** - No manual Vite optimization needed; dependencies are pre-bundled automatically
-- 🔧 **Improved Build System** - Switched to unbuild for better ESM/CJS compatibility
 
 ### 🚨 Breaking Changes
 
-- ⚠️ **Requires Storybook 10.x** - Storybook 10 is ESM-only
-- ⚠️ **Requires Node.js 20.19+, 22.12+, or 24+** - Due to Storybook 10's ESM requirement
+- ⚠️ **Storybook 10.x** - Storybook 10 is now an ESM-only package, requiring Node.js 20.19+, 22.12+, or 24+
 
 ### 🩹 Fixes
 
