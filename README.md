@@ -25,45 +25,6 @@ Update your `nuxt.config`:
 
 Then run `pnpm dev` to start your Nuxt server.
 
-## Configuration
-
-### Vite Optimization
-
-If you encounter race conditions or module resolution errors during initial Storybook load, you can add the following `viteFinal` configuration to your `.storybook/main.js`:
-
-```js
-export default {
-  // ... other config
-  async viteFinal(config) {
-    // Pre-bundle dependencies to avoid race condition on initial load
-    config.optimizeDeps = {
-      ...config.optimizeDeps,
-      include: [
-        ...(config.optimizeDeps?.include || []),
-        '@storybook/vue3-vite',
-        '@storybook/vue3/entry-preview',
-        'react/jsx-runtime',
-        'react',
-        'react-dom/client',
-      ],
-      // Force pre-bundling on every start to ensure deps are ready
-      force: true,
-    }
-    // Disable strict file system access for more stability
-    config.server = {
-      ...config.server,
-      fs: {
-        ...config.server?.fs,
-        strict: false,
-      },
-    }
-    return config
-  },
-}
-```
-
-This configuration ensures that Storybook's internal dependencies are pre-bundled before the initial load, preventing race conditions and "failed to fetch dynamically imported module" errors.
-
 ## Demo
 
 https://github.com/storybook-vue/nuxt-storybook-module-demo
@@ -80,17 +41,17 @@ https://github.com/storybook-vue/nuxt-storybook-module-demo
 
 📦 Extendable by Nuxt modules
 
-🚀 Supports Nuxt 3.18.1+ and Nuxt 4+ / Storybook 10+
+🚀 Supports Nuxt 3 and Nuxt 4 with Storybook 10
 
 ## Requirements
 
 - Node.js 20.19+, 22.12+, or 24+
-- Nuxt 3.18.1 or later (including Nuxt 4.x)
-- Storybook 10.0.0 or later (ESM-only)
+- Nuxt 3.x or Nuxt 4.x
+- Storybook 10.x
 
 ## Previous Versions
 
-- **Nuxt 3** (< 3.18.1): Use v8.x or earlier with Storybook 8 or 9
+- **Storybook 8/9**: Use v8.x of this module
 - **Nuxt 2**: Use v4.x with Storybook v6 (check the v4 branch for legacy code)
 
 ## Contributing

@@ -5,54 +5,20 @@
 ### 🚀 Enhancements
 
 - ⚡ **Storybook 10 Support** - Full compatibility with Storybook 10's ESM-only architecture
-- ⚡ **Nuxt 4 Support** - Fully compatible with the latest Nuxt 4 release
-- 📦 **Optimized Dependency Pre-bundling** - Enhanced Vite configuration for better ESM module handling
-- 🎯 **Improved Developer Experience** - Cleaner console output with manifest errors resolved
+- ⚡ **Nuxt 3 & 4 Support** - Works with both Nuxt 3.x and Nuxt 4.x
+- 📦 **Simplified Configuration** - No manual Vite optimization needed; dependencies are pre-bundled automatically
+- 🔧 **Improved Build System** - Switched to unbuild for better ESM/CJS compatibility
 
 ### 🚨 Breaking Changes
 
-- ⚠️ **Requires Nuxt 4.0.0+** - Dropped support for Nuxt 3.x
-- ⚠️ **Requires Storybook 10.0.0+** - Storybook 10 is ESM-only
+- ⚠️ **Requires Storybook 10.x** - Storybook 10 is ESM-only
 - ⚠️ **Requires Node.js 20.19+, 22.12+, or 24+** - Due to Storybook 10's ESM requirement
-- Updated `peerDependencies` to enforce minimum versions
 
 ### 🩹 Fixes
 
-- Fix empty MIME type error for `errx` module in Storybook 10 + Nuxt 4
-  - Added `errx` to Vite's `optimizeDeps.include` to ensure proper dependency pre-bundling
-  - Resolves browser blocking of module loads with empty MIME type
-  - Similar to previous fix for `jsdoc-type-pratt-parser` (issue #776)
 - Fix Nuxt app manifest 404 errors in Storybook preview
-  - Disabled `experimental.appManifest` feature when loading Nuxt for Storybook
-  - Prevents console errors for missing `/_nuxt/builds/meta/storybook.json`
-  - The app manifest feature (introduced in Nuxt 3.8+) is not needed for Storybook preview
-
-### 📖 Documentation
-
-- Added technical notes about Vite optimization workarounds for ESM-only packages
-- Updated `peerDependencies` to reflect Nuxt 4 and Storybook 10 requirements
-
-### 📝 Migration Guide
-
-**Upgrading from v9.x:**
-
-1. **Update Node.js**: Ensure you're running Node.js 20.19+, 22.12+, or 24+
-2. **Upgrade Nuxt**: Update to Nuxt 4.0.0 or later
-   ```bash
-   npm install nuxt@^4.0.0
-   ```
-3. **Upgrade Storybook**: Update to Storybook 10.0.0 or later
-   ```bash
-   npx storybook@latest upgrade
-   ```
-4. **ESM Configuration**: Ensure your `.storybook/main.js|ts` and presets are valid ESM
-5. **Clear Caches**: Remove `node_modules/.cache` and restart Storybook
-   ```bash
-   rm -rf node_modules/.cache
-   ```
-
-**Known Issues:**
-- If you encounter MIME type errors for other dependencies, they may need to be added to `optimizeDeps.include` in your Vite configuration
+- Add useRouter composable override for proper Storybook context
+- Add resolveModule helper for ESM/CJS compatibility in presets
 
 ## v9.0.1
 
