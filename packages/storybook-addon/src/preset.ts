@@ -1,8 +1,8 @@
-import { dirname, join } from 'node:path'
+import { dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
 
-import { resolve, normalize } from 'pathe'
+import { resolve, normalize, join } from 'pathe'
 import { resolvePath } from 'mlly'
 import vuePlugin from '@vitejs/plugin-vue'
 import replace from '@rollup/plugin-replace'
