@@ -83,5 +83,10 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "pnpm": {
+    "overrides": {
+      "@nuxtjs/storybook": "workspace:*"
+    }
   }
 }

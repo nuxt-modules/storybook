@@ -26,12 +26,15 @@ jobs:
           # Failing (windows): https://github.com/nuxt-modules/storybook/pull/882#issuecomment-2939100304
           # Failing (others): https://github.com/nuxt-modules/storybook/pull/933#issuecomment-3183349526
           - node: 21
+
     env:
       # renovate: datasource=npm depName=storybook
       STORYBOOK_VERSION: '10.1.0'
     steps:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        with:
+          fetch-depth: 0
 
       - name: Install pnpm
         uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4
@@ -45,17 +48,21 @@ jobs:
       - name: Install Verdaccio
         shell: bash
         run: |
-          pnpm install -g verdaccio wait-on
+          pnpm install -g verdaccio wait-on jq
+          # Start Verdaccio locally
           verdaccio --listen 4873 &
           wait-on --log http://localhost:4873
-          curl http://localhost:4873
-          TOKEN_RES=$(curl -XPUT \
+          curl -s http://localhost:4873
+          # create test user and extract token for publishing
+          TOKEN_RES=$(curl -s -XPUT \
                     -H "Content-type: application/json" \
                     -d '{ "name": "test", "password": "test" }' \
                     'http://localhost:4873/-/user/org.couchdb.user:test')
           TOKEN=$(echo "$TOKEN_RES" | jq -r '.token')
+          # set auth token for the Verdaccio host (do NOT set registry globally here)
           pnpm config set //localhost:4873/:_authToken $TOKEN
-          pnpm config set registry http://localhost:4873/
+          # record Verdaccio registry URL for targeted use later
+          echo "VERDACCIO_REGISTRY=http://localhost:4873/" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: pnpm install
@@ -63,9 +70,15 @@ jobs:
       - name: Build packages
         run: |
           pnpm jiti prepare-release.ts --nightly
-          pnpm publish --recursive --tag latest --no-git-checks --report-summary
+          # Publish to the local Verdaccio only (do NOT change global registry)
+          pnpm publish --recursive --tag latest --no-git-checks --report-summary --registry $VERDACCIO_REGISTRY
         env:
           NODE_ENV: 'production'
+
+      - name: Restore public registry
+        run: |
+          # Ensure subsequent installs use the public registry by default
+          pnpm config set registry https://registry.npmjs.org/
 
       - name: Create Sample Project
         shell: pwsh
@@ -73,8 +86,19 @@ jobs:
           New-Item -Path ${{ runner.temp }}/example -ItemType Directory
           pnpm nuxt init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
           cd ${{ runner.temp }}/example
+          # Configure the example to pull @nuxtjs-scoped packages from Verdaccio,
+          # but use the public registry for everything else.
+          # (Adjust scope if your packages use a different scope.)
+          @("registry=https://registry.npmjs.org/", "@nuxtjs:registry=http://localhost:4873/", "@storybook-vue:registry=http://localhost:4873/") | Set-Content -Path .npmrc
+          # Initialize Storybook in the example (will fetch Storybook from npmjs)
           pnpm dlx storybook@${{ env.STORYBOOK_VERSION }} init
+          # Install dependencies in the example so the storybook CLI/binaries are available
+          pnpm install
           pnpm list --long
+
+      - name: Install Storybook dependency
+        run: pnpm add -D storybook@${{ env.STORYBOOK_VERSION }}
+        working-directory: ${{ runner.temp }}/example
 
       - name: Build Storybook
         run: pnpm build-storybook
