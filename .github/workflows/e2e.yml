@@ -48,7 +48,7 @@ jobs:
       - name: Install Verdaccio
         shell: bash
         run: |
-          pnpm install -g verdaccio wait-on jq
+          pnpm install -g verdaccio wait-on
           # Start Verdaccio locally
           verdaccio --listen 4873 &
           wait-on --log http://localhost:4873
