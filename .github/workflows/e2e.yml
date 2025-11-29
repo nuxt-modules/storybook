@@ -98,10 +98,28 @@ jobs:
           # Configure scoped registries globally so pnpm can find our packages
           pnpm config set @nuxtjs:registry $VERDACCIO_REGISTRY
           pnpm config set @storybook-vue:registry $VERDACCIO_REGISTRY
-          # Install @storybook-vue/nuxt first so storybook init can detect it
+          # Install storybook packages (storybook init doesn't work with Verdaccio)
           pnpm add -D @storybook-vue/nuxt@latest storybook@$STORYBOOK_VERSION
-          # Initialize Storybook (will auto-detect Nuxt framework)
-          pnpm storybook init --yes
+          # Create Storybook configuration manually
+          mkdir -p .storybook stories
+          cat > .storybook/main.ts << 'MAINEOF'
+          import type { StorybookConfig } from '@storybook-vue/nuxt'
+          const config: StorybookConfig = {
+            stories: ['../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+            framework: { name: '@storybook-vue/nuxt', options: {} },
+          }
+          export default config
+          MAINEOF
+          cat > stories/Welcome.stories.ts << 'STORYEOF'
+          import type { Meta, StoryObj } from '@storybook-vue/nuxt'
+          const meta: Meta = { title: 'Welcome' }
+          export default meta
+          export const Default: StoryObj = {
+            render: () => ({ template: '<h1>Storybook works!</h1>' }),
+          }
+          STORYEOF
+          pnpm pkg set scripts.storybook="storybook dev -p 6006"
+          pnpm pkg set scripts.build-storybook="storybook build"
           pnpm install
           pnpm list --depth 0
 
