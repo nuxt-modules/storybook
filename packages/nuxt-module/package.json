@@ -25,15 +25,31 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/types.d.mts",
+      "types": "./dist/module.d.mts",
       "import": "./dist/module.mjs"
-    }
+    },
+    "./preset": {
+      "types": "./dist/preset.d.mts",
+      "import": "./dist/preset.mjs"
+    },
+    "./preview": {
+      "types": "./dist/preview.d.mts",
+      "import": "./dist/preview.mjs"
+    },
+    "./package.json": "./package.json"
   },
   "main": "./dist/module.mjs",
+  "types": "./dist/module.d.mts",
   "typesVersions": {
     "*": {
       ".": [
-        "./dist/types.d.mts"
+        "./dist/module.d.mts"
+      ],
+      "preset": [
+        "./dist/preset.d.mts"
+      ],
+      "preview": [
+        "./dist/preview.d.mts"
       ]
     }
   },
@@ -44,9 +60,9 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare",
-    "build": "nuxt-module-build build",
-    "prepack": "nuxt-module-build build"
+    "dev:prepare": "unbuild --stub",
+    "build": "unbuild",
+    "prepack": "unbuild"
   },
   "dependencies": {
     "@nuxt/devtools-kit": "^3.0.0",

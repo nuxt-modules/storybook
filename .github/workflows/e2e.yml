@@ -65,9 +65,11 @@ jobs:
           echo "VERDACCIO_REGISTRY=http://localhost:4873/" >> $GITHUB_ENV
 
       - name: Install dependencies
+        shell: bash
         run: pnpm install
 
       - name: Build packages
+        shell: bash
         run: |
           pnpm jiti prepare-release.ts --nightly
           # Publish to the local Verdaccio only (do NOT change global registry)
@@ -76,30 +78,106 @@ jobs:
           NODE_ENV: 'production'
 
       - name: Restore public registry
+        shell: bash
         run: |
           # Ensure subsequent installs use the public registry by default
           pnpm config set registry https://registry.npmjs.org/
 
       - name: Create Sample Project
-        shell: pwsh
+        shell: bash
         run: |
-          New-Item -Path ${{ runner.temp }}/example -ItemType Directory
-          pnpm nuxt init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
+          mkdir -p ${{ runner.temp }}/example
+          # CI=true defaults prompts to "No", echo pipes Enter to confirm
+          echo | CI=true npx nuxi init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
           cd ${{ runner.temp }}/example
           # Configure the example to pull @nuxtjs-scoped packages from Verdaccio,
           # but use the public registry for everything else.
-          # (Adjust scope if your packages use a different scope.)
-          @("registry=https://registry.npmjs.org/", "@nuxtjs:registry=http://localhost:4873/", "@storybook-vue:registry=http://localhost:4873/") | Set-Content -Path .npmrc
-          # Initialize Storybook in the example (will fetch Storybook from npmjs)
-          pnpm dlx storybook@${{ env.STORYBOOK_VERSION }} init
-          # Install dependencies in the example so the storybook CLI/binaries are available
+          cat > .npmrc << EOF
+          registry=https://registry.npmjs.org/
+          @nuxtjs:registry=$VERDACCIO_REGISTRY
+          @storybook-vue:registry=$VERDACCIO_REGISTRY
+          EOF
           pnpm install
-          pnpm list --long
 
-      - name: Install Storybook dependency
-        run: pnpm add -D storybook@${{ env.STORYBOOK_VERSION }}
+      - name: Install Storybook packages
+        shell: bash
         working-directory: ${{ runner.temp }}/example
+        run: pnpm add -D "@nuxtjs/storybook@latest" "storybook@$STORYBOOK_VERSION" "@storybook/addon-docs@$STORYBOOK_VERSION"
+
+      - name: Create Storybook configuration
+        shell: bash
+        working-directory: ${{ runner.temp }}/example
+        run: |
+          mkdir -p .storybook stories
+
+          # Create main.ts
+          cat > .storybook/main.ts << 'EOF'
+          import type { StorybookConfig } from '@nuxtjs/storybook'
+
+          const config: StorybookConfig = {
+            stories: [
+              '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+              '../components/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+            ],
+            addons: ['@storybook/addon-docs'],
+            framework: {
+              name: '@nuxtjs/storybook',
+              options: {},
+            },
+          }
+
+          export default config
+          EOF
+
+          # Create preview.ts
+          cat > .storybook/preview.ts << 'EOF'
+          import type { Preview } from '@nuxtjs/storybook'
+
+          const preview: Preview = {
+            parameters: {
+              controls: {
+                matchers: {
+                  color: /(background|color)$/i,
+                  date: /Date$/i,
+                },
+              },
+            },
+          }
+
+          export default preview
+          EOF
+
+          # Create a sample story
+          cat > stories/Welcome.stories.ts << 'EOF'
+          import type { Meta, StoryObj } from '@nuxtjs/storybook'
+
+          const meta: Meta = {
+            title: 'Welcome',
+          }
+
+          export default meta
+
+          type Story = StoryObj
+
+          export const Default: Story = {
+            render: () => ({
+              template: '<div><h1>Welcome to Storybook</h1><p>Your Nuxt + Storybook setup is working!</p></div>',
+            }),
+          }
+          EOF
+
+          # Add storybook scripts to package.json
+          pnpm pkg set scripts.storybook="storybook dev -p 6006"
+          pnpm pkg set scripts.build-storybook="storybook build"
+
+      - name: Final dependency installation
+        shell: bash
+        working-directory: ${{ runner.temp }}/example
+        run: |
+          pnpm install
+          pnpm list --depth 0
 
       - name: Build Storybook
-        run: pnpm build-storybook
+        shell: bash
         working-directory: ${{ runner.temp }}/example
+        run: pnpm build-storybook
