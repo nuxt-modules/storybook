@@ -95,11 +95,13 @@ jobs:
             exit 1
           fi
           cd example
-          # Configure scoped registries globally so pnpm dlx can find our packages
+          # Configure scoped registries globally so pnpm can find our packages
           pnpm config set @nuxtjs:registry $VERDACCIO_REGISTRY
           pnpm config set @storybook-vue:registry $VERDACCIO_REGISTRY
-          # Initialize Storybook (will auto-detect Nuxt and install @storybook-vue/nuxt)
-          pnpm dlx storybook@$STORYBOOK_VERSION init --yes
+          # Install @storybook-vue/nuxt first so storybook init can detect it
+          pnpm add -D @storybook-vue/nuxt@latest storybook@$STORYBOOK_VERSION
+          # Initialize Storybook (will auto-detect Nuxt framework)
+          pnpm storybook init --yes
           pnpm install
           pnpm list --depth 0
 
