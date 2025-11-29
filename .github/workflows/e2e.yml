@@ -87,8 +87,8 @@ jobs:
         shell: bash
         run: |
           cd "${{ runner.temp }}"
-          # CI=true defaults prompts to "No", echo pipes Enter to confirm
-          echo | CI=true npx nuxi init example --packageManager pnpm --force --gitInit=false
+          # Redirect stdin from /dev/null to force non-interactive mode
+          CI=true npx nuxi init example --packageManager pnpm --force --gitInit=false < /dev/null
           cd example
           # Configure the example to pull @nuxtjs-scoped packages from Verdaccio,
           # but use the public registry for everything else.
