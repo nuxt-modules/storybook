@@ -95,14 +95,10 @@ jobs:
             exit 1
           fi
           cd example
-          # Configure the example to pull @nuxtjs-scoped packages from Verdaccio,
-          # but use the public registry for everything else.
-          cat > .npmrc << EOF
-          registry=https://registry.npmjs.org/
-          @nuxtjs:registry=$VERDACCIO_REGISTRY
-          @storybook-vue:registry=$VERDACCIO_REGISTRY
-          EOF
-          # Initialize Storybook
+          # Configure scoped registries globally so pnpm dlx can find our packages
+          pnpm config set @nuxtjs:registry $VERDACCIO_REGISTRY
+          pnpm config set @storybook-vue:registry $VERDACCIO_REGISTRY
+          # Initialize Storybook (will auto-detect Nuxt and install @storybook-vue/nuxt)
           pnpm dlx storybook@$STORYBOOK_VERSION init --yes
           pnpm install
           pnpm list --depth 0
