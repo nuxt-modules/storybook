@@ -102,83 +102,8 @@ jobs:
           @nuxtjs:registry=$VERDACCIO_REGISTRY
           @storybook-vue:registry=$VERDACCIO_REGISTRY
           EOF
-          pnpm install
-
-      - name: Install Storybook packages
-        shell: bash
-        working-directory: ${{ runner.temp }}/example
-        run: pnpm add -D "@nuxtjs/storybook@latest" "storybook@$STORYBOOK_VERSION" "@storybook/addon-docs@$STORYBOOK_VERSION"
-
-      - name: Create Storybook configuration
-        shell: bash
-        working-directory: ${{ runner.temp }}/example
-        run: |
-          mkdir -p .storybook stories
-
-          # Create main.ts
-          cat > .storybook/main.ts << 'EOF'
-          import type { StorybookConfig } from '@nuxtjs/storybook'
-
-          const config: StorybookConfig = {
-            stories: [
-              '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-              '../components/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-            ],
-            addons: ['@storybook/addon-docs'],
-            framework: {
-              name: '@nuxtjs/storybook',
-              options: {},
-            },
-          }
-
-          export default config
-          EOF
-
-          # Create preview.ts
-          cat > .storybook/preview.ts << 'EOF'
-          import type { Preview } from '@nuxtjs/storybook'
-
-          const preview: Preview = {
-            parameters: {
-              controls: {
-                matchers: {
-                  color: /(background|color)$/i,
-                  date: /Date$/i,
-                },
-              },
-            },
-          }
-
-          export default preview
-          EOF
-
-          # Create a sample story
-          cat > stories/Welcome.stories.ts << 'EOF'
-          import type { Meta, StoryObj } from '@nuxtjs/storybook'
-
-          const meta: Meta = {
-            title: 'Welcome',
-          }
-
-          export default meta
-
-          type Story = StoryObj
-
-          export const Default: Story = {
-            render: () => ({
-              template: '<div><h1>Welcome to Storybook</h1><p>Your Nuxt + Storybook setup is working!</p></div>',
-            }),
-          }
-          EOF
-
-          # Add storybook scripts to package.json
-          pnpm pkg set scripts.storybook="storybook dev -p 6006"
-          pnpm pkg set scripts.build-storybook="storybook build"
-
-      - name: Final dependency installation
-        shell: bash
-        working-directory: ${{ runner.temp }}/example
-        run: |
+          # Initialize Storybook
+          pnpm dlx storybook@$STORYBOOK_VERSION init --yes
           pnpm install
           pnpm list --depth 0
 
