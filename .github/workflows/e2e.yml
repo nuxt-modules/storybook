@@ -86,10 +86,10 @@ jobs:
       - name: Create Sample Project
         shell: bash
         run: |
-          mkdir -p ${{ runner.temp }}/example
+          cd "${{ runner.temp }}"
           # CI=true defaults prompts to "No", echo pipes Enter to confirm
-          echo | CI=true npx nuxi init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
-          cd ${{ runner.temp }}/example
+          echo | CI=true npx nuxi init example --packageManager pnpm --force --gitInit=false
+          cd example
           # Configure the example to pull @nuxtjs-scoped packages from Verdaccio,
           # but use the public registry for everything else.
           cat > .npmrc << EOF
