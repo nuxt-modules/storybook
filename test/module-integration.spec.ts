@@ -31,7 +31,9 @@ describe('storybook module setup', () => {
     expect(moduleSource).toContain("nuxt.hook('listen'")
 
     // setupStorybook should be called inside the listen hook callback
-    expect(moduleSource).toMatch(/nuxt\.hook\s*\(\s*['"]listen['"]\s*,\s*\(\)\s*=>\s*(?:\{\s*)?setupStorybook/)
+    expect(moduleSource).toMatch(
+      /nuxt\.hook\s*\(\s*['"]listen['"]\s*,\s*\(\)\s*=>\s*(?:\{\s*)?setupStorybook/,
+    )
 
     // setupStorybook should NOT be called directly in the setup function
     // (outside of the listen hook)
