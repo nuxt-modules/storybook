@@ -18,12 +18,12 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     // For testing runtimeConfig in useMyComposable
-    app: {
-      name: 'Nuxt',
-      version: '1.0.0',
-      baseURL: '/',
-      host: 'localhost',
-      port: 3000,
+    public: {
+      appName: 'Nuxt',
+      appVersion: '1.0.0',
+      appBaseURL: '/',
+      appHost: 'localhost',
+      appPort: 3000,
     },
   },
 

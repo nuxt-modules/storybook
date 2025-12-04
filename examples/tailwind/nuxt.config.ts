@@ -2,6 +2,5 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/storybook', '@nuxtjs/tailwindcss'],
-
   compatibilityDate: '2024-08-03',
 })

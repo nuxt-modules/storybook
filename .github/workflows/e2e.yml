@@ -26,9 +26,10 @@ jobs:
           # Failing (windows): https://github.com/nuxt-modules/storybook/pull/882#issuecomment-2939100304
           # Failing (others): https://github.com/nuxt-modules/storybook/pull/933#issuecomment-3183349526
           - node: 21
+
     env:
       # renovate: datasource=npm depName=storybook
-      STORYBOOK_VERSION: '9.1.16'
+      STORYBOOK_VERSION: '10.1.0'
     steps:
       - name: Checkout
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
@@ -46,36 +47,81 @@ jobs:
         shell: bash
         run: |
           pnpm install -g verdaccio wait-on
+          # Start Verdaccio locally
           verdaccio --listen 4873 &
           wait-on --log http://localhost:4873
-          curl http://localhost:4873
-          TOKEN_RES=$(curl -XPUT \
+          curl -s http://localhost:4873
+          # create test user and extract token for publishing
+          TOKEN_RES=$(curl -s -XPUT \
                     -H "Content-type: application/json" \
                     -d '{ "name": "test", "password": "test" }' \
                     'http://localhost:4873/-/user/org.couchdb.user:test')
           TOKEN=$(echo "$TOKEN_RES" | jq -r '.token')
+          # set auth token for the Verdaccio host (do NOT set registry globally here)
           pnpm config set //localhost:4873/:_authToken $TOKEN
-          pnpm config set registry http://localhost:4873/
+          # record Verdaccio registry URL for targeted use later
+          echo "VERDACCIO_REGISTRY=http://localhost:4873/" >> $GITHUB_ENV
 
       - name: Install dependencies
+        shell: bash
         run: pnpm install
 
       - name: Build packages
+        shell: bash
         run: |
           pnpm jiti prepare-release.ts --nightly
-          pnpm publish --recursive --tag latest --no-git-checks --report-summary
+          # Publish to the local Verdaccio only (do NOT change global registry)
+          pnpm publish --recursive --tag latest --no-git-checks --report-summary --registry $VERDACCIO_REGISTRY
         env:
           NODE_ENV: 'production'
 
-      - name: Create Sample Project
-        shell: pwsh
+      - name: Restore public registry
+        shell: bash
         run: |
-          New-Item -Path ${{ runner.temp }}/example -ItemType Directory
-          pnpm nuxt init ${{ runner.temp }}/example --packageManager pnpm --force --gitInit=false
-          cd ${{ runner.temp }}/example
-          pnpm dlx storybook@${{ env.STORYBOOK_VERSION }} init
-          pnpm list --long
+          # Ensure subsequent installs use the public registry by default
+          pnpm config set registry https://registry.npmjs.org/
+
+      - name: Create Sample Project
+        shell: bash
+        run: |
+          cd "${{ runner.temp }}"
+          # nuxi init may exit with code 1 due to modules prompt failing on non-TTY stdin
+          # Allow failure, then verify project was created successfully
+          CI=true npx nuxi init example --packageManager pnpm --force --gitInit=false < /dev/null || true
+          if [ ! -f example/nuxt.config.ts ]; then
+            echo "Error: nuxi init failed to create project"
+            exit 1
+          fi
+          cd example
+          # Configure scoped registries globally so pnpm can find our packages
+          pnpm config set @nuxtjs:registry $VERDACCIO_REGISTRY
+          pnpm config set @storybook-vue:registry $VERDACCIO_REGISTRY
+          # Install storybook packages (storybook init doesn't work with Verdaccio)
+          pnpm add -D @storybook-vue/nuxt@latest storybook@$STORYBOOK_VERSION
+          # Create Storybook configuration manually
+          mkdir -p .storybook stories
+          cat > .storybook/main.ts << 'MAINEOF'
+          import type { StorybookConfig } from '@storybook-vue/nuxt'
+          const config: StorybookConfig = {
+            stories: ['../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+            framework: { name: '@storybook-vue/nuxt', options: {} },
+          }
+          export default config
+          MAINEOF
+          cat > stories/Welcome.stories.ts << 'STORYEOF'
+          import type { Meta, StoryObj } from '@storybook-vue/nuxt'
+          const meta: Meta = { title: 'Welcome' }
+          export default meta
+          export const Default: StoryObj = {
+            render: () => ({ template: '<h1>Storybook works!</h1>' }),
+          }
+          STORYEOF
+          pnpm pkg set scripts.storybook="storybook dev -p 6006"
+          pnpm pkg set scripts.build-storybook="storybook build"
+          pnpm install
+          pnpm list --depth 0
 
       - name: Build Storybook
-        run: pnpm build-storybook
+        shell: bash
         working-directory: ${{ runner.temp }}/example
+        run: pnpm build-storybook

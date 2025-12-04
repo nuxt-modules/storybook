@@ -10,11 +10,11 @@ orientation: horizontal
 ---
   :::prose-pre
   ---
-  code: npx storybook@9.1.16 init
+  code: npx storybook@latest init
   filename: Terminal
   ---
   ```bash
-  npx storybook@9.1.16 init
+  npx storybook@latest init
   ```
   :::
 
@@ -22,7 +22,7 @@ orientation: horizontal
 Add <span class="text-french-rose-500">Storybook</span> to your Nuxt application
 
 #description
-Easily integrate Storybook in your Nuxt application to build, document and test your components.
+Easily integrate Storybook (v10.x) in your Nuxt application to build, document and test your components.
 
 #links
   :::u-button
