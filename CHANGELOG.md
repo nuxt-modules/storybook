@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased
+
+### 🚀 Enhancements
+
+- ⚡ **Storybook 10 Support** - Full compatibility with Storybook 10's ESM-only architecture
+- ⚡ **Nuxt 3 & 4 Support** - Works with both Nuxt 3.x and Nuxt 4.x
+
+### 🚨 Breaking Changes
+
+- ⚠️ **Storybook 10.x** - Storybook 10 is now an ESM-only package, requiring Node.js 20.19+, 22.12+, or 24+
+
+### 🩹 Fixes
+
+- Fix Nuxt app manifest 404 errors in Storybook preview
+- Add useRouter composable override for proper Storybook context
+- Add resolveModule helper for ESM/CJS compatibility in presets
+
 ## v9.0.1
 
 [compare changes](https://github.com/nuxt-modules/storybook/compare/v9.0.0...v9.0.1)

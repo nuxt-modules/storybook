@@ -25,15 +25,31 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/types.d.mts",
+      "types": "./dist/module.d.mts",
       "import": "./dist/module.mjs"
-    }
+    },
+    "./preset": {
+      "types": "./dist/preset.d.mts",
+      "import": "./dist/preset.mjs"
+    },
+    "./preview": {
+      "types": "./dist/preview.d.mts",
+      "import": "./dist/preview.mjs"
+    },
+    "./package.json": "./package.json"
   },
   "main": "./dist/module.mjs",
+  "types": "./dist/module.d.mts",
   "typesVersions": {
     "*": {
       ".": [
-        "./dist/types.d.mts"
+        "./dist/module.d.mts"
+      ],
+      "preset": [
+        "./dist/preset.d.mts"
+      ],
+      "preview": [
+        "./dist/preview.d.mts"
       ]
     }
   },
@@ -44,15 +60,15 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare",
-    "build": "nuxt-module-build build",
-    "prepack": "nuxt-module-build build"
+    "dev:prepare": "unbuild --stub",
+    "build": "unbuild",
+    "prepack": "unbuild"
   },
   "dependencies": {
     "@nuxt/devtools-kit": "^3.0.0",
     "@nuxt/kit": "^3.18.1 || ^4.0.0",
     "@storybook-vue/nuxt": "workspace:*",
-    "chalk": "^5.6.0",
+    "chalk": "^5.6.2",
     "consola": "^3.4.2",
     "defu": "^6.1.4",
     "get-port-please": "^3.2.0",
@@ -60,11 +76,11 @@
   },
   "devDependencies": {
     "@nuxt/module-builder": "1.0.2",
-    "storybook": "9.1.16",
+    "storybook": "10.1.0",
     "unbuild": "3.6.1",
-    "vite": "7.1.4"
+    "vite": "7.2.2"
   },
   "peerDependencies": {
-    "storybook": "~10.0.2"
+    "storybook": "^10.0.0"
   }
 }

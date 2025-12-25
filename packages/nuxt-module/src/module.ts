@@ -85,6 +85,9 @@ export default defineNuxtModule<ModuleOptions>({
 
     logger.verbose('🔌  Storybook Module Setup')
 
-    setupStorybook(options, nuxt)
+    // Defer Storybook startup until Nuxt's HTTP server is ready
+    nuxt.hook('listen', () => {
+      setupStorybook(options, nuxt)
+    })
   },
 })

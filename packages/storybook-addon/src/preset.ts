@@ -1,26 +1,40 @@
-import { dirname, join } from 'node:path'
+import { dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
-import { resolve, normalize } from 'pathe'
-import { resolvePath } from 'mlly'
 
-import type {
-  PresetProperty,
-  PreviewAnnotation,
-} from 'storybook/internal/types'
+import { resolve, normalize, join } from 'pathe'
+import { resolvePath } from 'mlly'
+import vuePlugin from '@vitejs/plugin-vue'
+import replace from '@rollup/plugin-replace'
+import stringify from 'json-stable-stringify'
 import {
   type UserConfig as ViteConfig,
   mergeConfig,
   searchForWorkspaceRoot,
 } from 'vite'
-import type { Nuxt } from '@nuxt/schema'
-import vuePlugin from '@vitejs/plugin-vue'
-
-import replace from '@rollup/plugin-replace'
-import type { StorybookConfig } from './types'
 import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
-import stringify from 'json-stable-stringify'
 import nuxtRuntimeConfigPlugin from './runtimeConfig'
+import type { Nuxt } from '@nuxt/schema'
+import type {
+  PresetProperty,
+  PreviewAnnotation,
+} from 'storybook/internal/types'
+import type { StorybookConfig } from './types'
+
+/**
+ * Resolves a module specifier to its file path.
+ * Works in both ESM and CJS contexts by using createRequire as fallback.
+ * Essential for supporting backwards compatibility in Storybook
+ */
+async function resolveModule(specifier: string): Promise<string> {
+  // Try import.meta.resolve first (ESM)
+  if (typeof import.meta.resolve === 'function') {
+    return import.meta.resolve(specifier)
+  }
+  // Fallback for CJS: use createRequire
+  const require = createRequire(import.meta.url)
+  return pathToFileURL(require.resolve(specifier)).href
+}
 
 const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
@@ -57,6 +71,8 @@ async function extendComposables(nuxt: Nuxt) {
   addImportsSources({
     imports: ['useRouter'],
     from: join(composablesDir, 'router'),
+    // Use higher priority to override Nuxt's built-in useRouter without warning
+    priority: 2,
   })
 }
 
@@ -90,6 +106,12 @@ async function loadNuxtViteConfig(root: string | undefined) {
       appId: 'nuxt-app',
       buildId: 'storybook',
       ssr: false,
+      experimental: {
+        // Disable app manifest to prevent 404 errors in Storybook preview
+        // Nuxt 3.8+ tries to fetch /_nuxt/builds/meta/{buildId}.json for build checking
+        // but Storybook doesn't generate this manifest, causing console errors
+        appManifest: false,
+      },
     },
   })
 
@@ -188,6 +210,12 @@ function mergeViteConfig(
       'import.meta.client': 'true',
     },
 
+    // Pre-bundle React dependencies for Storybook's docs addon
+    // React packages need explicit optimization as they're used by addon-docs
+    optimizeDeps: {
+      include: ['react/jsx-runtime', 'react', 'react-dom/client'],
+    },
+
     plugins: [
       replace({
         values: {
@@ -202,7 +230,8 @@ function mergeViteConfig(
       cors: true,
       proxy: {
         ...getPreviewProxy(),
-        ...getNuxtProxyConfig(nuxt).proxy,
+        // Only proxy to Nuxt dev server when Nuxt is actually running in dev mode
+        ...(nuxt.options.dev ? getNuxtProxyConfig(nuxt).proxy : {}),
       },
       fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
     },
@@ -214,10 +243,12 @@ export const core: PresetProperty<'core', StorybookConfig> = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: any,
 ) => {
+  // Storybook 10 (ESM-only) requires fully resolved paths to entry points, not directories
+  // Use resolveModule helper for ESM/CJS compatibility
   return {
     ...config,
-    builder: await getPackageDir('@storybook/builder-vite'),
-    renderer: await getPackageDir('@storybook/vue3'),
+    builder: await resolveModule('@storybook/builder-vite'),
+    renderer: await resolveModule('@storybook/vue3/preset'),
   }
 }
 

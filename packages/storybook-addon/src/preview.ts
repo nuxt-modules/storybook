@@ -1,3 +1,4 @@
+/* eslint-disable import/first */
 /**
  * This is loaded by the Storybook canvas preview iframe and applies to all stories.
  * https://github.com/storybookjs/storybook/blob/main/docs/contribute/framework.md#4-author-the-framework-itself
@@ -15,6 +16,16 @@ import { getContext } from 'unctx'
 import { $fetch } from 'ofetch'
 // @ts-expect-error virtual file
 import { runtimeConfig } from 'virtual:nuxt-runtime-config'
+
+// Re-export renderToCanvas and other required exports from vue3 entry-preview
+export {
+  renderToCanvas,
+  render,
+  parameters,
+  argTypesEnhancers,
+  applyDecorators,
+  mount,
+} from '@storybook/vue3/entry-preview'
 
 // This is used to overwrite the fetch function, not sure if it's necessary for Storybook
 // It doesn't work with the current setup
