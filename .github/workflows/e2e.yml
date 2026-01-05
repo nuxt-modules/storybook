@@ -87,7 +87,7 @@ jobs:
           cd "${{ runner.temp }}"
           # nuxi init may exit with code 1 due to modules prompt failing on non-TTY stdin
           # Allow failure, then verify project was created successfully
-          CI=true npx nuxi init example --packageManager pnpm --force --gitInit=false < /dev/null || true
+          CI=true npx nuxi init example --template minimal --packageManager pnpm --modules --force --gitInit=false < /dev/null || true
           if [ ! -f example/nuxt.config.ts ]; then
             echo "Error: nuxi init failed to create project"
             exit 1
