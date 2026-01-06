@@ -77,9 +77,8 @@ async function extendComposables(nuxt: Nuxt) {
 }
 
 async function loadNuxtViteConfig(root: string | undefined) {
-  const { loadNuxt, tryUseNuxt, buildNuxt, extendPages } = await import(
-    '@nuxt/kit'
-  )
+  const { loadNuxt, tryUseNuxt, buildNuxt, extendPages } =
+    await import('@nuxt/kit')
 
   let nuxt = tryUseNuxt()
   if (nuxt) {
