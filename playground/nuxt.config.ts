@@ -1,7 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-01-15',
-
   modules: [
     '../packages/nuxt-module/src/module',
     '@nuxt/test-utils/module',
@@ -13,6 +11,14 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
+
+  css: ['~/assets/css/main.css'],
+
+  routeRules: {
+    '/': { prerender: true },
+  },
+
+  compatibilityDate: '2025-01-15',
 
   storybook: {
     host: 'http://localhost',
@@ -26,10 +32,6 @@ export default defineNuxtConfig({
       { code: 'fr', name: 'French', file: 'fr.json' },
       { code: 'ar', name: 'Arabic', file: 'ar.json' },
     ],
-  },
-
-  routeRules: {
-    '/': { prerender: true },
   },
 
   eslint: {
