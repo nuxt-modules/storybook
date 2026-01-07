@@ -12,6 +12,6 @@ describe('ssr', async () => {
     // Get response to a server-rendered page with `$fetch`.
     const html = await $fetch('/')
     console.log(html)
-    expect(html).toContain('Nuxt Starter Template')
+    expect(html).toContain('Welcome to Nuxt!')
   })
 })
