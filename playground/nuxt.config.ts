@@ -2,44 +2,31 @@
 export default defineNuxtConfig({
   modules: [
     '../packages/nuxt-module/src/module',
-    '@nuxt/test-utils/module',
-    '@nuxt/eslint',
-    '@nuxt/ui',
     '@nuxtjs/i18n',
+    '@nuxt/test-utils/module',
   ],
 
-  devtools: {
-    enabled: true,
-  },
-
-  css: ['~/assets/css/main.css'],
+  devtools: { enabled: true },
 
   routeRules: {
     '/': { prerender: true },
   },
 
-  compatibilityDate: '2025-01-15',
-
-  storybook: {
-    host: 'http://localhost',
-    port: 6006,
-  },
+  compatibilityDate: '2024-11-01',
 
   i18n: {
     defaultLocale: 'en',
     locales: [
       { code: 'en', name: 'English', file: 'en.json' },
       { code: 'fr', name: 'French', file: 'fr.json' },
-      { code: 'ar', name: 'Arabic', file: 'ar.json' },
+      { code: 'ar', name: 'Arabic', file: 'ar.json', dir: 'rtl' },
     ],
   },
 
-  eslint: {
-    config: {
-      stylistic: {
-        commaDangle: 'never',
-        braceStyle: '1tbs',
-      },
-    },
+  storybook: {
+    host: 'http://localhost',
+    port: 6006,
+    // Very verbose logs for debugging
+    logLevel: Number.POSITIVE_INFINITY,
   },
 })

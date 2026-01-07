@@ -1,32 +1,27 @@
 {
   "name": "nuxt-storybook-playground",
-  "private": true,
   "type": "module",
+  "private": true,
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint .",
-    "typecheck": "nuxt typecheck",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev --port 6006",
     "build-storybook": "storybook build",
     "clear:cache": "rm -rf .nuxt .output node_modules/.cache node_modules/.vite ../.nuxt 2>/dev/null; echo 'All caches cleared'"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.82",
-    "@iconify-json/simple-icons": "^1.2.63",
-    "@nuxt/ui": "^4.3.0",
-    "nuxt": "^4.2.1",
+    "@nuxt/test-utils": "3.23.0",
+    "@nuxtjs/i18n": "10.2.1",
+    "nuxt": "^4.2.2",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@nuxtjs/storybook": "workspace:*",
     "@storybook-vue/nuxt": "workspace:*",
-    "@storybook/addon-docs": "10.1.11",
-    "eslint-plugin-storybook": "^10.1.11",
-    "storybook": "10.1.11",
-    "tailwindcss": "^4.1.18"
+    "storybook": "10.1.11"
   }
 }
