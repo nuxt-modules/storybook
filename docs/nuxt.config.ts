@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxt/image',
-    '@nuxt/ui-pro',
+    '@nuxt/ui',
     '@nuxt/content',
     'nuxt-og-image',
     'nuxt-llms',
@@ -14,8 +14,6 @@ export default defineNuxtConfig({
     provider: 'bunny',
     priority: ['bunny', 'google'],
   },
-
-  uiPro: { license: 'oss' },
 
   site: {
     url: 'https://storybook.nuxtjs.org/',
@@ -39,6 +37,10 @@ export default defineNuxtConfig({
 
   future: {
     compatibilityVersion: 4,
+  },
+
+  experimental: {
+    externalVue: false,
   },
 
   compatibilityDate: '2024-07-11',

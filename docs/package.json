@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "clear:cache": "rm -rf .nuxt .output node_modules/.cache node_modules/.vite ../.nuxt 2>/dev/null; echo 'All caches cleared'"
   },
   "dependencies": {
     "@iconify-json/lucide": "1.2.66",
@@ -17,7 +18,7 @@
     "@iconify-json/vscode-icons": "1.2.30",
     "@nuxt/content": "3.6.3",
     "@nuxt/image": "2.0.0",
-    "@nuxt/ui-pro": "3.3.3",
+    "@nuxt/ui": "^4.3.0",
     "better-sqlite3": "12.2.0",
     "nuxt": "4.2.1",
     "nuxt-llms": "0.1.3",
