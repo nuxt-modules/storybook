@@ -106,12 +106,6 @@ async function loadNuxtViteConfig(root: string | undefined) {
       appId: 'nuxt-app',
       buildId: 'storybook',
       ssr: false,
-      experimental: {
-        // Disable app manifest to prevent 404 errors in Storybook preview
-        // Nuxt 3.8+ tries to fetch /_nuxt/builds/meta/{buildId}.json for build checking
-        // but Storybook doesn't generate this manifest, causing console errors
-        appManifest: false,
-      },
     },
   })
 
@@ -398,18 +392,27 @@ async function getPackageDir(packageName: string) {
 }
 
 export function getNuxtProxyConfig(nuxt: Nuxt) {
-  const port = nuxt.options.runtimeConfig.app.port ?? 3000
-  const route = '^/(_nuxt|_ipx|api/_nuxt_icon|__nuxt_devtools__|__nuxt_island)'
+  // Nuxt may use a different port if default is busy
+  let target = 'http://localhost:3000'
+  if (nuxt.options.devServer?.url) {
+    target = nuxt.options.devServer.url.replace(/\/$/, '')
+  } else if (nuxt.options.devServer?.port) {
+    target = `http://localhost:${nuxt.options.devServer.port}`
+  }
+
+  // Exclude /builds/meta (appManifest) - Storybook doesn't need it
+  const route =
+    '^/(_nuxt(?!/builds/meta)|_ipx|api/_nuxt_icon|__nuxt_devtools__|__nuxt_island)'
   const proxy = {
     [route]: {
-      target: `http://localhost:${port}`,
+      target,
       changeOrigin: true,
       secure: false,
       ws: true,
     },
   }
   return {
-    port,
+    target,
     route,
     proxy,
   }
