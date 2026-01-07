@@ -3,11 +3,18 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxt/image',
-    '@nuxt/ui-pro',
+    '@nuxt/ui',
     '@nuxt/content',
     'nuxt-og-image',
     'nuxt-llms',
+    '@nuxtjs/mcp-toolkit',
   ],
+
+  devtools: {
+    enabled: true,
+  },
+
+  css: ['~/assets/css/main.css'],
 
   fonts: {
     // Google is not working in China
@@ -15,17 +22,9 @@ export default defineNuxtConfig({
     priority: ['bunny', 'google'],
   },
 
-  uiPro: { license: 'oss' },
-
   site: {
     url: 'https://storybook.nuxtjs.org/',
   },
-
-  devtools: {
-    enabled: true,
-  },
-
-  css: ['~/assets/css/main.css'],
 
   content: {
     build: {
@@ -37,8 +36,9 @@ export default defineNuxtConfig({
     },
   },
 
-  future: {
-    compatibilityVersion: 4,
+  experimental: {
+    asyncContext: true,
+    externalVue: false,
   },
 
   compatibilityDate: '2024-07-11',
@@ -47,6 +47,7 @@ export default defineNuxtConfig({
     prerender: {
       routes: ['/'],
       crawlLinks: true,
+      autoSubfolderIndex: false,
     },
   },
 
