@@ -17,8 +17,8 @@ Update your `nuxt.config`:
     '@nuxtjs/storybook',
   ],
   storybook: {
-    url: 'http://localhost:6006',
-    storybookRoute: '/__storybook__',
+    host: 'http://localhost',
+    route: '/_storybook',
     port: 6006,
   },
 ```
@@ -49,10 +49,13 @@ https://github.com/storybook-vue/nuxt-storybook-module-demo
 - Nuxt 3.x or Nuxt 4.x
 - Storybook 10.x
 
-## Previous Versions
+## Version Compatibility
 
-- **Storybook 8/9**: Use v8.x of this module
-- **Nuxt 2**: Use v4.x with Storybook v6 (check the v4 branch for legacy code)
+| Module Version | Storybook | Nuxt |
+|----------------|-----------|------|
+| v10.x | 10.x | 3.18.1+ / 4.x |
+| v9.x | 8.x / 9.x | 3.x |
+| v4.x | 6.x | 2.x (v4 branch) |
 
 ## Contributing
 
