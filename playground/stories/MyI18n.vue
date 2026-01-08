@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import '../components/button.css'
+import './button.css'
 import type { Locale } from 'vue-i18n'
 
 const props = defineProps<{
@@ -7,7 +7,8 @@ const props = defineProps<{
   message?: string
 }>()
 
-const { t, locale, setLocale, locales } = useI18n()
+const { t, locale, setLocale } = useI18n()
+const rtl = computed(() => locale.value === 'ar')
 
 setLocale(props.lang)
 watch(
@@ -39,10 +40,7 @@ watch(
       ar
     </button>
   </div>
-  <div
-    class="storybook welcome"
-    :style="{ direction: locales.find((l) => l.code === locale)?.dir || 'ltr' }"
-  >
+  <div class="storybook welcome" :style="{ direction: rtl ? 'rtl' : 'ltr' }">
     <div>{{ t('welcome', { name: 'Storybook' }) }}</div>
     <div>{{ t('welcome', { name: 'Nuxt' }) }}</div>
     <div>{{ t('welcome', { name: 'I18n' }) }}</div>
