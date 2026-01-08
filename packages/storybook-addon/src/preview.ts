@@ -14,6 +14,9 @@ import type { ObjectPlugin, Plugin, NuxtApp } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
 import { $fetch } from 'ofetch'
+import { createHead as createClientHead } from '@unhead/vue/client'
+// The headSymbol is just the string "usehead" used for Vue's provide/inject
+const headSymbol = 'usehead'
 // @ts-expect-error virtual file
 import { runtimeConfig } from 'virtual:nuxt-runtime-config'
 
@@ -73,6 +76,18 @@ setup(async (_vueApp, storyContext) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any
   }
+
+  // Pre-initialize Unhead before creating the Nuxt app
+  // This ensures the head instance is available via Vue's provide/inject
+  // before any plugins (like @nuxt/ui) try to use useHead()
+  // We use the same headSymbol that @unhead/vue uses for injection
+  const head = createClientHead({})
+  // Install head as Vue plugin AND explicitly provide it
+  vueApp.use(head)
+  // Also set global properties as backup for injection context issues
+  vueApp.config.globalProperties.$head = head
+  // Explicitly provide the head symbol for plugins that use inject()
+  vueApp.provide(headSymbol, head)
 
   const nuxt = createNuxtApp({
     id: storyNuxtAppId,
