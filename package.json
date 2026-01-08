@@ -87,7 +87,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@nuxtjs/storybook": "workspace:*"
+      "@nuxtjs/storybook": "workspace:*",
+      "h3-next": "npm:h3@1.15.4"
     }
   }
 }
