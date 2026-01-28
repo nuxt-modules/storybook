@@ -17,8 +17,7 @@ Update your `nuxt.config`:
     '@nuxtjs/storybook',
   ],
   storybook: {
-    url: 'http://localhost:6006',
-    storybookRoute: '/__storybook__',
+    host: 'http://localhost',
     port: 6006,
   },
 ```
