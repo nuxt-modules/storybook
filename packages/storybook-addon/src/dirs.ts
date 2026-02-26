@@ -10,10 +10,4 @@ export const composablesDir = resolve(runtimeDir, 'composables')
 
 export const packageDir = resolve(distDir, '..')
 
-export const dirs = [
-  distDir,
-  packageDir,
-  pluginsDir,
-  componentsDir,
-  composablesDir,
-]
+export const dirs = [distDir, packageDir, pluginsDir, componentsDir, composablesDir]

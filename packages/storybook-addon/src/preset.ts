@@ -7,18 +7,11 @@ import { resolvePath } from 'mlly'
 import vuePlugin from '@vitejs/plugin-vue'
 import replace from '@rollup/plugin-replace'
 import stringify from 'json-stable-stringify'
-import {
-  type UserConfig as ViteConfig,
-  mergeConfig,
-  searchForWorkspaceRoot,
-} from 'vite'
+import { type UserConfig as ViteConfig, mergeConfig, searchForWorkspaceRoot } from 'vite'
 import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
 import nuxtRuntimeConfigPlugin from './runtimeConfig'
 import type { Nuxt } from '@nuxt/schema'
-import type {
-  PresetProperty,
-  PreviewAnnotation,
-} from 'storybook/internal/types'
+import type { PresetProperty, PreviewAnnotation } from 'storybook/internal/types'
 import type { StorybookConfig } from './types'
 
 /**
@@ -47,9 +40,7 @@ const dirs = [distDir, packageDir, pluginsDir, componentsDir]
  */
 function extendComponents(nuxt: Nuxt) {
   nuxt.hook('components:extend', (components) => {
-    const nuxtLink = components.find(
-      ({ pascalName }) => pascalName === 'NuxtLink',
-    )
+    const nuxtLink = components.find(({ pascalName }) => pascalName === 'NuxtLink')
     if (!nuxtLink) {
       throw new Error('NuxtLink component not found')
     }
@@ -77,8 +68,7 @@ async function extendComposables(nuxt: Nuxt) {
 }
 
 async function loadNuxtViteConfig(root: string | undefined) {
-  const { loadNuxt, tryUseNuxt, buildNuxt, extendPages } =
-    await import('@nuxt/kit')
+  const { loadNuxt, tryUseNuxt, buildNuxt, extendPages } = await import('@nuxt/kit')
 
   let nuxt = tryUseNuxt()
   if (nuxt) {
@@ -115,9 +105,7 @@ async function loadNuxtViteConfig(root: string | undefined) {
   })
 
   if ((nuxt.options.builder as string) !== '@nuxt/vite-builder')
-    throw new Error(
-      `Storybook-Nuxt does not support '${nuxt.options.builder}' for now.`,
-    )
+    throw new Error(`Storybook-Nuxt does not support '${nuxt.options.builder}' for now.`)
   nuxt.options.build.transpile.push(join(packageDir, 'preview'))
 
   nuxt.hook('modules:done', () => {
@@ -137,26 +125,24 @@ async function loadNuxtViteConfig(root: string | undefined) {
   // Get Vite config from Nuxt
   // https://nuxt.com/docs/api/kit/examples#accessing-nuxt-vite-config
   await nuxt.ready()
-  return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>(
-    (resolve, reject) => {
-      nuxt.hook('vite:configResolved', (config, { isClient }) => {
-        if (isClient) {
-          resolve({
-            viteConfig: config,
-            nuxt,
-          })
-          // Stop the build process, as we don't need to build the Nuxt app
-          throw new Error('_stop_')
-        }
-      })
+  return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>((resolve, reject) => {
+    nuxt.hook('vite:configResolved', (config, { isClient }) => {
+      if (isClient) {
+        resolve({
+          viteConfig: config,
+          nuxt,
+        })
+        // Stop the build process, as we don't need to build the Nuxt app
+        throw new Error('_stop_')
+      }
+    })
 
-      buildNuxt(nuxt).catch((err) => {
-        if (!err.toString().includes('_stop_')) {
-          reject(err)
-        }
-      })
-    },
-  ).finally(() => nuxt.close())
+    buildNuxt(nuxt).catch((err) => {
+      if (!err.toString().includes('_stop_')) {
+        reject(err)
+      }
+    })
+  }).finally(() => nuxt.close())
 }
 
 function mergeViteConfig(
@@ -188,12 +174,10 @@ function mergeViteConfig(
   // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
   // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
   extendedConfig.optimizeDeps = extendedConfig.optimizeDeps || {}
-  extendedConfig.optimizeDeps.include =
-    extendedConfig.optimizeDeps.include || []
-  extendedConfig.optimizeDeps.include =
-    extendedConfig.optimizeDeps.include.filter(
-      (dep) => !extendedConfig.optimizeDeps?.exclude?.includes(dep),
-    )
+  extendedConfig.optimizeDeps.include = extendedConfig.optimizeDeps.include || []
+  extendedConfig.optimizeDeps.include = extendedConfig.optimizeDeps.include.filter(
+    (dep) => !extendedConfig.optimizeDeps?.exclude?.includes(dep),
+  )
 
   extendedConfig.optimizeDeps.include.push(
     // Add lodash/kebabCase, since it is still a cjs module
@@ -267,10 +251,7 @@ export interface Resolver {
    * @param id - The identifier or path of the module to resolve.
    * @returns A promise to resolve to the file path, or `null` if the module could not be resolved.
    */
-  resolveModule(
-    id: string,
-    options?: { paths?: string[] },
-  ): Promise<string | null>
+  resolveModule(id: string, options?: { paths?: string[] }): Promise<string | null>
 }
 /**
  * Creates a resolver that can resolve paths and modules relative to a base path.
@@ -338,30 +319,21 @@ export const previewAnnotations = async (
   ]
 }
 
-export const viteFinal: StorybookConfig['viteFinal'] = async (
-  config,
-  options,
-) => {
+export const viteFinal: StorybookConfig['viteFinal'] = async (config, options) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getStorybookViteConfig = async (c: Record<string, any>, o: any) => {
-    const presetURL = pathToFileURL(
-      join(await getPackageDir('@storybook/vue3-vite'), 'preset.js'),
-    )
+    const presetURL = pathToFileURL(join(await getPackageDir('@storybook/vue3-vite'), 'preset.js'))
     const { viteFinal: vueViteFinal } = await import(presetURL.href)
 
     if (!vueViteFinal) {
-      throw new Error(
-        'unexpected contents in package @storybook/vue3-vite: viteFinal not found',
-      )
+      throw new Error('unexpected contents in package @storybook/vue3-vite: viteFinal not found')
     }
 
     return (vueViteFinal as NonNullable<StorybookConfig['viteFinal']>)(c, o)
   }
 
   const storybookViteConfig = await getStorybookViteConfig(config, options)
-  const { viteConfig: nuxtConfig, nuxt } = await loadNuxtViteConfig(
-    storybookViteConfig.root,
-  )
+  const { viteConfig: nuxtConfig, nuxt } = await loadNuxtViteConfig(storybookViteConfig.root)
 
   const finalViteConfig = mergeViteConfig(storybookViteConfig, nuxtConfig, nuxt)
 

@@ -2,42 +2,30 @@
   "name": "@nuxtjs/storybook",
   "version": "9.0.1",
   "description": "Storybook module for Nuxt",
-  "license": "MIT",
+  "keywords": [
+    "nuxt",
+    "storybook",
+    "vite",
+    "vue3"
+  ],
   "homepage": "https://storybook.nuxtjs.org",
+  "bugs": {
+    "url": "https://github.com/nuxt-modules/storybook/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "ChakAs3",
+    "email": "javachakir@gmail.com"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nuxt-modules/storybook.git",
     "directory": "packages/nuxt-module"
   },
-  "bugs": {
-    "url": "https://github.com/nuxt-modules/storybook/issues"
-  },
-  "keywords": [
-    "storybook",
-    "nuxt",
-    "vite",
-    "vue3"
+  "files": [
+    "dist"
   ],
-  "author": {
-    "name": "ChakAs3",
-    "email": "javachakir@gmail.com"
-  },
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/module.d.mts",
-      "import": "./dist/module.mjs"
-    },
-    "./preset": {
-      "types": "./dist/preset.d.mts",
-      "import": "./dist/preset.mjs"
-    },
-    "./preview": {
-      "types": "./dist/preview.d.mts",
-      "import": "./dist/preview.mjs"
-    },
-    "./package.json": "./package.json"
-  },
   "main": "./dist/module.mjs",
   "types": "./dist/module.d.mts",
   "typesVersions": {
@@ -53,11 +41,20 @@
       ]
     }
   },
-  "files": [
-    "dist"
-  ],
-  "engines": {
-    "node": ">=20.0.0"
+  "exports": {
+    ".": {
+      "types": "./dist/module.d.mts",
+      "import": "./dist/module.mjs"
+    },
+    "./preset": {
+      "types": "./dist/preset.d.mts",
+      "import": "./dist/preset.mjs"
+    },
+    "./preview": {
+      "types": "./dist/preview.d.mts",
+      "import": "./dist/preview.mjs"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "dev:prepare": "unbuild --stub",
@@ -82,5 +79,8 @@
   },
   "peerDependencies": {
     "storybook": "^10.2.7"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }

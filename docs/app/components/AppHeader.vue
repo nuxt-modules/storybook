@@ -8,12 +8,7 @@ const { header } = useAppConfig()
 
 <template>
   <UHeader :ui="{ center: 'flex-1' }" :to="header?.to || '/'">
-    <UContentSearchButton
-      v-if="header?.search"
-      label="Search..."
-      variant="outline"
-      class="w-full"
-    >
+    <UContentSearchButton v-if="header?.search" label="Search..." variant="outline" class="w-full">
       <template #trailing>
         <div class="flex items-center gap-0.5 ms-auto">
           <UKbd value="meta" />
@@ -22,10 +17,7 @@ const { header } = useAppConfig()
       </template>
     </UContentSearchButton>
 
-    <template
-      v-if="header?.logo?.dark || header?.logo?.light || header?.title"
-      #title
-    >
+    <template v-if="header?.logo?.dark || header?.logo?.light || header?.title" #title>
       <UColorModeImage
         v-if="header?.logo?.dark || header?.logo?.light"
         :light="header?.logo?.light!"

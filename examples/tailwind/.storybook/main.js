@@ -4,15 +4,8 @@ const config = {
     name: '@storybook-vue/nuxt',
     options: {},
   },
-  stories: [
-    '../components/**/*.mdx',
-    '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-  ],
-  addons: [
-    '@storybook/addon-docs',
-    '@storybook/addon-links',
-    '@chromatic-com/storybook',
-  ],
+  stories: ['../components/**/*.mdx', '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
+  addons: ['@storybook/addon-docs', '@storybook/addon-links', '@chromatic-com/storybook'],
   docs: {
     autodocs: 'tag',
   },

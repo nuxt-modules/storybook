@@ -10,24 +10,11 @@ import {
 } from 'vue'
 import { useRouter as useVueRouter } from 'vue-router'
 import type { RouteLocation, RouteLocationRaw } from 'vue-router'
-import {
-  hasProtocol,
-  parseQuery,
-  parseURL,
-  withTrailingSlash,
-  withoutTrailingSlash,
-} from 'ufo'
+import { hasProtocol, parseQuery, parseURL, withTrailingSlash, withoutTrailingSlash } from 'ufo'
 
-import {
-  navigateTo,
-  onNuxtReady,
-  preloadRouteComponents,
-  useNuxtApp,
-  useRouter,
-} from 'nuxt/app'
+import { navigateTo, onNuxtReady, preloadRouteComponents, useNuxtApp, useRouter } from 'nuxt/app'
 
-const firstNonUndefined = <T>(...args: (T | undefined)[]) =>
-  args.find((arg) => arg !== undefined)
+const firstNonUndefined = <T>(...args: (T | undefined)[]) => args.find((arg) => arg !== undefined)
 
 const DEFAULT_EXTERNAL_REL_ATTRIBUTE = 'noopener noreferrer'
 
@@ -66,8 +53,7 @@ export interface NuxtLinkProps {
 
 // Polyfills for Safari support
 // https://caniuse.com/requestidlecallback
-export const requestIdleCallback: Window['requestIdleCallback'] = import.meta
-  .server
+export const requestIdleCallback: Window['requestIdleCallback'] = import.meta.server
   ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ((() => {}) as any)
   : globalThis.requestIdleCallback ||
@@ -82,8 +68,7 @@ export const requestIdleCallback: Window['requestIdleCallback'] = import.meta
       }, 1)
     })
 
-export const cancelIdleCallback: Window['cancelIdleCallback'] = import.meta
-  .server
+export const cancelIdleCallback: Window['cancelIdleCallback'] = import.meta.server
   ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ((() => {}) as any)
   : globalThis.cancelIdleCallback ||
@@ -100,11 +85,7 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
     main: keyof NuxtLinkProps,
     sub: keyof NuxtLinkProps,
   ): void => {
-    if (
-      import.meta.dev &&
-      props[main] !== undefined &&
-      props[sub] !== undefined
-    )
+    if (import.meta.dev && props[main] !== undefined && props[sub] !== undefined)
       console.warn(
         `[${componentName}] \`${main}\` and \`${sub}\` cannot be used together. \`${sub}\` will be ignored.`,
       )
@@ -113,16 +94,10 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
     to: RouteLocationRaw,
     resolve: (to: RouteLocationRaw) => RouteLocation & { href?: string },
   ): RouteLocationRaw | RouteLocation => {
-    if (
-      !to ||
-      (options.trailingSlash !== 'append' && options.trailingSlash !== 'remove')
-    )
-      return to
+    if (!to || (options.trailingSlash !== 'append' && options.trailingSlash !== 'remove')) return to
 
     const normalizeTrailingSlash =
-      options.trailingSlash === 'append'
-        ? withTrailingSlash
-        : withoutTrailingSlash
+      options.trailingSlash === 'append' ? withTrailingSlash : withoutTrailingSlash
     if (typeof to === 'string') return normalizeTrailingSlash(to, true)
 
     const path = 'path' in to ? to.path : resolve(to).path
@@ -243,9 +218,7 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
         // When `to` is a route object then it's an internal link
         if (typeof to.value === 'object') return false
 
-        return (
-          to.value === '' || hasProtocol(to.value, { acceptRelative: true })
-        )
+        return to.value === '' || hasProtocol(to.value, { acceptRelative: true })
       })
 
       // Prefetching
@@ -274,29 +247,19 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
             onNuxtReady(() => {
               idleId = requestIdleCallback(() => {
                 if (el?.value?.tagName) {
-                  unobserve = observer!.observe(
-                    el.value as HTMLElement,
-                    async () => {
-                      unobserve?.()
-                      unobserve = null
+                  unobserve = observer!.observe(el.value as HTMLElement, async () => {
+                    unobserve?.()
+                    unobserve = null
 
-                      const path =
-                        typeof to.value === 'string'
-                          ? to.value
-                          : router.resolve(to.value).fullPath
-                      await Promise.all([
-                        nuxtApp.hooks
-                          .callHook('link:prefetch', path)
-                          .catch(() => {}),
-                        !isExternal.value &&
-                          preloadRouteComponents(
-                            to.value as string,
-                            router,
-                          ).catch(() => {}),
-                      ])
-                      prefetched.value = true
-                    },
-                  )
+                    const path =
+                      typeof to.value === 'string' ? to.value : router.resolve(to.value).fullPath
+                    await Promise.all([
+                      nuxtApp.hooks.callHook('link:prefetch', path).catch(() => {}),
+                      !isExternal.value &&
+                        preloadRouteComponents(to.value as string, router).catch(() => {}),
+                    ])
+                    prefetched.value = true
+                  })
                 }
               })
             })
@@ -315,8 +278,7 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
             ref: elRef,
             to: to.value,
             activeClass: props.activeClass || options.activeClass,
-            exactActiveClass:
-              props.exactActiveClass || options.exactActiveClass,
+            exactActiveClass: props.exactActiveClass || options.exactActiveClass,
             replace: props.replace,
             ariaCurrentValue: props.ariaCurrentValue,
             custom: props.custom,
@@ -326,26 +288,19 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
           // may render fragment or text root nodes (#14897, #19375)
           if (!props.custom) {
             if (prefetched.value)
-              routerLinkProps.class =
-                props.prefetchedClass || options.prefetchedClass
+              routerLinkProps.class = props.prefetchedClass || options.prefetchedClass
 
             routerLinkProps.rel = props.rel
           }
 
           // Internal link
-          return h(
-            resolveComponent('RouterLink'),
-            routerLinkProps,
-            slots.default,
-          )
+          return h(resolveComponent('RouterLink'), routerLinkProps, slots.default)
         }
 
         // Resolves `to` value if it's a route location object
         // converts `""` to `null` to prevent the attribute from being added as empty (`href=""`)
         const href =
-          typeof to.value === 'object'
-            ? (router.resolve(to.value)?.href ?? null)
-            : to.value || null
+          typeof to.value === 'object' ? (router.resolve(to.value)?.href ?? null) : to.value || null
 
         // Resolves `target` value
         const target = props.target || null

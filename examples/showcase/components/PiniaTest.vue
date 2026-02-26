@@ -19,8 +19,8 @@ const counter = useCounter()
     </div>
 
     <p>
-      This is an example store to test out devtools. Try one of the following
-      with the devtools open:
+      This is an example store to test out devtools. Try one of the following with the devtools
+      open:
       <br />
     </p>
 
@@ -33,16 +33,14 @@ const counter = useCounter()
         <b>Test Errors</b> and immediately after <b>increment</b> the store
       </li>
       <li>
-        While the dev server is running, try changing counter.changeMe, adding,
-        and removing new state properties
+        While the dev server is running, try changing counter.changeMe, adding, and removing new
+        state properties
       </li>
     </ol>
 
     <h2>Counter Store</h2>
 
-    <p data-testid="counter-values">
-      Counter: {{ counter.n }}. Double: {{ counter.double }}
-    </p>
+    <p data-testid="counter-values">Counter: {{ counter.n }}. Double: {{ counter.double }}</p>
 
     <p>Increment the Store:</p>
 

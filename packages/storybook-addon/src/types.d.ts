@@ -16,9 +16,7 @@ type BuilderOptions = BuilderOptionsVite & {
 }
 
 type StorybookConfigFramework = {
-  framework:
-    | FrameworkName
-    | { name: FrameworkName; options: FrameworkOptionsVue }
+  framework: FrameworkName | { name: FrameworkName; options: FrameworkOptionsVue }
   core?: Omit<StorybookConfigBase['core'], 'builder'> & {
     builder?:
       | BuilderName
