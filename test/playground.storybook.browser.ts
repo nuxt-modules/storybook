@@ -7,9 +7,7 @@ test('no errors', async ({ page }) => {
   await page.locator('.sb-preparing-docs').waitFor({ state: 'hidden' })
 
   try {
-    await page
-      .locator('#error-message')
-      .waitFor({ state: 'visible', timeout: 1000 })
+    await page.locator('#error-message').waitFor({ state: 'visible', timeout: 1000 })
   } catch {
     // Ignore, error message is not visible and that's what we want
   }
@@ -18,16 +16,12 @@ test('no errors', async ({ page }) => {
 })
 
 test('renders the docs example', async ({ page }) => {
-  await page.goto(
-    'http://localhost:6006/iframe.html?viewMode=docs&id=example-nuxtwelcome--docs',
-  )
+  await page.goto('http://localhost:6006/iframe.html?viewMode=docs&id=example-nuxtwelcome--docs')
   await page.locator('#storybook-docs').waitFor()
   await page.locator('.sb-preparing-docs').waitFor({ state: 'hidden' })
 
   const text = await page
-    .locator(
-      'div#story--example-nuxtwelcome--nuxt-welcome-story--primary-inner > h1',
-    )
+    .locator('div#story--example-nuxtwelcome--nuxt-welcome-story--primary-inner > h1')
     .textContent()
   expect(text).toContain('Welcome Nuxt to Storybook')
 })

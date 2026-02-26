@@ -2,23 +2,35 @@
   "name": "@storybook-vue/nuxt",
   "version": "9.0.1",
   "description": "Storybook addon for Nuxt and Vite",
-  "license": "MIT",
+  "keywords": [
+    "nuxt",
+    "storybook",
+    "vite",
+    "vue3"
+  ],
   "homepage": "https://storybook.nuxtjs.org",
+  "bugs": {
+    "url": "https://github.com/nuxt-modules/storybook/issues"
+  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nuxt-modules/storybook.git",
     "directory": "packages/storybook-addon"
   },
-  "bugs": {
-    "url": "https://github.com/nuxt-modules/storybook/issues"
-  },
-  "keywords": [
-    "storybook",
-    "nuxt",
-    "vite",
-    "vue3"
+  "files": [
+    "dist/**/*",
+    "template/**/*",
+    "README.md",
+    "*.js",
+    "*.mjs",
+    "*.cjs",
+    "*.d.ts"
   ],
   "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -38,20 +50,8 @@
     },
     "./package.json": "./package.json"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/**/*",
-    "template/**/*",
-    "README.md",
-    "*.js",
-    "*.mjs",
-    "*.cjs",
-    "*.d.ts"
-  ],
-  "engines": {
-    "node": ">=20.19.0"
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "unbuild",
@@ -60,12 +60,6 @@
     "dev": "unbuild",
     "prepack": "unbuild",
     "release": "pnpm changelogen --release --push && pnpm publish"
-  },
-  "peerDependencies": {
-    "nuxt": "^3.18.1 || ^4.0.0",
-    "storybook": "^10.2.7",
-    "vite": "^5.2.0 || ^6.0.0 || ^7.0.0",
-    "vue": "^3.4.0"
   },
   "dependencies": {
     "@nuxt/kit": "^4.0.0",
@@ -93,8 +87,14 @@
     "unbuild": "3.6.1",
     "vue": "3.5.27"
   },
-  "publishConfig": {
-    "access": "public"
+  "peerDependencies": {
+    "nuxt": "^3.18.1 || ^4.0.0",
+    "storybook": "^10.2.7",
+    "vite": "^5.2.0 || ^6.0.0 || ^7.0.0",
+    "vue": "^3.4.0"
+  },
+  "engines": {
+    "node": ">=20.19.0"
   },
   "bundler": {
     "entries": [

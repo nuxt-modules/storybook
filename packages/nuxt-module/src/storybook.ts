@@ -6,10 +6,7 @@ import type { ModuleOptions } from './module'
 import { withTrailingSlash } from 'ufo'
 import { colors, logger } from './logger'
 import { cache as storybookCache } from 'storybook/internal/common'
-import {
-  buildDevStandalone,
-  withTelemetry,
-} from 'storybook/internal/core-server'
+import { buildDevStandalone, withTelemetry } from 'storybook/internal/core-server'
 
 const buildLogger = logger.withTag('build')
 
@@ -93,12 +90,8 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     logger.error('Failed to start Storybook')
     return
   }
-  logger.log(
-    `  ➜ Storybook: ${colors.underline(withTrailingSlash(result.address))}`,
-  )
-  logger.verbose(
-    `  ➜ Storybook: ${colors.underline(withTrailingSlash(result.networkAddress))}`,
-  )
+  logger.log(`  ➜ Storybook: ${colors.underline(withTrailingSlash(result.address))}`)
+  logger.verbose(`  ➜ Storybook: ${colors.underline(withTrailingSlash(result.networkAddress))}`)
 
   nuxt.hook('build:done', () => {
     logger.verbose(' ')

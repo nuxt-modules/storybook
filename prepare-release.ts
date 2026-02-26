@@ -38,11 +38,8 @@ type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
 export type Package = ThenArg<ReturnType<typeof loadPackage>>
 export async function loadPackage(dir: string) {
   const pkgPath = resolve(dir, 'package.json')
-  const data = JSON.parse(
-    await fsp.readFile(pkgPath, 'utf-8').catch(() => '{}'),
-  )
-  const save = () =>
-    fsp.writeFile(pkgPath, JSON.stringify(data, null, 2) + '\n')
+  const data = JSON.parse(await fsp.readFile(pkgPath, 'utf-8').catch(() => '{}'))
+  const save = () => fsp.writeFile(pkgPath, JSON.stringify(data, null, 2) + '\n')
 
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   const updateDeps = (reviver: (dep: Dep) => Dep | void) => {
@@ -76,9 +73,7 @@ export async function loadPackage(dir: string) {
 
 export async function loadWorkspace(dir: string) {
   const workspacePkg = await loadPackage(dir)
-  const pkgDirs = (
-    await globby(['packages/*'], { onlyDirectories: true })
-  ).sort()
+  const pkgDirs = (await globby(['packages/*'], { onlyDirectories: true })).sort()
 
   const packages: Package[] = []
 
@@ -110,11 +105,7 @@ export async function loadWorkspace(dir: string) {
     }
   }
 
-  const setVersion = (
-    name: string,
-    newVersion: string,
-    opts: { updateDeps?: boolean } = {},
-  ) => {
+  const setVersion = (name: string, newVersion: string, opts: { updateDeps?: boolean } = {}) => {
     find(name).data.version = newVersion
     if (!opts.updateDeps) {
       return
@@ -159,12 +150,7 @@ export async function determineBumpType() {
 
 export async function getLatestCommits() {
   const config = await loadChangelogConfig(process.cwd())
-  const latestTag = execaSync('git', [
-    'describe',
-    '--tags',
-    '--abbrev=0',
-    '--always',
-  ]).stdout
+  const latestTag = execaSync('git', ['describe', '--tags', '--abbrev=0', '--always']).stdout
 
   return parseCommits(await getGitDiff(latestTag), config)
 }
@@ -175,17 +161,12 @@ async function bumpVersion() {
 
   const commits = await getLatestCommits().then((commits) =>
     commits.filter(
-      (c) =>
-        config.types[c.type] &&
-        !(c.type === 'chore' && c.scope === 'deps' && !c.isBreaking),
+      (c) => config.types[c.type] && !(c.type === 'chore' && c.scope === 'deps' && !c.isBreaking),
     ),
   )
   const bumpType = (await determineBumpType()) || 'patch'
 
-  const newVersion = inc(
-    workspace.find('@nuxtjs/storybook').data.version,
-    bumpType,
-  )
+  const newVersion = inc(workspace.find('@nuxtjs/storybook').data.version, bumpType)
   if (!newVersion) {
     throw new Error('Failed to determine new version')
   }
@@ -230,9 +211,7 @@ function checkGitBranch() {
   // Check current branch
   const currentBranch = execSync('git branch --show-current').toString().trim()
   if (currentBranch !== 'main') {
-    consola.error(
-      `You should be on branch "main" but are on "${currentBranch}"`,
-    )
+    consola.error(`You should be on branch "main" but are on "${currentBranch}"`)
     process.exit(1)
   }
 
@@ -255,7 +234,7 @@ async function prepareRelease() {
     await loadChangelogConfig(process.cwd(), { newVersion }),
   )
   await writeChangelog(changelog)
-  execSync('pnpm lint:prettier --write')
+  execSync('pnpm oxfmt')
 
   execSync(`git commit -am "chore(release): bump version to ${newVersion}"`)
 
@@ -265,10 +244,7 @@ async function prepareRelease() {
 async function prepareNightly() {
   const workspace = await loadWorkspace(process.cwd())
 
-  const commit = execSync('git rev-parse --short HEAD')
-    .toString('utf-8')
-    .trim()
-    .slice(0, 8)
+  const commit = execSync('git rev-parse --short HEAD').toString('utf-8').trim().slice(0, 8)
   const date = Math.round(Date.now() / (1000 * 60))
 
   const bumpType = await determineBumpType()

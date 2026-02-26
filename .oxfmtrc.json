@@ -1,0 +1,6 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": false,
+  "singleQuote": true,
+  "ignorePatterns": ["docs/**/*.md"] // MDC syntax is not supported: https://github.com/oxc-project/oxc/issues/18740
+}

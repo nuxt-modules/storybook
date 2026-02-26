@@ -21,24 +21,9 @@ watch(
 
 <template>
   <div class="storybook lang-selector">
-    <button
-      class="storybook-button storybook-button--small"
-      @click="setLocale('en')"
-    >
-      en
-    </button>
-    <button
-      class="storybook-button storybook-button--small"
-      @click="setLocale('fr')"
-    >
-      fr
-    </button>
-    <button
-      class="storybook-button storybook-button--small"
-      @click="setLocale('ar')"
-    >
-      ar
-    </button>
+    <button class="storybook-button storybook-button--small" @click="setLocale('en')">en</button>
+    <button class="storybook-button storybook-button--small" @click="setLocale('fr')">fr</button>
+    <button class="storybook-button storybook-button--small" @click="setLocale('ar')">ar</button>
   </div>
   <div class="storybook welcome" :style="{ direction: rtl ? 'rtl' : 'ltr' }">
     <div>{{ t('welcome', { name: 'Storybook' }) }}</div>

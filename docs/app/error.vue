@@ -20,13 +20,9 @@ useSeoMeta({
 const { data: navigation } = await useAsyncData('navigation', () =>
   queryCollectionNavigation('docs'),
 )
-const { data: files } = useLazyAsyncData(
-  'search',
-  () => queryCollectionSearchSections('docs'),
-  {
-    server: false,
-  },
-)
+const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs'), {
+  server: false,
+})
 
 provide('navigation', navigation)
 </script>

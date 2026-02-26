@@ -10,9 +10,7 @@ const meta = {
   title: 'Storybook Feature/Use Decorators',
   component: SimpleButton,
   tags: ['autodocs'],
-  decorators: [
-    () => ({ template: '<div style="margin: 3em;"><story/></div>' }),
-  ],
+  decorators: [() => ({ template: '<div style="margin: 3em;"><story/></div>' })],
 } satisfies Meta<typeof SimpleButton>
 
 export default meta

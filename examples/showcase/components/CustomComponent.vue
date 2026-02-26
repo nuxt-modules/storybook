@@ -53,8 +53,6 @@ function onClick() {
 
 <template>
   <div class="storybook sb-column">
-    <button :class="classes" :style="style" @click="onClick">
-      {{ label }} <slot />
-    </button>
+    <button :class="classes" :style="style" @click="onClick">{{ label }} <slot /></button>
   </div>
 </template>

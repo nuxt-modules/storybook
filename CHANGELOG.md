@@ -71,7 +71,7 @@
 
 ### 🚀 Enhancements
 
-- ⚠️  Upgrade storybook to v9 ([#882](https://github.com/nuxt-modules/storybook/pull/882))
+- ⚠️ Upgrade storybook to v9 ([#882](https://github.com/nuxt-modules/storybook/pull/882))
 
 ### 🏡 Chore
 
@@ -80,7 +80,7 @@
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  Upgrade storybook to v9 ([#882](https://github.com/nuxt-modules/storybook/pull/882))
+- ⚠️ Upgrade storybook to v9 ([#882](https://github.com/nuxt-modules/storybook/pull/882))
 
 ### ❤️ Contributors
 

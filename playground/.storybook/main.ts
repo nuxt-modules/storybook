@@ -2,10 +2,7 @@ import type { StorybookConfig } from '@nuxtjs/storybook'
 import Inspect from 'vite-plugin-inspect'
 
 const config: StorybookConfig = {
-  stories: [
-    '../components/**/*.mdx',
-    '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-  ],
+  stories: ['../components/**/*.mdx', '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
   addons: ['@storybook/addon-docs', '@chromatic-com/storybook'],
   framework: {
     name: '@storybook-vue/nuxt',

@@ -1,14 +1,17 @@
 {
   "name": "nuxt-storybook",
-  "private": true,
   "version": "",
+  "private": true,
   "license": "MIT",
-  "repository": "nuxt-modules/storybook",
   "author": {
     "name": "ChakAs3",
     "email": "javachakir@gmail.com"
   },
+  "repository": "nuxt-modules/storybook",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "pnpm run --filter=./playground/** dev",
     "dev:prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && pnpm run prepare",
@@ -30,10 +33,10 @@
     "example:showcase:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:showcase:storybook:build --project-token=chpt_a53adf402cb628c",
     "build": "pnpm run --recursive --filter=./packages/* build",
     "package": "cd ./packages/storybook-addon && pnpm pack && cd ../nuxt-module && pnpm pack",
-    "lint": "pnpm lint:eslint && pnpm lint:prettier",
+    "lint": "pnpm lint:eslint && pnpm lint:oxfmt",
     "lint:eslint": "eslint --max-warnings=0 --report-unused-disable-directives .",
-    "lint:prettier": "prettier --check .",
-    "lint:fix": "pnpm lint:eslint --fix && pnpm lint:prettier --write",
+    "lint:oxfmt": "oxfmt --check",
+    "lint:fix": "pnpm lint:eslint --fix && pnpm oxfmt",
     "release": "pnpm jiti prepare-release.ts && pnpm publish --recursive  && git push --follow-tags",
     "release:major": "pnpm jiti prepare-release.ts --major && pnpm publish --recursive  && git push --follow-tags",
     "nightly-release": "pnpm jiti prepare-release.ts --nightly && pnpm publish --recursive --tag nightly --access public --no-git-checks --provenance --report-summary",
@@ -46,7 +49,6 @@
     "test:coverage": "vitest --coverage",
     "test:playwright": "pnpm exec playwright test"
   },
-  "packageManager": "pnpm@10.28.2",
   "devDependencies": {
     "@nuxt/eslint-config": "1.13.0",
     "@nuxt/test-utils": "3.23.0",
@@ -60,14 +62,17 @@
     "happy-dom": "20.5.0",
     "jiti": "2.6.1",
     "nuxt": "4.3.0",
-    "prettier": "3.8.1",
+    "oxfmt": "^0.35.0",
     "release-it": "19.2.4",
     "semver": "7.7.4",
     "typescript": "5.9.3",
     "vitest": "3.2.4"
   },
-  "publishConfig": {
-    "access": "public"
+  "packageManager": "pnpm@10.28.2",
+  "pnpm": {
+    "overrides": {
+      "@nuxtjs/storybook": "workspace:*"
+    }
   },
   "release-it": {
     "git": {
@@ -79,15 +84,6 @@
     },
     "hooks": {
       "after:bump": "npx changelogen@latest --no-commit --no-tag --output --r $(node -p \"require('./package.json').version\")"
-    }
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  },
-  "pnpm": {
-    "overrides": {
-      "@nuxtjs/storybook": "workspace:*"
     }
   }
 }
