@@ -85,7 +85,7 @@ jobs:
         shell: bash
         run: |
           cd "${{ runner.temp }}"
-          CI=true npx nuxi init example --template minimal --packageManager pnpm --modules --force --gitInit=false
+          CI=true npx nuxi init example --template minimal --packageManager pnpm --force --gitInit=false
           cd example
           # Configure scoped registries globally so pnpm can find our packages
           pnpm config set @nuxtjs:registry $VERDACCIO_REGISTRY
