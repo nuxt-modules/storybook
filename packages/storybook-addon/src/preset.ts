@@ -187,6 +187,7 @@ function mergeViteConfig(
   // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
   // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
   extendedConfig.optimizeDeps = extendedConfig.optimizeDeps || {}
+  extendedConfig.optimizeDeps.noDiscovery = true
   extendedConfig.optimizeDeps.include =
     extendedConfig.optimizeDeps.include || []
   extendedConfig.optimizeDeps.include =
