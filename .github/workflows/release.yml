@@ -37,8 +37,6 @@ jobs:
 
       - name: Publish packages
         run: pnpm publish --recursive --access public --no-git-checks --provenance --tag latest
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
 
       - name: Create GitHub Release
         run: changelogithub
