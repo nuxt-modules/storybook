@@ -25,8 +25,8 @@ export const Home: Story = {
   render(args) {
     return {
       components: { CustomNav },
-      setup() {
-        useRouter().push('/')
+      async setup() {
+        await useRouter().push('/')
         return { args }
       },
       template: '<div><CustomNav /></div>',
