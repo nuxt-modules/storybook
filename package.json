@@ -11,7 +11,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm run --filter=./playground/** dev",
-    "dev:prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && pnpm run prepare",
+    "dev:prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && pnpm run --recursive --filter=./examples/** --parallel dev:prepare && pnpm run prepare",
     "dev:build": "pnpm run --filter=./playground/** build",
     "playground:storybook:dev": "pnpm run --filter=./playground/** storybook",
     "playground:storybook:build": "cd playground && pnpm run build-storybook",

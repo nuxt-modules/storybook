@@ -5,8 +5,8 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "dev:prepare": "nuxt prepare",
     "generate": "nuxt generate",
-    "prepare": "nuxt prepare",
     "preview": "nuxt preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
