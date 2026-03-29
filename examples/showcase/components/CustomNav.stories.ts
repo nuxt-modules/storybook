@@ -25,8 +25,9 @@ export const Home: Story = {
   render(args) {
     return {
       components: { CustomNav },
-      async setup() {
-        await useRouter().push('/')
+      setup() {
+        // oxlint-disable-next-line typescript/no-floating-promises -- doesn't work with async setup for some reason
+        useRouter().push('/')
         return { args }
       },
       template: '<div><CustomNav /></div>',

@@ -230,8 +230,7 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
 
         const path = props.to || props.href || '' // Defaults to empty string (won't render any `href` attribute)
 
-        // oxlint-disable-next-line typescript/unbound-method
-        return resolveTrailingSlashBehavior(path, router.resolve)
+        return resolveTrailingSlashBehavior(path, router.resolve.bind(router))
       })
 
       // Resolving link type
