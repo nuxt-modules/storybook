@@ -60,6 +60,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
 
   release:
+    name: Release
     concurrency:
       group: release
     permissions:
@@ -86,9 +87,9 @@ jobs:
         run: pnpm build
 
       - name: Publish packages
-        run: pnpm publish --recursive --access public --no-git-checks --provenance --tag latest --dry-run
+        run: pnpm publish --recursive --access public --no-git-checks --provenance --tag latest --dry-run --force
 
       - name: Create GitHub Release
-        run: changelogithub
+        run: pnpm release-notes --dry
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
