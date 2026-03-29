@@ -187,13 +187,14 @@ function mergeViteConfig(
   // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
   // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
   extendedConfig.optimizeDeps = extendedConfig.optimizeDeps || {}
-  extendedConfig.optimizeDeps.noDiscovery = true
   extendedConfig.optimizeDeps.include =
     extendedConfig.optimizeDeps.include || []
   extendedConfig.optimizeDeps.include =
     extendedConfig.optimizeDeps.include.filter(
       (dep) => !extendedConfig.optimizeDeps?.exclude?.includes(dep),
     )
+  // Vite is optimizing too aggressively sometimes and missing components that are using virtual files like #components.
+  extendedConfig.optimizeDeps.noDiscovery = true
 
   extendedConfig.optimizeDeps.include.push(
     // Add lodash/kebabCase, since it is still a cjs module
