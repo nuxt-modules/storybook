@@ -1,4 +1,4 @@
-name: release-nightly
+name: Release
 
 on:
   push:
@@ -14,6 +14,7 @@ permissions: {}
 
 jobs:
   nightly:
+    name: Nightly & PR release
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'nuxt-modules' }}
     permissions:
@@ -22,6 +23,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          # Needed for the nightly release to calculate the version bump
+          fetch-depth: 0
 
       - name: Enable Corepack
         run: corepack enable
@@ -42,5 +46,15 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: 📦 release pkg.pr.new
+      - name: 📦 Release pkg.pr.new
+        if: ${{ github.event_name == 'pull_request' }}
         run: pnpm pkg-pr-new publish './packages/*'
+
+      - name: Nightly release
+        if: |
+          github.event_name == 'push' &&
+          !contains(github.event.head_commit.message, '[skip-release]') &&
+          !startsWith(github.event.head_commit.message, 'docs')
+        run: pnpm nightly-release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
