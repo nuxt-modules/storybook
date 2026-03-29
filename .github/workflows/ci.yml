@@ -17,19 +17,11 @@ jobs:
         # Keep this in sync with the oldest Node.js version supported by the storybook
         node: [20.19.0, 22, 24]
         os: [ubuntu-latest, windows-latest, macos-latest]
-        include:
-          - node: 24
-            os: ubuntu-latest
-            release-nightly: true
     permissions:
       contents: read
-      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          # Needed for the nightly release to calculate the version bump
-          fetch-depth: 0
 
       - name: Install pnpm
         uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
@@ -60,19 +52,9 @@ jobs:
         run: pnpm test:playwright
 
       - name: Upload Playwright report
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         if: ${{ !cancelled() }}
         with:
           name: playwright-report-${{ runner.os }}-${{ matrix.node }}
           path: playwright-report/
           retention-days: 30
-
-      - name: Nightly release
-        if: |
-          github.event_name == 'push' &&
-          matrix.release-nightly &&
-          !contains(github.event.head_commit.message, '[skip-release]') &&
-          !startsWith(github.event.head_commit.message, 'docs')
-        run: pnpm nightly-release
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}

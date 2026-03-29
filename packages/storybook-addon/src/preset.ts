@@ -1,8 +1,7 @@
-import { dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
 
-import { resolve, normalize, join } from 'pathe'
+import { dirname, resolve, normalize, join } from 'pathe'
 import { resolvePath } from 'mlly'
 import vuePlugin from '@vitejs/plugin-vue'
 import replace from '@rollup/plugin-replace'
@@ -195,6 +194,8 @@ function mergeViteConfig(
     extendedConfig.optimizeDeps.include.filter(
       (dep) => !extendedConfig.optimizeDeps?.exclude?.includes(dep),
     )
+  // Vite is optimizing too aggressively sometimes and missing components that are using virtual files like #components.
+  extendedConfig.optimizeDeps.noDiscovery = true
 
   extendedConfig.optimizeDeps.include.push(
     // Add lodash/kebabCase, since it is still a cjs module

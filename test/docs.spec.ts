@@ -1,4 +1,4 @@
-import { dirname, resolve } from 'node:path'
+import { dirname, resolve } from 'pathe'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { $fetch, setup } from '@nuxt/test-utils'

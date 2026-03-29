@@ -19,7 +19,7 @@ describe('storybook module setup', () => {
   it('module uses listen hook to defer storybook startup', async () => {
     // Read the actual module source to verify the pattern
     const fs = await import('node:fs/promises')
-    const path = await import('node:path')
+    const path = await import('pathe')
 
     const moduleSource = await fs.readFile(
       path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
@@ -52,7 +52,7 @@ describe('storybook module setup', () => {
 
   it('module checks for __STORYBOOK__ env before registering hook', async () => {
     const fs = await import('node:fs/promises')
-    const path = await import('node:path')
+    const path = await import('pathe')
 
     const moduleSource = await fs.readFile(
       path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
@@ -67,7 +67,7 @@ describe('storybook module setup', () => {
 
   it('module checks enabled option before registering hook', async () => {
     const fs = await import('node:fs/promises')
-    const path = await import('node:path')
+    const path = await import('pathe')
 
     const moduleSource = await fs.readFile(
       path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
