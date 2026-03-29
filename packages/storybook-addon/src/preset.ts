@@ -193,6 +193,8 @@ function mergeViteConfig(
     extendedConfig.optimizeDeps.include.filter(
       (dep) => !extendedConfig.optimizeDeps?.exclude?.includes(dep),
     )
+  // Vite is optimizing too aggressively sometimes and missing components that are using virtual files like #components.
+  extendedConfig.optimizeDeps.noDiscovery = true
 
   extendedConfig.optimizeDeps.include.push(
     // Add lodash/kebabCase, since it is still a cjs module
