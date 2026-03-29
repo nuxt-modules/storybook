@@ -66,7 +66,7 @@ jobs:
       contents: write
       id-token: write
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && github.ref_type == 'tag' && github.repository_owner == 'nuxt-modules' }}
+    # if: ${{ github.event_name == 'push' && github.ref_type == 'tag' && github.repository_owner == 'nuxt-modules' }}
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -86,7 +86,7 @@ jobs:
         run: pnpm build
 
       - name: Publish packages
-        run: pnpm publish --recursive --access public --no-git-checks --provenance --tag latest
+        run: pnpm publish --recursive --access public --no-git-checks --provenance --tag latest --dry-run
 
       - name: Create GitHub Release
         run: changelogithub
