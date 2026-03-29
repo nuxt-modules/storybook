@@ -40,6 +40,7 @@ export const useCounter = defineStore('counter', {
           state.n--
           state.decrementedTimes++
         })
+        // oxlint-disable-next-line no-await-in-loop: we want to wait between each decrement
         await delay(interval)
       }
     },

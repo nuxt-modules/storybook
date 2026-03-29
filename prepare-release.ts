@@ -80,15 +80,9 @@ export async function loadWorkspace(dir: string) {
     await globby(['packages/*'], { onlyDirectories: true })
   ).sort()
 
-  const packages: Package[] = []
-
-  for (const pkgDir of pkgDirs) {
-    const pkg = await loadPackage(pkgDir)
-    if (!pkg.data.name) {
-      continue
-    }
-    packages.push(pkg)
-  }
+  const packages: Package[] = (
+    await Promise.all(pkgDirs.map((pkgDir) => loadPackage(pkgDir)))
+  ).filter((pkg) => pkg.data.name)
 
   const find = (name: string) => {
     const pkg = packages.find((pkg) => pkg.data.name === name)

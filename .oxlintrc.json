@@ -1,5 +1,9 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "options": {
+    // "typeAware": true,
+    // "typeCheck": true
+  },
   "plugins": [
     "eslint",
     "import",
@@ -13,6 +17,20 @@
     "correctness": "error",
     "suspicious": "warn",
     "perf": "error",
-    "style": "error"
-  }
+    "style": "warn"
+  },
+  "jsPlugins": [
+    "@nuxt/eslint-plugin"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "**/*.test-d.ts",
+      ],
+      "rules": {
+        // Disable the "expect-expect" rule for typing tests (they may not contain asserts)
+        "expect-expect": "off"
+      }
+    }
+  ]
 }
