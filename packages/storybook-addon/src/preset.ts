@@ -113,14 +113,15 @@ async function loadNuxtViteConfig(root: string | undefined) {
     },
   })
 
-  if ((nuxt.options.builder as string) !== '@nuxt/vite-builder')
+  if (nuxt.options.builder !== '@nuxt/vite-builder')
     throw new Error(
+      // oxlint-disable-next-line typescript/restrict-template-expressions, typescript/no-base-to-string -- builder is a string union type, so it should be safe to use in template literal
       `Storybook-Nuxt does not support '${nuxt.options.builder}' for now.`,
     )
   nuxt.options.build.transpile.push(join(packageDir, 'preview'))
 
-  nuxt.hook('modules:done', () => {
-    extendComposables(nuxt)
+  nuxt.hook('modules:done', async () => {
+    await extendComposables(nuxt)
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
     // nuxt.options.build.transpile.push('@storybook-vue/nuxt')
