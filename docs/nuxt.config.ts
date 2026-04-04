@@ -54,6 +54,9 @@ export default defineNuxtConfig({
     '/': {
       ogImage: { component: 'OgImageDefaultTakumi' },
     },
+    '/**': {
+      ogImage: { component: 'OgImageDocsTakumi' },
+    },
   },
 
   icon: {

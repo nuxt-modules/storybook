@@ -37,11 +37,6 @@ useSeoMeta({
 
 const headline = computed(() => findPageHeadline(navigation?.value, page.value))
 
-defineOgImage('DocsTakumi', {
-  title: page.value.title,
-  description: page.value.description,
-})
-
 const links = computed(() => {
   const links = []
   if (toc?.bottom?.edit) {
