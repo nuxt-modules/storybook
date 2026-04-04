@@ -40,7 +40,6 @@ const headline = computed(() => findPageHeadline(navigation?.value, page.value))
 defineOgImage('DocsTakumi', {
   title: page.value.title,
   description: page.value.description,
-  headline: headline.value,
 })
 
 const links = computed(() => {
