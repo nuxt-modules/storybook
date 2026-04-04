@@ -59,4 +59,8 @@ export default defineNuxtConfig({
     title: 'Storybook Nuxt Module - Documentation',
     description: 'Nuxt module for Storybook',
   },
+
+  ogImage: {
+    zeroRuntime: true,
+  },
 })
