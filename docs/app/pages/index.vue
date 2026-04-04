@@ -1,6 +1,5 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-defineOgImage('OgImageDefaultTakumi')
 const { data: page } = await useAsyncData('index', () =>
   queryCollection('landing').path('/').first(),
 )

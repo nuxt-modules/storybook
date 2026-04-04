@@ -50,6 +50,12 @@ export default defineNuxtConfig({
     },
   },
 
+  routeRules: {
+    '/': {
+      ogImage: { component: 'OgImageDefaultTakumi' },
+    },
+  },
+
   icon: {
     provider: 'iconify',
   },
