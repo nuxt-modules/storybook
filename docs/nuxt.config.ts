@@ -50,15 +50,6 @@ export default defineNuxtConfig({
     },
   },
 
-  routeRules: {
-    '/': {
-      ogImage: { component: 'OgImageDefaultTakumi' },
-    },
-    '/**': {
-      ogImage: { component: 'OgImageDocsTakumi' },
-    },
-  },
-
   icon: {
     provider: 'iconify',
   },
@@ -67,9 +58,5 @@ export default defineNuxtConfig({
     domain: 'https://storybook.nuxtjs.org/',
     title: 'Storybook Nuxt Module - Documentation',
     description: 'Nuxt module for Storybook',
-  },
-
-  ogImage: {
-    zeroRuntime: true,
   },
 })
