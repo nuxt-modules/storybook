@@ -4,6 +4,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/ui-pro',
     '@nuxt/content',
+    '@nuxt/fonts',
     'nuxt-og-image',
     'nuxt-llms',
   ],
