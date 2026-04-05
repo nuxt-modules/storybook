@@ -4,12 +4,10 @@ export default defineAppConfig({
       primary: 'french-rose',
       neutral: 'slate',
     },
-  },
-  uiPro: {
     footer: {
       slots: {
-        root: 'border-t border-(--ui-border)',
-        left: 'text-sm text-(--ui-text-muted)',
+        root: 'border-t border-default',
+        left: 'text-sm text-muted',
       },
     },
   },
@@ -36,7 +34,7 @@ export default defineAppConfig({
     ],
   },
   footer: {
-    credits: 'Made with Nuxt UI Pro',
+    credits: `Built with Nuxt UI • © ${new Date().getFullYear()}`,
     colorMode: false,
     links: [
       {

@@ -1,14 +1,14 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import type { ContentNavigationItem } from '@nuxt/content'
-import { findPageHeadline } from '#ui-pro/utils/content'
+import { findPageHeadline } from '@nuxt/content/utils'
 
 definePageMeta({
   layout: 'docs',
 })
 
 const route = useRoute()
-const { toc, seo } = useAppConfig()
+const { toc } = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
 const { data: page } = await useAsyncData(route.path, () =>
@@ -28,16 +28,21 @@ const { data: surround } = await useAsyncData(`${route.path}-surround`, () => {
   })
 })
 
+const title = page.value.seo?.title || page.value.title
+const description = page.value.seo?.description || page.value.description
+
 useSeoMeta({
-  title: page.value.seo.title,
-  ogTitle: `${page.value.seo.title} - ${seo?.siteName}`,
-  description: page.value.seo.description,
-  ogDescription: page.value.seo.description,
+  title,
+  ogTitle: title,
+  description,
+  ogDescription: description,
 })
 
-const headline = computed(() => findPageHeadline(navigation?.value, page.value))
+const headline = computed(() =>
+  findPageHeadline(navigation?.value, page.value?.path),
+)
 
-defineOgImageComponent('Docs', {
+defineOgImage('Docs', {
   title: page.value.title,
   description: page.value.description,
   headline: headline.value,
@@ -63,9 +68,18 @@ const links = computed(() => {
     <UPageHeader
       :title="page.title"
       :description="page.description"
-      :links="page.links"
       :headline="headline"
-    />
+    >
+      <template #links>
+        <UButton
+          v-for="(link, index) in page.links"
+          :key="index"
+          v-bind="link"
+        />
+
+        <PageHeaderLinks />
+      </template>
+    </UPageHeader>
 
     <UPageBody>
       <ContentRenderer v-if="page" :value="page" />

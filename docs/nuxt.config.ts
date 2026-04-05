@@ -2,30 +2,23 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxt/image',
-    '@nuxt/ui-pro',
+    '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/fonts',
     'nuxt-og-image',
     'nuxt-llms',
+    '@nuxtjs/mcp-toolkit',
   ],
-
-  fonts: {
-    // Google is not working in China
-    provider: 'bunny',
-    priority: ['bunny', 'google'],
-  },
-
-  uiPro: { license: 'oss' },
-
-  site: {
-    url: 'https://storybook.nuxtjs.org/',
-  },
 
   devtools: {
     enabled: true,
   },
 
   css: ['~/assets/css/main.css'],
+
+  site: {
+    url: 'https://storybook.nuxtjs.org/',
+  },
 
   content: {
     build: {
@@ -37,8 +30,8 @@ export default defineNuxtConfig({
     },
   },
 
-  future: {
-    compatibilityVersion: 4,
+  experimental: {
+    asyncContext: true,
   },
 
   compatibilityDate: '2024-07-11',
@@ -47,6 +40,7 @@ export default defineNuxtConfig({
     prerender: {
       routes: ['/'],
       crawlLinks: true,
+      autoSubfolderIndex: false,
     },
   },
 
@@ -57,6 +51,32 @@ export default defineNuxtConfig({
   llms: {
     domain: 'https://storybook.nuxtjs.org/',
     title: 'Storybook Nuxt Module - Documentation',
-    description: 'Nuxt module for Storybook',
+    description:
+      'This is the documentation for the Storybook Nuxt Module, a module that allows you to easily integrate Storybook into your Nuxt project.',
+    full: {
+      title: 'Storybook Nuxt Module - Full Documentation',
+      description:
+        'This is the full documentation for the Storybook Nuxt Module.',
+    },
+    sections: [
+      {
+        title: 'Getting Started',
+        contentCollection: 'docs',
+        contentFilters: [
+          { field: 'path', operator: 'LIKE', value: '/getting-started%' },
+        ],
+      },
+      {
+        title: 'Storybook',
+        contentCollection: 'docs',
+        contentFilters: [
+          { field: 'path', operator: 'LIKE', value: '/storybook%' },
+        ],
+      },
+    ],
+  },
+
+  mcp: {
+    name: 'Storybook Nuxt Module',
   },
 })
