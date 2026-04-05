@@ -17,28 +17,20 @@ jobs:
         # Keep this in sync with the oldest Node.js version supported by the storybook
         node: [20.19.0, 22, 24]
         os: [ubuntu-latest, windows-latest, macos-latest]
-        include:
-          - node: 24
-            os: ubuntu-latest
-            release-nightly: true
     permissions:
       contents: read
-      id-token: write
     env:
       # Increase Node.js heap size to prevent OOM errors on macOS runners
       NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-        with:
-          # Needed for the nightly release to calculate the version bump
-          fetch-depth: 0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install pnpm
-        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
 
       - name: Setup Node
-        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: ${{ matrix.node }}
           cache: pnpm
@@ -46,6 +38,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Prepare types
+        run: pnpm dev:prepare
 
       - name: Lint
         run: pnpm lint
@@ -63,19 +58,9 @@ jobs:
         run: pnpm test:playwright
 
       - name: Upload Playwright report
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         if: ${{ !cancelled() }}
         with:
           name: playwright-report-${{ runner.os }}-${{ matrix.node }}
           path: playwright-report/
           retention-days: 30
-
-      - name: Nightly release
-        if: |
-          github.event_name == 'push' &&
-          matrix.release-nightly &&
-          !contains(github.event.head_commit.message, '[skip-release]') &&
-          !startsWith(github.event.head_commit.message, 'docs')
-        run: pnpm nightly-release
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}

@@ -1,10 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    '@nuxt/eslint',
     '@nuxt/image',
     '@nuxt/ui',
     '@nuxt/content',
+    '@nuxt/fonts',
     'nuxt-og-image',
     'nuxt-llms',
   ],
@@ -47,15 +47,6 @@ export default defineNuxtConfig({
       routes: ['/'],
       crawlLinks: true,
       autoSubfolderIndex: false,
-    },
-  },
-
-  eslint: {
-    config: {
-      stylistic: {
-        commaDangle: 'never',
-        braceStyle: '1tbs',
-      },
     },
   },
 

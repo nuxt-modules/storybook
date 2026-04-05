@@ -1,5 +1,5 @@
 import defu from 'defu'
-import { resolve, relative } from 'node:path'
+import { resolve, relative } from 'pathe'
 import type { Nuxt } from 'nuxt/schema'
 import { getPort } from 'get-port-please'
 import type { ModuleOptions } from './module'

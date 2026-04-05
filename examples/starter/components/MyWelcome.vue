@@ -1,6 +1,8 @@
 <template>
-  <h1>Welcome Nuxt to Storybook</h1>
-  <NuxtWelcome />
+  <div class="nuxt-welcome-story">
+    <h1>Welcome Nuxt to Storybook</h1>
+    <NuxtWelcome />
+  </div>
 </template>
 
 <style>
@@ -36,5 +38,10 @@
   color: #029cfd;
   text-decoration: none;
   font-size: 14px;
+}
+
+/* Hide Nuxt version badge in Storybook to avoid constant updates in snapshots */
+.nuxt-welcome-story a[href*='nuxt.com?utm_source=nuxt-welcome'] > span {
+  display: none;
 }
 </style>
