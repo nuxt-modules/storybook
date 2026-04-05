@@ -8,7 +8,7 @@ definePageMeta({
 })
 
 const route = useRoute()
-const { toc, seo } = useAppConfig()
+const { toc } = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
 const { data: page } = await useAsyncData(route.path, () =>
@@ -33,20 +33,20 @@ const description = page.value.seo?.description || page.value.description
 
 useSeoMeta({
   title,
-  ogTitle: `${title} - ${seo?.siteName}`,
+  ogTitle: title,
   description,
   ogDescription: description,
 })
 
-const headline = computed(() => findPageHeadline(navigation?.value, page.value))
+const headline = computed(() =>
+  findPageHeadline(navigation?.value, page.value?.path),
+)
 
-if (import.meta.server) {
-  defineOgImageComponent('Docs', {
+defineOgImage('Docs', {
     title: page.value.title,
     description: page.value.description,
     headline: headline.value,
   })
-}
 
 const links = computed(() => {
   const links = []
@@ -70,12 +70,14 @@ const links = computed(() => {
       :description="page.description"
       :headline="headline"
     >
-      <template v-if="page.links?.length" #links>
+      <template #links>
         <UButton
           v-for="(link, index) in page.links"
           :key="index"
           v-bind="link"
         />
+
+        <PageHeaderLinks />
       </template>
     </UPageHeader>
 

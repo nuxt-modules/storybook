@@ -10,17 +10,9 @@ const { header } = useAppConfig()
   <UHeader :ui="{ center: 'flex-1' }" :to="header?.to || '/'">
     <UContentSearchButton
       v-if="header?.search"
-      label="Search..."
-      variant="outline"
+      :collapsed="false"
       class="w-full"
-    >
-      <template #trailing>
-        <div class="flex items-center gap-0.5 ms-auto">
-          <UKbd value="meta" />
-          <UKbd value="k" />
-        </div>
-      </template>
-    </UContentSearchButton>
+    />
 
     <template
       v-if="header?.logo?.dark || header?.logo?.light || header?.title"
@@ -41,7 +33,7 @@ const { header } = useAppConfig()
 
     <template v-else #left>
       <NuxtLink :to="header?.to || '/'">
-        <Logo class="w-auto shrink-0" />
+        <AppLogo class="w-auto h-6 shrink-0" />
       </NuxtLink>
     </template>
 
