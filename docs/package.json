@@ -7,8 +7,7 @@
     "dev": "nuxt dev",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "typecheck": "nuxt typecheck",
-    "clear:cache": "rm -rf .nuxt .output node_modules/.cache node_modules/.vite ../.nuxt 2>/dev/null; echo 'All caches cleared'"
+    "typecheck": "nuxt typecheck"
   },
   "dependencies": {
     "@iconify-json/lucide": "1.2.101",
