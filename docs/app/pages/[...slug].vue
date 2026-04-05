@@ -43,10 +43,10 @@ const headline = computed(() =>
 )
 
 defineOgImage('Docs', {
-    title: page.value.title,
-    description: page.value.description,
-    headline: headline.value,
-  })
+  title: page.value.title,
+  description: page.value.description,
+  headline: headline.value,
+})
 
 const links = computed(() => {
   const links = []
