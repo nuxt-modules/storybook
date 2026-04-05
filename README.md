@@ -49,14 +49,6 @@ https://github.com/storybook-vue/nuxt-storybook-module-demo
 - Nuxt 3.x or Nuxt 4.x
 - Storybook 10.x
 
-## Version Compatibility
-
-| Module Version | Storybook | Nuxt |
-|----------------|-----------|------|
-| v10.x | 10.x | 3.18.1+ / 4.x |
-| v9.x | 8.x / 9.x | 3.x |
-| v4.x | 6.x | 2.x (v4 branch) |
-
 ## Contributing
 
 1. Install dependencies with `pnpm`.
