@@ -7,7 +7,7 @@ Integrate [Storybook](http://storybook.js.org) into your [Nuxt](https://nuxt.com
 ## Installing
 
 ```
-npx nuxi@latest module add storybook
+npx nuxt@latest module add storybook
 ```
 
 Update your `nuxt.config`:
