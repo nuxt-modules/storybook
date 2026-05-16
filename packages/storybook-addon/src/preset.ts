@@ -19,6 +19,7 @@ import type {
   PreviewAnnotation,
 } from 'storybook/internal/types'
 import type { StorybookConfig } from './types'
+import { addPlugin } from '@nuxt/kit'
 
 /**
  * Resolves a module specifier to its file path.
@@ -111,6 +112,13 @@ async function loadNuxtViteConfig(root: string | undefined) {
         appManifest: false,
       },
     },
+  })
+
+  nuxt.runWithContext(() => {
+    addPlugin({
+      src: join(runtimeDir, 'plugins/middleware'),
+      mode: 'client',
+    })
   })
 
   if ((nuxt.options.builder as string) !== '@nuxt/vite-builder')
