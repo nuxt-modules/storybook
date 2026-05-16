@@ -9,7 +9,8 @@
  * https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/app/entry.ts
  */
 
-import { Decorator, setup } from '@storybook/vue3-vite'
+import { setup } from '@storybook/vue3-vite'
+import type { Decorator } from '@storybook/vue3-vite'
 import type { ObjectPlugin, Plugin, NuxtApp } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
@@ -32,25 +33,26 @@ export {
 import '#build/css'
 // @ts-expect-error virtual file
 import plugins from '#build/plugins'
-import { h, Suspense } from 'vue'
+import { defineComponent, h, Suspense } from 'vue'
 
 export const decorators: Decorator[] = [
-  (update, context) => {
-    return h(Suspense, {
-      onResolve: () => {
-        if (context.__nuxt) {
-          context.__nuxt.isHydrating = false
+  (update, context) => defineComponent({
+    name: 'NuxtStorySuspenseDecorator',
+    setup() {
+      return () => h(Suspense, {
+        onResolve: () => {
+          if (context.__nuxt) {
+            context.__nuxt.isHydrating = false
+          }
+          return context.__nuxt?.hooks.callHook('app:suspense:resolve')
         }
-        return context.__nuxt?.hooks.callHook('app:suspense:resolve')
-      }
-    }, {
-      default: () => {
-        return h(update())
-      },
-      // todo: add a pretty storybook nuxt logo for loading
-      // todo: add error component for when the suspense throws an error
-    })
-  }
+      }, {
+        default: () => h(update()),
+        // todo: add a pretty storybook nuxt logo for loading
+        // todo: add error component for when the suspense throws an error
+      })
+    },
+  })
 ]
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
