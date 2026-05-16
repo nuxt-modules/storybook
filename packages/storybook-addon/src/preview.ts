@@ -9,7 +9,7 @@
  * https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/app/entry.ts
  */
 
-import { setup } from '@storybook/vue3-vite'
+import { Decorator, setup } from '@storybook/vue3-vite'
 import type { ObjectPlugin, Plugin, NuxtApp } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
@@ -23,7 +23,6 @@ export {
   render,
   parameters,
   argTypesEnhancers,
-  applyDecorators,
   mount,
 } from '@storybook/vue3/entry-preview'
 
@@ -33,6 +32,27 @@ export {
 import '#build/css'
 // @ts-expect-error virtual file
 import plugins from '#build/plugins'
+import { h, Suspense } from 'vue'
+
+export const decorators: Decorator[] = [
+  (update, context) => {
+    return h(Suspense, {
+      onResolve: () => {
+        if (context.__nuxt) {
+          context.__nuxt.isHydrating = false
+        }
+        return context.__nuxt?.hooks.callHook('app:suspense:resolve')
+      }
+    }, {
+      default: () => {
+        return h(update())
+      },
+      // todo: add a pretty storybook nuxt logo for loading
+      // todo: add error component for when the suspense throws an error
+    })
+  }
+]
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const pluginsTyped: Array<Plugin & ObjectPlugin<any>> = plugins
 
@@ -92,6 +112,5 @@ setup(async (_vueApp, storyContext) => {
   // but currently storybook doesn't provide a hook to do that
   // await nuxt.hooks.callHook('app:mounted', vueApp)
 
-  await nuxt.hooks.callHook('app:suspense:resolve')
   // await nextTick()
 })
