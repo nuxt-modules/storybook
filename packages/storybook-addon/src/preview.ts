@@ -36,23 +36,29 @@ import plugins from '#build/plugins'
 import { defineComponent, h, Suspense } from 'vue'
 
 export const decorators: Decorator[] = [
-  (update, context) => defineComponent({
-    name: 'NuxtStorySuspenseDecorator',
-    setup() {
-      return () => h(Suspense, {
-        onResolve: () => {
-          if (context.__nuxt) {
-            context.__nuxt.isHydrating = false
-          }
-          return context.__nuxt?.hooks.callHook('app:suspense:resolve')
-        }
-      }, {
-        default: () => h(update()),
-        // todo: add a pretty storybook nuxt logo for loading
-        // todo: add error component for when the suspense throws an error
-      })
-    },
-  })
+  (update, context) =>
+    defineComponent({
+      name: 'NuxtStorySuspenseDecorator',
+      setup() {
+        return () =>
+          h(
+            Suspense,
+            {
+              onResolve: () => {
+                if (context.__nuxt) {
+                  context.__nuxt.isHydrating = false
+                }
+                return context.__nuxt?.hooks.callHook('app:suspense:resolve')
+              },
+            },
+            {
+              default: () => h(update()),
+              // todo: add a pretty storybook nuxt logo for loading
+              // todo: add error component for when the suspense throws an error
+            },
+          )
+      },
+    }),
 ]
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
