@@ -69,7 +69,7 @@ jobs:
       - name: Build packages
         shell: bash
         run: |
-          pnpm jiti prepare-release.ts --nightly
+          pnpm build
           # Publish to the local Verdaccio only (do NOT change global registry)
           pnpm publish --recursive --tag latest --no-git-checks --report-summary --registry $VERDACCIO_REGISTRY
         env:
