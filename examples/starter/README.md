@@ -1,6 +1,6 @@
 # Nuxt Minimal Starter
 
-This example has been created based off the minimal starter template of Nuxt (`npx nuxi@latest init`), followed by running
+This example has been created based off the minimal starter template of Nuxt (`npx nuxt@latest init`), followed by running
 
 ```bash
 npx storybook@latest init
