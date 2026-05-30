@@ -1,9 +1,10 @@
 @import 'tailwindcss';
-@import '@nuxt/ui-pro';
+@import '@nuxt/ui';
 
 @source "../../../content/**/*";
 
 @theme static {
+  --container-8xl: 90rem;
   --font-sans: 'Public Sans', sans-serif;
 
   --color-green-50: #effdf5;
@@ -29,4 +30,8 @@
   --color-french-rose-800: #ad0730;
   --color-french-rose-900: #8f0c2c;
   --color-french-rose-950: #580014;
+}
+
+:root {
+  --ui-container: var(--container-8xl);
 }
