@@ -81,10 +81,23 @@ async function loadNuxtViteConfig(root: string | undefined) {
 
   let nuxt = tryUseNuxt()
   if (nuxt) {
-    // Nuxt is already started in the current process (i.e. in dev mode)
-    // We assume that we are called from the Nuxt module, which means that
-    // Nuxt is in the "load module" state and we can access the Vite config later via the hook
+    // Nuxt is already started in the current process (i.e. in dev mode,
+    // started from @nuxtjs/storybook). The module captured the resolved
+    // client Vite config into this promise during module setup — at this
+    // point the vite:configResolved event may already have fired, so
+    // registering a hook here would wait forever (#993).
     const nuxtRes = nuxt
+    const viteConfigPromise = (
+      nuxt as unknown as Record<symbol, Promise<ViteConfig> | undefined>
+    )[Symbol.for('@storybook-vue/nuxt:vite-config-promise')]
+    if (viteConfigPromise) {
+      return viteConfigPromise.then((viteConfig) => ({
+        viteConfig,
+        nuxt: nuxtRes,
+      }))
+    }
+    // Fallback: Nuxt is present but didn't stash the config promise, so it
+    // is still in the "load module" state and the hook fires later.
     return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>((resolve) => {
       nuxtRes.hook('vite:configResolved', (config, { isClient }) => {
         if (isClient) {

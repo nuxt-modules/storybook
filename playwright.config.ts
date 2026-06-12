@@ -72,9 +72,25 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'pnpm playground:storybook:dev',
-    url: 'http://127.0.0.1:6006',
-    reuseExistingServer: !process.env.CI,
-  },
+  webServer: [
+    {
+      command: 'pnpm playground:storybook:dev',
+      url: 'http://127.0.0.1:6006',
+      reuseExistingServer: !process.env.CI,
+    },
+    // Embedded mode: `nuxt dev` with the module starting Storybook itself
+    // (regression coverage for #993). Readiness is checked on the embedded
+    // Storybook, which only responds once the module has started it.
+    // Nuxt's port is passed as a flag (not the PORT env var) because
+    // Storybook's dev server also reads PORT and would try to bind it.
+    {
+      command: 'pnpm --filter=./playground exec nuxt dev --port 3100',
+      url: 'http://127.0.0.1:6016',
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+      env: {
+        STORYBOOK_PORT: '6016',
+      },
+    },
+  ],
 })
