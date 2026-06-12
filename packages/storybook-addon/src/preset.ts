@@ -179,7 +179,12 @@ function mergeViteConfig(
 ): ViteConfig {
   const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
 
-  const plugins = extendedConfig.plugins || []
+  // mergeConfig reuses nested objects by reference when a key exists on only
+  // one side. In embedded mode nuxtConfig is the app's LIVE resolved config,
+  // so mutating those shared objects below would poison the running dev
+  // server (e.g. its dep optimizer), breaking the app's own asset serving
+  // (#993). Clone everything this function writes to.
+  const plugins = [...(extendedConfig.plugins || [])]
 
   // Find the index of the plugin with name 'vite:vue'
   const index = plugins.findIndex(
@@ -200,9 +205,10 @@ function mergeViteConfig(
 
   // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
   // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
-  extendedConfig.optimizeDeps = extendedConfig.optimizeDeps || {}
-  extendedConfig.optimizeDeps.include =
-    extendedConfig.optimizeDeps.include || []
+  extendedConfig.optimizeDeps = {
+    ...extendedConfig.optimizeDeps,
+    include: [...(extendedConfig.optimizeDeps?.include || [])],
+  }
   extendedConfig.optimizeDeps.include =
     extendedConfig.optimizeDeps.include.filter(
       (dep) => !extendedConfig.optimizeDeps?.exclude?.includes(dep),
