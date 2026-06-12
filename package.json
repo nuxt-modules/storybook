@@ -35,7 +35,7 @@
     "lint:prettier": "prettier --check .",
     "lint:fix": "pnpm lint:oxlint --fix && pnpm lint:prettier --write",
     "release-notes": "pnpm changelogithub",
-    "prepare": "pnpm run --filter=./playground/** prepare",
+    "prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && pnpm run --filter=./playground/** prepare",
     "docs:dev": "pnpm run --filter=./docs/** dev",
     "docs:build": "pnpm run --filter=./docs/** build",
     "test": "vitest run",
