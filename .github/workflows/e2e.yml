@@ -86,7 +86,7 @@ jobs:
           pnpm config set @nuxtjs:registry $VERDACCIO_REGISTRY
           pnpm config set @storybook-vue:registry $VERDACCIO_REGISTRY
           # Install storybook packages (storybook init doesn't work with Verdaccio)
-          pnpm add -D @storybook-vue/nuxt@latest storybook@$STORYBOOK_VERSION
+          pnpm add -D @storybook-vue/nuxt@latest storybook@$STORYBOOK_VERSION --ignore-scripts
           # Create Storybook configuration manually
           mkdir -p .storybook stories
           cat > .storybook/main.ts << 'MAINEOF'
@@ -107,7 +107,7 @@ jobs:
           STORYEOF
           pnpm pkg set scripts.storybook="storybook dev -p 6006"
           pnpm pkg set scripts.build-storybook="storybook build"
-          pnpm install
+          pnpm install --ignore-scripts
           pnpm list --depth 0
 
       - name: Build Storybook
