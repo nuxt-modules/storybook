@@ -112,6 +112,8 @@ setup(async (_vueApp, storyContext) => {
   // ...also for calls of useNuxtApp with the default key
   getContext('nuxt-app').set(nuxt, true)
 
+  storyContext.__nuxt = nuxt
+
   await applyPlugins(nuxt, pluginsTyped)
   await nuxt.hooks.callHook('app:created', vueApp)
   await nuxt.hooks.callHook('app:beforeMount', vueApp)
