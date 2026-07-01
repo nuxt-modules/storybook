@@ -52,8 +52,8 @@ function extendComponents(nuxt: Nuxt) {
     if (!nuxtLink) {
       throw new Error('NuxtLink component not found')
     }
-    nuxtLink.filePath = join(runtimeDir, 'components/nuxt-link')
-    nuxtLink.shortPath = join(runtimeDir, 'components/nuxt-link')
+    nuxtLink.filePath = normalize(join(runtimeDir, 'components/nuxt-link'))
+    nuxtLink.shortPath = normalize(join(runtimeDir, 'components/nuxt-link'))
     nuxt.options.build.transpile.push(nuxtLink.filePath)
   })
 }
@@ -69,7 +69,7 @@ async function extendComposables(nuxt: Nuxt) {
   nuxt.options.build.transpile.push(composablesDir)
   addImportsSources({
     imports: ['useRouter'],
-    from: join(composablesDir, 'router'),
+    from: normalize(join(composablesDir, 'router')),
     // Use higher priority to override Nuxt's built-in useRouter without warning
     priority: 2,
   })
