@@ -1,5 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
+defineOgImage('OgImageDefaultTakumi')
 const { data: page } = await useAsyncData('index', () =>
   queryCollection('landing').path('/').first(),
 )
@@ -11,12 +12,15 @@ if (!page.value) {
   })
 }
 
+const title = page.value.seo?.title || page.value.title
+const description = page.value.seo?.description || page.value.description
+
 useSeoMeta({
-  title: page.value.seo.title,
-  titleTemplate: null,
-  ogTitle: page.value.seo.title,
-  description: page.value.seo.description,
-  ogDescription: page.value.seo.description,
+  titleTemplate: '',
+  title,
+  ogTitle: title,
+  description,
+  ogDescription: description,
 })
 </script>
 
