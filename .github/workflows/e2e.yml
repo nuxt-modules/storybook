@@ -19,13 +19,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Keep this in sync with the oldest Node.js version supported by the storybook
-        node: [20, 21, 22, 23, 24]
+        node: [22, 24]
         os: [ubuntu-latest, windows-latest, macos-latest]
-        exclude:
-          # Failing (windows): https://github.com/nuxt-modules/storybook/pull/882#issuecomment-2939100304
-          # Failing (others): https://github.com/nuxt-modules/storybook/pull/933#issuecomment-3183349526
-          - node: 21
 
     env:
       # renovate: datasource=npm depName=storybook
