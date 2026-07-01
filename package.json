@@ -91,6 +91,13 @@
       "h3": "1.15.11",
       "h3-next": "npm:h3@1.15.11",
       "@nuxtjs/storybook": "workspace:*"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "@tailwindcss/oxide",
+      "esbuild",
+      "unrs-resolver",
+      "vue-demi"
+    ]
   }
 }
