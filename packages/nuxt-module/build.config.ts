@@ -17,6 +17,7 @@ export default defineBuildConfig({
     '@storybook-vue/nuxt',
     '@storybook-vue/nuxt/preset',
     '@storybook-vue/nuxt/preview',
+    '@nuxt/schema',
   ],
   // Ignore warnings
   failOnWarn: false,
