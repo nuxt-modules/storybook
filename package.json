@@ -34,9 +34,6 @@
     "lint:oxlint": "oxlint .",
     "lint:prettier": "prettier --check .",
     "lint:fix": "pnpm lint:oxlint --fix && pnpm lint:prettier --write",
-    "release": "pnpm jiti prepare-release.ts && git push --follow-tags",
-    "release:major": "pnpm jiti prepare-release.ts --major && git push --follow-tags",
-    "nightly-release": "pnpm jiti prepare-release.ts --nightly && pnpm publish --recursive --tag nightly --access public --no-git-checks --provenance --report-summary",
     "release-notes": "pnpm changelogithub",
     "prepare": "pnpm run --filter=./playground/** prepare",
     "docs:dev": "pnpm run --filter=./docs/** dev",
@@ -50,7 +47,7 @@
   "devDependencies": {
     "@nuxt/eslint-plugin": "1.15.2",
     "@nuxt/test-utils": "4.0.0",
-    "@playwright/test": "1.59.1",
+    "@playwright/test": "1.61.0",
     "@types/node": "24.12.2",
     "@vitest/coverage-v8": "4.1.2",
     "@vue/test-utils": "2.4.6",

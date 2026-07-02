@@ -69,7 +69,7 @@ jobs:
       - name: Build packages
         shell: bash
         run: |
-          pnpm jiti prepare-release.ts --nightly
+          pnpm build
           # Publish to the local Verdaccio only (do NOT change global registry)
           pnpm publish --recursive --tag latest --no-git-checks --report-summary --registry $VERDACCIO_REGISTRY
         env:
@@ -85,7 +85,7 @@ jobs:
         shell: bash
         run: |
           cd "${{ runner.temp }}"
-          CI=true npx nuxi init example --template minimal --packageManager pnpm --no-modules --force --gitInit=false
+          CI=true npx nuxi init example --template minimal --packageManager pnpm --no-modules --no-install --force --gitInit=false
           cd example
           # Configure scoped registries globally so pnpm can find our packages
           pnpm config set @nuxtjs:registry $VERDACCIO_REGISTRY
@@ -112,8 +112,9 @@ jobs:
           STORYEOF
           pnpm pkg set scripts.storybook="storybook dev -p 6006"
           pnpm pkg set scripts.build-storybook="storybook build"
-          pnpm install
+          pnpm install --ignore-scripts
           pnpm list --depth 0
+          pnpm run postinstall
 
       - name: Build Storybook
         shell: bash
