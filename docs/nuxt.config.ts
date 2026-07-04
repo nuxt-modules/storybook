@@ -42,6 +42,9 @@ export default defineNuxtConfig({
       crawlLinks: true,
       autoSubfolderIndex: false,
     },
+    output: {
+      dir: 'dist'
+    }
   },
 
   icon: {
