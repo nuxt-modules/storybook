@@ -24,8 +24,7 @@
     {
       "files": ["**/*.test-d.ts"],
       "rules": {
-        // Disable the "expect-expect" rule for typing tests (they may not contain asserts)
-        "expect-expect": "off"
+        "vitest/expect-expect": "off"
       }
     }
   ]
