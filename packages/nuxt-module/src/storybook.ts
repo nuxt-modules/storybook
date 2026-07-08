@@ -64,6 +64,8 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     port: storybookServerPort,
     configDir,
     configType: 'DEVELOPMENT',
+    // Embedded programmatic start: never block on interactive prompts
+    ci: true,
     cache: storybookCache,
     // Don't check for storybook updates (we're using the latest version)
     versionUpdates: false,

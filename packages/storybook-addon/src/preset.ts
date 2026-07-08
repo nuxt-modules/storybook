@@ -81,10 +81,23 @@ async function loadNuxtViteConfig(root: string | undefined) {
 
   let nuxt = tryUseNuxt()
   if (nuxt) {
-    // Nuxt is already started in the current process (i.e. in dev mode)
-    // We assume that we are called from the Nuxt module, which means that
-    // Nuxt is in the "load module" state and we can access the Vite config later via the hook
+    // Nuxt is already started in the current process (i.e. in dev mode,
+    // started from @nuxtjs/storybook). The module captured the resolved
+    // client Vite config into this promise during module setup — at this
+    // point the vite:configResolved event may already have fired, so
+    // registering a hook here would wait forever (#993).
     const nuxtRes = nuxt
+    const viteConfigPromise = (
+      nuxt as unknown as Record<symbol, Promise<ViteConfig> | undefined>
+    )[Symbol.for('@storybook-vue/nuxt:vite-config-promise')]
+    if (viteConfigPromise) {
+      return viteConfigPromise.then((viteConfig) => ({
+        viteConfig,
+        nuxt: nuxtRes,
+      }))
+    }
+    // Fallback: Nuxt is present but didn't stash the config promise, so it
+    // is still in the "load module" state and the hook fires later.
     return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>((resolve) => {
       nuxtRes.hook('vite:configResolved', (config, { isClient }) => {
         if (isClient) {
@@ -166,7 +179,12 @@ function mergeViteConfig(
 ): ViteConfig {
   const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
 
-  const plugins = extendedConfig.plugins || []
+  // mergeConfig reuses nested objects by reference when a key exists on only
+  // one side. In embedded mode nuxtConfig is the app's LIVE resolved config,
+  // so mutating those shared objects below would poison the running dev
+  // server (e.g. its dep optimizer), breaking the app's own asset serving
+  // (#993). Clone everything this function writes to.
+  const plugins = [...(extendedConfig.plugins || [])]
 
   // Find the index of the plugin with name 'vite:vue'
   const index = plugins.findIndex(
@@ -187,9 +205,10 @@ function mergeViteConfig(
 
   // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
   // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
-  extendedConfig.optimizeDeps = extendedConfig.optimizeDeps || {}
-  extendedConfig.optimizeDeps.include =
-    extendedConfig.optimizeDeps.include || []
+  extendedConfig.optimizeDeps = {
+    ...extendedConfig.optimizeDeps,
+    include: [...(extendedConfig.optimizeDeps?.include || [])],
+  }
   extendedConfig.optimizeDeps.include =
     extendedConfig.optimizeDeps.include.filter(
       (dep) => !extendedConfig.optimizeDeps?.exclude?.includes(dep),
