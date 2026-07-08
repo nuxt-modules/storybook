@@ -32,15 +32,15 @@ jobs:
             storybookBuildScript: example:showcase:storybook:build
             projectToken: chpt_a53adf402cb628c
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0
 
       - name: Install pnpm
-        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
 
       - name: Setup Node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 24
           cache: pnpm
@@ -55,7 +55,7 @@ jobs:
         run: pnpm ${{ matrix.buildScript }}
 
       - name: Publish and test example
-        uses: chromaui/action@8a2b82547aef5a3efc8ec3c7905f4ab09a76ed0b # v16.1.0
+        uses: chromaui/action@1bbb5819252d9782cb7d77122d9becae467def18 # v16.10.1
         with:
           # Don't wait until Chromatic verified the build
           # exitOnceUploaded: true

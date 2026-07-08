@@ -19,26 +19,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Keep this in sync with the oldest Node.js version supported by the storybook
-        node: [20, 21, 22, 23, 24]
+        node: [22, 24]
         os: [ubuntu-latest, windows-latest, macos-latest]
-        exclude:
-          # Failing (windows): https://github.com/nuxt-modules/storybook/pull/882#issuecomment-2939100304
-          # Failing (others): https://github.com/nuxt-modules/storybook/pull/933#issuecomment-3183349526
-          - node: 21
 
     env:
       # renovate: datasource=npm depName=storybook
       STORYBOOK_VERSION: '10.3.6'
+      pnpm_config_strict_dep_builds: 'false'
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
       - name: Install pnpm
-        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
 
       - name: Setup Node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: ${{ matrix.node }}
           cache: pnpm
@@ -85,7 +81,7 @@ jobs:
         shell: bash
         run: |
           cd "${{ runner.temp }}"
-          CI=true npx nuxi init example --template minimal --packageManager pnpm --no-modules --force --gitInit=false
+          CI=true npx nuxi init example --template minimal --packageManager pnpm --no-modules --no-install --force --gitInit=false
           cd example
           # Configure scoped registries globally so pnpm can find our packages
           pnpm config set @nuxtjs:registry $VERDACCIO_REGISTRY
@@ -112,8 +108,9 @@ jobs:
           STORYEOF
           pnpm pkg set scripts.storybook="storybook dev -p 6006"
           pnpm pkg set scripts.build-storybook="storybook build"
-          pnpm install
+          pnpm install --ignore-scripts
           pnpm list --depth 0
+          pnpm run postinstall
 
       - name: Build Storybook
         shell: bash
