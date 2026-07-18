@@ -70,6 +70,7 @@ jobs:
           pnpm publish --recursive --tag latest --no-git-checks --report-summary --registry $VERDACCIO_REGISTRY
         env:
           NODE_ENV: 'production'
+          NODE_OPTIONS: '--max-old-space-size=4096'
 
       - name: Restore public registry
         shell: bash
