@@ -10,6 +10,7 @@
  */
 
 import { setup } from '@storybook/vue3-vite'
+import type { Decorator } from '@storybook/vue3-vite'
 import type { ObjectPlugin, Plugin, NuxtApp } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
@@ -23,7 +24,6 @@ export {
   render,
   parameters,
   argTypesEnhancers,
-  applyDecorators,
   mount,
 } from '@storybook/vue3/entry-preview'
 
@@ -33,6 +33,34 @@ export {
 import '#build/css'
 // @ts-expect-error virtual file
 import plugins from '#build/plugins'
+import { defineComponent, h, Suspense } from 'vue'
+
+export const decorators: Decorator[] = [
+  (update, context) =>
+    defineComponent({
+      name: 'NuxtStorySuspenseDecorator',
+      setup() {
+        return () =>
+          h(
+            Suspense,
+            {
+              onResolve: () => {
+                if (context.__nuxt) {
+                  context.__nuxt.isHydrating = false
+                }
+                return context.__nuxt?.hooks.callHook('app:suspense:resolve')
+              },
+            },
+            {
+              default: () => h(update()),
+              // todo: add a pretty storybook nuxt logo for loading
+              // todo: add error component for when the suspense throws an error
+            },
+          )
+      },
+    }),
+]
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const pluginsTyped: Array<Plugin & ObjectPlugin<any>> = plugins
 
@@ -84,6 +112,8 @@ setup(async (_vueApp, storyContext) => {
   // ...also for calls of useNuxtApp with the default key
   getContext('nuxt-app').set(nuxt, true)
 
+  storyContext.__nuxt = nuxt
+
   await applyPlugins(nuxt, pluginsTyped)
   await nuxt.hooks.callHook('app:created', vueApp)
   await nuxt.hooks.callHook('app:beforeMount', vueApp)
@@ -92,6 +122,5 @@ setup(async (_vueApp, storyContext) => {
   // but currently storybook doesn't provide a hook to do that
   // await nuxt.hooks.callHook('app:mounted', vueApp)
 
-  await nuxt.hooks.callHook('app:suspense:resolve')
   // await nextTick()
 })
