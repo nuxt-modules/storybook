@@ -55,7 +55,7 @@ jobs:
         run: pnpm ${{ matrix.buildScript }}
 
       - name: Publish and test example
-        uses: chromaui/action@1bbb5819252d9782cb7d77122d9becae467def18 # v16.10.1
+        uses: chromaui/action@2a0b63f30233c48591844a46d451b9cf68128186 # v18.7.2
         with:
           # Don't wait until Chromatic verified the build
           # exitOnceUploaded: true
