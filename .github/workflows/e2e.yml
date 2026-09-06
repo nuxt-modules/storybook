@@ -26,6 +26,7 @@ jobs:
       # renovate: datasource=npm depName=storybook
       STORYBOOK_VERSION: '10.3.6'
       pnpm_config_strict_dep_builds: 'false'
+      NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3

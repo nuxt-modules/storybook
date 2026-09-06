@@ -1,24 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: [
-    '@nuxt/image',
-    '@nuxt/ui',
-    '@nuxt/content',
-    '@nuxt/fonts',
-    'nuxt-og-image',
-    'nuxt-llms',
-    '@nuxtjs/mcp-toolkit',
-  ],
-
-  devtools: {
-    enabled: true,
-  },
-
-  css: ['~/assets/css/main.css'],
-
-  site: {
-    url: 'https://storybook.nuxtjs.org/',
-  },
+  compatibilityDate: '2024-07-11',
 
   content: {
     build: {
@@ -30,18 +12,14 @@ export default defineNuxtConfig({
     },
   },
 
-  experimental: {
-    asyncContext: true,
+  css: ['~/assets/css/main.css'],
+
+  devtools: {
+    enabled: true,
   },
 
-  compatibilityDate: '2024-07-11',
-
-  nitro: {
-    prerender: {
-      routes: ['/'],
-      crawlLinks: true,
-      autoSubfolderIndex: false,
-    },
+  experimental: {
+    asyncContext: true,
   },
 
   icon: {
@@ -49,34 +27,56 @@ export default defineNuxtConfig({
   },
 
   llms: {
-    domain: 'https://storybook.nuxtjs.org/',
-    title: 'Storybook Nuxt Module - Documentation',
     description:
       'This is the documentation for the Storybook Nuxt Module, a module that allows you to easily integrate Storybook into your Nuxt project.',
+    domain: 'https://storybook.nuxtjs.org/',
     full: {
-      title: 'Storybook Nuxt Module - Full Documentation',
       description:
         'This is the full documentation for the Storybook Nuxt Module.',
+      title: 'Storybook Nuxt Module - Full Documentation',
     },
     sections: [
       {
-        title: 'Getting Started',
         contentCollection: 'docs',
         contentFilters: [
           { field: 'path', operator: 'LIKE', value: '/getting-started%' },
         ],
+        title: 'Getting Started',
       },
       {
-        title: 'Storybook',
         contentCollection: 'docs',
         contentFilters: [
           { field: 'path', operator: 'LIKE', value: '/storybook%' },
         ],
+        title: 'Storybook',
       },
     ],
+    title: 'Storybook Nuxt Module - Documentation',
   },
 
   mcp: {
     name: 'Storybook Nuxt Module',
+  },
+
+  modules: [
+    '@nuxt/image',
+    '@nuxt/ui',
+    '@nuxt/content',
+    '@nuxt/fonts',
+    'nuxt-og-image',
+    'nuxt-llms',
+    '@nuxtjs/mcp-toolkit',
+  ],
+
+  nitro: {
+    prerender: {
+      autoSubfolderIndex: false,
+      crawlLinks: true,
+      routes: ['/'],
+    },
+  },
+
+  site: {
+    url: 'https://storybook.nuxtjs.org/',
   },
 })
