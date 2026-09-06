@@ -1,5 +1,3 @@
-import { describe, expectTypeOf, it } from 'vitest'
-
 import type { StorybookConfig } from './types'
 
 describe('storybookConfig', () => {
