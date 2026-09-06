@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 /**
  * Unit tests for the @nuxtjs/storybook module setup behavior.
  *

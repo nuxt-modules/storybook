@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { dirname, resolve } from 'pathe'
 import { fileURLToPath } from 'node:url'
 
