@@ -1,61 +1,16 @@
-import { defineNuxtModule } from '@nuxt/kit'
-import type { LogLevel } from './logger'
-import { logger } from './logger'
-
-import { setupStorybook } from './storybook'
-
+import { defineNuxtModule, addVitePlugin } from '@nuxt/kit'
+import componentHighlighterNuxt, {getNuxtViteDevToolsInjectionScript, viteDevToolsBridgeModule, getNuxtDevToolsHookScript,  } from '@storybook/experimental-devtools/nuxt'
 export type * from '@storybook-vue/nuxt'
 
 export interface ModuleOptions {
-  /**
-   * The route where the Storybook application will be available in development mode.
-   *
-   * @default '/_storybook'
-   */
-  route: string
-
-  /**
-   * The port where the Storybook application server will be started.
-   *
-   * @default 6006
-   */
-  port: number
-
-  /**
-   * The host where the Storybook application server will be started.
-   *
-   * @default Environment variable 'STORYBOOK_HOST' or 'http://localhost'
-   * @example 'http://localhost'
-   */
-  host: string
-
-  /**
-   * Log level for the terminal output.
-   *
-   * @default nuxt.options.logLevel
-   */
-  logLevel: LogLevel
 
   /**
    * Enable the module
    * @default true
    */
   enabled: boolean
-
-  /**
-   * Whether to enable HTTPS.
-   *
-   * @default false
-   *
-   * @example
-   * ```
-   * https: {
-   *   key: './server.key',
-   *   cert: './server.crt'
-   * }
-   * ```
-   */
-  https: boolean | { key: string; cert: string }
+  
+  // todo highlighter options
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -74,22 +29,31 @@ export default defineNuxtModule<ModuleOptions>({
         webpack: false,
       },
       nuxt: '^3.18.1 || ^4.0.0',
-    },
-    configKey: 'storybook',
+    },    configKey: 'storybook',
     name: '@nuxtjs/storybook',
+    
+  }, 
+  defaults: {
+    enabled: true,
   },
   async setup(options, nuxt) {
-    if (import.meta.env?.__STORYBOOK__ || !options.enabled) {
+    if(!nuxt.options.dev) {
       return
     }
+    viteDevToolsBridgeModule({}, nuxt)
+    nuxt.options.app.head = nuxt.options.app.head || {}
+    nuxt.options.app.head.script = nuxt.options.app.head.script || []
+    nuxt.options.app.head.script.push(  {
+          innerHTML: getNuxtDevToolsHookScript(),
+          tagPosition: 'head',
+        },
+        {
+          type: 'module',
+          innerHTML: getNuxtViteDevToolsInjectionScript(),
+          tagPosition: 'bodyClose',
+        },)
 
-    logger.level = options.logLevel
-
-    logger.verbose('🔌  Storybook Module Setup')
-
-    // Defer Storybook startup until Nuxt's HTTP server is ready
-    nuxt.hook('listen', async () => {
-      await setupStorybook(options, nuxt)
-    })
+addVitePlugin(componentHighlighterNuxt())
+    
   },
 })
