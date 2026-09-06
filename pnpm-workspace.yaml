@@ -15,7 +15,7 @@ catalog:
   '@storybook/vue3': ^11.0.0-alpha.5
   '@storybook/vue3-vite': ^11.0.0-alpha.5
   changelogen: 0.6.2
-  nuxt: 4.4.8
+  nuxt: 4.5.2
   storybook: ^11.0.0-alpha.5
   typescript: 6.0.3
   unbuild: 3.6.1
@@ -23,9 +23,10 @@ catalog:
   vue-router: 5.1.0
 
 overrides:
-  h3: 1.15.11
   h3-next: npm:h3@2.0.2
   '@nuxtjs/storybook': workspace:*
+  # Keep in sync with `@nuxt/devtools-kit` in packages/nuxt-module
+  '@nuxt/devtools': 4.0.0-alpha.17
 
 linkWorkspacePackages: deep
 
