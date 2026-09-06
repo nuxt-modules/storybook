@@ -1,15 +1,16 @@
 <script setup>
 import { computed } from 'vue'
+
 const props = defineProps({
-  colorMode: { type: String, required: false, default: 'light' },
+  colorMode: { default: 'light', required: false, type: String },
+  description: { required: false, type: String },
+  height: { default: 600, required: false, type: Number },
   title: {
-    type: String,
-    required: false,
     default: 'Integrate Storybook in your Nuxt app',
+    required: false,
+    type: String,
   },
-  description: { type: String, required: false },
-  width: { type: Number, required: false, default: 1200 },
-  height: { type: Number, required: false, default: 600 },
+  width: { default: 1200, required: false, type: Number },
 })
 const themeColor = '255, 71, 133' // #ff4785
 </script>

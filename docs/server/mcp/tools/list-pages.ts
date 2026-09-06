@@ -1,6 +1,7 @@
 import { queryCollection } from '@nuxt/content/server'
 
 export default defineMcpTool({
+  cache: '1h',
   description: `Lists all available documentation pages with their categories and basic information.
 
 WHEN TO USE: Use this tool when you need to EXPLORE or SEARCH for documentation about a topic but don't know the exact page path. Common scenarios:
@@ -19,7 +20,6 @@ OUTPUT: Returns a structured list with:
 - path: Exact path for use with get-page
 - description: Brief summary of page content
 - url: Full URL for reference`,
-  cache: '1h',
   handler: async () => {
     const event = useEvent()
     const url = getRequestURL(event)
@@ -33,18 +33,18 @@ OUTPUT: Returns a structured list with:
         .all()
 
       const result = pages.map((page) => ({
-        title: page.title,
-        path: page.path,
         description: page.description,
+        path: page.path,
+        title: page.title,
         url: `${siteUrl}${page.path}`,
       }))
 
       return {
-        content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
+        content: [{ text: JSON.stringify(result, null, 2), type: 'text' }],
       }
     } catch {
       return {
-        content: [{ type: 'text', text: 'Failed to list pages' }],
+        content: [{ text: 'Failed to list pages', type: 'text' }],
         isError: true,
       }
     }

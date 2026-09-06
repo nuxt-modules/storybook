@@ -24,7 +24,7 @@ onMounted(() => {
       }
     }
     setTimeout(blinkHandler, 0)
-  }, 10000)
+  }, 10_000)
 
   onUnmounted(() => {
     clearInterval(timerId)
@@ -36,13 +36,13 @@ onMounted(() => {
       blinkState++
 
       if (blinkState % 2) {
-        // talking.value = 'closed'
+        // Talking.value = 'closed'
         setTimeout(blinkHandler, talkRate)
       } else if (blinkState < 10) {
-        // talking.value = 'open'
+        // Talking.value = 'open'
         setTimeout(blinkHandler, talkRate)
       } else {
-        // talking.value = 'closed'
+        // Talking.value = 'closed'
       }
     }
     setTimeout(blinkHandler, 0)

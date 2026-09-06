@@ -1,5 +1,5 @@
 import defu from 'defu'
-import { resolve, relative } from 'pathe'
+import { relative, resolve } from 'pathe'
 import type { Nuxt } from 'nuxt/schema'
 import { getPort } from 'get-port-please'
 import type { ModuleOptions } from './module'
@@ -53,7 +53,7 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
   const projectDir = resolve(nuxt.options.rootDir)
   const configDir = resolve(projectDir, '.storybook')
 
-  // include .storybook in tsconfig
+  // Include .storybook in tsconfig
   nuxt.options.typescript = defu(nuxt.options.typescript, {
     tsConfig: {
       include: [relative(nuxt.options.buildDir, resolve(configDir, '**/*'))],
@@ -73,7 +73,9 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     sslKey: typeof options.https === 'object' ? options.https.key : undefined,
   } satisfies Parameters<typeof buildDevStandalone>[0]
 
-  if (!nuxt.options.dev) return
+  if (!nuxt.options.dev) {
+    return
+  }
 
   logger.verbose('Starting Storybook')
   const result = await withTelemetry(
@@ -111,16 +113,16 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
 
   nuxt.hook('devtools:customTabs', (tabs) => {
     tabs.push({
-      // unique identifier
+      // Unique identifier
       name: 'nuxt-storybook',
-      // title to display in the tab
+      // Title to display in the tab
       title: 'Storybook',
-      // any icon from Iconify, or a URL to an image
+      // Any icon from Iconify, or a URL to an image
       icon: 'devicon:storybook',
-      // iframe view
+      // Iframe view
       view: {
         type: 'iframe',
-        // absolute URL to the iframes
+        // Absolute URL to the iframes
         src: `${storybookRoute}/`,
       },
     })

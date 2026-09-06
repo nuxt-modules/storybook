@@ -1,16 +1,13 @@
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
 
-import { dirname, resolve, normalize, join } from 'pathe'
+import { dirname, join, normalize, resolve } from 'pathe'
 import { resolvePath } from 'mlly'
 import vuePlugin from '@vitejs/plugin-vue'
 import replace from '@rollup/plugin-replace'
 import stringify from 'json-stable-stringify'
-import {
-  type UserConfig as ViteConfig,
-  mergeConfig,
-  searchForWorkspaceRoot,
-} from 'vite'
+import { mergeConfig, searchForWorkspaceRoot } from 'vite'
+import type { UserConfig as ViteConfig } from 'vite'
 import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
 import nuxtRuntimeConfigPlugin from './runtimeConfig'
 import type { Nuxt } from '@nuxt/schema'
@@ -41,7 +38,7 @@ const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
 const dirs = [distDir, packageDir, pluginsDir, componentsDir]
 
 /**
- * extend nuxt-link component to use storybook router
+ * Extend nuxt-link component to use storybook router
  * @param nuxt
  */
 function extendComponents(nuxt: Nuxt) {
@@ -59,7 +56,7 @@ function extendComponents(nuxt: Nuxt) {
 }
 
 /**
- * extend composables to override router ( fix undefined router  useNuxtApp )
+ * Extend composables to override router ( fix undefined router  useNuxtApp )
  *
  * @param nuxt
  */
@@ -89,8 +86,8 @@ async function loadNuxtViteConfig(root: string | undefined) {
       nuxtRes.hook('vite:configResolved', (config, { isClient }) => {
         if (isClient) {
           resolve({
-            viteConfig: config,
             nuxt: nuxtRes,
+            viteConfig: config,
           })
         }
       })
@@ -98,33 +95,34 @@ async function loadNuxtViteConfig(root: string | undefined) {
   }
   nuxt = await loadNuxt({
     cwd: root,
-    ready: false,
     dev: false,
     overrides: {
       appId: 'nuxt-app',
       buildId: 'storybook',
-      ssr: false,
       experimental: {
         // Disable app manifest to prevent 404 errors in Storybook preview
         // Nuxt 3.8+ tries to fetch /_nuxt/builds/meta/{buildId}.json for build checking
-        // but Storybook doesn't generate this manifest, causing console errors
+        // But Storybook doesn't generate this manifest, causing console errors
         appManifest: false,
       },
+      ssr: false,
     },
+    ready: false,
   })
 
-  if (nuxt.options.builder !== '@nuxt/vite-builder')
+  if (nuxt.options.builder !== '@nuxt/vite-builder') {
     throw new Error(
       // oxlint-disable-next-line typescript/restrict-template-expressions, typescript/no-base-to-string -- builder is a string union type, so it should be safe to use in template literal
       `Storybook-Nuxt does not support '${nuxt.options.builder}' for now.`,
     )
+  }
   nuxt.options.build.transpile.push(join(packageDir, 'preview'))
 
   nuxt.hook('modules:done', async () => {
     await extendComposables(nuxt)
     // Override nuxt-link component to use storybook router
     extendComponents(nuxt)
-    // nuxt.options.build.transpile.push('@storybook-vue/nuxt')
+    // Nuxt.options.build.transpile.push('@storybook-vue/nuxt')
     // Add iframe page
     extendPages((pages) => {
       pages.push({
@@ -142,17 +140,17 @@ async function loadNuxtViteConfig(root: string | undefined) {
       nuxt.hook('vite:configResolved', (config, { isClient }) => {
         if (isClient) {
           resolve({
-            viteConfig: config,
             nuxt,
+            viteConfig: config,
           })
           // Stop the build process, as we don't need to build the Nuxt app
           throw new Error('_stop_')
         }
       })
 
-      buildNuxt(nuxt).catch((err) => {
-        if (!err.toString().includes('_stop_')) {
-          reject(err)
+      buildNuxt(nuxt).catch((error) => {
+        if (!error.toString().includes('_stop_')) {
+          reject(error)
         }
       })
     },
@@ -179,7 +177,7 @@ function mergeViteConfig(
     plugins[index] = vuePlugin()
   } else {
     // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
-    // and transforms global vue components before nuxt:components:imports.
+    // And transforms global vue components before nuxt:components:imports.
     plugins.unshift(vuePlugin())
   }
 
@@ -206,7 +204,7 @@ function mergeViteConfig(
   )
 
   return mergeConfig(extendedConfig, {
-    // build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
+    // Build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
     define: {
       'import.meta.client': 'true',
     },
@@ -219,22 +217,22 @@ function mergeViteConfig(
 
     plugins: [
       replace({
-        values: {
-          'import.meta.server': 'false',
-          'import.meta.client': 'true',
-        },
         preventAssignment: true,
+        values: {
+          'import.meta.client': 'true',
+          'import.meta.server': 'false',
+        },
       }),
       nuxtRuntimeConfigPlugin(nuxt.options.runtimeConfig),
     ],
     server: {
       cors: true,
+      fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
       proxy: {
         ...getPreviewProxy(),
         // Only proxy to Nuxt dev server when Nuxt is actually running in dev mode
         ...(nuxt.options.dev ? getNuxtProxyConfig(nuxt).proxy : {}),
       },
-      fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
     },
     envPrefix: ['NUXT_'],
   })
@@ -243,15 +241,14 @@ function mergeViteConfig(
 export const core: PresetProperty<'core', StorybookConfig> = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: any,
-) => {
+) =>
   // Storybook 10 (ESM-only) requires fully resolved paths to entry points, not directories
   // Use resolveModule helper for ESM/CJS compatibility
-  return {
+  ({
     ...config,
     builder: await resolveModule('@storybook/builder-vite'),
     renderer: await resolveModule('@storybook/vue3/preset'),
-  }
-}
+  })
 
 export interface Resolver {
   /**
@@ -301,7 +298,7 @@ function createResolver(base: string | URL): Resolver {
     resolve: (...path) => resolve(base, ...path),
     async resolveModule(id, options) {
       const paths = options?.paths ?? [base]
-      paths.concat([base as string])
+      paths.concat([base])
       return await resolvePath(id, { url: paths }).catch(() => null)
     },
   }
@@ -326,16 +323,16 @@ export const previewAnnotations = async (
       // Handle @storybook/vue3
       if (typeof entry === 'string' && entry.includes('vue3')) {
         return {
-          bare: normalize(entry),
           absolute: '',
+          bare: normalize(entry),
         }
       } else {
         return entry
       }
     }),
     {
-      bare: resolver.resolve('preview'),
       absolute: '',
+      bare: resolver.resolve('preview'),
     },
   ]
 }
@@ -374,15 +371,15 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     console.debug(`Writing Vite configs to ${options.outputDir}/logs/...`)
     fs.writeFileSync(
       join(options.outputDir, 'logs', 'vite-storybook.config.json'),
-      stringify(storybookViteConfig, { space: '  ', cycles: true }) || '',
+      stringify(storybookViteConfig, { cycles: true, space: '  ' }) || '',
     )
     fs.writeFileSync(
       join(options.outputDir, 'logs', 'vite-nuxt.config.json'),
-      stringify(nuxtConfig, { space: '  ', cycles: true }) || '',
+      stringify(nuxtConfig, { cycles: true, space: '  ' }) || '',
     )
     fs.writeFileSync(
       join(options.outputDir, 'logs', 'vite-final.config.json'),
-      stringify(finalViteConfig, { space: '  ', cycles: true }) || '',
+      stringify(finalViteConfig, { cycles: true, space: '  ' }) || '',
     )
   }
 
@@ -393,8 +390,8 @@ async function getPackageDir(packageName: string) {
   try {
     const require = createRequire(import.meta.url)
     return dirname(require.resolve(join(packageName, 'package.json')))
-  } catch (e) {
-    throw new Error(`Cannot find ${packageName}`, { cause: e })
+  } catch (error) {
+    throw new Error(`Cannot find ${packageName}`, { cause: error })
   }
 }
 
@@ -403,26 +400,26 @@ export function getNuxtProxyConfig(nuxt: Nuxt) {
   const route = '^/(_nuxt|_ipx|api/_nuxt_icon|__nuxt_devtools__|__nuxt_island)'
   const proxy = {
     [route]: {
-      target: `http://localhost:${port}`,
       changeOrigin: true,
       secure: false,
+      target: `http://localhost:${port}`,
       ws: true,
     },
   }
   return {
     port,
-    route,
     proxy,
+    route,
   }
 }
 
 function getPreviewProxy() {
   return {
     '/__storybook_preview__': {
-      target: '/',
       changeOrigin: false,
-      secure: false,
       rewrite: (path: string) => path.replace('/__storybook_preview__', ''),
+      secure: false,
+      target: '/',
       ws: true,
     },
   }
