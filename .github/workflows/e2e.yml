@@ -67,6 +67,13 @@ jobs:
         shell: bash
         run: |
           pnpm build
+          # Give the packages a version that cannot exist upstream. Without this,
+          # `pnpm publish` skips them ("no new packages that should be published")
+          # because Verdaccio proxies npmjs, where the current version already
+          # exists -- and the example then silently installs the stale npm copy.
+          E2E_VERSION="$(node -p "require('./packages/storybook-addon/package.json').version")-e2e.${GITHUB_RUN_ID}"
+          for pkg in packages/*/; do (cd "$pkg" && npm pkg set version="$E2E_VERSION"); done
+          echo "E2E_VERSION=$E2E_VERSION" >> $GITHUB_ENV
           # Publish to the local Verdaccio only (do NOT change global registry)
           pnpm publish --recursive --tag latest --no-git-checks --report-summary --registry $VERDACCIO_REGISTRY
         env:
@@ -87,8 +94,10 @@ jobs:
           # Configure scoped registries globally so pnpm can find our packages
           pnpm config set @nuxtjs:registry $VERDACCIO_REGISTRY
           pnpm config set @storybook-vue:registry $VERDACCIO_REGISTRY
-          # Install storybook packages (storybook init doesn't work with Verdaccio)
-          pnpm add -D @storybook-vue/nuxt@latest storybook@$STORYBOOK_VERSION
+          # Install storybook packages (storybook init doesn't work with Verdaccio).
+          # Pin the exact e2e version so that falling back to npmjs fails loudly
+          # instead of silently resolving a stale published release.
+          pnpm add -D @storybook-vue/nuxt@$E2E_VERSION storybook@$STORYBOOK_VERSION
           # Create Storybook configuration manually
           mkdir -p .storybook stories
           cat > .storybook/main.ts << 'MAINEOF'
