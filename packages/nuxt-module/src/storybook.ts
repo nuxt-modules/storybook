@@ -1,6 +1,6 @@
 import defu from 'defu'
 import { relative, resolve } from 'pathe'
-import type { Nuxt } from 'nuxt/schema'
+import type { Nuxt } from '@nuxt/schema'
 import { getPort } from 'get-port-please'
 import type { ModuleOptions } from './module'
 import { withTrailingSlash } from 'ufo'
