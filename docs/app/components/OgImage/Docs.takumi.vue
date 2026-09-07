@@ -1,23 +1,23 @@
 <script setup>
 defineProps({
-  colorMode: { type: String, required: false, default: 'dark' },
-  title: { type: String, required: false, default: 'Documentation' },
+  colorMode: { default: 'dark', required: false, type: String },
   description: {
-    type: String,
-    required: false,
     default: 'Documentation for the Nuxt-Storybook module',
-  },
-  icon: { type: String, required: false },
-  primaryColor: {
-    type: String,
     required: false,
+    type: String,
+  },
+  icon: { required: false, type: String },
+  primaryColor: {
     default: 'rgba(255, 71, 133, 1)',
+    required: false,
+    type: String,
   },
   primaryTextColor: {
-    type: String,
-    required: false,
     default: 'hsl(354, 90%, 60%)',
+    required: false,
+    type: String,
   },
+  title: { default: 'Documentation', required: false, type: String },
 })
 </script>
 

@@ -2,27 +2,22 @@ import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
   declaration: true,
-  entries: [
-    { input: 'src/index' },
-    { input: 'src/preview' },
-    { input: 'src/preset', outDir: 'dist/', format: 'cjs', ext: 'js' },
-    {
-      input: 'src/runtime/',
-      outDir: 'dist/runtime',
-      format: 'esm',
-      ext: 'js',
-    },
-  ],
-
-  rollup: {
-    emitCJS: true,
-    inlineDependencies: true,
-  },
   dependencies: [
     'vue-router',
     '@storybook/builder-vite',
     '@storybook/vue3',
     '@storybook/vue3-vite',
+  ],
+  entries: [
+    { input: 'src/index' },
+    { input: 'src/preview' },
+    { ext: 'js', format: 'cjs', input: 'src/preset', outDir: 'dist/' },
+    {
+      ext: 'js',
+      format: 'esm',
+      input: 'src/runtime/',
+      outDir: 'dist/runtime',
+    },
   ],
   externals: [
     'nuxt',
@@ -37,4 +32,8 @@ export default defineBuildConfig({
     '#build/css',
     'virtual:nuxt-runtime-config',
   ],
+  rollup: {
+    emitCJS: true,
+    inlineDependencies: true,
+  },
 })

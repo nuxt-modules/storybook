@@ -1,4 +1,5 @@
 import { defineBuildConfig } from 'unbuild'
+
 export default defineBuildConfig({
   entries: [
     // Default module entry (handled by nuxt-module-build)

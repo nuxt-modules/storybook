@@ -3,8 +3,8 @@ import PiniaLogo from './PiniaLogo.vue'
 
 defineProps({
   msg: {
-    type: String,
     required: true,
+    type: String,
   },
 })
 
