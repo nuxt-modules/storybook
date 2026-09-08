@@ -39,8 +39,6 @@
       rangeStrategy: 'pin',
     },
     {
-      // Storybook packages are never pinned: the addon publishes them as caret ranges so users on a newer
-      // Storybook don't get a nested older copy (see #1079). Bump the range floor to the tested version instead.
       matchPackagePatterns: ['storybook', '@storybook/*'],
       groupName: 'storybook packages',
       groupSlug: 'storybook',
