@@ -5,25 +5,26 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "dev:prepare": "nuxt prepare",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@nuxt/image": "2.0.0",
-    "@nuxtjs/i18n": "10.2.1",
+    "@nuxt/image": "catalog:",
+    "@nuxtjs/i18n": "catalog:",
     "@pinia/nuxt": "0.11.3",
-    "nuxt": "4.3.0",
+    "nuxt": "catalog:",
     "pinia": "3.0.4",
-    "vue": "3.5.27",
-    "vue-router": "5.0.2"
+    "vue": "catalog:",
+    "vue-router": "catalog:"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "5.0.1",
+    "@chromatic-com/storybook": "catalog:",
     "@nuxtjs/storybook": "latest",
-    "@storybook/addon-docs": "10.2.15",
-    "@storybook/addon-links": "10.2.15",
-    "storybook": "10.2.15"
+    "@storybook/addon-docs": "catalog:",
+    "@storybook/addon-links": "catalog:",
+    "storybook": "catalog:"
   }
 }

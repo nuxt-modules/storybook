@@ -5,6 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "dev:prepare": "nuxt prepare",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "storybook": "storybook dev -p 6006",
@@ -12,16 +13,16 @@
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "nightly",
-    "nuxt": "4.3.0",
-    "vue": "3.5.27",
-    "vue-router": "5.0.2"
+    "nuxt": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "5.0.1",
+    "@chromatic-com/storybook": "catalog:",
     "@nuxtjs/storybook": "latest",
-    "@storybook/addon-docs": "10.2.15",
-    "@storybook/addon-links": "10.2.15",
-    "storybook": "10.2.15",
+    "@storybook/addon-docs": "catalog:",
+    "@storybook/addon-links": "catalog:",
+    "storybook": "catalog:",
     "tailwindcss": "3.4.19"
   }
 }

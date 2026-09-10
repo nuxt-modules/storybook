@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 test('no errors', async ({ page }) => {
   await page.goto('http://localhost:6006/iframe.html')
@@ -24,12 +24,12 @@ test('renders the docs example', async ({ page }) => {
   await page.locator('#storybook-docs').waitFor()
   await page.locator('.sb-preparing-docs').waitFor({ state: 'hidden' })
 
-  const text = await page
-    .locator(
-      'div#story--example-nuxtwelcome--nuxt-welcome-story--primary-inner > h1',
-    )
-    .textContent()
-  expect(text).toContain('Welcome Nuxt to Storybook')
+  await expect(
+    page.locator('#storybook-docs').getByRole('heading', {
+      exact: true,
+      name: 'Welcome Nuxt to Storybook',
+    }),
+  ).toBeVisible()
 })
 
 test('renders the story example', async ({ page }) => {
@@ -39,6 +39,10 @@ test('renders the story example', async ({ page }) => {
   await page.locator('#storybook-root').waitFor()
   await page.locator('.sb-preparing-story').waitFor({ state: 'hidden' })
 
-  const text = await page.locator('#storybook-root > h1').textContent()
-  expect(text).toContain('Welcome Nuxt to Storybook')
+  await expect(
+    page.locator('#storybook-root').getByRole('heading', {
+      exact: true,
+      name: 'Welcome Nuxt to Storybook',
+    }),
+  ).toBeVisible()
 })

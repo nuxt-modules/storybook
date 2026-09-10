@@ -1,22 +1,26 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
+defineOgImage('OgImageDefaultTakumi')
 const { data: page } = await useAsyncData('index', () =>
   queryCollection('landing').path('/').first(),
 )
 if (!page.value) {
   throw createError({
+    fatal: true,
     statusCode: 404,
     statusMessage: 'Page not found',
-    fatal: true,
   })
 }
 
+const title = page.value.seo?.title || page.value.title
+const description = page.value.seo?.description || page.value.description
+
 useSeoMeta({
-  title: page.value.seo.title,
-  titleTemplate: null,
-  ogTitle: page.value.seo.title,
-  description: page.value.seo.description,
-  ogDescription: page.value.seo.description,
+  description,
+  ogDescription: description,
+  ogTitle: title,
+  title,
+  titleTemplate: '',
 })
 </script>
 

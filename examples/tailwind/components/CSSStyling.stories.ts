@@ -1,9 +1,9 @@
 import CSSStyling from './CSSStyling.vue'
 
 const meta = {
-  title: 'Example/CSS Styling',
   component: CSSStyling,
   tags: ['autodocs'],
+  title: 'Example/CSS Styling',
 }
 
 export default meta

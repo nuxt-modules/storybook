@@ -19,10 +19,10 @@ orientation: horizontal
   :::
 
 #title
-Add <span class="text-french-rose-500">Storybook</span> to your Nuxt application
+Add [Storybook]{.text-primary} to your Nuxt application
 
 #description
-Easily integrate Storybook (v10.x) in your Nuxt application to build, document and test your components.
+Easily integrate Storybook in your Nuxt application to build, document and test your components.
 
 #links
   :::u-button

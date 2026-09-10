@@ -1,4 +1,5 @@
 import { defineBuildConfig } from 'unbuild'
+
 export default defineBuildConfig({
   entries: [
     // Default module entry (handled by nuxt-module-build)
@@ -17,6 +18,7 @@ export default defineBuildConfig({
     '@storybook-vue/nuxt',
     '@storybook-vue/nuxt/preset',
     '@storybook-vue/nuxt/preview',
+    '@nuxt/schema',
   ],
   // Ignore warnings
   failOnWarn: false,
