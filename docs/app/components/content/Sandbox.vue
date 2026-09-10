@@ -16,25 +16,25 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  src: {
-    type: String,
-    default: '',
-  },
-  repo: {
-    type: String,
-    default: '',
-  },
   branch: {
-    type: String,
     default: '',
+    type: String,
   },
   dir: {
-    type: String,
     default: '',
+    type: String,
   },
   file: {
-    type: String,
     default: 'app.vue',
+    type: String,
+  },
+  repo: {
+    default: '',
+    type: String,
+  },
+  src: {
+    default: '',
+    type: String,
   },
 })
 

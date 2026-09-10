@@ -1,12 +1,12 @@
-import { defineVitestProject } from '@nuxt/test-utils/config'
+import { defineConfig } from 'vitest/config'
 
-export default defineVitestProject({
+export default defineConfig({
   test: {
+    include: ['test/*.spec.ts'],
     typecheck: {
       enabled: true,
       // Don't fail the test if typecheck of source files fails for the moment
       ignoreSourceErrors: true,
     },
-    include: ['test/*.spec.ts'],
   },
 })

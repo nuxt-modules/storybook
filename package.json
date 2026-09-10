@@ -11,7 +11,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm run --filter=./playground/** dev",
-    "dev:prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && pnpm run prepare",
+    "dev:prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && pnpm run --recursive --filter=./examples/** --parallel dev:prepare && pnpm run prepare",
     "dev:build": "pnpm run --filter=./playground/** build",
     "playground:storybook:dev": "pnpm run --filter=./playground/** storybook",
     "playground:storybook:build": "cd playground && pnpm run build-storybook",
@@ -30,42 +30,42 @@
     "example:showcase:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:showcase:storybook:build --project-token=chpt_a53adf402cb628c",
     "build": "pnpm run --recursive --filter=./packages/* build",
     "package": "cd ./packages/storybook-addon && pnpm pack && cd ../nuxt-module && pnpm pack",
-    "lint": "pnpm lint:eslint && pnpm lint:prettier",
-    "lint:eslint": "eslint --max-warnings=0 --report-unused-disable-directives .",
+    "lint": "pnpm lint:oxlint && pnpm lint:prettier",
+    "lint:oxlint": "oxlint .",
     "lint:prettier": "prettier --check .",
-    "lint:fix": "pnpm lint:eslint --fix && pnpm lint:prettier --write",
-    "release": "pnpm jiti prepare-release.ts && pnpm publish --recursive  && git push --follow-tags",
-    "release:major": "pnpm jiti prepare-release.ts --major && pnpm publish --recursive  && git push --follow-tags",
-    "nightly-release": "pnpm jiti prepare-release.ts --nightly && pnpm publish --recursive --tag nightly --access public --no-git-checks --provenance --report-summary",
+    "lint:fix": "pnpm lint:oxlint --fix && pnpm lint:prettier --write",
+    "release-notes": "pnpm changelogithub",
     "prepare": "pnpm run --filter=./playground/** prepare",
     "docs:dev": "pnpm run --filter=./docs/** dev",
     "docs:build": "pnpm run --filter=./docs/** build",
-    "docs:generate": "pnpm run --filter=./docs/** generate",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:coverage": "vitest --coverage",
     "test:playwright": "pnpm exec playwright test"
   },
-  "packageManager": "pnpm@10.28.2",
+  "packageManager": "pnpm@11.25.0+sha512.5cde925b4f075f725eb71fbae18a42ffe784524789f19b61c731cb8721ec28aaee160e01a8d5af4fedb2a42cdbf300efe23db356b0d4a17b4d63e11f8ab7c956",
   "devDependencies": {
-    "@nuxt/eslint-config": "1.13.0",
-    "@nuxt/test-utils": "3.23.0",
-    "@playwright/test": "1.58.1",
-    "@types/node": "24.10.11",
-    "@vitest/coverage-v8": "3.2.4",
-    "@vue/test-utils": "2.4.6",
-    "changelogen": "0.6.2",
-    "chromatic": "15.0.0",
-    "eslint": "9.39.2",
-    "happy-dom": "20.5.0",
-    "jiti": "2.6.1",
-    "nuxt": "4.3.0",
-    "pathe": "^2.0.3",
-    "prettier": "3.8.1",
-    "release-it": "19.2.4",
-    "semver": "7.7.4",
-    "typescript": "5.9.3",
-    "vitest": "3.2.4"
+    "@nuxt/eslint-plugin": "1.16.0",
+    "@nuxt/test-utils": "4.0.3",
+    "@playwright/test": "1.61.0",
+    "@types/node": "24.13.2",
+    "@vitest/coverage-v8": "4.1.9",
+    "@vue/test-utils": "2.4.11",
+    "changelogen": "catalog:",
+    "changelogithub": "14.0.0",
+    "chromatic": "16.10.1",
+    "happy-dom": "20.10.4",
+    "jiti": "2.7.0",
+    "nuxt": "catalog:",
+    "oxlint": "1.70.0",
+    "oxlint-tsgolint": "0.23.0",
+    "pathe": "2.0.3",
+    "pkg-pr-new": "0.0.75",
+    "prettier": "3.8.4",
+    "release-it": "20.2.0",
+    "semver": "7.8.4",
+    "typescript": "catalog:",
+    "vitest": "4.1.9"
   },
   "publishConfig": {
     "access": "public"
@@ -85,10 +85,5 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
-  },
-  "pnpm": {
-    "overrides": {
-      "@nuxtjs/storybook": "workspace:*"
-    }
   }
 }

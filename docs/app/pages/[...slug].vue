@@ -1,14 +1,14 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import type { ContentNavigationItem } from '@nuxt/content'
-import { findPageHeadline } from '#ui-pro/utils/content'
+import { findPageHeadline } from '@nuxt/content/utils'
 
 definePageMeta({
   layout: 'docs',
 })
 
 const route = useRoute()
-const { toc, seo } = useAppConfig()
+const { toc } = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
 const { data: page } = await useAsyncData(route.path, () =>
@@ -16,31 +16,36 @@ const { data: page } = await useAsyncData(route.path, () =>
 )
 if (!page.value) {
   throw createError({
+    fatal: true,
     statusCode: 404,
     statusMessage: 'Page not found',
-    fatal: true,
   })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () => {
-  return queryCollectionItemSurroundings('docs', route.path, {
+const { data: surround } = await useAsyncData(`${route.path}-surround`, () =>
+  queryCollectionItemSurroundings('docs', route.path, {
     fields: ['description'],
-  })
-})
+  }),
+)
+
+const title = page.value.seo?.title || page.value.title
+const description = page.value.seo?.description || page.value.description
 
 useSeoMeta({
-  title: page.value.seo.title,
-  ogTitle: `${page.value.seo.title} - ${seo?.siteName}`,
-  description: page.value.seo.description,
-  ogDescription: page.value.seo.description,
+  description,
+  ogDescription: description,
+  ogTitle: title,
+  title,
 })
 
-const headline = computed(() => findPageHeadline(navigation?.value, page.value))
+const headline = computed(() =>
+  findPageHeadline(navigation?.value, page.value?.path),
+)
 
-defineOgImageComponent('Docs', {
-  title: page.value.title,
+defineOgImage('Docs', {
   description: page.value.description,
   headline: headline.value,
+  title: page.value.title,
 })
 
 const links = computed(() => {
@@ -49,8 +54,8 @@ const links = computed(() => {
     links.push({
       icon: 'i-lucide-external-link',
       label: 'Edit this page',
-      to: `${toc.bottom.edit}/${page?.value?.stem}.${page?.value?.extension}`,
       target: '_blank',
+      to: `${toc.bottom.edit}/${page?.value?.stem}.${page?.value?.extension}`,
     })
   }
 
@@ -63,9 +68,18 @@ const links = computed(() => {
     <UPageHeader
       :title="page.title"
       :description="page.description"
-      :links="page.links"
       :headline="headline"
-    />
+    >
+      <template #links>
+        <UButton
+          v-for="(link, index) in page.links"
+          :key="index"
+          v-bind="link"
+        />
+
+        <PageHeaderLinks />
+      </template>
+    </UPageHeader>
 
     <UPageBody>
       <ContentRenderer v-if="page" :value="page" />

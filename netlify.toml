@@ -8,7 +8,7 @@
   base = "/"
 
   # Command to build the site
-  command = "pnpm docs:generate"
+  command = "pnpm docs:build"
 
   # Directory containing the deploy-ready HTML files
   publish = "docs/dist"

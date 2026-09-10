@@ -5,30 +5,34 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint .",
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@iconify-json/lucide": "1.2.88",
-    "@iconify-json/simple-icons": "1.2.69",
-    "@iconify-json/vscode-icons": "1.2.40",
-    "@nuxt/content": "3.11.2",
-    "@nuxt/image": "2.0.0",
-    "@nuxt/ui-pro": "3.3.7",
-    "better-sqlite3": "12.6.2",
-    "nuxt": "4.3.0",
+    "@iconify-json/lucide": "1.2.112",
+    "@iconify-json/simple-icons": "1.2.86",
+    "@iconify-json/vscode-icons": "1.2.57",
+    "@nuxt/content": "3.14.0",
+    "@nuxt/fonts": "0.14.0",
+    "@nuxt/image": "catalog:",
+    "@nuxt/ui": "4.8.2",
+    "@takumi-rs/core": "1.8.5",
+    "@nuxtjs/mcp-toolkit": "0.17.2",
+    "@nuxtjs/mdc": "0.22.0",
+    "@vueuse/core": "14.3.0",
+    "better-sqlite3": "12.11.1",
+    "minimark": "1.0.0",
+    "nuxt": "catalog:",
     "nuxt-llms": "0.2.0",
-    "nuxt-og-image": "5.1.13",
-    "tailwindcss": "4.1.18",
-    "vue": "3.5.27"
+    "nuxt-og-image": "6.6.0",
+    "tailwindcss": "4.3.1",
+    "ufo": "1.6.4",
+    "unist-util-visit": "5.1.0",
+    "zod": "4.4.3"
   },
   "devDependencies": {
-    "@nuxt/eslint": "1.13.0",
-    "eslint": "9.39.2",
-    "typescript": "5.9.3",
-    "vue-tsc": "3.2.4"
+    "typescript": "catalog:",
+    "vue-tsc": "3.3.5"
   }
 }

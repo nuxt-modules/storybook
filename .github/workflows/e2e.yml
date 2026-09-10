@@ -23,16 +23,18 @@ jobs:
 
     env:
       # renovate: datasource=npm depName=storybook
-      STORYBOOK_VERSION: '10.2.15'
+      STORYBOOK_VERSION: '^10.3.6'
+      pnpm_config_strict_dep_builds: 'false'
+      NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
       - name: Install pnpm
-        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
 
       - name: Setup Node
-        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 24
           cache: pnpm
@@ -63,7 +65,14 @@ jobs:
       - name: Build packages
         shell: bash
         run: |
-          pnpm jiti prepare-release.ts --nightly
+          pnpm build
+          # Give the packages a version that cannot exist upstream. Without this,
+          # `pnpm publish` skips them ("no new packages that should be published")
+          # because Verdaccio proxies npmjs, where the current version already
+          # exists -- and the example then silently installs the stale npm copy.
+          E2E_VERSION="$(node -p "require('./packages/storybook-addon/package.json').version")-e2e.${GITHUB_RUN_ID}"
+          for pkg in packages/*/; do (cd "$pkg" && npm pkg set version="$E2E_VERSION"); done
+          echo "E2E_VERSION=$E2E_VERSION" >> $GITHUB_ENV
           # Publish to the local Verdaccio only (do NOT change global registry)
           pnpm publish --recursive --tag latest --no-git-checks --report-summary --registry $VERDACCIO_REGISTRY
         env:
@@ -79,13 +88,15 @@ jobs:
         shell: bash
         run: |
           cd "${{ runner.temp }}"
-          CI=true npx nuxi init example --template minimal --packageManager pnpm --no-modules --force --gitInit=false
+          CI=true npx nuxi init example --template minimal --packageManager pnpm --no-modules --no-install --force --gitInit=false
           cd example
           # Configure scoped registries globally so pnpm can find our packages
           pnpm config set @nuxtjs:registry $VERDACCIO_REGISTRY
           pnpm config set @storybook-vue:registry $VERDACCIO_REGISTRY
-          # Install storybook packages (storybook init doesn't work with Verdaccio)
-          pnpm add -D @storybook-vue/nuxt@latest storybook@$STORYBOOK_VERSION
+          # Install storybook packages (storybook init doesn't work with Verdaccio).
+          # Pin the exact e2e version so that falling back to npmjs fails loudly
+          # instead of silently resolving a stale published release.
+          pnpm add -D @storybook-vue/nuxt@$E2E_VERSION storybook@$STORYBOOK_VERSION
           # Create Storybook configuration manually
           mkdir -p .storybook stories
           cat > .storybook/main.ts << 'MAINEOF'
@@ -106,8 +117,9 @@ jobs:
           STORYEOF
           pnpm pkg set scripts.storybook="storybook dev -p 6006"
           pnpm pkg set scripts.build-storybook="storybook build"
-          pnpm install
+          pnpm install --ignore-scripts
           pnpm list --depth 0
+          pnpm run postinstall
 
       - name: Build Storybook
         shell: bash

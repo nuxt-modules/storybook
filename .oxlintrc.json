@@ -1,0 +1,40 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "options": {
+    "typeAware": true
+    // "typeCheck": true
+  },
+  "plugins": [
+    "eslint",
+    "import",
+    "unicorn",
+    "typescript",
+    "oxc",
+    "vitest",
+    "vue"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "error",
+    "style": "warn"
+  },
+  "jsPlugins": ["@nuxt/eslint-plugin"],
+  "overrides": [
+    {
+      "files": ["**/*.test-d.ts"],
+      "rules": {
+        "vitest/expect-expect": "off"
+      }
+    },
+    {
+      // Playwright specs (see `testMatch` in playwright.config.ts), not vitest:
+      // `test`/`expect` come from `@playwright/test`, so the autofix for this
+      // rule adds a duplicate import and breaks the file.
+      "files": ["**/*.browser.ts"],
+      "rules": {
+        "vitest/prefer-importing-vitest-globals": "off"
+      }
+    }
+  ]
+}
