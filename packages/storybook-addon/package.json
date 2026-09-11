@@ -51,7 +51,7 @@
     "*.d.ts"
   ],
   "engines": {
-    "node": ">=20.19.0"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "build": "unbuild",
@@ -84,8 +84,7 @@
   },
   "devDependencies": {
     "@storybook/react-vite": "catalog:",
-    "@vitejs/plugin-vue": "6.0.7",
-    "@vitejs/plugin-vue-jsx": "5.1.5",
+    "@vitejs/plugin-vue": "^6.0.7",
     "changelogen": "catalog:",
     "nuxt": "catalog:",
     "storybook": "catalog:",
