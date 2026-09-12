@@ -7,7 +7,7 @@ import vuePlugin from '@vitejs/plugin-vue'
 import replace from '@rollup/plugin-replace'
 import stringify from 'json-stable-stringify'
 import { mergeConfig, searchForWorkspaceRoot } from 'vite'
-import type { UserConfig as ViteConfig } from 'vite'
+import type { Plugin, UserConfig as ViteConfig } from 'vite'
 import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
 import nuxtRuntimeConfigPlugin from './runtimeConfig'
 import type { Nuxt } from '@nuxt/schema'
@@ -157,12 +157,36 @@ async function loadNuxtViteConfig(root: string | undefined) {
   ).finally(() => nuxt.close())
 }
 
-function mergeViteConfig(
+async function resolveVueBundlerPath(nuxt: Nuxt): Promise<string | undefined> {
+  const path = await resolvePath('vue/dist/vue.esm-bundler.js', {
+    url: [nuxt.options.rootDir, ...nuxt.options.modulesDir],
+  }).catch(() => undefined)
+  return path ? normalize(path) : undefined
+}
+
+// #1049 alias vue to absolute esm-bundler path
+function vueBundlerAliasPlugin(vueBundlerPath: string): Plugin {
+  return {
+    name: 'nuxt-storybook:vue-bundler-alias',
+    // We want this to run after Storybook's plugin replacement. See  https://github.com/storybookjs/storybook/blob/d0d7ff85158417bbc4dffba941b1a525f7e4ddc2/code/frameworks/vue3-vite/src/plugins/vue-template.ts#L9 
+    enforce: 'post',
+    config: () => ({ resolve: { alias: { vue: vueBundlerPath } } }),
+  }
+}
+
+async function mergeViteConfig(
   storybookConfig: ViteConfig,
   nuxtConfig: ViteConfig,
   nuxt: Nuxt,
-): ViteConfig {
+): Promise<ViteConfig> {
   const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
+
+  const vueBundlerPath = await resolveVueBundlerPath(nuxt)
+  if (!vueBundlerPath) {
+    console.warn(
+      'Could not resolve `vue/dist/vue.esm-bundler.js`, keeping the bare Storybook alias for `vue`',
+    )
+  }
 
   const plugins = extendedConfig.plugins || []
 
@@ -224,6 +248,7 @@ function mergeViteConfig(
         },
       }),
       nuxtRuntimeConfigPlugin(nuxt.options.runtimeConfig),
+      ...(vueBundlerPath ? [vueBundlerAliasPlugin(vueBundlerPath)] : []),
     ],
     server: {
       cors: true,
@@ -362,7 +387,11 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     storybookViteConfig.root,
   )
 
-  const finalViteConfig = mergeViteConfig(storybookViteConfig, nuxtConfig, nuxt)
+  const finalViteConfig = await mergeViteConfig(
+    storybookViteConfig,
+    nuxtConfig,
+    nuxt,
+  )
 
   if (options.outputDir != null) {
     // Write all vite configs to logs
