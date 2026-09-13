@@ -59,27 +59,29 @@ export interface ModuleOptions {
 }
 
 export default defineNuxtModule<ModuleOptions>({
+  defaults: (nuxt) => ({
+    enabled: true,
+    host: import.meta.env?.STORYBOOK_HOST || 'http://localhost',
+    https: false,
+    logLevel: nuxt.options.logLevel === 'silent' ? 0 : 3,
+    port: 6006,
+    route: '/_storybook',
+  }),
   meta: {
-    name: '@nuxtjs/storybook',
-    configKey: 'storybook',
     compatibility: {
-      nuxt: '^3.18.1 || ^4.0.0',
       builder: {
         // Not compatible with webpack
         webpack: false,
       },
+      nuxt: '^3.18.1 || ^4.0.0',
     },
+    configKey: 'storybook',
+    name: '@nuxtjs/storybook',
   },
-  defaults: (nuxt) => ({
-    host: import.meta.env?.STORYBOOK_HOST || 'http://localhost',
-    route: '/_storybook',
-    port: 6006,
-    logLevel: nuxt.options.logLevel === 'silent' ? 0 : 3,
-    enabled: true,
-    https: false,
-  }),
   async setup(options, nuxt) {
-    if (import.meta.env?.__STORYBOOK__ || !options.enabled) return
+    if (import.meta.env?.__STORYBOOK__ || !options.enabled) {
+      return
+    }
 
     logger.level = options.logLevel
 

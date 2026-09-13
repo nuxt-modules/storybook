@@ -1,9 +1,9 @@
 import HelloWorldPage from './HelloWorld.vue'
 
 const meta = {
-  title: 'Features/Pages as Stories',
   component: HelloWorldPage,
   tags: ['autodocs'],
+  title: 'Features/Pages as Stories',
 }
 
 export default meta

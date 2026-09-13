@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'fr', 'ar'],
+  },
   modules: [
     // Load the module from the built package (dist) rather than the raw
     // TypeScript source: the embedded Storybook startup hangs when the module
@@ -11,7 +15,6 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
     '@nuxtjs/i18n',
   ],
-
   storybook: {
     // Very verbose logs for debugging
     logLevel: Number.POSITIVE_INFINITY,
@@ -20,10 +23,5 @@ export default defineNuxtConfig({
     ...(process.env.STORYBOOK_PORT
       ? { port: Number(process.env.STORYBOOK_PORT) }
       : {}),
-  },
-
-  i18n: {
-    locales: ['en', 'fr', 'ar'],
-    defaultLocale: 'en',
   },
 })

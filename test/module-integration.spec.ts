@@ -26,15 +26,15 @@ describe('storybook module setup', () => {
 
     const moduleSource = await fs.readFile(
       path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
-      'utf-8',
+      'utf8',
     )
 
     // Storybook startup is deferred to nuxt.hook('listen', ...) instead of
-    // running directly in setup()
+    // Running directly in setup()
     expect(moduleSource).toContain("nuxt.hook('listen'")
 
-    // setupStorybook is called inside the listen hook callback, but must NOT
-    // be awaited: that blocks Nuxt's boot pipeline and deadlocks against
+    // SetupStorybook is called inside the listen hook callback, but must NOT
+    // Be awaited: that blocks Nuxt's boot pipeline and deadlocks against
     // Storybook waiting for the Vite config (#993)
     expect(moduleSource).toMatch(
       /nuxt\.hook\s*\(\s*['"]listen['"]\s*,\s*\(\)\s*=>\s*\{\s*setupStorybook/,
@@ -44,7 +44,7 @@ describe('storybook module setup', () => {
     // The fire-and-forget call must still surface failures
     expect(moduleSource).toMatch(/setupStorybook\([^)]*\)\.catch/)
 
-    // setupStorybook should NOT be called directly in the setup function
+    // SetupStorybook should NOT be called directly in the setup function
     // (outside of the listen hook)
     // Find the setup function and extract content before the listen hook
     const setupStart = moduleSource.indexOf('async setup(')
@@ -55,7 +55,7 @@ describe('storybook module setup', () => {
 
     // Get content between setup start and listen hook
     const beforeHook = moduleSource.slice(setupStart, listenHookPos)
-    // setupStorybook should not be called before the hook
+    // SetupStorybook should not be called before the hook
     expect(beforeHook).not.toContain('setupStorybook(')
   })
 
@@ -89,7 +89,7 @@ describe('storybook module setup', () => {
 
     const moduleSource = await fs.readFile(
       path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
-      'utf-8',
+      'utf8',
     )
 
     // Should check for __STORYBOOK__ to avoid recursion
@@ -104,7 +104,7 @@ describe('storybook module setup', () => {
 
     const moduleSource = await fs.readFile(
       path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
-      'utf-8',
+      'utf8',
     )
 
     // Should check if module is enabled

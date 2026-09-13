@@ -105,10 +105,11 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
       import.meta.dev &&
       props[main] !== undefined &&
       props[sub] !== undefined
-    )
+    ) {
       console.warn(
         `[${componentName}] \`${main}\` and \`${sub}\` cannot be used together. \`${sub}\` will be ignored.`,
       )
+    }
   }
   const resolveTrailingSlashBehavior = (
     to: RouteLocationRaw,
@@ -117,20 +118,23 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
     if (
       !to ||
       (options.trailingSlash !== 'append' && options.trailingSlash !== 'remove')
-    )
+    ) {
       return to
+    }
 
     const normalizeTrailingSlash =
       options.trailingSlash === 'append'
         ? withTrailingSlash
         : withoutTrailingSlash
-    if (typeof to === 'string') return normalizeTrailingSlash(to, true)
+    if (typeof to === 'string') {
+      return normalizeTrailingSlash(to, true)
+    }
 
     const path = 'path' in to ? to.path : resolve(to).path
 
     return {
       ...to,
-      name: undefined, // named routes would otherwise always override trailing slash behavior
+      name: undefined, // Named routes would otherwise always override trailing slash behavior
       path: normalizeTrailingSlash(path, true),
     }
   }
@@ -140,86 +144,86 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
     props: {
       // Routing
       to: {
-        type: [String, Object] as PropType<RouteLocationRaw>,
         default: undefined,
         required: false,
+        type: [String, Object] as PropType<RouteLocationRaw>,
       },
       href: {
-        type: [String, Object] as PropType<RouteLocationRaw>,
         default: undefined,
         required: false,
+        type: [String, Object] as PropType<RouteLocationRaw>,
       },
 
       // Attributes
       target: {
-        type: String as PropType<string>,
         default: undefined,
         required: false,
+        type: String as PropType<string>,
       },
       rel: {
-        type: String as PropType<string>,
         default: undefined,
         required: false,
+        type: String as PropType<string>,
       },
       noRel: {
-        type: Boolean as PropType<boolean>,
         default: undefined,
         required: false,
+        type: Boolean as PropType<boolean>,
       },
 
       // Prefetching
       prefetch: {
-        type: Boolean as PropType<boolean>,
         default: undefined,
         required: false,
+        type: Boolean as PropType<boolean>,
       },
       noPrefetch: {
-        type: Boolean as PropType<boolean>,
         default: undefined,
         required: false,
+        type: Boolean as PropType<boolean>,
       },
 
       // Styling
       activeClass: {
-        type: String as PropType<string>,
         default: undefined,
         required: false,
+        type: String as PropType<string>,
       },
       exactActiveClass: {
-        type: String as PropType<string>,
         default: undefined,
         required: false,
+        type: String as PropType<string>,
       },
       prefetchedClass: {
-        type: String as PropType<string>,
         default: undefined,
         required: false,
+        type: String as PropType<string>,
       },
 
       // Vue Router's `<RouterLink>` additional props
       replace: {
-        type: Boolean as PropType<boolean>,
         default: undefined,
         required: false,
+        type: Boolean as PropType<boolean>,
       },
       ariaCurrentValue: {
-        type: String as PropType<string>,
         default: undefined,
         required: false,
+        type: String as PropType<string>,
       },
 
       // Edge cases handling
       external: {
-        type: Boolean as PropType<boolean>,
         default: undefined,
         required: false,
+        type: Boolean as PropType<boolean>,
       },
 
       // Slot API
       custom: {
-        type: Boolean as PropType<boolean>,
         default: undefined,
         required: false,
+        type: Boolean as PropType<boolean>,
       },
     },
     setup(props, { slots }) {
@@ -236,13 +240,19 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
       // Resolving link type
       const isExternal = computed<boolean>(() => {
         // External prop is explicitly set
-        if (props.external) return true
+        if (props.external) {
+          return true
+        }
 
         // When `target` prop is set, link is external
-        if (props.target && props.target !== '_self') return true
+        if (props.target && props.target !== '_self') {
+          return true
+        }
 
         // When `to` is a route object then it's an internal link
-        if (typeof to.value === 'object') return false
+        if (typeof to.value === 'object') {
+          return false
+        }
 
         return (
           to.value === '' || hasProtocol(to.value, { acceptRelative: true })
@@ -275,35 +285,34 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
             onNuxtReady(() => {
               idleId = requestIdleCallback(() => {
                 if (el?.value?.tagName) {
-                  unobserve = observer!.observe(
-                    el.value as HTMLElement,
-                    async () => {
-                      unobserve?.()
-                      unobserve = null
+                  unobserve = observer!.observe(el.value, async () => {
+                    unobserve?.()
+                    unobserve = null
 
-                      const path =
-                        typeof to.value === 'string'
-                          ? to.value
-                          : router.resolve(to.value).fullPath
-                      await Promise.all([
-                        nuxtApp.hooks
-                          .callHook('link:prefetch', path)
-                          .catch(() => {}),
-                        !isExternal.value &&
-                          preloadRouteComponents(
-                            to.value as string,
-                            router,
-                          ).catch(() => {}),
-                      ])
-                      prefetched.value = true
-                    },
-                  )
+                    const path =
+                      typeof to.value === 'string'
+                        ? to.value
+                        : router.resolve(to.value).fullPath
+                    await Promise.all([
+                      nuxtApp.hooks
+                        .callHook('link:prefetch', path)
+                        .catch(() => {}),
+                      !isExternal.value &&
+                        preloadRouteComponents(
+                          to.value as string,
+                          router,
+                        ).catch(() => {}),
+                    ])
+                    prefetched.value = true
+                  })
                 }
               })
             })
           })
           onBeforeUnmount(() => {
-            if (idleId) cancelIdleCallback(idleId)
+            if (idleId) {
+              cancelIdleCallback(idleId)
+            }
             unobserve?.()
             unobserve = null
           })
@@ -313,22 +322,23 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
       return () => {
         if (!isExternal.value) {
           const routerLinkProps: Record<string, unknown> = {
-            ref: elRef,
-            to: to.value,
             activeClass: props.activeClass || options.activeClass,
-            exactActiveClass:
-              props.exactActiveClass || options.exactActiveClass,
-            replace: props.replace,
             ariaCurrentValue: props.ariaCurrentValue,
             custom: props.custom,
+            exactActiveClass:
+              props.exactActiveClass || options.exactActiveClass,
+            ref: elRef,
+            replace: props.replace,
+            to: to.value,
           }
 
           // `custom` API cannot support fallthrough attributes as the slot
-          // may render fragment or text root nodes (#14897, #19375)
+          // May render fragment or text root nodes (#14897, #19375)
           if (!props.custom) {
-            if (prefetched.value)
+            if (prefetched.value) {
               routerLinkProps.class =
                 props.prefetchedClass || options.prefetchedClass
+            }
 
             routerLinkProps.rel = props.rel
           }
@@ -342,7 +352,7 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
         }
 
         // Resolves `to` value if it's a route location object
-        // converts `""` to `null` to prevent the attribute from being added as empty (`href=""`)
+        // Converts `""` to `null` to prevent the attribute from being added as empty (`href=""`)
         const href =
           typeof to.value === 'object'
             ? (router.resolve(to.value)?.href ?? null)
@@ -355,7 +365,7 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
         checkPropConflicts(props, 'noRel', 'rel')
         const rel = props.noRel
           ? null
-          : // converts `""` to `null` to prevent the attribute from being added as empty (`rel=""`)
+          : // Converts `""` to `null` to prevent the attribute from being added as empty (`rel=""`)
             firstNonUndefined<string | null>(
               props.rel,
               options.externalRelAttribute,
@@ -366,13 +376,21 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
 
         // https://router.vuejs.org/api/#custom
         if (props.custom) {
-          if (!slots.default) return null
+          if (!slots.default) {
+            return null
+          }
 
           return slots.default({
             href,
+            isActive: false,
+            isExactActive: false,
+            isExternal: isExternal.value,
             navigate,
+            rel,
             get route() {
-              if (!href) return undefined
+              if (!href) {
+                return undefined
+              }
 
               const url = parseURL(href)
               return {
@@ -382,7 +400,7 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
                   return parseQuery(url.search)
                 },
                 hash: url.hash,
-                // stub properties for compat with vue-router
+                // Stub properties for compat with vue-router
                 params: {},
                 name: undefined,
                 matched: [],
@@ -391,19 +409,15 @@ export function defineNuxtLink(options: NuxtLinkOptions) {
                 href,
               }
             },
-            rel,
             target,
-            isExternal: isExternal.value,
-            isActive: false,
-            isExactActive: false,
           })
         }
 
         return h(
           'a',
           {
-            ref: el,
             href,
+            ref: el,
             rel,
             target,
           },
@@ -421,10 +435,14 @@ type CallbackFn = () => void
 type ObserveFn = (element: Element, callback: CallbackFn) => () => void
 
 function useObserver(): { observe: ObserveFn } | undefined {
-  if (import.meta.server) return
+  if (import.meta.server) {
+    return
+  }
 
   const nuxtApp = useNuxtApp()
-  if (nuxtApp._observer) return nuxtApp._observer
+  if (nuxtApp._observer) {
+    return nuxtApp._observer
+  }
 
   let observer: IntersectionObserver | null = null
 
@@ -436,7 +454,9 @@ function useObserver(): { observe: ObserveFn } | undefined {
         for (const entry of entries) {
           const callback = callbacks.get(entry.target)
           const isVisible = entry.isIntersecting || entry.intersectionRatio > 0
-          if (isVisible && callback) callback()
+          if (isVisible && callback) {
+            callback()
+          }
         }
       })
     }
@@ -460,7 +480,9 @@ function useObserver(): { observe: ObserveFn } | undefined {
 }
 
 function isSlowConnection() {
-  if (import.meta.server) return
+  if (import.meta.server) {
+    return
+  }
 
   // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -468,6 +490,8 @@ function isSlowConnection() {
     saveData: boolean
     effectiveType: string
   } | null
-  if (cn && (cn.saveData || /2g/.test(cn.effectiveType))) return true
+  if (cn && (cn.saveData || /2g/.test(cn.effectiveType))) {
+    return true
+  }
   return false
 }

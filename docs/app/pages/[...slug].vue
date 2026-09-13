@@ -16,26 +16,26 @@ const { data: page } = await useAsyncData(route.path, () =>
 )
 if (!page.value) {
   throw createError({
+    fatal: true,
     statusCode: 404,
     statusMessage: 'Page not found',
-    fatal: true,
   })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () => {
-  return queryCollectionItemSurroundings('docs', route.path, {
+const { data: surround } = await useAsyncData(`${route.path}-surround`, () =>
+  queryCollectionItemSurroundings('docs', route.path, {
     fields: ['description'],
-  })
-})
+  }),
+)
 
 const title = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
 
 useSeoMeta({
-  title,
-  ogTitle: title,
   description,
   ogDescription: description,
+  ogTitle: title,
+  title,
 })
 
 const headline = computed(() =>
@@ -43,9 +43,9 @@ const headline = computed(() =>
 )
 
 defineOgImage('Docs', {
-  title: page.value.title,
   description: page.value.description,
   headline: headline.value,
+  title: page.value.title,
 })
 
 const links = computed(() => {
@@ -54,8 +54,8 @@ const links = computed(() => {
     links.push({
       icon: 'i-lucide-external-link',
       label: 'Edit this page',
-      to: `${toc.bottom.edit}/${page?.value?.stem}.${page?.value?.extension}`,
       target: '_blank',
+      to: `${toc.bottom.edit}/${page?.value?.stem}.${page?.value?.extension}`,
     })
   }
 

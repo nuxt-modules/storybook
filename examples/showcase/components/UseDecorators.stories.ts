@@ -7,12 +7,12 @@ import SimpleButton from './SimpleButton.vue'
  * https://storybook.js.org/docs/writing-stories/decorators
  */
 const meta = {
-  title: 'Storybook Feature/Use Decorators',
   component: SimpleButton,
-  tags: ['autodocs'],
   decorators: [
     () => ({ template: '<div style="margin: 3em;"><story/></div>' }),
   ],
+  tags: ['autodocs'],
+  title: 'Storybook Feature/Use Decorators',
 } satisfies Meta<typeof SimpleButton>
 
 export default meta

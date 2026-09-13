@@ -1,9 +1,9 @@
 import SimpleDiv from './SimpleDiv.vue'
 
 const meta = {
-  title: 'Example/Simple Div',
   component: SimpleDiv,
   tags: ['autodocs'],
+  title: 'Example/Simple Div',
 }
 
 export default meta
