@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 
 import type { Nuxt } from '@nuxt/schema'
 import { getNuxtProxyConfig } from '../packages/storybook-addon/src/preset'
@@ -28,7 +29,7 @@ describe(getNuxtProxyConfig, () => {
     )
     expect(target).toStrictEqual({
       host: '127.0.0.1',
-      port: 54321,
+      port: 54_321,
       protocol: 'http:',
     })
     expect(Object.values(proxy)[0]?.target).toStrictEqual(target)
