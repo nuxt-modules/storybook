@@ -451,14 +451,11 @@ export function getNuxtProxyConfig(nuxt: Nuxt) {
       target,
       changeOrigin: true,
       secure: false,
-      target: `http://localhost:${port}`,
       ws: true,
     },
   }
   return {
-    target,
-    route,
-    port,
+    target, 
     proxy,
     route,
   }
