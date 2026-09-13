@@ -168,7 +168,7 @@ async function resolveVueBundlerPath(nuxt: Nuxt): Promise<string | undefined> {
 function vueBundlerAliasPlugin(vueBundlerPath: string): Plugin {
   return {
     name: 'nuxt-storybook:vue-bundler-alias',
-    // We want this to run after Storybook's plugin replacement. See  https://github.com/storybookjs/storybook/blob/d0d7ff85158417bbc4dffba941b1a525f7e4ddc2/code/frameworks/vue3-vite/src/plugins/vue-template.ts#L9 
+    // We want this to run after Storybook's plugin replacement. See  https://github.com/storybookjs/storybook/blob/d0d7ff85158417bbc4dffba941b1a525f7e4ddc2/code/frameworks/vue3-vite/src/plugins/vue-template.ts#L9
     enforce: 'post',
     config: () => ({ resolve: { alias: { vue: vueBundlerPath } } }),
   }
