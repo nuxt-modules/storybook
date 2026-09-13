@@ -429,7 +429,7 @@ export function getNuxtProxyConfig(nuxt: Nuxt) {
   // Loopback (http://[::1]:3000) and http-proxy cannot parse bracketed
   // IPv6 hosts in string targets.
   let target = { host: 'localhost', port: 3000, protocol: 'http:' }
-  const {devServer} = nuxt.options
+  const { devServer } = nuxt.options
   if (devServer?.url) {
     const url = new URL(devServer.url)
     target = {
@@ -455,8 +455,8 @@ export function getNuxtProxyConfig(nuxt: Nuxt) {
     },
   }
   return {
-    proxy, 
-    route, 
+    proxy,
+    route,
     target,
   }
 }
