@@ -44,7 +44,7 @@ jobs:
         run: pnpm build
 
       - name: 📦 Release pkg.pr.new
-        run: pnpm pkg-pr-new publish './packages/*'
+        run: pnpm pkg-pr-new publish --compact --pnpm './packages/*'
 
   release:
     name: Release
