@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+
 import type { Nuxt } from '@nuxt/schema'
 import { getNuxtProxyConfig } from '../packages/storybook-addon/src/preset'
 
@@ -21,34 +21,34 @@ function mockNuxt(devServer?: { url?: string; port?: number }): Nuxt {
   } as unknown as Nuxt
 }
 
-describe('getNuxtProxyConfig', () => {
+describe(getNuxtProxyConfig, () => {
   it('targets the dev server url', () => {
     const { target, proxy } = getNuxtProxyConfig(
       mockNuxt({ url: 'http://127.0.0.1:54321/' }),
     )
-    expect(target).toEqual({
-      protocol: 'http:',
+    expect(target).toStrictEqual({
       host: '127.0.0.1',
       port: 54321,
+      protocol: 'http:',
     })
-    expect(Object.values(proxy)[0]?.target).toEqual(target)
+    expect(Object.values(proxy)[0]?.target).toStrictEqual(target)
   })
 
   it('unwraps bracketed IPv6 hosts', () => {
     const { target } = getNuxtProxyConfig(
       mockNuxt({ url: 'http://[::1]:3000/' }),
     )
-    expect(target).toEqual({ protocol: 'http:', host: '::1', port: 3000 })
+    expect(target).toStrictEqual({ host: '::1', port: 3000, protocol: 'http:' })
   })
 
   it('falls back to the dev server port when no url is available', () => {
     const { target } = getNuxtProxyConfig(mockNuxt({ port: 4000 }))
-    expect(target).toEqual({ protocol: 'http:', host: 'localhost', port: 4000 })
+    expect(target).toStrictEqual({ host: 'localhost', port: 4000, protocol: 'http:' })
   })
 
   it('falls back to localhost:3000 when devServer has neither url nor port', () => {
     const { target } = getNuxtProxyConfig(mockNuxt())
-    expect(target).toEqual({ protocol: 'http:', host: 'localhost', port: 3000 })
+    expect(target).toStrictEqual({ host: 'localhost', port: 3000, protocol: 'http:' })
   })
 
   it('proxies /_nuxt assets but not the app manifest', () => {
@@ -59,7 +59,7 @@ describe('getNuxtProxyConfig', () => {
     expect('/_nuxt/@vite/client').toMatch(matcher)
     expect('/_ipx/w_100/img.png').toMatch(matcher)
     // App manifest files are specific to the Storybook build and must not
-    // be answered by the Nuxt app
+    // Be answered by the Nuxt app
     expect('/_nuxt/builds/meta/storybook.json').not.toMatch(matcher)
   })
 })

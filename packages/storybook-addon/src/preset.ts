@@ -426,10 +426,10 @@ async function getPackageDir(packageName: string) {
 
 export function getNuxtProxyConfig(nuxt: Nuxt) {
   // The target must stay an object: the dev server often binds the IPv6
-  // loopback (http://[::1]:3000) and http-proxy cannot parse bracketed
+  // Loopback (http://[::1]:3000) and http-proxy cannot parse bracketed
   // IPv6 hosts in string targets.
-  let target = { protocol: 'http:', host: 'localhost', port: 3000 }
-  const devServer = nuxt.options.devServer
+  let target = { host: 'localhost', port: 3000, protocol: 'http:' }
+  const {devServer} = nuxt.options
   if (devServer?.url) {
     const url = new URL(devServer.url)
     target = {
@@ -439,25 +439,25 @@ export function getNuxtProxyConfig(nuxt: Nuxt) {
       port: Number(url.port || (url.protocol === 'https:' ? 443 : 80)),
     }
   } else if (devServer?.port) {
-    target = { protocol: 'http:', host: 'localhost', port: devServer.port }
+    target = { host: 'localhost', port: devServer.port, protocol: 'http:' }
   }
 
   // /_nuxt/builds/meta (app manifest) is excluded: those files are specific
-  // to the Storybook build and must not be answered by the Nuxt app
+  // To the Storybook build and must not be answered by the Nuxt app
   const route =
     '^/(_nuxt(?!/builds/meta)|_ipx|api/_nuxt_icon|__nuxt_devtools__|__nuxt_island)'
   const proxy = {
     [route]: {
-      target,
       changeOrigin: true,
       secure: false,
+      target,
       ws: true,
     },
   }
   return {
-    target, 
-    proxy,
-    route,
+    proxy, 
+    route, 
+    target,
   }
 }
 
