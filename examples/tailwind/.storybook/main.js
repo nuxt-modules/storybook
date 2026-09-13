@@ -1,13 +1,5 @@
 /** @type { import('storybook-vue').StorybookConfig } */
 const config = {
-  framework: {
-    name: '@storybook-vue/nuxt',
-    options: {},
-  },
-  stories: [
-    '../components/**/*.mdx',
-    '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-  ],
   addons: [
     '@storybook/addon-docs',
     '@storybook/addon-links',
@@ -16,5 +8,13 @@ const config = {
   docs: {
     autodocs: 'tag',
   },
+  framework: {
+    name: '@storybook-vue/nuxt',
+    options: {},
+  },
+  stories: [
+    '../components/**/*.mdx',
+    '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)',
+  ],
 }
 export default config

@@ -6,5 +6,3 @@ declare global {
     __NUXT__?: Record<string, any> | Record<string, Record<string, any>>
   }
 }
-
-export {}

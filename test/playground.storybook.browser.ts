@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 test('no errors', async ({ page }) => {
   await page.goto('http://localhost:6006/iframe.html')

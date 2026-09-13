@@ -23,19 +23,19 @@ describe('storybook module setup', () => {
 
     const moduleSource = await fs.readFile(
       path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
-      'utf-8',
+      'utf8',
     )
 
     // The fix pattern: nuxt.hook('listen', ...) should be used instead of
-    // calling setupStorybook directly in setup()
+    // Calling setupStorybook directly in setup()
     expect(moduleSource).toContain("nuxt.hook('listen'")
 
-    // setupStorybook should be called inside the listen hook callback
+    // SetupStorybook should be called inside the listen hook callback
     expect(moduleSource).toMatch(
       /nuxt\.hook\s*\(\s*['"]listen['"]\s*,\s*async\s*\(\)\s*=>\s*\{\s*await\s+setupStorybook/,
     )
 
-    // setupStorybook should NOT be called directly in the setup function
+    // SetupStorybook should NOT be called directly in the setup function
     // (outside of the listen hook)
     // Find the setup function and extract content before the listen hook
     const setupStart = moduleSource.indexOf('async setup(')
@@ -46,7 +46,7 @@ describe('storybook module setup', () => {
 
     // Get content between setup start and listen hook
     const beforeHook = moduleSource.slice(setupStart, listenHookPos)
-    // setupStorybook should not be called before the hook
+    // SetupStorybook should not be called before the hook
     expect(beforeHook).not.toContain('setupStorybook(')
   })
 
@@ -56,7 +56,7 @@ describe('storybook module setup', () => {
 
     const moduleSource = await fs.readFile(
       path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
-      'utf-8',
+      'utf8',
     )
 
     // Should check for __STORYBOOK__ to avoid recursion
@@ -71,7 +71,7 @@ describe('storybook module setup', () => {
 
     const moduleSource = await fs.readFile(
       path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
-      'utf-8',
+      'utf8',
     )
 
     // Should check if module is enabled

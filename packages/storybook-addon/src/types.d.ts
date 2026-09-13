@@ -1,8 +1,8 @@
 import type { StorybookConfig as StorybookConfigBase } from 'storybook/internal/types'
 import type { FrameworkOptions as FrameworkOptionsVue } from '@storybook/vue3-vite'
 import type {
-  StorybookConfigVite,
   BuilderOptions as BuilderOptionsVite,
+  StorybookConfigVite,
 } from '@storybook/builder-vite'
 
 declare let STORYBOOK_VUE_GLOBAL_PLUGINS: string[]
@@ -15,7 +15,7 @@ type BuilderOptions = BuilderOptionsVite & {
   outputDir?: string
 }
 
-type StorybookConfigFramework = {
+interface StorybookConfigFramework {
   framework:
     | FrameworkName
     | { name: FrameworkName; options: FrameworkOptionsVue }

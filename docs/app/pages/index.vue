@@ -6,9 +6,9 @@ const { data: page } = await useAsyncData('index', () =>
 )
 if (!page.value) {
   throw createError({
+    fatal: true,
     statusCode: 404,
     statusMessage: 'Page not found',
-    fatal: true,
   })
 }
 
@@ -16,11 +16,11 @@ const title = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
 
 useSeoMeta({
-  titleTemplate: '',
-  title,
-  ogTitle: title,
   description,
   ogDescription: description,
+  ogTitle: title,
+  title,
+  titleTemplate: '',
 })
 </script>
 

@@ -16,7 +16,7 @@ const meta = {
     backgroundColor: { control: 'color' },
     onClick: { action: 'clicked' },
   },
-  args: { primary: false }, // default value
+  args: { primary: false }, // Default value
 } satisfies Meta<typeof CustomComponent>
 
 export default meta
@@ -28,11 +28,11 @@ type Story = StoryObj<typeof meta>
  */
 
 export const SimpleComponent: Story = {
-  args: { primary: true, label: 'Primary' },
+  args: { label: 'Primary', primary: true },
 }
 
 export const CustomTemplate: Story = {
-  args: { primary: true, label: 'My Story' },
+  args: { label: 'My Story', primary: true },
   render: (args) => ({
     components: { CustomComponent },
     setup() {

@@ -7,9 +7,9 @@ export default eventHandler(async (event) => {
   const slug = getRouterParams(event)['slug.md']
   if (!slug?.endsWith('.md')) {
     throw createError({
+      fatal: true,
       statusCode: 404,
       statusMessage: 'Page not found',
-      fatal: true,
     })
   }
 
@@ -20,9 +20,9 @@ export default eventHandler(async (event) => {
     .first()
   if (!page) {
     throw createError({
+      fatal: true,
       statusCode: 404,
       statusMessage: 'Page not found',
-      fatal: true,
     })
   }
 

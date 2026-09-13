@@ -1,8 +1,9 @@
-import { describe, expectTypeOf, test } from 'vitest'
+import { describe, expectTypeOf, it } from 'vitest'
+
 import type { StorybookConfig } from './types'
 
-describe('StorybookConfig', () => {
-  test('should restrict framework name', () => {
+describe('storybookConfig', () => {
+  it('should restrict framework name', () => {
     expectTypeOf<StorybookConfig>()
       .toHaveProperty('framework')
       .extract<string>()
@@ -13,7 +14,7 @@ describe('StorybookConfig', () => {
       .toHaveProperty('name')
       .toEqualTypeOf<'@storybook-vue/nuxt'>()
   })
-  test('should restrict builder name', () => {
+  it('should restrict builder name', () => {
     expectTypeOf<StorybookConfig>()
       .toHaveProperty('core')
       .exclude<undefined>()
@@ -29,22 +30,22 @@ describe('StorybookConfig', () => {
       .toHaveProperty('name')
       .toEqualTypeOf<'@storybook/builder-vite'>()
   })
-  test('should allow setting docgen option', () => {
+  it('should allow setting docgen option', () => {
     const _config: StorybookConfig = {
-      stories: [],
       framework: {
         name: '@storybook-vue/nuxt',
         options: {
           docgen: 'vue-component-meta',
         },
       },
+      stories: [],
     }
   })
-  test('should allow setting staticDirs', () => {
+  it('should allow setting staticDirs', () => {
     const _config: StorybookConfig = {
-      stories: [],
       framework: '@storybook-vue/nuxt',
       staticDirs: ['public'],
+      stories: [],
     }
   })
 })

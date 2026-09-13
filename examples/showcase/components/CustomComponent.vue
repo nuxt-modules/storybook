@@ -11,23 +11,23 @@ const props = withDefaults(
      */
     label?: string
     /**
-     * primary or secondary button
+     * Primary or secondary button
      */
     primary?: boolean
     /**
-     * size of the button
+     * Size of the button
      */
     size?: Sizes
     /**
-     * background color of the button
+     * Background color of the button
      */
     backgroundColor?: string
   }>(),
   {
-    primary: false,
-    label: '',
-    size: undefined,
     backgroundColor: undefined,
+    label: '',
+    primary: false,
+    size: undefined,
   },
 )
 
