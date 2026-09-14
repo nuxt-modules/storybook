@@ -53,7 +53,6 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
   const projectDir = resolve(nuxt.options.rootDir)
   const configDir = resolve(projectDir, '.storybook')
 
-  // Include .storybook in tsconfig
   nuxt.options.typescript = defu(nuxt.options.typescript, {
     tsConfig: {
       include: [relative(nuxt.options.buildDir, resolve(configDir, '**/*'))],
@@ -64,7 +63,7 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     port: storybookServerPort,
     configDir,
     configType: 'DEVELOPMENT',
-    // Embedded programmatic start: never block on interactive prompts
+    // ignore prompts
     ci: true,
     cache: storybookCache,
     // Don't check for storybook updates (we're using the latest version)
@@ -115,16 +114,11 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
 
   nuxt.hook('devtools:customTabs', (tabs) => {
     tabs.push({
-      // Unique identifier
       name: 'nuxt-storybook',
-      // Title to display in the tab
       title: 'Storybook',
-      // Any icon from Iconify, or a URL to an image
       icon: 'devicon:storybook',
-      // Iframe view
       view: {
         type: 'iframe',
-        // Absolute URL to the iframes
         src: `${storybookRoute}/`,
       },
     })

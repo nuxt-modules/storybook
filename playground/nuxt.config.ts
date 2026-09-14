@@ -7,10 +7,8 @@ export default defineNuxtConfig({
     locales: ['en', 'fr', 'ar'],
   },
   modules: [
-    // Load the module from the built package (dist) rather than the raw
-    // TypeScript source: the embedded Storybook startup hangs when the module
-    // is loaded through jiti's TS transform, and users only ever get dist.
-    // Run `pnpm build` before `pnpm dev` / the e2e suite (CI already does).
+    // Built package, not the raw source: embedded startup hangs when the
+    // module is loaded through jiti's TS transform. Needs `pnpm build` first.
     '@nuxtjs/storybook',
     '@nuxt/test-utils/module',
     '@nuxtjs/i18n',
@@ -18,8 +16,8 @@ export default defineNuxtConfig({
   storybook: {
     // Very verbose logs for debugging
     logLevel: Number.POSITIVE_INFINITY,
-    // Let the e2e setup pin the embedded Storybook port so it cannot collide
-    // with the standalone instance (see playwright.config.ts)
+    // Lets the e2e setup pin the port so it cannot collide with the
+    // standalone instance (see playwright.config.ts)
     ...(process.env.STORYBOOK_PORT
       ? { port: Number(process.env.STORYBOOK_PORT) }
       : {}),

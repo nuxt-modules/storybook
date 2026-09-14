@@ -1,115 +1,144 @@
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import type { ViteConfig } from '@nuxt/schema'
+import { logger } from '../packages/nuxt-module/src/logger'
 
-/**
- * Unit tests for the @nuxtjs/storybook module setup behavior.
- *
- * These tests verify that the module starts Storybook from Nuxt's 'listen'
- * hook WITHOUT awaiting it, and that the client Vite config is captured
- * during module setup. Awaiting Storybook inside the listen hook deadlocks
- * the dev server: Nuxt's boot pipeline waits for the hook handler while
- * Storybook's preview build waits for Nuxt's vite:configResolved event,
- * which only fires once boot proceeds (#993).
- *
- * We test the module.ts file directly by reading its source and verifying
- * the hook registration pattern. This is simpler than mocking the full
- * @nuxt/kit environment.
- *
- * Note: Full integration tests with actual Storybook server are not possible
- * in Vitest due to @nuxt/test-utils limitations with dev mode. For E2E testing
- * of Storybook startup, use Playwright tests instead.
- */
+/** Shared with @storybook-vue/nuxt's loadNuxtViteConfig (#993). */
+const VITE_CONFIG_PROMISE = Symbol.for(
+  '@storybook-vue/nuxt:vite-config-promise',
+)
+
+/** Long enough for a blocked `listen` hook to lose the race below. */
+const BLOCKED_HOOK_GRACE_MS = 50
+
+const setupStorybook = vi.fn<() => Promise<void>>()
+
+vi.mock('../packages/nuxt-module/src/storybook', () => ({
+  setupStorybook: () => setupStorybook(),
+}))
+
+type StubNuxt = ReturnType<typeof createStubNuxt>
+
+function createStubNuxt() {
+  const handlers = new Map<string, ((...args: never[]) => unknown)[]>()
+  const hook = (name: string, fn: (...args: never[]) => unknown) => {
+    handlers.set(name, [...(handlers.get(name) ?? []), fn])
+  }
+  const callHook = async (name: string, ...args: unknown[]) => {
+    await Promise.all(
+      (handlers.get(name) ?? []).map((fn) => fn(...(args as never[]))),
+    )
+  }
+  return {
+    _version: '4.0.0',
+    callHook,
+    hook,
+    hooks: { addHooks: () => {}, callHook, hook },
+    options: { logLevel: 'info', rootDir: process.cwd(), storybook: {} },
+    registeredHooks: () => [...handlers.keys()].sort(),
+  }
+}
+
+async function runModuleSetup(
+  nuxt: StubNuxt,
+  options: Record<string, unknown> = {},
+) {
+  const module = (await import('../packages/nuxt-module/src/module')).default
+  await (module as unknown as (o: object, n: StubNuxt) => Promise<void>)(
+    options,
+    nuxt,
+  )
+}
+
+function readViteConfigPromise(nuxt: StubNuxt) {
+  return (nuxt as unknown as Record<symbol, Promise<ViteConfig> | undefined>)[
+    VITE_CONFIG_PROMISE
+  ]
+}
+
 describe('storybook module setup', () => {
-  it('module starts storybook from the listen hook without blocking it', async () => {
-    // Read the actual module source to verify the pattern
-    const fs = await import('node:fs/promises')
-    const path = await import('pathe')
-
-    const moduleSource = await fs.readFile(
-      path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
-      'utf8',
-    )
-
-    // Storybook startup is deferred to nuxt.hook('listen', ...) instead of
-    // Running directly in setup()
-    expect(moduleSource).toContain("nuxt.hook('listen'")
-
-    // SetupStorybook is called inside the listen hook callback, but must NOT
-    // Be awaited: that blocks Nuxt's boot pipeline and deadlocks against
-    // Storybook waiting for the Vite config (#993)
-    expect(moduleSource).toMatch(
-      /nuxt\.hook\s*\(\s*['"]listen['"]\s*,\s*\(\)\s*=>\s*\{\s*setupStorybook/,
-    )
-    expect(moduleSource).not.toMatch(/await\s+setupStorybook/)
-
-    // The fire-and-forget call must still surface failures
-    expect(moduleSource).toMatch(/setupStorybook\([^)]*\)\.catch/)
-
-    // SetupStorybook should NOT be called directly in the setup function
-    // (outside of the listen hook)
-    // Find the setup function and extract content before the listen hook
-    const setupStart = moduleSource.indexOf('async setup(')
-    expect(setupStart).toBeGreaterThan(-1)
-
-    const listenHookPos = moduleSource.indexOf("nuxt.hook('listen'", setupStart)
-    expect(listenHookPos).toBeGreaterThan(setupStart)
-
-    // Get content between setup start and listen hook
-    const beforeHook = moduleSource.slice(setupStart, listenHookPos)
-    // SetupStorybook should not be called before the hook
-    expect(beforeHook).not.toContain('setupStorybook(')
+  beforeEach(() => {
+    setupStorybook.mockReset()
   })
 
-  it('module captures the vite config before the listen hook', async () => {
-    const fs = await import('node:fs/promises')
-    const path = await import('pathe')
+  it('returns from the listen hook without waiting for storybook to start', async () => {
+    // Storybook's preview build waits for the Vite config, which Nuxt only
+    // resolves once boot proceeds past this hook — awaiting here deadlocks
+    // both servers and hangs every request (#993).
+    setupStorybook.mockReturnValue(new Promise(() => {}))
+    const nuxt = createStubNuxt()
+    await runModuleSetup(nuxt)
 
-    const moduleSource = await fs.readFile(
-      path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
-      'utf-8',
-    )
+    const winner = await Promise.race([
+      nuxt.callHook('listen').then(() => 'listen returned'),
+      new Promise((resolve) =>
+        setTimeout(() => resolve('listen blocked'), BLOCKED_HOOK_GRACE_MS),
+      ),
+    ])
 
-    // The vite:configResolved capture must be registered during module setup,
-    // before the listen hook: Storybook starts after 'listen' fires, at which
-    // point the event may already have passed (#993)
-    const capturePos = moduleSource.indexOf("nuxt.hook('vite:configResolved'")
-    const listenPos = moduleSource.indexOf("nuxt.hook('listen'")
-    expect(capturePos).toBeGreaterThan(-1)
-    expect(listenPos).toBeGreaterThan(capturePos)
-
-    // The captured promise is shared with @storybook-vue/nuxt via a
-    // well-known symbol on the Nuxt instance
-    expect(moduleSource).toContain(
-      "Symbol.for('@storybook-vue/nuxt:vite-config-promise')",
-    )
+    expect(winner).toMatchInlineSnapshot(`"listen returned"`)
+    expect(setupStorybook).toHaveBeenCalledOnce()
   })
 
-  it('module checks for __STORYBOOK__ env before registering hook', async () => {
-    const fs = await import('node:fs/promises')
-    const path = await import('pathe')
+  it('resolves the shared promise with the client vite config', async () => {
+    setupStorybook.mockResolvedValue()
+    const nuxt = createStubNuxt()
+    await runModuleSetup(nuxt)
 
-    const moduleSource = await fs.readFile(
-      path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
-      'utf8',
+    await nuxt.callHook(
+      'vite:configResolved',
+      { mode: 'server' },
+      { isClient: false },
+    )
+    await nuxt.callHook(
+      'vite:configResolved',
+      { mode: 'client' },
+      { isClient: true },
     )
 
-    // Should check for __STORYBOOK__ to avoid recursion
-    expect(moduleSource).toContain('__STORYBOOK__')
-    // Should early return when inside Storybook
-    expect(moduleSource).toMatch(/if\s*\(\s*import\.meta\.env\?\.__STORYBOOK__/)
+    await expect(readViteConfigPromise(nuxt)).resolves.toMatchInlineSnapshot(`
+      {
+        "mode": "client",
+      }
+    `)
   })
 
-  it('module checks enabled option before registering hook', async () => {
-    const fs = await import('node:fs/promises')
-    const path = await import('pathe')
+  it('captures the vite config before storybook can start', async () => {
+    // Storybook starts after 'listen'; by then vite:configResolved may
+    // already have fired, so the capture cannot be registered lazily (#993).
+    setupStorybook.mockResolvedValue()
+    const nuxt = createStubNuxt()
+    await runModuleSetup(nuxt)
 
-    const moduleSource = await fs.readFile(
-      path.resolve(__dirname, '../packages/nuxt-module/src/module.ts'),
-      'utf8',
+    expect(nuxt.registeredHooks()).toMatchInlineSnapshot(`
+      [
+        "listen",
+        "vite:configResolved",
+      ]
+    `)
+  })
+
+  it('logs a failed storybook start instead of rejecting the hook', async () => {
+    setupStorybook.mockRejectedValue(new Error('port in use'))
+    const error = vi.spyOn(logger, 'error').mockImplementation(() => {})
+    const nuxt = createStubNuxt()
+    await runModuleSetup(nuxt)
+
+    await expect(nuxt.callHook('listen')).resolves.toBeUndefined()
+    await vi.waitFor(() => expect(error).toHaveBeenCalled())
+
+    expect(error.mock.calls[0]?.[0]).toMatchInlineSnapshot(
+      `"Failed to start Storybook"`,
     )
+    error.mockRestore()
+  })
 
-    // Should check if module is enabled
-    expect(moduleSource).toContain('options.enabled')
-    // Should have enabled in defaults
-    expect(moduleSource).toMatch(/enabled:\s*true/)
+  it('registers nothing when the module is disabled', async () => {
+    setupStorybook.mockResolvedValue()
+    const nuxt = createStubNuxt()
+    await runModuleSetup(nuxt, { enabled: false })
+
+    expect(nuxt.registeredHooks()).toMatchInlineSnapshot(`[]`)
+    expect(readViteConfigPromise(nuxt)).toBeUndefined()
+    expect(setupStorybook).not.toHaveBeenCalled()
   })
 })

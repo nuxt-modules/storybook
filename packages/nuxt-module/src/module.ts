@@ -1,10 +1,19 @@
 import { defineNuxtModule } from '@nuxt/kit'
+import type { ViteConfig } from '@nuxt/schema'
 import type { LogLevel } from './logger'
 import { logger } from './logger'
 
 import { setupStorybook } from './storybook'
 
 export type * from '@storybook-vue/nuxt'
+
+/**
+ * Well-known key used to hand the client Vite config to
+ * `@storybook-vue/nuxt`, which runs in this same process.
+ */
+const VITE_CONFIG_PROMISE = Symbol.for(
+  '@storybook-vue/nuxt:vite-config-promise',
+)
 
 export interface ModuleOptions {
   /**
@@ -87,28 +96,18 @@ export default defineNuxtModule<ModuleOptions>({
 
     logger.verbose('🔌  Storybook Module Setup')
 
-    // Capture the resolved client Vite config now, while modules are loading:
-    // by the time Storybook starts (after the listen hook) the event may
-    // already have fired, so @storybook-vue/nuxt cannot reliably register
-    // this hook itself (#993).
-    const viteConfigPromise = new Promise((resolve) => {
+    const viteConfigPromise = new Promise<Readonly<ViteConfig>>((resolve) => {
       nuxt.hook('vite:configResolved', (config, { isClient }) => {
         if (isClient) resolve(config)
       })
     })
-    // Hand the promise to @storybook-vue/nuxt's loadNuxtViteConfig, which
-    // runs in the same process and reads it off the shared Nuxt instance.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(nuxt as any)[Symbol.for('@storybook-vue/nuxt:vite-config-promise')] =
-      viteConfigPromise
+    ;(nuxt as unknown as Record<symbol, Promise<Readonly<ViteConfig>>>)[
+      VITE_CONFIG_PROMISE
+    ] = viteConfigPromise
 
-    // Defer Storybook startup until Nuxt's HTTP server is ready, but do not
-    // await it: Nuxt's boot pipeline waits for listen-hook handlers, while
-    // Storybook's preview build waits for the Vite config above — awaiting
-    // here deadlocks both servers (#993).
     nuxt.hook('listen', () => {
-      setupStorybook(options, nuxt).catch((err: unknown) => {
-        logger.error('Failed to start Storybook', err)
+      setupStorybook(options, nuxt).catch((error: unknown) => {
+        logger.error('Failed to start Storybook', error)
       })
     })
   },
