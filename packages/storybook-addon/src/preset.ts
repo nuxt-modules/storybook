@@ -32,6 +32,11 @@ async function resolveModule(specifier: string): Promise<string> {
   return pathToFileURL(require.resolve(specifier)).href
 }
 
+/** Well-known key the @nuxtjs/storybook module uses to hand over the config. */
+const VITE_CONFIG_PROMISE = Symbol.for(
+  '@storybook-vue/nuxt:vite-config-promise',
+)
+
 const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
 
@@ -78,10 +83,22 @@ async function loadNuxtViteConfig(root: string | undefined) {
 
   let nuxt = tryUseNuxt()
   if (nuxt) {
-    // Nuxt is already started in the current process (i.e. in dev mode)
-    // We assume that we are called from the Nuxt module, which means that
-    // Nuxt is in the "load module" state and we can access the Vite config later via the hook
+    // Nuxt is already running in this process (dev mode, started from
+    // @nuxtjs/storybook). Prefer the config the module captured during its
+    // setup: vite:configResolved may already have fired, in which case the
+    // hook registered below would never run (#993).
     const nuxtRes = nuxt
+    const viteConfigPromise = (
+      nuxt as unknown as Record<symbol, Promise<ViteConfig> | undefined>
+    )[VITE_CONFIG_PROMISE]
+    if (viteConfigPromise) {
+      return viteConfigPromise.then((viteConfig) => ({
+        viteConfig,
+        nuxt: nuxtRes,
+      }))
+    }
+    // Older @nuxtjs/storybook: Nuxt is still in the "load module" state, so
+    // the event has yet to fire.
     return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>((resolve) => {
       nuxtRes.hook('vite:configResolved', (config, { isClient }) => {
         if (isClient) {
@@ -174,7 +191,7 @@ function vueBundlerAliasPlugin(vueBundlerPath: string): Plugin {
   }
 }
 
-async function mergeViteConfig(
+export async function mergeViteConfig(
   storybookConfig: ViteConfig,
   nuxtConfig: ViteConfig,
   nuxt: Nuxt,
@@ -188,16 +205,17 @@ async function mergeViteConfig(
     )
   }
 
-  const plugins = extendedConfig.plugins || []
+  // mergeConfig reuses nested objects by reference when a key exists on only
+  // one side, and in embedded mode nuxtConfig is the app's live resolved
+  // config — so everything written below is cloned first, or it would poison
+  // the running dev server's own dep optimizer (#993).
+  const plugins = [...(extendedConfig.plugins || [])]
 
-  // Find the index of the plugin with name 'vite:vue'
   const index = plugins.findIndex(
     (plugin) => plugin && 'name' in plugin && plugin.name === 'vite:vue',
   )
 
-  // Check if the plugin was found
   if (index !== -1) {
-    // Replace the plugin with the new one using vuePlugin()
     plugins[index] = vuePlugin()
   } else {
     // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
@@ -209,23 +227,23 @@ async function mergeViteConfig(
 
   // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
   // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
-  extendedConfig.optimizeDeps = extendedConfig.optimizeDeps || {}
-  extendedConfig.optimizeDeps.include =
-    extendedConfig.optimizeDeps.include || []
-  extendedConfig.optimizeDeps.include =
-    extendedConfig.optimizeDeps.include.filter(
-      (dep) => !extendedConfig.optimizeDeps?.exclude?.includes(dep),
-    )
-  // Vite is optimizing too aggressively sometimes and missing components that are using virtual files like #components.
-  extendedConfig.optimizeDeps.noDiscovery = true
+  const { include = [], exclude } = extendedConfig.optimizeDeps ?? {}
+  const optimizeInclude = include.filter((dep) => !exclude?.includes(dep))
 
-  extendedConfig.optimizeDeps.include.push(
+  optimizeInclude.push(
     // Add lodash/kebabCase, since it is still a cjs module
     // Imported in https://github.com/storybookjs/storybook/blob/480359d5e340d97476131781c69b4b5e3b724f57/code/renderers/vue3/src/docs/sourceDecorator.ts#L18
     '@nuxtjs/storybook > @storybook-vue/nuxt > @storybook/vue3 > lodash/kebabCase',
     // Workaround for https://github.com/nuxt-modules/storybook/issues/776
     'storybook > @storybook/core > jsdoc-type-pratt-parser',
   )
+
+  extendedConfig.optimizeDeps = {
+    ...extendedConfig.optimizeDeps,
+    include: optimizeInclude,
+    // Vite is optimizing too aggressively sometimes and missing components that are using virtual files like #components.
+    noDiscovery: true,
+  }
 
   return mergeConfig(extendedConfig, {
     // Build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
