@@ -1,492 +1,51 @@
-import { fileURLToPath, pathToFileURL } from 'node:url'
-import { createRequire } from 'node:module'
-
-import { dirname, join, normalize, resolve } from 'pathe'
-import { resolvePath } from 'mlly'
-import vuePlugin from '@vitejs/plugin-vue'
-import replace from '@rollup/plugin-replace'
+import { fileURLToPath } from 'node:url'
+import { join, normalize } from 'pathe'
 import stringify from 'json-stable-stringify'
-import { mergeConfig, searchForWorkspaceRoot } from 'vite'
-import type { Plugin, UserConfig as ViteConfig } from 'vite'
-import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
-import nuxtRuntimeConfigPlugin from './runtimeConfig'
-import type { Nuxt } from '@nuxt/schema'
-import type {
-  PresetProperty,
-  PreviewAnnotation,
-} from 'storybook/internal/types'
-import type { StorybookConfig } from './types'
+import { viteFinal as vueViteFinal } from '@storybook/vue3-vite/preset'
+import type { PresetProperty } from 'storybook/internal/types'
+import { loadNuxtViteConfig } from './node/load-nuxt'
+import { mergeViteConfig } from './node/vite-config'
+import type { StorybookConfig } from './types.d'
 
-/**
- * Resolves a module specifier to its file path.
- * Works in both ESM and CJS contexts by using createRequire as fallback.
- * Essential for supporting backwards compatibility in Storybook
- */
-async function resolveModule(specifier: string): Promise<string> {
-  // Try import.meta.resolve first (ESM)
-  if (typeof import.meta.resolve === 'function') {
-    return import.meta.resolve(specifier)
-  }
-  // Fallback for CJS: use createRequire
-  const require = createRequire(import.meta.url)
-  return pathToFileURL(require.resolve(specifier)).href
-}
+export * from '@storybook/vue3-vite/preset'
 
-/** Well-known key the @nuxtjs/storybook module uses to hand over the config. */
-const VITE_CONFIG_PROMISE = Symbol.for(
-  '@storybook-vue/nuxt:vite-config-promise',
+/** Extensionless, so Vite picks the built `.mjs` next to this module. */
+const PREVIEW_ENTRY = normalize(
+  fileURLToPath(new URL('./preview', import.meta.url)),
 )
 
-const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
-const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
+export const core: PresetProperty<'core'> = async (config, options) => {
+  const framework = await options.presets.apply('framework')
 
-const dirs = [distDir, packageDir, pluginsDir, componentsDir]
-
-/**
- * Extend nuxt-link component to use storybook router
- * @param nuxt
- */
-function extendComponents(nuxt: Nuxt) {
-  nuxt.hook('components:extend', (components) => {
-    const nuxtLink = components.find(
-      ({ pascalName }) => pascalName === 'NuxtLink',
-    )
-    if (!nuxtLink) {
-      throw new Error('NuxtLink component not found')
-    }
-    nuxtLink.filePath = normalize(join(runtimeDir, 'components/nuxt-link'))
-    nuxtLink.shortPath = normalize(join(runtimeDir, 'components/nuxt-link'))
-    nuxt.options.build.transpile.push(nuxtLink.filePath)
-  })
-}
-
-/**
- * Extend composables to override router ( fix undefined router  useNuxtApp )
- *
- * @param nuxt
- */
-
-async function extendComposables(nuxt: Nuxt) {
-  const { addImportsSources } = await import('@nuxt/kit')
-  nuxt.options.build.transpile.push(composablesDir)
-  addImportsSources({
-    imports: ['useRouter'],
-    from: normalize(join(composablesDir, 'router')),
-    // Use higher priority to override Nuxt's built-in useRouter without warning
-    priority: 2,
-  })
-}
-
-async function loadNuxtViteConfig(root: string | undefined) {
-  const { loadNuxt, tryUseNuxt, buildNuxt, extendPages } =
-    await import('@nuxt/kit')
-
-  let nuxt = tryUseNuxt()
-  if (nuxt) {
-    // Nuxt is already running in this process (dev mode, started from
-    // @nuxtjs/storybook). Prefer the config the module captured during its
-    // setup: vite:configResolved may already have fired, in which case the
-    // hook registered below would never run (#993).
-    const nuxtRes = nuxt
-    const viteConfigPromise = (
-      nuxt as unknown as Record<symbol, Promise<ViteConfig> | undefined>
-    )[VITE_CONFIG_PROMISE]
-    if (viteConfigPromise) {
-      return viteConfigPromise.then((viteConfig) => ({
-        viteConfig,
-        nuxt: nuxtRes,
-      }))
-    }
-    // Older @nuxtjs/storybook: Nuxt is still in the "load module" state, so
-    // the event has yet to fire.
-    return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>((resolve) => {
-      nuxtRes.hook('vite:configResolved', (config, { isClient }) => {
-        if (isClient) {
-          resolve({
-            nuxt: nuxtRes,
-            viteConfig: config,
-          })
-        }
-      })
-    })
-  }
-  nuxt = await loadNuxt({
-    cwd: root,
-    dev: false,
-    overrides: {
-      appId: 'nuxt-app',
-      buildId: 'storybook',
-      experimental: {
-        // Disable app manifest to prevent 404 errors in Storybook preview
-        // Nuxt 3.8+ tries to fetch /_nuxt/builds/meta/{buildId}.json for build checking
-        // But Storybook doesn't generate this manifest, causing console errors
-        appManifest: false,
-      },
-      ssr: false,
-    },
-    ready: false,
-  })
-
-  if (nuxt.options.builder !== '@nuxt/vite-builder') {
-    throw new Error(
-      // oxlint-disable-next-line typescript/restrict-template-expressions, typescript/no-base-to-string -- builder is a string union type, so it should be safe to use in template literal
-      `Storybook-Nuxt does not support '${nuxt.options.builder}' for now.`,
-    )
-  }
-  nuxt.options.build.transpile.push(join(packageDir, 'preview'))
-
-  nuxt.hook('modules:done', async () => {
-    await extendComposables(nuxt)
-    // Override nuxt-link component to use storybook router
-    extendComponents(nuxt)
-    // Nuxt.options.build.transpile.push('@storybook-vue/nuxt')
-    // Add iframe page
-    extendPages((pages) => {
-      pages.push({
-        name: 'storybook-iframe',
-        path: '/iframe.html',
-      })
-    })
-  })
-
-  // Get Vite config from Nuxt
-  // https://nuxt.com/docs/api/kit/examples#accessing-nuxt-vite-config
-  await nuxt.ready()
-  return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>(
-    (resolve, reject) => {
-      nuxt.hook('vite:configResolved', (config, { isClient }) => {
-        if (isClient) {
-          resolve({
-            nuxt,
-            viteConfig: config,
-          })
-          // Stop the build process, as we don't need to build the Nuxt app
-          throw new Error('_stop_')
-        }
-      })
-
-      buildNuxt(nuxt).catch((error) => {
-        if (!error.toString().includes('_stop_')) {
-          reject(error)
-        }
-      })
-    },
-  ).finally(() => nuxt.close())
-}
-
-async function resolveVueBundlerPath(nuxt: Nuxt): Promise<string | undefined> {
-  const path = await resolvePath('vue/dist/vue.esm-bundler.js', {
-    url: [nuxt.options.rootDir, ...nuxt.options.modulesDir],
-  }).catch(() => undefined)
-  return path ? normalize(path) : undefined
-}
-
-// #1049 alias vue to absolute esm-bundler path
-function vueBundlerAliasPlugin(vueBundlerPath: string): Plugin {
   return {
-    name: 'nuxt-storybook:vue-bundler-alias',
-    // We want this to run after Storybook's plugin replacement. See  https://github.com/storybookjs/storybook/blob/d0d7ff85158417bbc4dffba941b1a525f7e4ddc2/code/frameworks/vue3-vite/src/plugins/vue-template.ts#L9
-    enforce: 'post',
-    config: () => ({ resolve: { alias: { vue: vueBundlerPath } } }),
-  }
-}
-
-export async function mergeViteConfig(
-  storybookConfig: ViteConfig,
-  nuxtConfig: ViteConfig,
-  nuxt: Nuxt,
-): Promise<ViteConfig> {
-  const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
-
-  const vueBundlerPath = await resolveVueBundlerPath(nuxt)
-  if (!vueBundlerPath) {
-    console.warn(
-      'Could not resolve `vue/dist/vue.esm-bundler.js`, keeping the bare Storybook alias for `vue`',
-    )
-  }
-
-  // mergeConfig reuses nested objects by reference when a key exists on only
-  // one side, and in embedded mode nuxtConfig is the app's live resolved
-  // config — so everything written below is cloned first, or it would poison
-  // the running dev server's own dep optimizer (#993).
-  const plugins = [...(extendedConfig.plugins || [])]
-
-  const index = plugins.findIndex(
-    (plugin) => plugin && 'name' in plugin && plugin.name === 'vite:vue',
-  )
-
-  if (index !== -1) {
-    plugins[index] = vuePlugin()
-  } else {
-    // Vue plugin should be the first registered user plugin so that it will be added directly after Vite's core plugins
-    // And transforms global vue components before nuxt:components:imports.
-    plugins.unshift(vuePlugin())
-  }
-
-  extendedConfig.plugins = plugins
-
-  // Storybook adds 'vue' as dependency that should be optimized, but nuxt explicitly excludes it from pre-bundling
-  // Prioritize `optimizeDeps.exclude`. If same dep is in `include` and `exclude`, remove it from `include`
-  const { include = [], exclude } = extendedConfig.optimizeDeps ?? {}
-  const optimizeInclude = include.filter((dep) => !exclude?.includes(dep))
-
-  optimizeInclude.push(
-    // Add lodash/kebabCase, since it is still a cjs module
-    // Imported in https://github.com/storybookjs/storybook/blob/480359d5e340d97476131781c69b4b5e3b724f57/code/renderers/vue3/src/docs/sourceDecorator.ts#L18
-    '@nuxtjs/storybook > @storybook-vue/nuxt > @storybook/vue3 > lodash/kebabCase',
-    // Workaround for https://github.com/nuxt-modules/storybook/issues/776
-    'storybook > @storybook/core > jsdoc-type-pratt-parser',
-  )
-
-  extendedConfig.optimizeDeps = {
-    ...extendedConfig.optimizeDeps,
-    include: optimizeInclude,
-    // Vite is optimizing too aggressively sometimes and missing components that are using virtual files like #components.
-    noDiscovery: true,
-  }
-
-  return mergeConfig(extendedConfig, {
-    // Build: { rollupOptions: { external: ['vue', 'vue-demi'] } },
-    define: {
-      'import.meta.client': 'true',
-    },
-
-    // Pre-bundle React dependencies for Storybook's docs addon
-    // React packages need explicit optimization as they're used by addon-docs
-    optimizeDeps: {
-      include: ['react/jsx-runtime', 'react', 'react-dom/client'],
-    },
-
-    plugins: [
-      replace({
-        preventAssignment: true,
-        values: {
-          'import.meta.client': 'true',
-          'import.meta.server': 'false',
-        },
-      }),
-      nuxtRuntimeConfigPlugin(nuxt.options.runtimeConfig),
-      ...(vueBundlerPath ? [vueBundlerAliasPlugin(vueBundlerPath)] : []),
-    ],
-    server: {
-      cors: true,
-      fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
-      proxy: {
-        ...getPreviewProxy(),
-        // Only proxy to Nuxt dev server when Nuxt is actually running in dev mode
-        ...(nuxt.options.dev ? getNuxtProxyConfig(nuxt).proxy : {}),
-      },
-    },
-    envPrefix: ['NUXT_'],
-  })
-}
-
-export const core: PresetProperty<'core', StorybookConfig> = async (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  config: any,
-) =>
-  // Storybook 10 (ESM-only) requires fully resolved paths to entry points, not directories
-  // Use resolveModule helper for ESM/CJS compatibility
-  ({
     ...config,
-    builder: await resolveModule('@storybook/builder-vite'),
-    renderer: await resolveModule('@storybook/vue3/preset'),
-  })
-
-export interface Resolver {
-  /**
-   * Resolves the given path segments to an absolute path, using the provided base path.
-   *
-   * The resulting path is normalized, and trailing slashes are removed unless the path gets resolved to the root directory.
-   *
-   * @param path A sequence of paths or path segments.
-   * @throws {TypeError} if any of the arguments is not a string.
-   */
-  resolve(...path: string[]): string
-  /**
-   * Asynchronously resolves a module path to a local file path, using the provided base path.
-   *
-   * @param id - The identifier or path of the module to resolve.
-   * @returns A promise to resolve to the file path, or `null` if the module could not be resolved.
-   */
-  resolveModule(
-    id: string,
-    options?: { paths?: string[] },
-  ): Promise<string | null>
-}
-/**
- * Creates a resolver that can resolve paths and modules relative to a base path.
- *
- * @example
- * ```js
- * const resolver = createResolver(import.meta.url)
- * const path = resolver.resolve('preview')
- * const modulePath = await resolver.resolveModule('module-name')
- * ```
- *
- * @param base - The base path to resolve paths and modules relative to.
- * @returns A resolver object.
- */
-function createResolver(base: string | URL): Resolver {
-  if (!base) {
-    throw new Error('`base` argument is missing for createResolver(base)!')
-  }
-
-  base = base.toString()
-  if (base.startsWith('file://')) {
-    base = dirname(fileURLToPath(base))
-  }
-
-  return {
-    resolve: (...path) => resolve(base, ...path),
-    async resolveModule(id, options) {
-      const paths = options?.paths ?? [base]
-      paths.concat([base])
-      return await resolvePath(id, { url: paths }).catch(() => null)
+    builder: {
+      name: fileURLToPath(import.meta.resolve('@storybook/builder-vite')),
+      options:
+        typeof framework === 'string' ? {} : framework.options.builder || {},
     },
+    renderer: fileURLToPath(import.meta.resolve('@storybook/vue3-vite/preset')),
   }
 }
 
-/**
- * This is needed to correctly load the `preview.js` file,
- * see https://github.com/storybookjs/storybook/blob/main/docs/contribute/framework.md#4-author-the-framework-itself
- */
-export const previewAnnotations = async (
-  entry: PreviewAnnotation[] = [],
-): Promise<PreviewAnnotation[]> => {
-  const resolver = createResolver(import.meta.url)
+export const previewAnnotations: PresetProperty<'previewAnnotations'> = (
+  entry = [],
+) => [...entry, PREVIEW_ENTRY]
 
-  // Problem: Storybook does not correctly resolve some modules to an absolute path to the correct deep path in node_modules.
-  // Solution:
-  // We need to make sure that they are resolved as dependencies of this package, since they are not installed in the root.
-  // We need to use bare here otherwise storybook will strip the absolute path, leading to a wrong import
-  // https://github.com/storybookjs/storybook/blob/3590a1cade2fe24608b3ce0246d5d58692c89883/code/builders/builder-vite/src/utils/process-preview-annotation.ts#L30-L35
-  return [
-    ...entry.map((entry) => {
-      // Handle @storybook/vue3
-      if (typeof entry === 'string' && entry.includes('vue3')) {
-        return {
-          absolute: '',
-          bare: normalize(entry),
-        }
-      } else {
-        return entry
-      }
-    }),
-    {
-      absolute: '',
-      bare: resolver.resolve('preview'),
-    },
-  ]
-}
-
+/** Merges the Nuxt app's Vite config into the one @storybook/vue3-vite built. */
 export const viteFinal: StorybookConfig['viteFinal'] = async (
   config,
   options,
 ) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const getStorybookViteConfig = async (c: Record<string, any>, o: any) => {
-    const presetURL = pathToFileURL(
-      join(await getPackageDir('@storybook/vue3-vite'), 'preset.js'),
-    )
-    const { viteFinal: vueViteFinal } = await import(presetURL.href)
-
-    if (!vueViteFinal) {
-      throw new Error(
-        'unexpected contents in package @storybook/vue3-vite: viteFinal not found',
-      )
-    }
-
-    return (vueViteFinal as NonNullable<StorybookConfig['viteFinal']>)(c, o)
-  }
-
-  const storybookViteConfig = await getStorybookViteConfig(config, options)
-  const { viteConfig: nuxtConfig, nuxt } = await loadNuxtViteConfig(
+  const storybookViteConfig = await vueViteFinal(config, options)
+  const { nuxt, viteConfig } = await loadNuxtViteConfig(
     storybookViteConfig.root,
   )
-
   const finalViteConfig = await mergeViteConfig(
     storybookViteConfig,
-    nuxtConfig,
+    viteConfig,
     nuxt,
   )
 
-  if (options.outputDir != null) {
-    // Write all vite configs to logs
-    const fs = await import('node:fs')
-    fs.mkdirSync(join(options.outputDir, 'logs'), { recursive: true })
-    console.debug(`Writing Vite configs to ${options.outputDir}/logs/...`)
-    fs.writeFileSync(
-      join(options.outputDir, 'logs', 'vite-storybook.config.json'),
-      stringify(storybookViteConfig, { cycles: true, space: '  ' }) || '',
-    )
-    fs.writeFileSync(
-      join(options.outputDir, 'logs', 'vite-nuxt.config.json'),
-      stringify(nuxtConfig, { cycles: true, space: '  ' }) || '',
-    )
-    fs.writeFileSync(
-      join(options.outputDir, 'logs', 'vite-final.config.json'),
-      stringify(finalViteConfig, { cycles: true, space: '  ' }) || '',
-    )
-  }
-
   return finalViteConfig
-}
-
-async function getPackageDir(packageName: string) {
-  try {
-    const require = createRequire(import.meta.url)
-    return dirname(require.resolve(join(packageName, 'package.json')))
-  } catch (error) {
-    throw new Error(`Cannot find ${packageName}`, { cause: error })
-  }
-}
-
-export function getNuxtProxyConfig(nuxt: Nuxt) {
-  // The target must stay an object: the dev server often binds the IPv6
-  // Loopback (http://[::1]:3000) and http-proxy cannot parse bracketed
-  // IPv6 hosts in string targets.
-  let target = { host: 'localhost', port: 3000, protocol: 'http:' }
-  const { devServer } = nuxt.options
-  if (devServer?.url) {
-    const url = new URL(devServer.url)
-    target = {
-      protocol: url.protocol,
-      // WHATWG URL keeps IPv6 literals bracketed; net.connect wants them raw
-      host: url.hostname.replace(/^\[|\]$/g, ''),
-      port: Number(url.port || (url.protocol === 'https:' ? 443 : 80)),
-    }
-  } else if (devServer?.port) {
-    target = { host: 'localhost', port: devServer.port, protocol: 'http:' }
-  }
-
-  // /_nuxt/builds/meta (app manifest) is excluded: those files are specific
-  // To the Storybook build and must not be answered by the Nuxt app
-  const route =
-    '^/(_nuxt(?!/builds/meta)|_ipx|api/_nuxt_icon|__nuxt_devtools__|__nuxt_island)'
-  const proxy = {
-    [route]: {
-      changeOrigin: true,
-      secure: false,
-      target,
-      ws: true,
-    },
-  }
-  return {
-    proxy,
-    route,
-    target,
-  }
-}
-
-function getPreviewProxy() {
-  return {
-    '/__storybook_preview__': {
-      changeOrigin: false,
-      rewrite: (path: string) => path.replace('/__storybook_preview__', ''),
-      secure: false,
-      target: '/',
-      ws: true,
-    },
-  }
 }

@@ -3,14 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { resolve } from 'pathe'
 import type { Nuxt } from '@nuxt/schema'
 import type { UserConfig as ViteConfig } from 'vite'
-import { mergeViteConfig } from '../packages/storybook-addon/src/preset'
-
-/**
- * In embedded mode the `nuxtConfig` argument is the running app's own resolved
- * Vite config, and vite's mergeConfig passes nested objects through by
- * reference — so writing to the merged result can reach back into the live dev
- * server and break the app's asset serving (#993).
- */
+import { mergeViteConfig } from '../packages/storybook-addon/src/node/vite-config'
 
 function mockNuxt(): Nuxt {
   return {
