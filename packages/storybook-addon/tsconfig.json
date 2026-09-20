@@ -8,11 +8,7 @@
     "skipLibCheck": false,
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
-    "strict": true,
-    "paths": {
-      "#app": ["./node_modules/nuxt/dist/app"],
-      "#app/entry": ["./node_modules/nuxt/dist/app/entry"]
-    }
+    "strict": true
   },
-  "include": ["src/**/*", "shim.d.ts"]
+  "include": ["src/**/*"]
 }

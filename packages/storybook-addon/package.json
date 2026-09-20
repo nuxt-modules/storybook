@@ -21,34 +21,25 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "node": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
     },
     "./preset": {
-      "types": "./dist/preset.d.ts",
-      "import": "./dist/preset.mjs",
-      "require": "./dist/preset.cjs"
+      "types": "./dist/preset.d.mts",
+      "import": "./dist/preset.mjs"
     },
     "./preview": {
-      "types": "./dist/preview.d.ts",
-      "import": "./dist/preview.mjs",
-      "default": "./preview.js"
+      "types": "./dist/preview.d.mts",
+      "import": "./dist/preview.mjs"
     },
     "./package.json": "./package.json"
   },
-  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.mts",
   "files": [
     "dist/**/*",
     "template/**/*",
-    "README.md",
-    "*.js",
-    "*.mjs",
-    "*.cjs",
-    "*.d.ts"
+    "README.md"
   ],
   "engines": {
     "node": ">=22.0.0"
@@ -77,9 +68,8 @@
     "@storybook/vue3-vite": "catalog:",
     "json-stable-stringify": "^1.3.0",
     "mlly": "^1.8.0",
-    "ofetch": "^1.5.1",
     "pathe": "^2.0.3",
-    "unctx": "^2.4.1",
+    "unplugin": "^3.4.0",
     "vue-router": "^5.0.0"
   },
   "devDependencies": {
@@ -94,13 +84,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "bundler": {
-    "entries": [
-      "./src/index.ts",
-      "./src/preview.ts",
-      "./src/preset.ts"
-    ],
-    "platform": "node"
   }
 }
