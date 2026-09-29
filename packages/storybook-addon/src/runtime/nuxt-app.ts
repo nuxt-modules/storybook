@@ -1,6 +1,7 @@
 import { addRouteMiddleware, applyPlugins, createNuxtApp } from 'nuxt/app'
 import { $fetch } from 'ofetch'
 import { getContext } from 'unctx'
+import { reactive, shallowReactive } from 'vue'
 import type { NuxtApp } from 'nuxt/app'
 import type { App, InjectionKey } from 'vue'
 import { runtimeConfig } from 'virtual:nuxt-storybook/options'
@@ -8,7 +9,11 @@ import plugins from '#build/plugins'
 import '#build/css'
 import { blockRouterNavigation } from './navigation'
 import type { NuxtParameters } from '../types'
- 
+
+type CreateOptions = Parameters<typeof createNuxtApp>[0]
+
+type Payload = NuxtApp['payload']
+
 export interface StoryApp {
   appId: string
   canvasElement: HTMLElement
@@ -18,15 +23,12 @@ export interface StoryApp {
 export const STORY_APP = Symbol(
   'nuxt-storybook:story-app',
 ) as InjectionKey<StoryApp>
- 
+
 const DEFAULT_APP_ID = 'nuxt-app'
 
 const DEFAULT_RUNTIME_CONFIG = { app: { baseURL: '/' }, public: {} }
 
-/**
- * Boots one Nuxt app for a story, mirroring the client half of Nuxt's own
- * `entry.ts` up to mounting, which Storybook does itself.
- */
+
 export function createStoryNuxtApp(
   vueApp: App,
   canvasElement: HTMLElement,
@@ -42,10 +44,7 @@ export function createStoryNuxtApp(
   return booted
 }
 
-/**
- * Releases the contexts still pointing at a story's Nuxt app, so an unmounted
- * app can be collected and `useNuxtApp()` never resolves to it.
- */
+
 export function disposeStoryNuxtApp(nuxt: NuxtApp): void {
   for (const id of [nuxt._id, DEFAULT_APP_ID]) {
     const context = getContext<NuxtApp>(id)
@@ -56,7 +55,6 @@ export function disposeStoryNuxtApp(nuxt: NuxtApp): void {
   }
 }
 
- 
 let bootstrapping: Promise<unknown> = Promise.resolve()
 
 async function bootstrapNuxtApp(
@@ -65,26 +63,16 @@ async function bootstrapNuxtApp(
 ): Promise<NuxtApp> {
   const { appId, parameters } = story
 
-  // Only way to inject the runtime config into the Nuxt app fornow 
-  window.__NUXT__ = {
-    config: {
-      ...DEFAULT_RUNTIME_CONFIG,
-      ...runtimeConfig,
-      ...parameters.runtimeConfig,
-    },
-    serverRendered: false,
-  }
-
   globalThis.$fetch ??= $fetch.create({
     baseURL: '/',
   }) as typeof globalThis.$fetch
 
-  const nuxt = createNuxtApp({ id: appId, vueApp: vueApp as NuxtApp['vueApp'] })
+  const nuxt = createNuxtApp({
+    id: appId,
+    payload: createStoryPayload(parameters),
+    vueApp,
+  } as CreateOptions)
   claimDefaultContext(nuxt)
-
-  // Set route before plugins 
-  const path = parameters.route || '/'
-  nuxt.payload.path = path.includes('?') ? path : `${path}?`
 
   vueApp.provide(STORY_APP, story)
   reportErrorsToNuxt(vueApp, nuxt)
@@ -106,7 +94,25 @@ async function bootstrapNuxtApp(
 
   return nuxt
 }
- 
+
+function createStoryPayload(parameters: NuxtParameters): Payload {
+  const path = parameters.route || '/'
+  const payload: Payload = {
+    _errors: shallowReactive<Payload['_errors']>({}),
+    config: {
+      ...DEFAULT_RUNTIME_CONFIG,
+      ...runtimeConfig,
+      ...parameters.runtimeConfig,
+    },
+    data: shallowReactive<Payload['data']>({}),
+    once: new Set<string>(),
+    path: path.includes('?') ? path : `${path}?`,
+    serverRendered: false,
+    state: reactive<Payload['state']>({}),
+  }
+  return shallowReactive(payload)
+}
+
 function claimDefaultContext(nuxt: NuxtApp) {
   const { runWithContext } = nuxt
   nuxt.runWithContext = (fn) => {
