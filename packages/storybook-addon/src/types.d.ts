@@ -29,6 +29,28 @@ interface StorybookConfigFramework {
   }
 }
 
+export interface NuxtParameters {
+  /**
+   * Lets the story navigate away from its route, in the router or to another site.
+   *
+   * @default false
+   * @remarks `false` keeps the story where it is and reports each attempt to the `navigation` spy.
+   */
+  navigation?: boolean
+
+  /**
+   * Route the story's Nuxt app starts on.
+   *
+   * @default '/'
+   */
+  route?: string
+
+  /**
+   * Values merged into the app's runtime config before the story's Nuxt app is created.
+   */
+  runtimeConfig?: Record<string, unknown>
+}
+
 /**
  * The interface for Storybook configuration in `main.ts` files.
  */
