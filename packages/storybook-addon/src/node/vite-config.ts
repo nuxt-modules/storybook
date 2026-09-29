@@ -4,8 +4,10 @@ import { normalize } from 'pathe'
 import { mergeConfig, searchForWorkspaceRoot } from 'vite'
 import type { Nuxt } from '@nuxt/schema'
 import type { Plugin, UserConfig as ViteConfig } from 'vite'
-import { servableDirs } from '../dirs'
+import { browserIndex, servableDirs } from '../dirs'
 import { previewOptionsPlugin } from './plugins/preview-options'
+ 
+const PACKAGE_NAME_RE = /^@storybook-vue\/nuxt$/
 
 export async function mergeViteConfig(
   storybookConfig: ViteConfig,
@@ -61,6 +63,11 @@ export async function mergeViteConfig(
       }).vite(),
       ...(vueBundlerPath ? [vueBundlerAliasPlugin(vueBundlerPath)] : []),
     ],
+    resolve: {
+      alias: [
+        { find: PACKAGE_NAME_RE, replacement: browserIndex },
+      ],
+    },
     server: {
       cors: true,
       fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...servableDirs] },

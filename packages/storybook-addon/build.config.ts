@@ -9,10 +9,13 @@ export default defineBuildConfig({
     { ext: 'js', format: 'esm', input: 'src/runtime/', outDir: 'dist/runtime' },
   ],
   externals: [
+    /^\.\.?\/runtime\//,
+    '#app/components/injections',
     '#build/css',
     '#build/plugins',
     'nuxt/app',
     'storybook/internal/types',
+    'storybook/test',
     'virtual:nuxt-storybook/options',
     'vue',
   ],

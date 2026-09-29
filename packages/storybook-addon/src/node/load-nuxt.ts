@@ -11,7 +11,9 @@ interface LoadedNuxt {
 export async function loadNuxtViteConfig(
   root: string | undefined,
 ): Promise<LoadedNuxt> {
-  const { buildNuxt, loadNuxt } = await import('@nuxt/kit')
+  const { buildNuxt, createResolver, loadNuxt, } = await import('@nuxt/kit')
+
+  const findPath = createResolver(runtimeDir).resolvePath
 
   const nuxt = await loadNuxt({
     cwd: root,
@@ -39,6 +41,14 @@ export async function loadNuxtViteConfig(
 
   nuxt.hook('pages:routerOptions', ({ files }) => {
     files.push({ path: resolve(runtimeDir, 'router.options') })
+  })
+
+  nuxt.hook('pages:extend', async (pages) => {
+    pages.push({
+      file: await findPath(resolve(runtimeDir, 'fallback-page')),
+      name: 'storybook-fallback',
+      path: '/:pathMatch(.*)*',
+    })
   })
 
   await nuxt.ready()
