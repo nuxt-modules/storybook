@@ -14,7 +14,6 @@ import { PageRouteSymbol } from '#app/components/injections'
 import { guardExternalLinks } from './navigation'
 import { STORY_APP, disposeStoryNuxtApp } from './nuxt-app'
 
-
 export const NuxtStorybookRoot = defineComponent({
   name: 'NuxtStorybookRoot',
   setup(_props, { slots }) {

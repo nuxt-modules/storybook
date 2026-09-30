@@ -28,7 +28,6 @@ const DEFAULT_APP_ID = 'nuxt-app'
 
 const DEFAULT_RUNTIME_CONFIG = { app: { baseURL: '/' }, public: {} }
 
-
 export function createStoryNuxtApp(
   vueApp: App,
   canvasElement: HTMLElement,
@@ -43,7 +42,6 @@ export function createStoryNuxtApp(
   bootstrapping = booted.catch(() => undefined)
   return booted
 }
-
 
 export function disposeStoryNuxtApp(nuxt: NuxtApp): void {
   for (const id of [nuxt._id, DEFAULT_APP_ID]) {
