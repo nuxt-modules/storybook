@@ -1,97 +1,37 @@
-/* eslint-disable import/first */
-/**
- * This is loaded by the Storybook canvas preview iframe and applies to all stories.
- * https://github.com/storybookjs/storybook/blob/main/docs/contribute/framework.md#4-author-the-framework-itself
- * https://github.com/storybookjs/storybook/blob/main/docs/configure/index.md#configure-story-rendering
- *
- * We use it to load the Nuxt app in the preview iframe.
- * This should contain the same setup as what Nuxt does in the background.
- * https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/app/entry.ts
- */
-
 import { setup } from '@storybook/vue3-vite'
-import type { NuxtApp, ObjectPlugin, Plugin } from 'nuxt/app'
-import { applyPlugins, createNuxtApp } from 'nuxt/app'
-import { getContext } from 'unctx'
-import { $fetch } from 'ofetch'
-// @ts-expect-error virtual file
-import { runtimeConfig } from 'virtual:nuxt-storybook/options'
+import { h, resolveComponent } from 'vue'
+import type { Decorator, StoryContext } from '@storybook/vue3'
+import { navigation } from './runtime/navigation'
+import { createStoryNuxtApp } from './runtime/nuxt-app'
+import { NuxtStorybookRoot } from './runtime/nuxt-root'
+import type { NuxtParameters } from './types'
 
-// Re-export renderToCanvas and other required exports from vue3 entry-preview
-export {
-  renderToCanvas,
-  render,
-  parameters,
-  argTypesEnhancers,
-  applyDecorators,
-  mount,
-} from '@storybook/vue3/entry-preview'
-
-// This is used to overwrite the fetch function, not sure if it's necessary for Storybook
-// It doesn't work with the current setup
-// Import '#build/fetch.mjs'
-import '#build/css'
-// @ts-expect-error virtual file
-import plugins from '#build/plugins'
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const pluginsTyped: (Plugin & ObjectPlugin<any>)[] = plugins
-
-setup(async (_vueApp, storyContext) => {
-  const vueApp = _vueApp as unknown as NuxtApp['vueApp']
-  // We key the Nuxt apps to the id of the story
-  // This is not totally correct, since the storybook vue renderer actually uses the canvas element
-  // Also this doesn't allow to "forceRemount"
-  // TODO: Improve this (needs PR to storybook to pass the necessary infos to this function)
-
-  // Use storyContext.canvasElement.id as key as it's unique for each rendered story
-  // StoryContext.id is same for 2 stories in Docs mode, Primary story and the first story in stories are the same story and have the same id
-  const key = storyContext?.canvasElement.id
-  if (!key) {
-    throw new Error('StoryContext is not provided')
+setup(async (vueApp, storyContext) => {
+  if (!storyContext?.canvasElement) {
+    throw new Error(
+      '[nuxt-storybook] Storybook did not provide a story context',
+    )
   }
 
-  // Create a new nuxt app for each story
-  const storyNuxtAppId = `nuxt-app-${key}`
-  const storyNuxtCtx = getContext(storyNuxtAppId)
-
-  // Provide the config of the Nuxt app
-  window.__NUXT__ = {
-    config: {
-      app: { baseURL: '/' },
-      public: {},
-      ...runtimeConfig,
-    },
-    data: {},
-    serverRendered: false,
-    state: {},
-  }
-  // Set $fetch
-  // Based on https://github.com/nuxt/nuxt/blob/356173134280b66c5902e5129d2f5ee73b799352/packages/nuxt/src/core/templates.ts#L390-L403
-  if (!globalThis.$fetch) {
-    globalThis.$fetch = $fetch.create({
-      baseURL: '/',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }) as any
-  }
-
-  const nuxt = createNuxtApp({
-    id: storyNuxtAppId,
+  await createStoryNuxtApp(
     vueApp,
-  })
-
-  // Provide the Nuxt app as context
-  storyNuxtCtx.set(nuxt, true)
-  // ...also for calls of useNuxtApp with the default key
-  getContext('nuxt-app').set(nuxt, true)
-
-  await applyPlugins(nuxt, pluginsTyped)
-  await nuxt.hooks.callHook('app:created', vueApp)
-  await nuxt.hooks.callHook('app:beforeMount', vueApp)
-
-  // TODO: The following are usually called after the app is mounted
-  // But currently storybook doesn't provide a hook to do that
-  // Await nuxt.hooks.callHook('app:mounted', vueApp)
-
-  await nuxt.hooks.callHook('app:suspense:resolve')
-  // Await nextTick()
+    storyContext.canvasElement,
+    nuxtParameters(storyContext),
+  )
 })
+
+export const decorators: Decorator[] = [
+  () => ({
+    setup: () => () =>
+      h(NuxtStorybookRoot, null, {
+        default: () => h(resolveComponent('story')),
+      }),
+  }),
+]
+
+export const beforeEach = () => {
+  navigation.mockClear()
+}
+function nuxtParameters(context: StoryContext): NuxtParameters {
+  return (context.parameters.nuxt ?? {}) as NuxtParameters
+}
