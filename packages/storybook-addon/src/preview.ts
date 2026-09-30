@@ -9,13 +9,15 @@
  * https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/app/entry.ts
  */
 
+// Must be imported first
+// @ts-expect-error virtual file
+import { createNuxtPayload } from 'virtual:nuxt-runtime-config'
+// ----
 import { setup } from '@storybook/vue3-vite'
 import type { NuxtApp, ObjectPlugin, Plugin } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
 import { $fetch } from 'ofetch'
-// @ts-expect-error virtual file
-import { createNuxtPayload } from 'virtual:nuxt-runtime-config'
 
 // Re-export renderToCanvas and other required exports from vue3 entry-preview
 export {
