@@ -11,7 +11,7 @@ export * from '@storybook/vue3-vite/preset'
 
 /** Extensionless, so Vite picks the built `.mjs` next to this module. */
 const PREVIEW_ENTRY = normalize(
-  fileURLToPath(new URL('./preview', import.meta.url)),
+  fileURLToPath(new URL('preview', import.meta.url)),
 )
 
 export const core: PresetProperty<'core'> = async (config, options) => {

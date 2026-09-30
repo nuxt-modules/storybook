@@ -29,4 +29,4 @@ test('embedded storybook renders the story example', async ({ page }) => {
 })
 
 // The docs example is not covered here: the embedded story index is missing
-// its addon-docs entries (autodocs and MDX), a separate bug from #993.
+// Its addon-docs entries (autodocs and MDX), a separate bug from #993.

@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'vue-router'
 import type { RouterConfig } from '@nuxt/schema'
 
 const FALLBACK_ROUTE = {
-  // todo make it a proper fallback
+  // Todo make it a proper fallback
   component: { render: () => null },
   name: 'storybook-fallback',
   path: '/:pathMatch(.*)*',

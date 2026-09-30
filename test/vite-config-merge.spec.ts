@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+
 
 import { resolve } from 'pathe'
 import type { Nuxt } from '@nuxt/schema'
@@ -23,7 +23,7 @@ function appConfig(): ViteConfig {
   }
 }
 
-describe('mergeViteConfig', () => {
+describe(mergeViteConfig, () => {
   it('leaves the app config untouched', async () => {
     const nuxtConfig = appConfig()
     await mergeViteConfig({}, nuxtConfig, mockNuxt())

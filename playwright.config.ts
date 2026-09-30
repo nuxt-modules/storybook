@@ -4,17 +4,8 @@ import { defineConfig, devices } from '@playwright/test'
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './test',
-  testMatch: '**/*.browser.ts',
-  fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
-  use: {
-    trace: 'on-first-retry',
-  },
-
+  fullyParallel: true,
   projects: [
     {
       name: 'chromium',
@@ -31,7 +22,13 @@ export default defineConfig({
       use: { ...devices['Desktop Safari'] },
     },
   ],
-
+  reporter: 'html',
+  retries: process.env.CI ? 2 : 0,
+  testDir: './test',
+  testMatch: '**/*.browser.ts',
+  use: {
+    trace: 'on-first-retry',
+  },
   webServer: [
     {
       command: 'pnpm playground:storybook:dev',
@@ -51,4 +48,5 @@ export default defineConfig({
       url: 'http://127.0.0.1:6016',
     },
   ],
+  workers: process.env.CI ? 1 : undefined,
 })
