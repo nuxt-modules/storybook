@@ -1,5 +1,4 @@
 import replace from '@rollup/plugin-replace'
-import vuePlugin from '@vitejs/plugin-vue'
 import { resolvePath } from 'mlly'
 import { normalize } from 'pathe'
 import { mergeConfig, searchForWorkspaceRoot } from 'vite'

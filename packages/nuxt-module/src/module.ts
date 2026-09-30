@@ -98,7 +98,9 @@ export default defineNuxtModule<ModuleOptions>({
 
     const viteConfigPromise = new Promise<Readonly<ViteConfig>>((resolve) => {
       nuxt.hook('vite:configResolved', (config, { isClient }) => {
-        if (isClient) {resolve(config)}
+        if (isClient) {
+          resolve(config)
+        }
       })
     })
     ;(nuxt as unknown as Record<symbol, Promise<Readonly<ViteConfig>>>)[

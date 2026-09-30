@@ -15,7 +15,7 @@ import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
 import { $fetch } from 'ofetch'
 // @ts-expect-error virtual file
-import { runtimeConfig } from 'virtual:nuxt-runtime-config'
+import { runtimeConfig } from 'virtual:nuxt-storybook/options'
 
 // Re-export renderToCanvas and other required exports from vue3 entry-preview
 export {

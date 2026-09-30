@@ -8,7 +8,14 @@ export default defineBuildConfig({
     { input: 'src/preview' },
     { ext: 'js', format: 'esm', input: 'src/runtime/', outDir: 'dist/runtime' },
   ],
-  externals: ['storybook/internal/types'],
+  externals: [
+    '#build/css',
+    '#build/plugins',
+    'nuxt/app',
+    'storybook/internal/types',
+    'virtual:nuxt-storybook/options',
+    'vue',
+  ],
   rollup: {
     emitCJS: false,
     inlineDependencies: ['@vitejs/plugin-vue', '@rolldown/pluginutils'],

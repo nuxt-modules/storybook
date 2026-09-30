@@ -1,4 +1,4 @@
-
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { ViteConfig } from '@nuxt/schema'
 import { logger } from '../packages/nuxt-module/src/logger'
 
@@ -124,7 +124,9 @@ describe('storybook module setup', () => {
     await runModuleSetup(nuxt)
 
     await expect(nuxt.callHook('listen')).resolves.toBeUndefined()
-    await vi.waitFor(() => expect(error).toHaveBeenCalledWith())
+    await vi.waitFor(() =>
+      expect(error).toHaveBeenCalledWith(expect.any(String), expect.any(Error)),
+    )
 
     expect(error.mock.calls[0]?.[0]).toMatchInlineSnapshot(
       `"Failed to start Storybook"`,

@@ -1,5 +1,4 @@
-
-
+import { describe, expect, it } from 'vitest'
 import { resolve } from 'pathe'
 import type { Nuxt } from '@nuxt/schema'
 import type { UserConfig as ViteConfig } from 'vite'
@@ -23,7 +22,7 @@ function appConfig(): ViteConfig {
   }
 }
 
-describe(mergeViteConfig, () => {
+describe('mergeViteConfig', () => {
   it('leaves the app config untouched', async () => {
     const nuxtConfig = appConfig()
     await mergeViteConfig({}, nuxtConfig, mockNuxt())
@@ -60,13 +59,8 @@ describe(mergeViteConfig, () => {
           "pinia",
           "@nuxtjs/storybook > @storybook-vue/nuxt > @storybook/vue3 > lodash/kebabCase",
           "storybook > @storybook/core > jsdoc-type-pratt-parser",
-          "react/jsx-runtime",
-          "react",
-          "react-dom/client",
         ],
         "noDiscovery": true,
-        "rolldownOptions": undefined,
-        "rollupOptions": undefined,
       }
     `)
   })
