@@ -6,7 +6,7 @@ import type { Nuxt } from '@nuxt/schema'
 import type { Plugin, UserConfig as ViteConfig } from 'vite'
 import { browserIndex, servableDirs } from '../dirs'
 import { previewOptionsPlugin } from './plugins/preview-options'
- 
+
 const PACKAGE_NAME_RE = /^@storybook-vue\/nuxt$/
 
 export async function mergeViteConfig(
@@ -64,9 +64,7 @@ export async function mergeViteConfig(
       ...(vueBundlerPath ? [vueBundlerAliasPlugin(vueBundlerPath)] : []),
     ],
     resolve: {
-      alias: [
-        { find: PACKAGE_NAME_RE, replacement: browserIndex },
-      ],
+      alias: [{ find: PACKAGE_NAME_RE, replacement: browserIndex }],
     },
     server: {
       cors: true,

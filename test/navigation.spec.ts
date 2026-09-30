@@ -1,5 +1,5 @@
 // @vitest-environment happy-dom
-
+import { beforeEach, describe, expect, it } from 'vitest'
 
 import type { RouteLocationNormalized } from 'vue-router'
 import {
@@ -27,7 +27,7 @@ beforeEach(() => {
   navigation.mockClear()
 })
 
-describe(isExternalUrl, () => {
+describe('isExternalUrl', () => {
   it('reports a foreign origin', () => {
     expect(isExternalUrl('https://nuxt.com/docs')).toBeTruthy()
   })
@@ -51,7 +51,7 @@ describe(isExternalUrl, () => {
   })
 })
 
-describe(blockRouterNavigation, () => {
+describe('blockRouterNavigation', () => {
   it('aborts the navigation and reports its target', () => {
     const to = { fullPath: '/about?tab=1' } as RouteLocationNormalized
 
@@ -60,7 +60,7 @@ describe(blockRouterNavigation, () => {
   })
 })
 
-describe(guardExternalLinks, () => {
+describe('guardExternalLinks', () => {
   it('blocks an external link and reports its absolute URL', () => {
     const canvasElement = renderCanvas(
       '<a href="//nuxt.com/docs"><span>docs</span></a>',

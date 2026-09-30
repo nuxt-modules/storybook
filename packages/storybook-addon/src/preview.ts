@@ -6,7 +6,6 @@ import { createStoryNuxtApp } from './runtime/nuxt-app'
 import { NuxtStorybookRoot } from './runtime/nuxt-root'
 import type { NuxtParameters } from './types'
 
-
 setup(async (vueApp, storyContext) => {
   if (!storyContext?.canvasElement) {
     throw new Error(
@@ -32,7 +31,6 @@ export const decorators: Decorator[] = [
 
 export const beforeEach = () => {
   navigation.mockClear()
-
 }
 function nuxtParameters(context: StoryContext): NuxtParameters {
   return (context.parameters.nuxt ?? {}) as NuxtParameters
