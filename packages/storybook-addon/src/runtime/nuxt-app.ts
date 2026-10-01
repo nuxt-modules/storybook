@@ -1,3 +1,4 @@
+import { defu } from 'defu'
 import { addRouteMiddleware, applyPlugins, createNuxtApp } from 'nuxt/app'
 import { $fetch } from 'ofetch'
 import { getContext } from 'unctx'
@@ -65,6 +66,8 @@ async function bootstrapNuxtApp(
     baseURL: '/',
   }) as typeof globalThis.$fetch
 
+  // unset the default context to avoid conflicts with other stories rendered in the same canvas
+  getContext<NuxtApp>(appId).unset()
   const nuxt = createNuxtApp({
     id: appId,
     payload: createStoryPayload(parameters),
@@ -97,11 +100,11 @@ function createStoryPayload(parameters: NuxtParameters): Payload {
   const path = parameters.route || '/'
   const payload: Payload = {
     _errors: shallowReactive<Payload['_errors']>({}),
-    config: {
-      ...DEFAULT_RUNTIME_CONFIG,
-      ...runtimeConfig,
-      ...parameters.runtimeConfig,
-    },
+    config: defu(
+      parameters.runtimeConfig,
+      runtimeConfig,
+      DEFAULT_RUNTIME_CONFIG,
+    ) as Payload['config'],
     data: shallowReactive<Payload['data']>({}),
     once: new Set<string>(),
     path: path.includes('?') ? path : `${path}?`,
