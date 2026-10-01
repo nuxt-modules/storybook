@@ -1,5 +1,78 @@
 # Changelog
 
+## v10.0.0
+
+[compare changes](https://github.com/nuxt-modules/storybook/compare/v9.0.1...v10.0.0)
+
+### 🚀 Enhancements
+
+- Update to nuxt 4 ([#975](https://github.com/nuxt-modules/storybook/pull/975))
+- ⚠️  Add Storybook 10 and Nuxt 4 support ([#981](https://github.com/nuxt-modules/storybook/pull/981))
+
+### 🩹 Fixes
+
+- Replace node-path with pathe for windows compat and fix e2e CI ([#1026](https://github.com/nuxt-modules/storybook/pull/1026))
+- Set noDiscovery for vite optimize deps ([#1027](https://github.com/nuxt-modules/storybook/pull/1027))
+- Normalize autoimports paths for windows ([#1077](https://github.com/nuxt-modules/storybook/pull/1077))
+- Resolve vue full bundle from absolutePath ([#1098](https://github.com/nuxt-modules/storybook/pull/1098))
+- Derive the dev proxy target from the nuxt dev server address ([#1071](https://github.com/nuxt-modules/storybook/pull/1071))
+- Resolve dev server deadlock when starting embedded Storybook ([#1069](https://github.com/nuxt-modules/storybook/pull/1069))
+- Seed runtime config before user plugins are evaluated ([#1107](https://github.com/nuxt-modules/storybook/pull/1107))
+
+### 📖 Documentation
+
+- Align version requirements for Nuxt 4.x and Storybook 10.x ([#998](https://github.com/nuxt-modules/storybook/pull/998))
+- Recommend `https://pkg.pr.new/@nuxtjs/storybook@main` as preview build, remove npm nightly releases ([#1062](https://github.com/nuxt-modules/storybook/pull/1062))
+- Align minimark with @nuxt/content ([#1103](https://github.com/nuxt-modules/storybook/pull/1103))
+- Add migration page ([#1106](https://github.com/nuxt-modules/storybook/pull/1106))
+
+### 📦 Build
+
+- Externalise `@nuxt/schema` types ([#1076](https://github.com/nuxt-modules/storybook/pull/1076))
+
+### 🏡 Chore
+
+- Update dependencies to latest minor/patch ([#933](https://github.com/nuxt-modules/storybook/pull/933))
+- Disable testing on Node 21 due to known issues ([#945](https://github.com/nuxt-modules/storybook/pull/945))
+- Pin GitHub Action digests to semver in Renovate config ([#967](https://github.com/nuxt-modules/storybook/pull/967))
+- **deps:** ⚠️  Update dependency storybook to v10 ([#972](https://github.com/nuxt-modules/storybook/pull/972))
+- Fix `nuxt init` in e2e tests ([#991](https://github.com/nuxt-modules/storybook/pull/991))
+- Use pkg-pr-new for releases of PRs ([#1029](https://github.com/nuxt-modules/storybook/pull/1029))
+- Add release ci ([#1028](https://github.com/nuxt-modules/storybook/pull/1028))
+- Migrate to oxlint and fix a few linter issues ([#1018](https://github.com/nuxt-modules/storybook/pull/1018))
+- Remove remaining reference to eslint ([#1030](https://github.com/nuxt-modules/storybook/pull/1030))
+- Update @nuxt/test-utils to v4.0.0 in `nuxtrc` ([#1043](https://github.com/nuxt-modules/storybook/pull/1043))
+- Upgrade to @nuxt/ui v4 with Tailwind CSS v4 in docs ([#996](https://github.com/nuxt-modules/storybook/pull/996))
+- Fix build command for Netlify ([#1046](https://github.com/nuxt-modules/storybook/pull/1046))
+- Release nightly also on pkg.pr.new ([#1057](https://github.com/nuxt-modules/storybook/pull/1057))
+- **ci:** Adjust script in 'Create Sample Project' step ([#1075](https://github.com/nuxt-modules/storybook/pull/1075))
+- **pnpm:** Use catalog ([#1090](https://github.com/nuxt-modules/storybook/pull/1090))
+- Upgrade pnpm to v11 ([#1091](https://github.com/nuxt-modules/storybook/pull/1091))
+- Raise node version minimum to 22 ([#1095](https://github.com/nuxt-modules/storybook/pull/1095))
+
+### 🤖 CI
+
+- Reduce matrix compatibility due to pnpm and update pnpm action ([#1078](https://github.com/nuxt-modules/storybook/pull/1078))
+- Run only in node 24 ([#1096](https://github.com/nuxt-modules/storybook/pull/1096))
+- Add --compact --pnpm to pkg.pr.new command ([#1099](https://github.com/nuxt-modules/storybook/pull/1099))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Add Storybook 10 and Nuxt 4 support ([#981](https://github.com/nuxt-modules/storybook/pull/981))
+- **deps:** ⚠️  Update dependency storybook to v10 ([#972](https://github.com/nuxt-modules/storybook/pull/972))
+
+### ❤️ Contributors
+
+- Julien Huang <julien.h.dev@gmail.com>
+- Daniel Roe ([@danielroe](https://github.com/danielroe))
+- Simon <simon.cornforth@srcdev.co.uk>
+- Yoshihiro Yamaguchi ([@yamachi4416](https://github.com/yamachi4416))
+- Tobias Diez ([@tobiasdiez](https://github.com/tobiasdiez))
+- Tony Kornmeier ([@akornmeier](https://github.com/akornmeier))
+- Alex Korytskyi ([@alex-key](https://github.com/alex-key))
+- Julian Martin <julianmarti96n@gmail.com>
+- Nestor Vera <nestorvera@me.com>
+
 ## Unreleased
 
 ### 🚀 Enhancements
