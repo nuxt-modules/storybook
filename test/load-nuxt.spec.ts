@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest'
 import { fileURLToPath } from 'node:url'
 import { loadNuxtViteConfig } from '../packages/storybook-addon/src/node/load-nuxt'
 
@@ -11,8 +10,8 @@ describe('loadNuxtViteConfig (standalone)', () => {
     async () => {
       const { nuxt, viteConfig } = await loadNuxtViteConfig(playgroundDir)
 
-      expect(nuxt.options.pages).toBeTruthy()
-      expect(nuxt.options.ssr).toBeFalsy()
+      expect(nuxt.options.pages).toBe(true)
+      expect(nuxt.options.ssr).toBe(false)
       expect(viteConfig.plugins?.length).toBeGreaterThan(0)
 
       const [, routerOptions] =
