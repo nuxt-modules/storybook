@@ -1,19 +1,10 @@
 import { defineNuxtModule } from '@nuxt/kit'
-import type { ViteConfig } from '@nuxt/schema'
 import type { LogLevel } from './logger'
 import { logger } from './logger'
 
 import { setupStorybook } from './storybook'
 
 export type * from '@storybook-vue/nuxt'
-
-/**
- * Well-known key used to hand the client Vite config to
- * `@storybook-vue/nuxt`, which runs in this same process.
- */
-const VITE_CONFIG_PROMISE = Symbol.for(
-  '@storybook-vue/nuxt:vite-config-promise',
-)
 
 export interface ModuleOptions {
   /**
@@ -95,15 +86,6 @@ export default defineNuxtModule<ModuleOptions>({
     logger.level = options.logLevel
 
     logger.verbose('🔌  Storybook Module Setup')
-
-    const viteConfigPromise = new Promise<Readonly<ViteConfig>>((resolve) => {
-      nuxt.hook('vite:configResolved', (config, { isClient }) => {
-        if (isClient) resolve(config)
-      })
-    })
-    ;(nuxt as unknown as Record<symbol, Promise<Readonly<ViteConfig>>>)[
-      VITE_CONFIG_PROMISE
-    ] = viteConfigPromise
 
     nuxt.hook('listen', () => {
       setupStorybook(options, nuxt).catch((error: unknown) => {

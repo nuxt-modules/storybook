@@ -12,6 +12,8 @@ export default defineNuxtConfig({
     '@nuxtjs/storybook',
     '@nuxt/test-utils/module',
     '@nuxtjs/i18n',
+    // Local: regression probe for #1072, see the module itself.
+    './modules/stateful-vite-plugin-probe',
   ],
   storybook: {
     // Very verbose logs for debugging

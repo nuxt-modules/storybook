@@ -1,11 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import type { ViteConfig } from '@nuxt/schema'
 import { logger } from '../packages/nuxt-module/src/logger'
-
-/** Shared with @storybook-vue/nuxt's loadNuxtViteConfig (#993). */
-const VITE_CONFIG_PROMISE = Symbol.for(
-  '@storybook-vue/nuxt:vite-config-promise',
-)
 
 /** Long enough for a blocked `listen` hook to lose the race below. */
 const BLOCKED_HOOK_GRACE_MS = 50
@@ -49,12 +43,6 @@ async function runModuleSetup(
   )
 }
 
-function readViteConfigPromise(nuxt: StubNuxt) {
-  return (nuxt as unknown as Record<symbol, Promise<ViteConfig> | undefined>)[
-    VITE_CONFIG_PROMISE
-  ]
-}
-
 describe('storybook module setup', () => {
   beforeEach(() => {
     setupStorybook.mockReset()
@@ -79,32 +67,11 @@ describe('storybook module setup', () => {
     expect(setupStorybook).toHaveBeenCalledOnce()
   })
 
-  it('resolves the shared promise with the client vite config', async () => {
-    setupStorybook.mockResolvedValue()
-    const nuxt = createStubNuxt()
-    await runModuleSetup(nuxt)
-
-    await nuxt.callHook(
-      'vite:configResolved',
-      { mode: 'server' },
-      { isClient: false },
-    )
-    await nuxt.callHook(
-      'vite:configResolved',
-      { mode: 'client' },
-      { isClient: true },
-    )
-
-    await expect(readViteConfigPromise(nuxt)).resolves.toMatchInlineSnapshot(`
-      {
-        "mode": "client",
-      }
-    `)
-  })
-
-  it('captures the vite config before storybook can start', async () => {
-    // Storybook starts after 'listen'; by then vite:configResolved may
-    // already have fired, so the capture cannot be registered lazily (#993).
+  it('only registers the listen hook', async () => {
+    // The module no longer captures vite:configResolved itself; the addon's
+    // loadNuxtViteConfig extracts a fresh config from its own Nuxt instance
+    // instead of the app's live one, to avoid sharing live plugin state
+    // with Storybook's Vite server (#1072).
     setupStorybook.mockResolvedValue()
     const nuxt = createStubNuxt()
     await runModuleSetup(nuxt)
@@ -112,7 +79,6 @@ describe('storybook module setup', () => {
     expect(nuxt.registeredHooks()).toMatchInlineSnapshot(`
       [
         "listen",
-        "vite:configResolved",
       ]
     `)
   })
@@ -138,7 +104,6 @@ describe('storybook module setup', () => {
     await runModuleSetup(nuxt, { enabled: false })
 
     expect(nuxt.registeredHooks()).toMatchInlineSnapshot(`[]`)
-    expect(readViteConfigPromise(nuxt)).toBeUndefined()
     expect(setupStorybook).not.toHaveBeenCalled()
   })
 })

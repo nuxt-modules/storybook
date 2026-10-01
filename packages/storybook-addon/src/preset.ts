@@ -32,11 +32,6 @@ async function resolveModule(specifier: string): Promise<string> {
   return pathToFileURL(require.resolve(specifier)).href
 }
 
-/** Well-known key the @nuxtjs/storybook module uses to hand over the config. */
-const VITE_CONFIG_PROMISE = Symbol.for(
-  '@storybook-vue/nuxt:vite-config-promise',
-)
-
 const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
 
@@ -77,41 +72,31 @@ async function extendComposables(nuxt: Nuxt) {
   })
 }
 
-async function loadNuxtViteConfig(root: string | undefined) {
-  const { loadNuxt, tryUseNuxt, buildNuxt, extendPages } =
+export async function loadNuxtViteConfig(root: string | undefined) {
+  const { loadNuxt, tryUseNuxt, buildNuxt, extendPages, nuxtCtx } =
     await import('@nuxt/kit')
 
-  let nuxt = tryUseNuxt()
-  if (nuxt) {
-    // Nuxt is already running in this process (dev mode, started from
-    // @nuxtjs/storybook). Prefer the config the module captured during its
-    // setup: vite:configResolved may already have fired, in which case the
-    // hook registered below would never run (#993).
-    const nuxtRes = nuxt
-    const viteConfigPromise = (
-      nuxt as unknown as Record<symbol, Promise<ViteConfig> | undefined>
-    )[VITE_CONFIG_PROMISE]
-    if (viteConfigPromise) {
-      return viteConfigPromise.then((viteConfig) => ({
-        viteConfig,
-        nuxt: nuxtRes,
-      }))
-    }
-    // Older @nuxtjs/storybook: Nuxt is still in the "load module" state, so
-    // the event has yet to fire.
-    return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>((resolve) => {
-      nuxtRes.hook('vite:configResolved', (config, { isClient }) => {
-        if (isClient) {
-          resolve({
-            nuxt: nuxtRes,
-            viteConfig: config,
-          })
-        }
-      })
-    })
-  }
-  nuxt = await loadNuxt({
-    cwd: root,
+  // Nuxt may already be running in this process (dev mode, started from
+  // @nuxtjs/storybook). Its `dev`/`devServer` options and runtime config are
+  // what the merged Vite config must reflect, so keep a reference to it -
+  // but never reuse its *resolved Vite config* directly. That config carries
+  // the app's live, already-started plugin instances, and handing them to a
+  // second Vite server re-runs their lifecycle hooks against that server,
+  // corrupting the app's own running dev server (#1072). Instead, always
+  // extract a fresh Vite config from a separate, never-started Nuxt
+  // instance below, the same way the "no Nuxt running yet" path already did.
+  const appNuxt = tryUseNuxt()
+
+  // loadNuxt() below sets @nuxt/kit's global `nuxtCtx` singleton to our own
+  // throwaway instance, and nuxt.close() unconditionally clears it again -
+  // so any code that resolves the running app's Nuxt via `tryUseNuxt()`
+  // outside of an async-scoped call (e.g. a timer or watcher callback, not
+  // `runWithNuxtContext`) would see it disappear the moment we're done here.
+  // Save and restore it around the extraction so the app keeps working.
+  const previousNuxtCtx = nuxtCtx.tryUse()
+
+  const nuxt = await loadNuxt({
+    cwd: appNuxt ? appNuxt.options.rootDir : root,
     dev: false,
     overrides: {
       appId: 'nuxt-app',
@@ -152,26 +137,28 @@ async function loadNuxtViteConfig(root: string | undefined) {
   // Get Vite config from Nuxt
   // https://nuxt.com/docs/api/kit/examples#accessing-nuxt-vite-config
   await nuxt.ready()
-  return new Promise<{ viteConfig: ViteConfig; nuxt: Nuxt }>(
-    (resolve, reject) => {
-      nuxt.hook('vite:configResolved', (config, { isClient }) => {
-        if (isClient) {
-          resolve({
-            nuxt,
-            viteConfig: config,
-          })
-          // Stop the build process, as we don't need to build the Nuxt app
-          throw new Error('_stop_')
-        }
-      })
+  const viteConfig = await new Promise<ViteConfig>((resolve, reject) => {
+    nuxt.hook('vite:configResolved', (config, { isClient }) => {
+      if (isClient) {
+        resolve(config)
+        // Stop the build process, as we don't need to build the Nuxt app
+        throw new Error('_stop_')
+      }
+    })
 
-      buildNuxt(nuxt).catch((error) => {
-        if (!error.toString().includes('_stop_')) {
-          reject(error)
-        }
-      })
-    },
-  ).finally(() => nuxt.close())
+    buildNuxt(nuxt).catch((error) => {
+      if (!error.toString().includes('_stop_')) {
+        reject(error)
+      }
+    })
+  }).finally(async () => {
+    await nuxt.close()
+    if (previousNuxtCtx) {
+      nuxtCtx.set(previousNuxtCtx)
+    }
+  })
+
+  return { nuxt: appNuxt ?? nuxt, viteConfig }
 }
 
 async function resolveVueBundlerPath(nuxt: Nuxt): Promise<string | undefined> {
