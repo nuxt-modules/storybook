@@ -9,15 +9,13 @@
  * https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/app/entry.ts
  */
 
-// Must be imported first
-// @ts-expect-error virtual file
-import { createNuxtPayload } from 'virtual:nuxt-runtime-config'
-// ----
 import { setup } from '@storybook/vue3-vite'
 import type { NuxtApp, ObjectPlugin, Plugin } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
 import { getContext } from 'unctx'
 import { $fetch } from 'ofetch'
+// @ts-expect-error virtual file
+import { runtimeConfig } from 'virtual:nuxt-storybook/options'
 
 // Re-export renderToCanvas and other required exports from vue3 entry-preview
 export {
@@ -57,7 +55,16 @@ setup(async (_vueApp, storyContext) => {
   const storyNuxtCtx = getContext(storyNuxtAppId)
 
   // Provide the config of the Nuxt app
-  window.__NUXT__ = createNuxtPayload()
+  window.__NUXT__ = {
+    config: {
+      app: { baseURL: '/' },
+      public: {},
+      ...runtimeConfig,
+    },
+    data: {},
+    serverRendered: false,
+    state: {},
+  }
   // Set $fetch
   // Based on https://github.com/nuxt/nuxt/blob/356173134280b66c5902e5129d2f5ee73b799352/packages/nuxt/src/core/templates.ts#L390-L403
   if (!globalThis.$fetch) {

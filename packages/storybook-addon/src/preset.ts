@@ -1,6 +1,5 @@
 import { fileURLToPath } from 'node:url'
-import { join, normalize } from 'pathe'
-import stringify from 'json-stable-stringify'
+import { normalize } from 'pathe'
 import { viteFinal as vueViteFinal } from '@storybook/vue3-vite/preset'
 import type { PresetProperty } from 'storybook/internal/types'
 import { loadNuxtViteConfig } from './node/load-nuxt'
@@ -11,7 +10,7 @@ export * from '@storybook/vue3-vite/preset'
 
 /** Extensionless, so Vite picks the built `.mjs` next to this module. */
 const PREVIEW_ENTRY = normalize(
-  fileURLToPath(new URL('./preview', import.meta.url)),
+  fileURLToPath(new URL('preview', import.meta.url)),
 )
 
 export const core: PresetProperty<'core'> = async (config, options) => {
@@ -24,7 +23,7 @@ export const core: PresetProperty<'core'> = async (config, options) => {
       options:
         typeof framework === 'string' ? {} : framework.options.builder || {},
     },
-    renderer: fileURLToPath(import.meta.resolve('@storybook/vue3-vite/preset')),
+    renderer: fileURLToPath(import.meta.resolve('@storybook/vue3/preset')),
   }
 }
 

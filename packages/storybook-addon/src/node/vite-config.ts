@@ -1,5 +1,4 @@
 import replace from '@rollup/plugin-replace'
-import vuePlugin from '@vitejs/plugin-vue'
 import { resolvePath } from 'mlly'
 import { normalize } from 'pathe'
 import { mergeConfig, searchForWorkspaceRoot } from 'vite'
@@ -30,7 +29,7 @@ export async function mergeViteConfig(
   optimizeInclude.push(
     // Add lodash/kebabCase, since it is still a cjs module
     // Imported in https://github.com/storybookjs/storybook/blob/480359d5e340d97476131781c69b4b5e3b724f57/code/renderers/vue3/src/docs/sourceDecorator.ts#L18
-    // todo; will be removed in SB 12
+    // Todo; will be removed in SB 12
     '@nuxtjs/storybook > @storybook-vue/nuxt > @storybook/vue3 > lodash/kebabCase',
     // Workaround for https://github.com/nuxt-modules/storybook/issues/776
     'storybook > @storybook/core > jsdoc-type-pratt-parser',
@@ -48,6 +47,7 @@ export async function mergeViteConfig(
       'import.meta.client': 'true',
       'import.meta.server': 'false',
     },
+    envPrefix: ['NUXT_'],
     plugins: [
       replace({
         preventAssignment: true,
@@ -65,7 +65,6 @@ export async function mergeViteConfig(
       cors: true,
       fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...servableDirs] },
     },
-    envPrefix: ['NUXT_'],
   })
 }
 
@@ -80,7 +79,7 @@ async function resolveVueBundlerPath(nuxt: Nuxt): Promise<string | undefined> {
 function vueBundlerAliasPlugin(vueBundlerPath: string): Plugin {
   return {
     name: 'nuxt-storybook:vue-bundler-alias',
-    // nuxt set it in vite config
+    // Nuxt set it in vite config
     enforce: 'post',
     config: () => ({ resolve: { alias: { vue: vueBundlerPath } } }),
   }

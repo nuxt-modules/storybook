@@ -4,8 +4,8 @@ import type { UserConfig as ViteConfig } from 'vite'
 import { runtimeDir } from '../dirs'
 
 interface LoadedNuxt {
-   nuxt: Nuxt
-   viteConfig: ViteConfig
+  nuxt: Nuxt
+  viteConfig: ViteConfig
 }
 
 export async function loadNuxtViteConfig(
@@ -50,7 +50,7 @@ export async function loadNuxtViteConfig(
 function asViteConfig(config: Readonly<NuxtViteConfig>): ViteConfig {
   return config as unknown as ViteConfig
 }
- 
+
 function captureClientViteConfig(
   nuxt: Nuxt,
   buildNuxt: (nuxt: Nuxt) => Promise<void>,
