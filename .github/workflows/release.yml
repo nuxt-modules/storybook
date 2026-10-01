@@ -50,6 +50,7 @@ jobs:
 
   release:
     name: Release
+    environment: publish
     concurrency:
       group: release
     permissions:
