@@ -47,9 +47,7 @@ export const NuxtStorybookRoot = defineComponent({
       disposeStoryNuxtApp(nuxtApp)
     })
 
-    const onResolve = () => {
-      void nuxtApp.hooks.callHook('app:suspense:resolve')
-    }
+    const onResolve = nuxtApp.deferHydration()
 
     return () => h(Suspense, { onResolve }, slots.default?.())
   },
