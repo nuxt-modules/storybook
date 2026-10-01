@@ -63,7 +63,7 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
     port: storybookServerPort,
     configDir,
     configType: 'DEVELOPMENT',
-    // ignore prompts
+    // Ignore prompts
     ci: true,
     cache: storybookCache,
     // Don't check for storybook updates (we're using the latest version)
@@ -114,12 +114,12 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
 
   nuxt.hook('devtools:customTabs', (tabs) => {
     tabs.push({
+      icon: 'devicon:storybook',
       name: 'nuxt-storybook',
       title: 'Storybook',
-      icon: 'devicon:storybook',
       view: {
-        type: 'iframe',
         src: `${storybookRoute}/`,
+        type: 'iframe',
       },
     })
   })

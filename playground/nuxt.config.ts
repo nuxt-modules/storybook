@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   },
   modules: [
     // Built package, not the raw source: embedded startup hangs when the
-    // module is loaded through jiti's TS transform. Needs `pnpm build` first.
+    // Module is loaded through jiti's TS transform. Needs `pnpm build` first.
     '@nuxtjs/storybook',
     '@nuxt/test-utils/module',
     '@nuxtjs/i18n',
@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     // Very verbose logs for debugging
     logLevel: Number.POSITIVE_INFINITY,
     // Lets the e2e setup pin the port so it cannot collide with the
-    // standalone instance (see playwright.config.ts)
+    // Standalone instance (see playwright.config.ts)
     ...(process.env.STORYBOOK_PORT
       ? { port: Number(process.env.STORYBOOK_PORT) }
       : {}),
