@@ -1,0 +1,67 @@
+name: Release PR
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+    branches:
+      - main
+
+permissions: {}
+
+jobs:
+  detect:
+    name: Detect release PR
+    runs-on: ubuntu-latest
+    if: "${{ startsWith(github.event.pull_request.title, 'chore: v') && github.event.pull_request.head.repo.full_name == github.repository }}"
+    outputs:
+      version: ${{ steps.title.outputs.version }}
+    env:
+      PR_TITLE: ${{ github.event.pull_request.title }}
+    steps:
+      - name: Extract version from title
+        id: title
+        run: |
+          if [[ "$PR_TITLE" =~ ^chore:\ v([0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?)$ ]]; then
+            echo "version=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+          fi
+
+  changelog:
+    name: Update changelog and versions
+    runs-on: ubuntu-latest
+    needs: detect
+    if: ${{ needs.detect.outputs.version != '' }}
+    concurrency:
+      group: release-pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    permissions:
+      contents: write
+    timeout-minutes: 10
+    env:
+      VERSION: ${{ needs.detect.outputs.version }}
+      HEAD_REF: ${{ github.head_ref }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: pnpm install --ignore-scripts
+
+      - name: Update changelog and versions
+        run: pnpm release:prepare "$VERSION"
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md package.json packages/*/package.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(release): v$VERSION"
+            git push origin "HEAD:$HEAD_REF"
+          fi

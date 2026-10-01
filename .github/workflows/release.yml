@@ -46,16 +46,39 @@ jobs:
       - name: 📦 Release pkg.pr.new
         run: pnpm pkg-pr-new publish --compact --pnpm './packages/*'
 
+  detect:
+    name: Detect release
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && github.repository_owner == 'nuxt-modules' }}
+    permissions:
+      contents: read
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Check for an untagged version
+        id: version
+        run: |
+          TAG="v$(node -p "require('./package.json').version")"
+          REMOTE_TAG="$(git ls-remote --tags origin "refs/tags/$TAG")"
+          if [ "$TAG" != "v" ] && [ -z "$REMOTE_TAG" ]; then
+            echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          fi
+
   release:
     name: Release
+    needs: detect
     concurrency:
       group: release
     permissions:
       contents: write
       id-token: write
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && github.ref_type == 'tag' && github.repository_owner == 'nuxt-modules' }}
+    if: ${{ needs.detect.outputs.tag != '' }}
     timeout-minutes: 20
+    env:
+      TAG: ${{ needs.detect.outputs.tag }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -73,7 +96,10 @@ jobs:
       - name: Publish packages
         run: pnpm publish --recursive --access public --no-git-checks --provenance --tag latest
 
+      - name: Create tag
+        run: git tag "$TAG" && git push origin "$TAG"
+
       - name: Create GitHub Release
-        run: pnpm release-notes
+        run: pnpm changelogen gh release "$TAG"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
