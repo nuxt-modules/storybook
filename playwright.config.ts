@@ -36,8 +36,8 @@ export default defineConfig({
       url: 'http://127.0.0.1:6006',
     },
     // Embedded mode: `nuxt dev` starts Storybook itself, so readiness is
-    // checked on the embedded Storybook port. Nuxt's port is passed as a flag
-    // rather than PORT, which Storybook's dev server would also try to bind.
+    // Checked on the embedded Storybook port. Nuxt's port is passed as a flag
+    // Rather than PORT, which Storybook's dev server would also try to bind.
     {
       command: 'pnpm --filter=./playground exec nuxt dev --port 3100',
       env: {
