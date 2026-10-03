@@ -5,7 +5,7 @@ const config: StorybookConfig = {
   addons: ['@storybook/addon-docs', '@chromatic-com/storybook'],
   framework: {
     name: '@storybook-vue/nuxt',
-    options: {},
+     options: { docgen: 'vue-component-meta' } 
   },
   stories: [
     '../components/**/*.mdx',
