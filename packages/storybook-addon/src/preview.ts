@@ -1,3 +1,6 @@
+// must be first
+import './runtime/fetch'
+// ---
 import { setup } from '@storybook/vue3-vite'
 import { h, resolveComponent } from 'vue'
 import type { Decorator, StoryContext } from '@storybook/vue3'

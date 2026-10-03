@@ -1,6 +1,5 @@
 import { defu } from 'defu'
 import { addRouteMiddleware, applyPlugins, createNuxtApp } from 'nuxt/app'
-import { $fetch } from 'ofetch'
 import { getContext } from 'unctx'
 import { reactive, shallowReactive } from 'vue'
 import type { NuxtApp } from 'nuxt/app'
@@ -61,10 +60,6 @@ async function bootstrapNuxtApp(
   story: StoryApp,
 ): Promise<NuxtApp> {
   const { appId, parameters } = story
-
-  globalThis.$fetch ??= $fetch.create({
-    baseURL: '/',
-  }) as typeof globalThis.$fetch
 
   // unset the default context to avoid conflicts with other stories rendered in the same canvas
   getContext<NuxtApp>(appId).unset()
