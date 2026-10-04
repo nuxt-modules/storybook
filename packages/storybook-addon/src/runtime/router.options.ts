@@ -8,7 +8,9 @@ const FALLBACK_ROUTE = {
   path: '/:pathMatch(.*)*',
 }
 
-export default {
+const routerOptions: RouterConfig = {
   history: (base) => createMemoryHistory(base),
   routes: (routes) => [...routes, FALLBACK_ROUTE],
-} satisfies RouterConfig
+}
+
+export default routerOptions
