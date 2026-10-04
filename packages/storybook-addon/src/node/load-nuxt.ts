@@ -48,7 +48,7 @@ export async function loadNuxtViteConfig(
 }
 
 function asViteConfig(config: Readonly<NuxtViteConfig>): ViteConfig {
-  return config as unknown as ViteConfig
+  return config
 }
 
 function captureClientViteConfig(

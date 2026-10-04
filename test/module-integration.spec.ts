@@ -1,3 +1,4 @@
+import { beforeEach, vi, expect, describe, it } from 'vitest';
 import type { ViteConfig } from '@nuxt/schema'
 import { logger } from '../packages/nuxt-module/src/logger'
 
@@ -75,7 +76,7 @@ describe('storybook module setup', () => {
     ])
 
     expect(winner).toMatchInlineSnapshot(`"listen returned"`)
-    expect(setupStorybook).toHaveBeenCalledOnce()
+    expect(setupStorybook).toHaveBeenCalledTimes(1)
   })
 
   it('resolves the shared promise with the client vite config', async () => {
