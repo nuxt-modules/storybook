@@ -1,13 +1,14 @@
+import { expect } from 'vitest';
 import { expect, fn, userEvent, within } from 'storybook/test'
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
 
 import MyButton from './MyButton.vue'
 
 const meta = {
-  args: { label: 'Button', onClick: fn() },
   argTypes: {
     size: { control: 'select', options: ['small', 'medium', 'large'] },
   },
+  args: { label: 'Button', onClick: fn() },
   component: MyButton,
   tags: ['autodocs'],
   title: 'Example/Button',

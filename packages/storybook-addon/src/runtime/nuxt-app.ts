@@ -61,7 +61,7 @@ async function bootstrapNuxtApp(
 ): Promise<NuxtApp> {
   const { appId, parameters } = story
 
-  // unset the default context to avoid conflicts with other stories rendered in the same canvas
+  // Unset the default context to avoid conflicts with other stories rendered in the same canvas
   getContext<NuxtApp>(appId).unset()
   const nuxt = createNuxtApp({
     id: appId,

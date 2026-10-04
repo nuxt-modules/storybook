@@ -1,5 +1,5 @@
 // @vitest-environment happy-dom
-import { beforeEach, describe, expect, it } from 'vitest'
+
 
 import type { RouteLocationNormalized } from 'vue-router'
 import {
@@ -27,47 +27,47 @@ beforeEach(() => {
   navigation.mockClear()
 })
 
-describe('isExternalUrl', () => {
+describe(isExternalUrl, () => {
   it('reports a foreign origin', () => {
-    expect(isExternalUrl('https://nuxt.com/docs')).toBeTruthy()
+    expect(isExternalUrl('https://nuxt.com/docs')).toBe(true)
   })
 
   it('reports a protocol-relative host', () => {
-    expect(isExternalUrl('//nuxt.com/docs')).toBeTruthy()
+    expect(isExternalUrl('//nuxt.com/docs')).toBe(true)
   })
 
   it('ignores the preview origin', () => {
-    expect(isExternalUrl(`${location.origin}/about`)).toBeFalsy()
+    expect(isExternalUrl(`${location.origin}/about`)).toBe(false)
   })
 
   it('ignores relative links', () => {
-    expect(isExternalUrl('/about')).toBeFalsy()
-    expect(isExternalUrl('about')).toBeFalsy()
+    expect(isExternalUrl('/about')).toBe(false)
+    expect(isExternalUrl('about')).toBe(false)
   })
 
   it('ignores protocols the browser owns', () => {
-    expect(isExternalUrl('mailto:hi@nuxt.com')).toBeFalsy()
-    expect(isExternalUrl('tel:+33123456789')).toBeFalsy()
+    expect(isExternalUrl('mailto:hi@nuxt.com')).toBe(false)
+    expect(isExternalUrl('tel:+33123456789')).toBe(false)
   })
 })
 
-describe('blockRouterNavigation', () => {
+describe(blockRouterNavigation, () => {
   it('aborts the navigation and reports its target', () => {
     const to = { fullPath: '/about?tab=1' } as RouteLocationNormalized
 
-    expect(blockRouterNavigation(to)).toBeFalsy()
+    expect(blockRouterNavigation(to)).toBe(false)
     expect(navigation).toHaveBeenCalledWith('/about?tab=1')
   })
 })
 
-describe('guardExternalLinks', () => {
+describe(guardExternalLinks, () => {
   it('blocks an external link and reports its absolute URL', () => {
     const canvasElement = renderCanvas(
       '<a href="//nuxt.com/docs"><span>docs</span></a>',
     )
     guardExternalLinks(canvasElement)
 
-    expect(clickLink(canvasElement).defaultPrevented).toBeTruthy()
+    expect(clickLink(canvasElement).defaultPrevented).toBe(true)
     expect(navigation).toHaveBeenCalledWith(
       `${location.protocol}//nuxt.com/docs`,
     )
@@ -77,7 +77,7 @@ describe('guardExternalLinks', () => {
     const canvasElement = renderCanvas('<a href="/about">about</a>')
     guardExternalLinks(canvasElement)
 
-    expect(clickLink(canvasElement).defaultPrevented).toBeFalsy()
+    expect(clickLink(canvasElement).defaultPrevented).toBe(false)
     expect(navigation).not.toHaveBeenCalled()
   })
 
@@ -85,7 +85,7 @@ describe('guardExternalLinks', () => {
     const canvasElement = renderCanvas('<a href="https://nuxt.com/">nuxt</a>')
     guardExternalLinks(canvasElement)()
 
-    expect(clickLink(canvasElement).defaultPrevented).toBeFalsy()
+    expect(clickLink(canvasElement).defaultPrevented).toBe(false)
     expect(navigation).not.toHaveBeenCalled()
   })
 })

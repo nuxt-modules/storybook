@@ -1,3 +1,4 @@
+import { expect } from 'vitest';
 import { expect, userEvent, within } from 'storybook/test'
 import { navigation } from '@storybook-vue/nuxt'
 import type { Meta, StoryObj } from '@nuxtjs/storybook'

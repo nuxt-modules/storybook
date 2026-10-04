@@ -1,4 +1,4 @@
-// must be first
+// Must be first
 import './runtime/fetch'
 // ---
 import { setup } from '@storybook/vue3-vite'
