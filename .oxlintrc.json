@@ -19,7 +19,11 @@
     "perf": "error",
     "style": "warn"
   },
-  "rules": {
+  "rules": { 
+    "vitest/prefer-importing-vitest-globals": "off",
+    "vitest/prefer-called-times": "off",
+    "vitest/prefer-to-be-truthy": "off",
+    "vitest/prefer-to-be-falsy": "off",
     "vitest/valid-title": ["error", { "allowArguments": true }]
   },
   "jsPlugins": ["@nuxt/eslint-plugin"],

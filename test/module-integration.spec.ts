@@ -75,7 +75,7 @@ describe('storybook module setup', () => {
     ])
 
     expect(winner).toMatchInlineSnapshot(`"listen returned"`)
-    expect(setupStorybook).toHaveBeenCalledTimes(1)
+    expect(setupStorybook).toHaveBeenCalledOnce()
   })
 
   it('resolves the shared promise with the client vite config', async () => {

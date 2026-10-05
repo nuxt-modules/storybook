@@ -1,4 +1,3 @@
-import { expect } from 'vitest';
 import { expect, within } from 'storybook/test'
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
 

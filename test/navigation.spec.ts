@@ -1,6 +1,5 @@
 // @vitest-environment happy-dom
 
-
 import type { RouteLocationNormalized } from 'vue-router'
 import {
   blockRouterNavigation,
