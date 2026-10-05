@@ -19,6 +19,9 @@
     "perf": "error",
     "style": "warn"
   },
+  "rules": {
+    "vitest/valid-title": ["error", { "allowArguments": true }]
+  },
   "jsPlugins": ["@nuxt/eslint-plugin"],
   "overrides": [
     {

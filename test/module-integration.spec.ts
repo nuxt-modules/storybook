@@ -1,4 +1,3 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { ViteConfig } from '@nuxt/schema'
 import { logger } from '../packages/nuxt-module/src/logger'
 
@@ -12,7 +11,7 @@ const BLOCKED_HOOK_GRACE_MS = 50
 
 const setupStorybook = vi.fn<() => Promise<void>>()
 
-vi.mock('../packages/nuxt-module/src/storybook', () => ({
+vi.mock(import('../packages/nuxt-module/src/storybook'), () => ({
   setupStorybook: () => setupStorybook(),
 }))
 
@@ -34,7 +33,7 @@ function createStubNuxt() {
     hook,
     hooks: { addHooks: () => {}, callHook, hook },
     options: { logLevel: 'info', rootDir: process.cwd(), storybook: {} },
-    registeredHooks: () => [...handlers.keys()].sort(),
+    registeredHooks: () => [...handlers.keys()].toSorted(),
   }
 }
 
@@ -62,8 +61,8 @@ describe('storybook module setup', () => {
 
   it('returns from the listen hook without waiting for storybook to start', async () => {
     // Storybook's preview build waits for the Vite config, which Nuxt only
-    // resolves once boot proceeds past this hook — awaiting here deadlocks
-    // both servers and hangs every request (#993).
+    // Resolves once boot proceeds past this hook — awaiting here deadlocks
+    // Both servers and hangs every request (#993).
     setupStorybook.mockReturnValue(new Promise(() => {}))
     const nuxt = createStubNuxt()
     await runModuleSetup(nuxt)
@@ -76,7 +75,7 @@ describe('storybook module setup', () => {
     ])
 
     expect(winner).toMatchInlineSnapshot(`"listen returned"`)
-    expect(setupStorybook).toHaveBeenCalledOnce()
+    expect(setupStorybook).toHaveBeenCalledTimes(1)
   })
 
   it('resolves the shared promise with the client vite config', async () => {
@@ -104,7 +103,7 @@ describe('storybook module setup', () => {
 
   it('captures the vite config before storybook can start', async () => {
     // Storybook starts after 'listen'; by then vite:configResolved may
-    // already have fired, so the capture cannot be registered lazily (#993).
+    // Already have fired, so the capture cannot be registered lazily (#993).
     setupStorybook.mockResolvedValue()
     const nuxt = createStubNuxt()
     await runModuleSetup(nuxt)
@@ -124,7 +123,9 @@ describe('storybook module setup', () => {
     await runModuleSetup(nuxt)
 
     await expect(nuxt.callHook('listen')).resolves.toBeUndefined()
-    await vi.waitFor(() => expect(error).toHaveBeenCalled())
+    await vi.waitFor(() =>
+      expect(error).toHaveBeenCalledWith(expect.any(String), expect.any(Error)),
+    )
 
     expect(error.mock.calls[0]?.[0]).toMatchInlineSnapshot(
       `"Failed to start Storybook"`,
