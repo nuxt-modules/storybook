@@ -5,5 +5,7 @@ export const distDir = dirname(fileURLToPath(import.meta.url))
 
 export const runtimeDir = resolve(distDir, 'runtime')
 
+export const browserIndex = resolve(distDir, 'index')
+
 // Dirs that should be served by Storybook's dev server
 export const servableDirs = [distDir, resolve(distDir, '..'), runtimeDir]

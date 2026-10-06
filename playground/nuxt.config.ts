@@ -13,6 +13,9 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
     '@nuxtjs/i18n',
   ],
+  runtimeConfig: {
+    public: { apiBase: 'https://api.example.com' },
+  },
   storybook: {
     // Very verbose logs for debugging
     logLevel: Number.POSITIVE_INFINITY,
