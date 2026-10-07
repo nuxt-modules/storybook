@@ -57,7 +57,6 @@ describe(mergeViteConfig, () => {
         "include": [
           "pinia",
           "@nuxtjs/storybook > @storybook-vue/nuxt > @storybook/vue3 > lodash/kebabCase",
-          "storybook > @storybook/core > jsdoc-type-pratt-parser",
         ],
         "noDiscovery": true,
       }
