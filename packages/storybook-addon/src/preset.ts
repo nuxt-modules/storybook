@@ -7,7 +7,12 @@ import vuePlugin from '@vitejs/plugin-vue'
 import replace from '@rollup/plugin-replace'
 import stringify from 'json-stable-stringify'
 import { mergeConfig, searchForWorkspaceRoot } from 'vite'
-import type { Plugin, UserConfig as ViteConfig } from 'vite'
+import type {
+  Plugin,
+  PluginOption,
+  ServerOptions,
+  UserConfig as ViteConfig,
+} from 'vite'
 import { componentsDir, composablesDir, pluginsDir, runtimeDir } from './dirs'
 import nuxtRuntimeConfigPlugin from './runtimeConfig'
 import type { Nuxt } from '@nuxt/schema'
@@ -41,6 +46,22 @@ const packageDir = resolve(fileURLToPath(import.meta.url), '../..')
 const distDir = resolve(fileURLToPath(import.meta.url), '../..', 'dist')
 
 const dirs = [distDir, packageDir, pluginsDir, componentsDir]
+
+const NUXT_DEV_SERVER_PLUGINS = new Set([
+  'nuxt:dev-server',
+  'nuxt:vite-node-server',
+])
+
+const NUXT_SERVER_ONLY_KEYS: (keyof ServerOptions)[] = [
+  'host',
+  'https',
+  'middlewareMode',
+  'open',
+  'origin',
+  'port',
+  'strictPort',
+  'warmup',
+]
 
 /**
  * Extend nuxt-link component to use storybook router
@@ -196,7 +217,10 @@ export async function mergeViteConfig(
   nuxtConfig: ViteConfig,
   nuxt: Nuxt,
 ): Promise<ViteConfig> {
-  const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
+  const extendedConfig: ViteConfig = mergeConfig(
+    withoutNuxtServerWiring(nuxtConfig),
+    storybookConfig,
+  )
 
   const vueBundlerPath = await resolveVueBundlerPath(nuxt)
   if (!vueBundlerPath) {
@@ -209,7 +233,10 @@ export async function mergeViteConfig(
   // one side, and in embedded mode nuxtConfig is the app's live resolved
   // config — so everything written below is cloned first, or it would poison
   // the running dev server's own dep optimizer (#993).
-  const plugins = [...(extendedConfig.plugins || [])]
+  const plugins = withoutPlugins(
+    extendedConfig.plugins || [],
+    NUXT_DEV_SERVER_PLUGINS,
+  )
 
   const index = plugins.findIndex(
     (plugin) => plugin && 'name' in plugin && plugin.name === 'vite:vue',
@@ -267,18 +294,61 @@ export async function mergeViteConfig(
       }),
       nuxtRuntimeConfigPlugin(nuxt.options.runtimeConfig),
       ...(vueBundlerPath ? [vueBundlerAliasPlugin(vueBundlerPath)] : []),
+      ...(nuxt.options.dev ? [nuxtTemplatesHmrPlugin(nuxt)] : []),
     ],
     server: {
       cors: true,
       fs: { allow: [searchForWorkspaceRoot(process.cwd()), ...dirs] },
-      proxy: {
-        ...getPreviewProxy(),
-        // Only proxy to Nuxt dev server when Nuxt is actually running in dev mode
-        ...(nuxt.options.dev ? getNuxtProxyConfig(nuxt).proxy : {}),
-      },
+      // Only proxy to Nuxt dev server when Nuxt is actually running in dev mode
+      proxy: nuxt.options.dev ? getNuxtProxyConfig(nuxt).proxy : {},
     },
     envPrefix: ['NUXT_'],
   })
+}
+
+function withoutNuxtServerWiring(config: ViteConfig): ViteConfig {
+  if (!config.server) {
+    return config
+  }
+  const server = { ...config.server }
+  for (const key of NUXT_SERVER_ONLY_KEYS) {
+    delete server[key]
+  }
+  return { ...config, server }
+}
+
+function withoutPlugins(
+  plugins: PluginOption[],
+  names: Set<string>,
+): PluginOption[] {
+  return plugins.flatMap((plugin): PluginOption[] => {
+    if (Array.isArray(plugin)) {
+      return [withoutPlugins(plugin, names)]
+    }
+    if (plugin && 'name' in plugin && names.has(plugin.name)) {
+      return []
+    }
+    return [plugin]
+  })
+}
+
+function nuxtTemplatesHmrPlugin(nuxt: Nuxt): Plugin {
+  return {
+    name: 'nuxt-storybook:templates-hmr',
+    configureServer(server) {
+      nuxt.hook('app:templatesGenerated', async (_app, changedTemplates) => {
+        const mods = changedTemplates.flatMap((template) => [
+          ...(server.moduleGraph.getModulesByFile(
+            `virtual:nuxt:${encodeURIComponent(template.dst)}`,
+          ) || []),
+        ])
+        for (const mod of mods) {
+          server.moduleGraph.invalidateModule(mod)
+        }
+        await Promise.all(mods.map((mod) => server.reloadModule(mod)))
+      })
+    },
+  }
 }
 
 export const core: PresetProperty<'core', StorybookConfig> = async (
@@ -443,21 +513,15 @@ async function getPackageDir(packageName: string) {
 }
 
 export function getNuxtProxyConfig(nuxt: Nuxt) {
+  const url = getDevServerUrl(nuxt)
   // The target must stay an object: the dev server often binds the IPv6
   // Loopback (http://[::1]:3000) and http-proxy cannot parse bracketed
   // IPv6 hosts in string targets.
-  let target = { host: 'localhost', port: 3000, protocol: 'http:' }
-  const { devServer } = nuxt.options
-  if (devServer?.url) {
-    const url = new URL(devServer.url)
-    target = {
-      protocol: url.protocol,
-      // WHATWG URL keeps IPv6 literals bracketed; net.connect wants them raw
-      host: url.hostname.replace(/^\[|\]$/g, ''),
-      port: Number(url.port || (url.protocol === 'https:' ? 443 : 80)),
-    }
-  } else if (devServer?.port) {
-    target = { host: 'localhost', port: devServer.port, protocol: 'http:' }
+  const target = {
+    protocol: url.protocol,
+    // WHATWG URL keeps IPv6 literals bracketed; net.connect wants them raw
+    host: url.hostname.replace(/^\[|\]$/g, ''),
+    port: Number(url.port || (url.protocol === 'https:' ? 443 : 80)),
   }
 
   // /_nuxt/builds/meta (app manifest) is excluded: those files are specific
@@ -466,27 +530,25 @@ export function getNuxtProxyConfig(nuxt: Nuxt) {
     '^/(_nuxt(?!/builds/meta)|_ipx|api/_nuxt_icon|__nuxt_devtools__|__nuxt_island)'
   const proxy = {
     [route]: {
-      changeOrigin: true,
+      changeOrigin: false,
+      headers: { host: url.host },
       secure: false,
       target,
       ws: true,
     },
   }
   return {
+    host: url.host,
     proxy,
     route,
     target,
   }
 }
 
-function getPreviewProxy() {
-  return {
-    '/__storybook_preview__': {
-      changeOrigin: false,
-      rewrite: (path: string) => path.replace('/__storybook_preview__', ''),
-      secure: false,
-      target: '/',
-      ws: true,
-    },
+function getDevServerUrl(nuxt: Nuxt): URL {
+  const { devServer } = nuxt.options
+  if (devServer?.url) {
+    return new URL(devServer.url)
   }
+  return new URL(`http://localhost:${devServer?.port || 3000}`)
 }
