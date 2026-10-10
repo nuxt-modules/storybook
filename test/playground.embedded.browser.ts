@@ -7,7 +7,7 @@ import { expect, test } from '@playwright/test'
  */
 
 test('nuxt app responds while storybook runs embedded', async ({ page }) => {
-  await page.goto('http://localhost:3100/')
+  await page.goto('http://[::1]:3100/')
 
   await expect(page).toHaveTitle('Welcome to Nuxt!')
   await expect(page.getByRole('heading', { name: 'Get started' })).toBeVisible()
