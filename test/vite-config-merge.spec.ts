@@ -24,7 +24,7 @@ function appConfig(): ViteConfig {
 describe(mergeViteConfig, () => {
   it('leaves the app config untouched', async () => {
     const nuxtConfig = appConfig()
-    await mergeViteConfig({}, nuxtConfig, mockNuxt())
+    await mergeViteConfig({}, nuxtConfig, mockNuxt(), { imports: [], storyFiles: [] })
 
     expect(nuxtConfig).toMatchInlineSnapshot(`
       {
@@ -47,7 +47,7 @@ describe(mergeViteConfig, () => {
   })
 
   it('drops included deps that nuxt excludes, and disables discovery', async () => {
-    const merged = await mergeViteConfig({}, appConfig(), mockNuxt())
+    const merged = await mergeViteConfig({}, appConfig(), mockNuxt(), { imports: [], storyFiles: [] })
 
     expect(merged.optimizeDeps).toMatchInlineSnapshot(`
       {
@@ -65,7 +65,7 @@ describe(mergeViteConfig, () => {
   })
 
   it('replaces the nuxt vue plugin instead of appending a second one', async () => {
-    const merged = await mergeViteConfig({}, appConfig(), mockNuxt())
+    const merged = await mergeViteConfig({}, appConfig(), mockNuxt(), { imports: [], storyFiles: [] })
 
     const vuePlugins = (merged.plugins ?? []).filter(
       (plugin) => plugin && 'name' in plugin && plugin.name === 'vite:vue',

@@ -2,10 +2,13 @@ import { resolve } from 'pathe'
 import type { Nuxt, ViteConfig as NuxtViteConfig } from '@nuxt/schema'
 import type { UserConfig as ViteConfig } from 'vite'
 import { runtimeDir } from '../dirs'
+import { collectNuxtImports } from './plugins/mock-imports'
+import type { ImportMap } from './plugins/mock-imports'
 
 interface LoadedNuxt {
   nuxt: Nuxt
   viteConfig: ViteConfig
+  imports: ImportMap
 }
 
 export async function loadNuxtViteConfig(
@@ -38,6 +41,7 @@ export async function loadNuxtViteConfig(
   }
 
   nuxt.options.build.transpile.push(runtimeDir)
+  const imports = collectNuxtImports(nuxt)
 
   nuxt.hook('pages:routerOptions', ({ files }) => {
     files.push({ path: resolve(runtimeDir, 'router.options') })
@@ -54,7 +58,7 @@ export async function loadNuxtViteConfig(
   await nuxt.ready()
 
   const viteConfig = await captureClientViteConfig(nuxt, buildNuxt)
-  return { nuxt, viteConfig }
+  return { imports, nuxt, viteConfig }
 }
 
 function asViteConfig(config: Readonly<NuxtViteConfig>): ViteConfig {

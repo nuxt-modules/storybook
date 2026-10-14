@@ -19,3 +19,10 @@ declare module '#app/components/injections' {
 
   export const PageRouteSymbol: InjectionKey<RouteLocationNormalizedLoaded>
 }
+
+declare module 'virtual:nuxt-storybook/mocked-imports' {
+  import type { Mock } from 'storybook/test'
+
+  /** The spies of the auto-imports named in `mockNuxtImport()` calls. */
+  export const mockedImports: Record<string, Mock | undefined>
+}
