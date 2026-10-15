@@ -27,6 +27,7 @@ export default defineBuildConfig({
     'storybook/internal/types',
     '@vue/shared',
     '#app/composables/state',
+    '#app/nuxt',
     '#app/entry',
     '#build/plugins',
     '#build/css',
