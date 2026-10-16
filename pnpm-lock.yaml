@@ -325,8 +325,8 @@ importers:
         specifier: 13.0.3
         version: 13.0.3
       minimark:
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 1.0.0
+        version: 1.0.0
       nuxt:
         specifier: 'catalog:'
         version: 4.4.8(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0(supports-color@10.2.2)))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.0(supports-color@10.2.2)))(@parcel/watcher@2.5.6)(@types/node@24.13.2)(@vue/compiler-sfc@3.5.38)(better-sqlite3@13.0.3)(cac@6.7.14)(db0@0.3.4(better-sqlite3@13.0.3))(esbuild@0.28.1)(eslint@10.1.0(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.1(supports-color@10.2.2))(lightningcss@1.32.0)(magicast@0.5.5)(optionator@0.9.4)(oxlint@1.70.0(oxlint-tsgolint@7.0.2003))(pinia@3.0.4(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3)))(rolldown@1.0.3)(rollup-plugin-visualizer@7.0.1(rolldown@1.0.3)(rollup@4.62.0))(rollup@4.62.0)(srvx@0.11.15)(supports-color@10.2.2)(terser@5.46.0)(typescript@6.0.3)(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(yaml@2.9.0))(vue-tsc@3.3.5(typescript@6.0.3))(yaml@2.9.0)
@@ -7247,6 +7247,9 @@ packages:
   minimark@0.2.0:
     resolution: {integrity: sha512-AmtWU9pO0C2/3AM2pikaVhJ//8E5rOpJ7+ioFQfjIq+wCsBeuZoxPd97hBFZ9qrI7DMHZudwGH3r8A7BMnsIew==}
 
+  minimark@1.0.0:
+    resolution: {integrity: sha512-4maJvB7opKTzIWeh0jIpWf6FbN/nU3UjsjDnlLuYixnLp4laKoQrCYfmKA71Qm+EV3SUsKvawO+1EBiu11+kBg==}
+
   minimatch@10.2.5:
     resolution: {integrity: sha512-MULkVLfKGYDFYejP07QOurDLLQpcjk7Fw+7jXS2R2czRQzR56yHRveU5NDJEOviH+hETZKSkIk5c+T23GjFUMg==}
     engines: {node: 18 || 20 || >=22}
@@ -9228,23 +9231,6 @@ packages:
 
   unctx@2.5.0:
     resolution: {integrity: sha512-p+Rz9x0R7X+CYDkT+Xg8/GhpcShTlU8n+cf9OtOEf7zEQsNcCZO1dPKNRDqvUTaq+P32PMMkxWHwfrxkqfqAYg==}
-
-  unctx@3.0.1:
-    resolution: {integrity: sha512-5RAt2etv7g362RXyd33R82gm9u/kbtQlpoaOs9Bgm4E32GRMJ0xjbZyvdxUTmiuHk3V1IQb1aUNrp5IWY+JaWw==}
-    peerDependencies:
-      magic-string: '>=0.30.21'
-      oxc-parser: '>=0.140.0'
-      rolldown: ^1.1.5
-      unplugin: ^3.3.0
-    peerDependenciesMeta:
-      magic-string:
-        optional: true
-      oxc-parser:
-        optional: true
-      rolldown:
-        optional: true
-      unplugin:
-        optional: true
 
   undici-types@7.18.2:
     resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
@@ -17661,6 +17647,11 @@ snapshots:
 
   minimark@0.2.0: {}
 
+  minimark@1.0.0:
+    dependencies:
+      entities: 7.0.1
+      js-yaml: 4.1.1
+
   minimatch@10.2.5:
     dependencies:
       brace-expansion: 5.0.5
@@ -21346,13 +21337,6 @@ snapshots:
       estree-walker: 3.0.3
       magic-string: 0.30.21
       unplugin: 2.3.11
-
-  unctx@3.0.1(magic-string@1.3.1)(oxc-parser@0.133.0)(rolldown@1.0.3)(unplugin@3.4.0(esbuild@0.28.1)(rolldown@1.0.3)(rollup@4.62.0)(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(yaml@2.9.0))):
-    optionalDependencies:
-      magic-string: 1.3.1
-      oxc-parser: 0.133.0
-      rolldown: 1.0.3
-      unplugin: 3.4.0(esbuild@0.28.1)(rolldown@1.0.3)(rollup@4.62.0)(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(yaml@2.9.0))
 
   undici-types@7.18.2: {}
 
