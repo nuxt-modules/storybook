@@ -16,7 +16,10 @@ import { createNuxtPayload } from 'virtual:nuxt-runtime-config'
 import { setup } from '@storybook/vue3-vite'
 import type { NuxtApp, ObjectPlugin, Plugin } from 'nuxt/app'
 import { applyPlugins, createNuxtApp } from 'nuxt/app'
-import { getContext } from 'unctx'
+// Not exported from `nuxt/app`. It returns the store that `useNuxtApp()` reads.
+// Before Nuxt 4.6 this is unctx; after it, `globalThis.__nuxt_app_ctx__` in the browser
+// @ts-expect-error not part of the public types
+import { getNuxtAppCtx } from '#app/nuxt'
 import { $fetch } from 'ofetch'
 
 // Re-export renderToCanvas and other required exports from vue3 entry-preview
@@ -54,7 +57,7 @@ setup(async (_vueApp, storyContext) => {
 
   // Create a new nuxt app for each story
   const storyNuxtAppId = `nuxt-app-${key}`
-  const storyNuxtCtx = getContext(storyNuxtAppId)
+  const storyNuxtCtx = getNuxtAppCtx(storyNuxtAppId)
 
   // Provide the config of the Nuxt app
   window.__NUXT__ = createNuxtPayload()
@@ -75,7 +78,7 @@ setup(async (_vueApp, storyContext) => {
   // Provide the Nuxt app as context
   storyNuxtCtx.set(nuxt, true)
   // ...also for calls of useNuxtApp with the default key
-  getContext('nuxt-app').set(nuxt, true)
+  getNuxtAppCtx('nuxt-app').set(nuxt, true)
 
   await applyPlugins(nuxt, pluginsTyped)
   await nuxt.hooks.callHook('app:created', vueApp)
