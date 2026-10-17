@@ -1,6 +1,8 @@
 import { defu } from 'defu'
 import { addRouteMiddleware, applyPlugins, createNuxtApp } from 'nuxt/app'
-import { getContext } from 'unctx'
+// Not exported from `nuxt/app`. It returns the store that `useNuxtApp()` reads:
+// unctx before Nuxt 4.6, `globalThis.__nuxt_app_ctx__` in the browser after it
+import { getNuxtAppCtx } from '#app/nuxt'
 import { reactive, shallowReactive } from 'vue'
 import type { NuxtApp } from 'nuxt/app'
 import type { App, InjectionKey } from 'vue'
@@ -45,7 +47,7 @@ export function createStoryNuxtApp(
 
 export function disposeStoryNuxtApp(nuxt: NuxtApp): void {
   for (const id of [nuxt._id, DEFAULT_APP_ID]) {
-    const context = getContext<NuxtApp>(id)
+    const context = getNuxtAppCtx(id)
     // Stories rendered in the same canvas share an id: a newer one may own it
     if (context.tryUse() === nuxt) {
       context.unset()
@@ -62,7 +64,7 @@ async function bootstrapNuxtApp(
   const { appId, parameters } = story
 
   // Unset the default context to avoid conflicts with other stories rendered in the same canvas
-  getContext<NuxtApp>(appId).unset()
+  getNuxtAppCtx(appId).unset()
   const nuxt = createNuxtApp({
     id: appId,
     payload: createStoryPayload(parameters),
@@ -112,7 +114,7 @@ function createStoryPayload(parameters: NuxtParameters): Payload {
 function claimDefaultContext(nuxt: NuxtApp) {
   const { runWithContext } = nuxt
   nuxt.runWithContext = (fn) => {
-    getContext(DEFAULT_APP_ID).set(nuxt, true)
+    getNuxtAppCtx(DEFAULT_APP_ID).set(nuxt, true)
     return runWithContext(fn)
   }
 }

@@ -11,6 +11,7 @@ export default defineBuildConfig({
   externals: [
     /^\.\.?\/runtime\//,
     '#app/components/injections',
+    '#app/nuxt',
     '#build/css',
     '#build/plugins',
     'nuxt/app',

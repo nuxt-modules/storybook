@@ -19,3 +19,16 @@ declare module '#app/components/injections' {
 
   export const PageRouteSymbol: InjectionKey<RouteLocationNormalizedLoaded>
 }
+
+declare module '#app/nuxt' {
+  import type { NuxtApp } from 'nuxt/app'
+
+  interface NuxtAppContext {
+    use(): NuxtApp
+    tryUse(): NuxtApp | null
+    set(instance: NuxtApp, replace?: boolean): void
+    unset(): void
+  }
+
+  export function getNuxtAppCtx(id?: string): NuxtAppContext
+}
