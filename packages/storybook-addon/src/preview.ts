@@ -20,6 +20,7 @@ setup(async (vueApp, storyContext) => {
     vueApp,
     storyContext.canvasElement,
     nuxtParameters(storyContext),
+    storyContext.parameters.fileName,
   )
 })
 
