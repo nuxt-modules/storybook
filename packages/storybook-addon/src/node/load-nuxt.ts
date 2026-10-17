@@ -5,8 +5,8 @@ import type { UserConfig as ViteConfig } from 'vite'
 import { runtimeDir } from '../dirs'
 
 interface LoadedNuxt {
-  /** The runtime auto-imports, complete once Nuxt is ready. */
-  getImports: () => Promise<Import[]>
+  /** The runtime auto-imports, modules' included. */
+  imports: Import[]
   nuxt: Nuxt
   viteConfig: ViteConfig
 }
@@ -60,13 +60,12 @@ export async function loadNuxtViteConfig(
   })
 
   await nuxt.ready()
+  if (!unimport) {
+    throw new Error('[nuxt-storybook] Nuxt did not set up its auto-imports')
+  }
 
   const viteConfig = await captureClientViteConfig(nuxt, buildNuxt)
-  return {
-    getImports: async () => (await unimport?.getImports()) ?? [],
-    nuxt,
-    viteConfig,
-  }
+  return { imports: await unimport.getImports(), nuxt, viteConfig }
 }
 
 function asViteConfig(config: Readonly<NuxtViteConfig>): ViteConfig {

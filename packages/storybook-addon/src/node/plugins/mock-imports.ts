@@ -5,25 +5,16 @@ import {
   genSafeVariableName,
   genString,
 } from 'knitwork'
-import { basename, extname, normalize, resolve } from 'pathe'
+import { basename, dirname, extname, normalize, resolve } from 'pathe'
 import type { Plugin } from 'vite'
 import { runtimeDir } from '../../dirs'
 import {
   MOCK_CALL,
-  injectImportPath,
+  SCRIPT_FILE_RE,
+  injectStoryFile,
   storyImportPath,
-} from '../mock-nuxt-import'
-
-export interface MockedImport {
-  as: string
-  from: string
-  name: string
-}
-
-export interface MockOptions {
-  imports: MockedImport[]
-  storyFiles: string[]
-}
+} from '../mock-calls'
+import type { MockedImport } from '../mock-calls'
 
 export const MOCKED_IMPORTS_ID = 'virtual:nuxt-storybook/mocked-imports'
 export const SPY_MODULE_PREFIX = '\0nuxt-storybook-spy:'
@@ -31,13 +22,12 @@ const ORIGINAL_QUERY = 'nuxt-storybook-original'
 const SPIES_QUERY = 'spies'
 const MOCKS_RUNTIME = resolve(runtimeDir, 'mocks')
 
-export function mockImportsPlugin({
-  imports: mocked,
-  storyFiles,
-}: MockOptions): Plugin {
+export function mockImportsPlugin(mocked: MockedImport[]): Plugin {
+  // mocked imports of each module, keyed by the resolved module id
   const modules = new Map<string, MockedImport[]>()
-  const stems = new Set(mocked.map((entry) => stem(entry.from)))
-  const stories = new Set(storyFiles.map((file) => normalize(file)))
+  const stems = new Set(mocked.flatMap((entry) => stemsOf(entry.from)))
+  // Counts the transforms, so the runtime tells a re-evaluated story file apart
+  let generation = 0
 
   return {
     name: 'nuxt-storybook-mock-imports',
@@ -48,12 +38,18 @@ export function mockImportsPlugin({
         sources.map((source) => this.resolve(source)),
       )
       for (const [index, module] of resolved.entries()) {
-        if (module) {
-          const source = sources[index]
-          modules.set(
-            cleanId(module.id),
-            mocked.filter((entry) => entry.from === source),
+        const source = sources[index] ?? ''
+        if (!module) {
+          throw new Error(
+            `[nuxt-storybook] Cannot resolve '${source}', the module of a mocked auto-import`,
           )
+        }
+        modules.set(
+          cleanId(module.id),
+          mocked.filter((entry) => entry.from === source),
+        )
+        for (const stem of stemsOf(module.id)) {
+          stems.add(stem)
         }
       }
     },
@@ -65,7 +61,7 @@ export function mockImportsPlugin({
       ) {
         return source
       }
-      if (!importer || !stems.has(stem(source))) {
+      if (!importer || !stemsOf(source).some((stem) => stems.has(stem))) {
         return
       }
       const resolved = await this.resolve(source, importer, { skipSelf: true })
@@ -86,13 +82,10 @@ export function mockImportsPlugin({
     },
     transform(code, id) {
       const file = cleanId(id)
-      if (!stories.has(file) || !code.includes(MOCK_CALL)) {
+      if (!SCRIPT_FILE_RE.test(file) || !code.includes(MOCK_CALL)) {
         return
       }
-      return {
-        code: injectImportPath(code, file, storyImportPath(file)),
-        map: null,
-      }
+      return injectStoryFile(code, file, storyImportPath(file), ++generation)
     },
   }
 }
@@ -132,6 +125,9 @@ function spyModule(id: string, mocked: MockedImport[]): string {
 //   useCounter: __useCounter,
 //   useGreeting: __useGreeting
 // }
+// The imports use the auto-import sources, so `resolveId` redirects them to
+// the same spy modules as every other import: the registry hands out the
+// very spy instances the components call.
 function mockedImportsModule(mocked: MockedImport[]): string {
   const variable = (entry: MockedImport) => genSafeVariableName(`__${entry.as}`)
   const imports = mocked.map((entry) =>
@@ -176,8 +172,11 @@ function cleanId(id: string): string {
   return normalize(id.split('?')[0] ?? id)
 }
 
-// `#app/composables/router` and `.../router.js` share the stem `router`
-function stem(path: string): string {
+// The names a source may be imported under, to skip resolving unrelated ones:
+// `#app/composables/router` and `.../router.js` share `router`, and
+// `~/composables/useFoo` reaches `useFoo/index.ts` through `useFoo`
+function stemsOf(path: string): string[] {
   const file = cleanId(path)
-  return basename(file, extname(file))
+  const name = basename(file, extname(file))
+  return name === 'index' ? [name, basename(dirname(file))] : [name]
 }

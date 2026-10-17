@@ -6,35 +6,46 @@ export type Procedure = (...args: any[]) => any
 
 type Factory = () => Procedure
 
-const fileMocks = new Map<string, Map<string, Factory>>()
-const appMocks = new WeakMap<NuxtApp, Record<string, Procedure>>()
+interface FileMocks {
+  factories: Map<string, Factory>
+  /** The transform generation of the story module that registered them. */
+  generation: number
+}
 
+/** Records the factory a story file gives for an auto-import. */
 export function registerFileMock(
   file: string,
+  generation: number,
   name: string,
   factory: Factory,
 ): void {
-  const factories = fileMocks.get(file) ?? new Map<string, Factory>()
-  if (factories.has(name)) {
-    throw new Error(
-      `${name} is already mocked in ${file}. Each auto-import can only be mocked once per story file.`,
-    )
+  let mocks = fileMocks.get(file)
+  // A new generation is a re-evaluated story module (HMR): it starts over
+  if (mocks?.generation !== generation) {
+    mocks = { factories: new Map(), generation }
+    fileMocks.set(file, mocks)
   }
-  factories.set(name, factory)
-  fileMocks.set(file, factories)
+  mocks.factories.set(name, factory)
 }
 
 /** Gives a story's Nuxt app the implementations of its file, freshly built. */
-export function applyFileMocks(nuxt: NuxtApp, file: string | undefined): void {
-  const factories = file === undefined ? undefined : fileMocks.get(file)
+export function applyFileMocks(nuxt: NuxtApp, file: string): void {
+  const factories = fileMocks.get(file)?.factories
   if (factories) {
     const mocks = [...factories].map(([name, factory]) => [name, factory()])
     appMocks.set(nuxt, Object.fromEntries(mocks))
   }
 }
 
+/** Picks the implementation of an auto-import for the calling story's app. */
 export function resolveMock<T extends Procedure>(name: string, original: T): T {
   const nuxt = tryUseNuxtApp()
   const mock = nuxt ? appMocks.get(nuxt)?.[name] : undefined
   return (mock as T | undefined) ?? original
 }
+
+/** The factories of each story file, keyed by Storybook's import path. */
+const fileMocks = new Map<string, FileMocks>()
+
+/** The implementations of each story's Nuxt app, built from its file's factories. */
+const appMocks = new WeakMap<NuxtApp, Record<string, Procedure>>()

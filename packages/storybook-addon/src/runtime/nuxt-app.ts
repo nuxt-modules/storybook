@@ -20,8 +20,7 @@ type Payload = NuxtApp['payload']
 export interface StoryApp {
   appId: string
   canvasElement: HTMLElement
-  /** The story file as Storybook names it in `parameters.fileName`. */
-  file?: string
+  file: string
   parameters: NuxtParameters
 }
 
@@ -37,7 +36,7 @@ export function createStoryNuxtApp(
   vueApp: App,
   canvasElement: HTMLElement,
   parameters: NuxtParameters,
-  file?: string,
+  file: string,
 ): Promise<NuxtApp> {
   const story: StoryApp = {
     appId: `nuxt-app-${canvasElement.id}`,

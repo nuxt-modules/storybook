@@ -5,8 +5,6 @@ import { mergeConfig, searchForWorkspaceRoot } from 'vite'
 import type { Nuxt } from '@nuxt/schema'
 import type { Plugin, UserConfig as ViteConfig } from 'vite'
 import { browserIndex, servableDirs } from '../dirs'
-import { mockImportsPlugin } from './plugins/mock-imports'
-import type { MockOptions } from './plugins/mock-imports'
 import { previewOptionsPlugin } from './plugins/preview-options'
 
 const PACKAGE_NAME_RE = /^@storybook-vue\/nuxt$/
@@ -15,7 +13,6 @@ export async function mergeViteConfig(
   storybookConfig: ViteConfig,
   nuxtConfig: ViteConfig,
   nuxt: Nuxt,
-  mocks: MockOptions,
 ): Promise<ViteConfig> {
   const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
 
@@ -62,7 +59,6 @@ export async function mergeViteConfig(
       previewOptionsPlugin({
         runtimeConfig: nuxt.options.runtimeConfig,
       }).vite(),
-      mockImportsPlugin(mocks),
       ...(vueBundlerPath ? [vueBundlerAliasPlugin(vueBundlerPath)] : []),
     ],
     resolve: {
