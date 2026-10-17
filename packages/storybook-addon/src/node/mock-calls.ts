@@ -35,7 +35,6 @@ export const SCRIPT_FILE_RE = /\.[cm]?[jt]sx?$/
 // Storybook's default for story entries without `files`
 const DEFAULT_STORY_FILES = '**/*.@(mdx|stories.@(js|jsx|mjs|ts|tsx))'
 
-/** Lists the names the story files give to `mockNuxtImport()`. */
 export async function readMockedNames(
   options: ViteFinalOptions,
 ): Promise<string[]> {
@@ -49,7 +48,6 @@ export async function readMockedNames(
   return [...new Set(names.flat())]
 }
 
-/** Collects the names of the top-level `mockNuxtImport()` calls of a file. */
 export function extractMockedNames(code: string, file: string): string[] {
   return findMockCalls(code, file).map((call) => call.name)
 }

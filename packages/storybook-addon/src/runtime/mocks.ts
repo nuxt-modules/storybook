@@ -12,7 +12,6 @@ interface FileMocks {
   generation: number
 }
 
-/** Records the factory a story file gives for an auto-import. */
 export function registerFileMock(
   file: string,
   generation: number,
@@ -28,7 +27,6 @@ export function registerFileMock(
   mocks.factories.set(name, factory)
 }
 
-/** Gives a story's Nuxt app the implementations of its file, freshly built. */
 export function applyFileMocks(nuxt: NuxtApp, file: string): void {
   const factories = fileMocks.get(file)?.factories
   if (factories) {
@@ -44,8 +42,6 @@ export function resolveMock<T extends Procedure>(name: string, original: T): T {
   return (mock as T | undefined) ?? original
 }
 
-/** The factories of each story file, keyed by Storybook's import path. */
 const fileMocks = new Map<string, FileMocks>()
 
-/** The implementations of each story's Nuxt app, built from its file's factories. */
 const appMocks = new WeakMap<NuxtApp, Record<string, Procedure>>()
