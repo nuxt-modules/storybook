@@ -20,6 +20,7 @@ setup(async (vueApp, storyContext) => {
     vueApp,
     storyContext.canvasElement,
     nuxtParameters(storyContext),
+    storyFile(storyContext),
   )
 })
 
@@ -37,4 +38,9 @@ export const beforeEach = () => {
 }
 function nuxtParameters(context: StoryContext): NuxtParameters {
   return (context.parameters.nuxt ?? {}) as NuxtParameters
+}
+
+function storyFile(context: StoryContext): string | undefined {
+  const { fileName } = context.parameters
+  return typeof fileName === 'string' ? fileName : undefined
 }

@@ -9,6 +9,7 @@ import type { App, InjectionKey } from 'vue'
 import { runtimeConfig } from 'virtual:nuxt-storybook/options'
 import plugins from '#build/plugins'
 import '#build/css'
+import { applyFileMocks } from './mocks'
 import { blockRouterNavigation } from './navigation'
 import type { NuxtParameters } from '../types'
 
@@ -19,6 +20,8 @@ type Payload = NuxtApp['payload']
 export interface StoryApp {
   appId: string
   canvasElement: HTMLElement
+  /** The story file as Storybook names it in `parameters.fileName`. */
+  file?: string
   parameters: NuxtParameters
 }
 
@@ -34,10 +37,12 @@ export function createStoryNuxtApp(
   vueApp: App,
   canvasElement: HTMLElement,
   parameters: NuxtParameters,
+  file?: string,
 ): Promise<NuxtApp> {
   const story: StoryApp = {
     appId: `nuxt-app-${canvasElement.id}`,
     canvasElement,
+    file,
     parameters,
   }
   const booted = bootstrapping.then(() => bootstrapNuxtApp(vueApp, story))
@@ -71,6 +76,7 @@ async function bootstrapNuxtApp(
     vueApp,
   } as CreateOptions)
   claimDefaultContext(nuxt)
+  applyFileMocks(nuxt, story.file)
 
   vueApp.provide(STORY_APP, story)
   reportErrorsToNuxt(vueApp, nuxt)
