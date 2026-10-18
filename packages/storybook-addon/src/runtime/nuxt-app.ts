@@ -1,7 +1,7 @@
 import { defu } from 'defu'
 import { addRouteMiddleware, applyPlugins, createNuxtApp } from 'nuxt/app'
 // Not exported from `nuxt/app`. It returns the store that `useNuxtApp()` reads:
-// unctx before Nuxt 4.6, `globalThis.__nuxt_app_ctx__` in the browser after it
+// Unctx before Nuxt 4.6, `globalThis.__nuxt_app_ctx__` in the browser after it
 import { getNuxtAppCtx } from '#app/nuxt'
 import { reactive, shallowReactive } from 'vue'
 import type { NuxtApp } from 'nuxt/app'
@@ -37,7 +37,7 @@ const appIdMap = new WeakMap<HTMLElement, string>()
 function getAppId(canvasElement: HTMLElement): string {
   let appId = appIdMap.get(canvasElement)
   if (!appId) {
-    if(canvasElement.id) {
+    if (canvasElement.id) {
       appId = canvasElement.id
     } else {
       appId = `nuxt-app-${Math.random().toString(36).slice(2, 10)}`
@@ -121,7 +121,7 @@ function createStoryPayload(parameters: NuxtParameters): Payload {
       parameters.runtimeConfig,
       runtimeConfig,
       DEFAULT_RUNTIME_CONFIG,
-    ) as Payload['config'],
+    ),
     data: shallowReactive<Payload['data']>({}),
     once: new Set<string>(),
     path: path.includes('?') ? path : `${path}?`,

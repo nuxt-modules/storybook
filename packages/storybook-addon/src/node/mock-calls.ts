@@ -175,23 +175,27 @@ function findMockCalls(code: string, file: string): MockCall[] {
   })
 }
 
-// mockNuxtImport('a')
-// const a = mockNuxtImport('a')
-// export const a = mockNuxtImport('a')
+// MockNuxtImport('a')
+// Const a = mockNuxtImport('a')
+// Export const a = mockNuxtImport('a')
 function topLevelExpressions(statement: Statement): Expression[] {
   switch (statement.type) {
-    case 'ExpressionStatement':
+    case 'ExpressionStatement': {
       return [unwrap(statement.expression)]
-    case 'VariableDeclaration':
+    }
+    case 'VariableDeclaration': {
       return statement.declarations.flatMap(({ init }) =>
         init ? [unwrap(init)] : [],
       )
-    case 'ExportNamedDeclaration':
+    }
+    case 'ExportNamedDeclaration': {
       return statement.declaration
         ? topLevelExpressions(statement.declaration)
         : []
-    default:
+    }
+    default: {
       return []
+    }
   }
 }
 
@@ -200,10 +204,12 @@ function unwrap(expression: Expression): Expression {
   switch (expression.type) {
     case 'ParenthesizedExpression':
     case 'TSAsExpression':
-    case 'TSSatisfiesExpression':
+    case 'TSSatisfiesExpression': {
       return unwrap(expression.expression)
-    default:
+    }
+    default: {
       return expression
+    }
   }
 }
 

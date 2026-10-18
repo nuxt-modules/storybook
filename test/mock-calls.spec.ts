@@ -20,16 +20,16 @@ const IMPORTS: Import[] = [
   { from: '#app/composables/router', name: 'useRoute' },
   { from: '#app/composables/state', name: 'StateKey', type: true },
   {
+    as: 'useGreeting',
     from: '/app/composables/useGreeting.ts',
     name: 'default',
-    as: 'useGreeting',
   },
-  { from: '/app/utils/old.ts', name: 'oldHelper', disabled: true },
+  { disabled: true, from: '/app/utils/old.ts', name: 'oldHelper' },
 ]
 
 describe(extractMockedNames, () => {
   it('collects the names of the top-level calls', () => {
-    expect(extractMockedNames(STORY, FILE)).toEqual([
+    expect(extractMockedNames(STORY, FILE)).toStrictEqual([
       'useCounter',
       'useRoute',
       'useState',
@@ -95,7 +95,9 @@ describe(storyImportPath, () => {
 
 describe(resolveMockedImports, () => {
   it('maps the names to their runtime auto-imports', () => {
-    expect(resolveMockedImports(['useRoute', 'useGreeting'], IMPORTS)).toEqual([
+    expect(
+      resolveMockedImports(['useRoute', 'useGreeting'], IMPORTS),
+    ).toStrictEqual([
       { as: 'useRoute', from: '#app/composables/router', name: 'useRoute' },
       {
         as: 'useGreeting',
@@ -110,8 +112,8 @@ describe(resolveMockedImports, () => {
 
     expect(
       resolveMockedImports(['useNope', 'StateKey', 'oldHelper'], IMPORTS),
-    ).toEqual([])
-    expect(warn.mock.calls.map(([message]) => message)).toEqual([
+    ).toStrictEqual([])
+    expect(warn.mock.calls.map(([message]) => message)).toStrictEqual([
       "[nuxt-storybook] mockNuxtImport('useNope'): 'useNope' is not a Nuxt auto-import",
       "[nuxt-storybook] mockNuxtImport('StateKey'): 'StateKey' is not a Nuxt auto-import",
       "[nuxt-storybook] mockNuxtImport('oldHelper'): 'oldHelper' is not a Nuxt auto-import",

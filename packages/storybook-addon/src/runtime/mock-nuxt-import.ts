@@ -31,9 +31,9 @@ export function mockNuxtImport<Name extends MockableImport>(
 export function mockNuxtImport(
   name: string,
   factory?: () => Procedure,
-  // injected by vite plugin
+  // Injected by vite plugin
   file?: string,
-  // injected by vite plugin, incremented on each transform of the same file
+  // Injected by vite plugin, incremented on each transform of the same file
   generation = 0,
 ): Mock {
   if (file === undefined) {
