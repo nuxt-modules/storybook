@@ -41,6 +41,18 @@ import plugins from '#build/plugins'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const pluginsTyped: (Plugin & ObjectPlugin<any>)[] = plugins
 
+const canvasKeys = new WeakMap<HTMLElement, string>()
+let canvasCount = 0
+
+function canvasKey(canvasElement: HTMLElement): string {
+  let key = canvasKeys.get(canvasElement)
+  if (!key) {
+    key = `canvas-${++canvasCount}`
+    canvasKeys.set(canvasElement, key)
+  }
+  return key
+}
+
 setup(async (_vueApp, storyContext) => {
   const vueApp = _vueApp as unknown as NuxtApp['vueApp']
   // We key the Nuxt apps to the id of the story
@@ -50,10 +62,11 @@ setup(async (_vueApp, storyContext) => {
 
   // Use storyContext.canvasElement.id as key as it's unique for each rendered story
   // StoryContext.id is same for 2 stories in Docs mode, Primary story and the first story in stories are the same story and have the same id
-  const key = storyContext?.canvasElement.id
-  if (!key) {
+  const canvasElement = storyContext?.canvasElement
+  if (!canvasElement) {
     throw new Error('StoryContext is not provided')
   }
+  const key = canvasElement.id || canvasKey(canvasElement)
 
   // Create a new nuxt app for each story
   const storyNuxtAppId = `nuxt-app-${key}`
