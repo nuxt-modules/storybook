@@ -17,6 +17,7 @@ export default defineBuildConfig({
     'nuxt/app',
     'storybook/internal/types',
     'storybook/test',
+    'virtual:nuxt-storybook/mocked-imports',
     'virtual:nuxt-storybook/options',
     'vue',
   ],

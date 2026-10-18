@@ -1,8 +1,11 @@
 import { fileURLToPath } from 'node:url'
 import { normalize } from 'pathe'
 import { viteFinal as vueViteFinal } from '@storybook/vue3-vite/preset'
+import { mergeConfig } from 'vite'
 import type { PresetProperty } from 'storybook/internal/types'
 import { loadNuxtViteConfig } from './node/load-nuxt'
+import { readMockedNames, resolveMockedImports } from './node/mock-calls'
+import { mockImportsPlugin } from './node/plugins/mock-imports'
 import { mergeViteConfig } from './node/vite-config'
 import type { StorybookConfig } from './types.d'
 
@@ -37,7 +40,7 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   options,
 ) => {
   const storybookViteConfig = await vueViteFinal(config, options)
-  const { nuxt, viteConfig } = await loadNuxtViteConfig(
+  const { imports, nuxt, viteConfig } = await loadNuxtViteConfig(
     storybookViteConfig.root,
   )
   const finalViteConfig = await mergeViteConfig(
@@ -46,5 +49,6 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
     nuxt,
   )
 
-  return finalViteConfig
+  const mocked = resolveMockedImports(await readMockedNames(options), imports)
+  return mergeConfig(finalViteConfig, { plugins: [mockImportsPlugin(mocked)] })
 }

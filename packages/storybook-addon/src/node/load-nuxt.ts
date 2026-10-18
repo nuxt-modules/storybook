@@ -1,9 +1,12 @@
 import { resolve } from 'pathe'
 import type { Nuxt, ViteConfig as NuxtViteConfig } from '@nuxt/schema'
+import type { Import, Unimport } from 'unimport'
 import type { UserConfig as ViteConfig } from 'vite'
 import { runtimeDir } from '../dirs'
 
 interface LoadedNuxt {
+  /** The runtime auto-imports, modules' included. */
+  imports: Import[]
   nuxt: Nuxt
   viteConfig: ViteConfig
 }
@@ -39,6 +42,11 @@ export async function loadNuxtViteConfig(
 
   nuxt.options.build.transpile.push(runtimeDir)
 
+  let unimport: Unimport | undefined
+  nuxt.hook('imports:context', (context) => {
+    unimport = context
+  })
+
   nuxt.hook('pages:routerOptions', ({ files }) => {
     files.push({ path: resolve(runtimeDir, 'router.options') })
   })
@@ -52,9 +60,12 @@ export async function loadNuxtViteConfig(
   })
 
   await nuxt.ready()
+  if (!unimport) {
+    throw new Error('[nuxt-storybook] Nuxt did not set up its auto-imports')
+  }
 
   const viteConfig = await captureClientViteConfig(nuxt, buildNuxt)
-  return { nuxt, viteConfig }
+  return { imports: await unimport.getImports(), nuxt, viteConfig }
 }
 
 function asViteConfig(config: Readonly<NuxtViteConfig>): ViteConfig {
