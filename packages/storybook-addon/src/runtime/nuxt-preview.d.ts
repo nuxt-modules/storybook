@@ -19,23 +19,3 @@ declare module 'virtual:nuxt-storybook/mocked-imports' {
   /** The spies of the auto-imports named in `mockNuxtImport()` calls. */
   export const mockedImports: Record<string, Mock | undefined>
 }
-
-declare module '#app/components/injections' {
-  import type { InjectionKey } from 'vue'
-  import type { RouteLocationNormalizedLoaded } from 'vue-router'
-
-  export const PageRouteSymbol: InjectionKey<RouteLocationNormalizedLoaded>
-}
-
-declare module '#app/nuxt' {
-  import type { NuxtApp } from 'nuxt/app'
-
-  interface NuxtAppContext {
-    use(): NuxtApp
-    tryUse(): NuxtApp | null
-    set(instance: NuxtApp, replace?: boolean): void
-    unset(): void
-  }
-
-  export function getNuxtAppCtx(id?: string): NuxtAppContext
-}

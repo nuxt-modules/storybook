@@ -8,6 +8,7 @@
     "skipLibCheck": false,
     "moduleResolution": "Bundler",
     "paths": {
+      "#app/*": ["./node_modules/nuxt/dist/app/*"],
       "#imports": ["./types/nuxt-imports.d.ts"]
     },
     "resolveJsonModule": true,
