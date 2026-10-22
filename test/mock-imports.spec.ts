@@ -37,6 +37,7 @@ const STORY_FILE = `${process.cwd()}/components/A.stories.ts`
 // Resolves the Nuxt alias and the `~` directory import like Vite would
 const context = {
   resolve: (source: string) => ({
+    external: false,
     id:
       source === ROUTER_SOURCE
         ? ROUTER_ID
@@ -44,7 +45,6 @@ const context = {
             '~/composables/useFoo',
             '/app/composables/useFoo/index.ts',
           ),
-    external: false,
   }),
 }
 
@@ -91,8 +91,8 @@ describe(mockImportsPlugin, () => {
     const { resolveId } = await startedPlugin()
     const versioned = {
       resolve: () => ({
-        id: '/app/composables/a.ts?v=abc123',
         external: false,
+        id: '/app/composables/a.ts?v=abc123',
       }),
     }
 

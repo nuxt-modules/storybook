@@ -23,15 +23,13 @@ const SPIES_QUERY = 'spies'
 const MOCKS_RUNTIME = resolve(runtimeDir, 'mocks')
 
 export function mockImportsPlugin(mocked: MockedImport[]): Plugin {
-  // mocked imports of each module, keyed by the resolved module id
+  // Mocked imports of each module, keyed by the resolved module id
   const modules = new Map<string, MockedImport[]>()
   const stems = new Set(mocked.flatMap((entry) => stemsOf(entry.from)))
   // Counts the transforms, so the runtime tells a re-evaluated story file apart
   let generation = 0
 
   return {
-    name: 'nuxt-storybook-mock-imports',
-    enforce: 'pre',
     async buildStart() {
       const sources = [...new Set(mocked.map((entry) => entry.from))]
       const resolved = await Promise.all(
@@ -53,6 +51,17 @@ export function mockImportsPlugin(mocked: MockedImport[]): Plugin {
         }
       }
     },
+    enforce: 'pre',
+    load(id) {
+      if (id === MOCKED_IMPORTS_ID) {
+        return mockedImportsModule(mocked)
+      }
+      if (id.startsWith(SPY_MODULE_PREFIX)) {
+        const original = originalId(id)
+        return spyModule(original, modules.get(cleanId(original)) ?? [])
+      }
+    },
+    name: 'nuxt-storybook-mock-imports',
     async resolveId(source, importer) {
       if (
         source === MOCKED_IMPORTS_ID ||
@@ -71,15 +80,6 @@ export function mockImportsPlugin(mocked: MockedImport[]): Plugin {
         return spyModuleId(resolved.id, spied)
       }
     },
-    load(id) {
-      if (id === MOCKED_IMPORTS_ID) {
-        return mockedImportsModule(mocked)
-      }
-      if (id.startsWith(SPY_MODULE_PREFIX)) {
-        const original = originalId(id)
-        return spyModule(original, modules.get(cleanId(original)) ?? [])
-      }
-    },
     transform(code, id) {
       const file = cleanId(id)
       if (!SCRIPT_FILE_RE.test(file) || !code.includes(MOCK_CALL)) {
@@ -90,12 +90,12 @@ export function mockImportsPlugin(mocked: MockedImport[]): Plugin {
   }
 }
 
-// import { fn } from "storybook/test"
-// import { resolveMock } from "<runtime>/mocks"
-// import * as original from "/app/composables/useCounter.ts?nuxt-storybook-original"
-// export * from "/app/composables/useCounter.ts?nuxt-storybook-original"
-// export default original.default
-// export const useCounter = fn((...args) => resolveMock("useCounter", original["useCounter"])(...args)).mockName("useCounter")
+// Import { fn } from "storybook/test"
+// Import { resolveMock } from "<runtime>/mocks"
+// Import * as original from "/app/composables/useCounter.ts?nuxt-storybook-original"
+// Export * from "/app/composables/useCounter.ts?nuxt-storybook-original"
+// Export default original.default
+// Export const useCounter = fn((...args) => resolveMock("useCounter", original["useCounter"])(...args)).mockName("useCounter")
 function spyModule(id: string, mocked: MockedImport[]): string {
   const original = withOriginalQuery(id)
   const spy = ({ as, name }: MockedImport) => {
@@ -119,15 +119,15 @@ function spyModule(id: string, mocked: MockedImport[]): string {
   ].join('\n')
 }
 
-// import { useCounter as __useCounter } from "/app/composables/useCounter.ts"
-// import { default as __useGreeting } from "/app/composables/useGreeting.ts"
-// export const mockedImports = {
-//   useCounter: __useCounter,
-//   useGreeting: __useGreeting
+// Import { useCounter as __useCounter } from "/app/composables/useCounter.ts"
+// Import { default as __useGreeting } from "/app/composables/useGreeting.ts"
+// Export const mockedImports = {
+//   UseCounter: __useCounter,
+//   UseGreeting: __useGreeting
 // }
 // The imports use the auto-import sources, so `resolveId` redirects them to
-// the same spy modules as every other import: the registry hands out the
-// very spy instances the components call.
+// The same spy modules as every other import: the registry hands out the
+// Very spy instances the components call.
 function mockedImportsModule(mocked: MockedImport[]): string {
   const variable = (entry: MockedImport) => genSafeVariableName(`__${entry.as}`)
   const imports = mocked.map((entry) =>
@@ -146,8 +146,8 @@ function mockedImportsModule(mocked: MockedImport[]): string {
 
 // `\0nuxt-storybook-spy:/app/composables/a.ts?v=abc&spies=useCounter`
 // The version of the original keeps every import path on one browser URL;
-// the names make that URL change with the wrapper, as the browser caches
-// versioned files as immutable
+// The names make that URL change with the wrapper, as the browser caches
+// Versioned files as immutable
 function spyModuleId(id: string, mocked: MockedImport[]): string {
   const names = mocked.map((entry) => entry.as).join(',')
   return `${SPY_MODULE_PREFIX}${withQuery(id, `${SPIES_QUERY}=${names}`)}`
