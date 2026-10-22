@@ -6,8 +6,8 @@ import MyNuxtGreeting from './MyNuxtGreeting.vue'
 
 // `useGreeting` is the default export of its composable file
 const useGreeting = mockNuxtImport(
-  'useGreeting',
-  () => (name: string) => `Bonjour ${name}`,
+  'useGreeting', 
+  () =>  (name: string) => `Bonjour ${name}`
 )
 
 const meta = {
