@@ -15,12 +15,6 @@ type ResolveId = (
 
 type Load = (this: unknown, id: string) => string | undefined
 
-type Transform = (
-  this: unknown,
-  code: string,
-  id: string,
-) => { code: string } | undefined
-
 const ROUTER_SOURCE = '#app/composables/router'
 
 const ROUTER_ID = '/app/node_modules/nuxt/dist/app/composables/router.js'
@@ -31,8 +25,6 @@ const MOCKED: MockedImport[] = [
   { as: 'useGreeting', from: '/app/composables/greeting.ts', name: 'default' },
   { as: 'useFoo', from: '/app/composables/useFoo/index.ts', name: 'useFoo' },
 ]
-
-const STORY_FILE = `${process.cwd()}/components/A.stories.ts`
 
 // Resolves the Nuxt alias and the `~` directory import like Vite would
 const context = {
@@ -55,7 +47,6 @@ async function startedPlugin(mocked = MOCKED) {
   return {
     load: plugin.load as Load,
     resolveId: plugin.resolveId as ResolveId,
-    transform: plugin.transform as Transform,
   }
 }
 
@@ -110,8 +101,12 @@ describe(mockImportsPlugin, () => {
       resolveId.call(context, '/app/other.ts', '/app/components/A.vue'),
     ).resolves.toBeUndefined()
     await expect(
-      resolveId.call(context, `${ROUTER_ID}?nuxt-storybook-original`, '/x.js'),
-    ).resolves.toBe(`${ROUTER_ID}?nuxt-storybook-original`)
+      resolveId.call(
+        context,
+        ROUTER_SOURCE,
+        `${SPY_MODULE_PREFIX}${ROUTER_ID}`,
+      ),
+    ).resolves.toBeUndefined()
   })
 
   it('exports the mocked names as spies and the rest as is', async () => {
@@ -122,8 +117,8 @@ describe(mockImportsPlugin, () => {
     ).toMatchInlineSnapshot(`
       "import { fn } from "storybook/test";
       import { resolveMock } from "${resolve(runtimeDir, 'mocks')}";
-      import * as original from "/app/node_modules/nuxt/dist/app/composables/router.js?v=abc&nuxt-storybook-original";
-      export * from "/app/node_modules/nuxt/dist/app/composables/router.js?v=abc&nuxt-storybook-original";
+      import * as original from "/app/node_modules/nuxt/dist/app/composables/router.js?v=abc";
+      export * from "/app/node_modules/nuxt/dist/app/composables/router.js?v=abc";
       export default original.default
       export const useRoute = fn((...args) => resolveMock("useRoute", original["useRoute"])(...args)).mockName("useRoute")
       "
@@ -141,15 +136,23 @@ describe(mockImportsPlugin, () => {
     ).toMatchInlineSnapshot(`
       "import { fn } from "storybook/test";
       import { resolveMock } from "${resolve(runtimeDir, 'mocks')}";
-      import * as original from "/app/composables/greeting.ts?nuxt-storybook-original";
-      export * from "/app/composables/greeting.ts?nuxt-storybook-original";
+      import * as original from "/app/composables/greeting.ts";
+      export * from "/app/composables/greeting.ts";
       export default fn((...args) => resolveMock("useGreeting", original["default"])(...args)).mockName("useGreeting")
       "
     `)
   })
 
-  it('serves the spies by name', async () => {
-    const { load } = await startedPlugin(MOCKED.slice(0, 3))
+  it('serves the spies by name, and the mocked component names', async () => {
+    const plugin = mockImportsPlugin(MOCKED.slice(0, 3), [
+      {
+        filePath: '/app/components/MyAvatar.vue',
+        name: 'default',
+        pascalName: 'MyAvatar',
+        server: false,
+      },
+    ])
+    const load = plugin.load as Load
 
     expect(load.call({}, MOCKED_IMPORTS_ID)).toMatchInlineSnapshot(`
       "import { useCounter as __useCounter } from "/app/composables/a.ts";
@@ -160,21 +163,8 @@ describe(mockImportsPlugin, () => {
         useRoute: __useRoute,
         useGreeting: __useGreeting
       }
+      export const mockedComponents = ["MyAvatar"]
       "
     `)
-  })
-
-  it('tells the calls of a script which file they are in, counting the transforms', async () => {
-    const { transform } = await startedPlugin()
-    const code = `mockNuxtImport('useCounter', factory)\n`
-
-    expect(transform.call({}, code, STORY_FILE)?.code).toBe(
-      `mockNuxtImport('useCounter', factory, "./components/A.stories.ts", 1)\n`,
-    )
-    expect(transform.call({}, code, `${STORY_FILE}?t=123`)?.code).toBe(
-      `mockNuxtImport('useCounter', factory, "./components/A.stories.ts", 2)\n`,
-    )
-    expect(transform.call({}, 'const x = 1\n', STORY_FILE)).toBeUndefined()
-    expect(transform.call({}, code, '/app/components/A.vue')).toBeUndefined()
   })
 })

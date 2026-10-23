@@ -1,13 +1,19 @@
 import { resolve } from 'pathe'
-import type { Nuxt, ViteConfig as NuxtViteConfig } from '@nuxt/schema'
+import type {
+  Component,
+  Nuxt,
+  ViteConfig as NuxtViteConfig,
+} from '@nuxt/schema'
 import type { Import, Unimport } from 'unimport'
 import type { UserConfig as ViteConfig } from 'vite'
 import { runtimeDir } from '../dirs'
 
 interface LoadedNuxt {
+  components: Component[]
   /** The runtime auto-imports, modules' included. */
   imports: Import[]
   nuxt: Nuxt
+  serverComponentRuntime: string
   viteConfig: ViteConfig
 }
 
@@ -47,6 +53,11 @@ export async function loadNuxtViteConfig(
     unimport = context
   })
 
+  let components: Component[] = []
+  nuxt.hook('components:extend', (registered) => {
+    components = registered
+  })
+
   nuxt.hook('pages:routerOptions', ({ files }) => {
     files.push({ path: resolve(runtimeDir, 'router.options') })
   })
@@ -65,7 +76,16 @@ export async function loadNuxtViteConfig(
   }
 
   const viteConfig = await captureClientViteConfig(nuxt, buildNuxt)
-  return { imports: await unimport.getImports(), nuxt, viteConfig }
+  return {
+    components,
+    imports: await unimport.getImports(),
+    nuxt,
+    serverComponentRuntime: resolve(
+      nuxt.options.appDir,
+      '../components/runtime/server-component',
+    ),
+    viteConfig,
+  }
 }
 
 function asViteConfig(config: Readonly<NuxtViteConfig>): ViteConfig {
