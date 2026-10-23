@@ -90,7 +90,7 @@ async function bootstrapNuxtApp(
     vueApp,
   } as CreateOptions)
   claimDefaultContext(nuxt)
-  applyFileMocks(nuxt, story.file)
+  await applyFileMocks(nuxt, story.file)
 
   vueApp.provide(STORY_APP, story)
   reportErrorsToNuxt(vueApp, nuxt)
