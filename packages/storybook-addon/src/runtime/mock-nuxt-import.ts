@@ -6,7 +6,7 @@ import type { Procedure } from './mocks'
 type NuxtImports = typeof import('#imports')
 
 type MockableName = {
-  [Name in keyof NuxtImports]: NuxtImports[Name] extends Procedure
+  [Name in keyof NuxtImports]: [NuxtImports[Name]] extends [Procedure]
     ? Name
     : never
 }[keyof NuxtImports]
