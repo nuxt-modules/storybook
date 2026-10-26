@@ -9,6 +9,7 @@
     "moduleResolution": "Bundler",
     "paths": {
       "#app/*": ["./node_modules/nuxt/dist/app/*"],
+      "#components": ["./types/nuxt-components.d.ts"],
       "#imports": ["./types/nuxt-imports.d.ts"]
     },
     "resolveJsonModule": true,

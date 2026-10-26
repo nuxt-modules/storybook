@@ -4,8 +4,14 @@ import { viteFinal as vueViteFinal } from '@storybook/vue3-vite/preset'
 import { mergeConfig } from 'vite'
 import type { PresetProperty } from 'storybook/internal/types'
 import { loadNuxtViteConfig } from './node/load-nuxt'
-import { readMockedNames, resolveMockedImports } from './node/mock-calls'
+import {
+  readMockedNames,
+  resolveMockedComponents,
+  resolveMockedImports,
+} from './node/mock-calls'
+import { mockComponentsPlugin } from './node/plugins/mock-components'
 import { mockImportsPlugin } from './node/plugins/mock-imports'
+import { storyFilesPlugin } from './node/plugins/story-files'
 import { mergeViteConfig } from './node/vite-config'
 import type { StorybookConfig } from './types.d'
 
@@ -40,15 +46,22 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   options,
 ) => {
   const storybookViteConfig = await vueViteFinal(config, options)
-  const { imports, nuxt, viteConfig } = await loadNuxtViteConfig(
-    storybookViteConfig.root,
-  )
+  const { components, imports, nuxt, serverComponentRuntime, viteConfig } =
+    await loadNuxtViteConfig(storybookViteConfig.root)
   const finalViteConfig = await mergeViteConfig(
     storybookViteConfig,
     viteConfig,
     nuxt,
   )
 
-  const mocked = resolveMockedImports(await readMockedNames(options), imports)
-  return mergeConfig(finalViteConfig, { plugins: [mockImportsPlugin(mocked)] })
+  const names = await readMockedNames(options)
+  const mockedImports = resolveMockedImports(names.imports, imports)
+  const mockedComponents = resolveMockedComponents(names.components, components)
+  return mergeConfig(finalViteConfig, {
+    plugins: [
+      storyFilesPlugin(),
+      mockImportsPlugin(mockedImports, mockedComponents),
+      mockComponentsPlugin(mockedComponents, serverComponentRuntime),
+    ],
+  })
 }

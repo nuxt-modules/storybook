@@ -3,6 +3,7 @@ import { genString } from 'knitwork'
 import MagicString from 'magic-string'
 import { Visitor, parseSync } from 'oxc-parser'
 import { normalize, relative, resolve } from 'pathe'
+import type { Component } from '@nuxt/schema'
 import type { SourceMap } from 'magic-string'
 import type { CallExpression, Expression, Statement } from 'oxc-parser'
 import type { Import } from 'unimport'
@@ -15,6 +16,28 @@ export interface MockedImport {
   name: string
 }
 
+/** A Nuxt component: the export `name` of `filePath`, or a server island. */
+export interface MockedComponent {
+  filePath: string
+  name: string
+  pascalName: string
+  server: boolean
+}
+
+export interface MockedNames {
+  components: string[]
+  imports: string[]
+}
+
+export type MockKind = keyof MockedNames
+
+export interface MockCall {
+  /** Where the last argument ends, to append the story file after it. */
+  argumentsEnd: number
+  kind: MockKind
+  name: string
+}
+
 type ViteFinalOptions = Parameters<NonNullable<StorybookConfig['viteFinal']>>[1]
 
 type StoriesEntry = Extract<
@@ -22,34 +45,36 @@ type StoriesEntry = Extract<
   unknown[]
 >[number]
 
-interface MockCall {
-  /** Where the last argument ends, to append the story file after it. */
-  argumentsEnd: number
-  name: string
+export const MOCK_CALLS: Record<MockKind, string> = {
+  components: 'mockComponent',
+  imports: 'mockNuxtImport',
 }
-
-export const MOCK_CALL = 'mockNuxtImport'
 
 export const SCRIPT_FILE_RE = /\.[cm]?[jt]sx?$/
 
 // Storybook's default for story entries without `files`
 const DEFAULT_STORY_FILES = '**/*.@(mdx|stories.@(js|jsx|mjs|ts|tsx))'
 
+const KINDS = Object.keys(MOCK_CALLS) as MockKind[]
+
 export async function readMockedNames(
   options: ViteFinalOptions,
-): Promise<string[]> {
+): Promise<MockedNames> {
   const files = await listStoryFiles(options)
-  const names = await Promise.all(
+  const calls = await Promise.all(
     files.map(async (file) => {
       const code = await readFile(file, 'utf8')
-      return code.includes(MOCK_CALL) ? extractMockedNames(code, file) : []
+      return hasMockCall(code) ? findMockCalls(code, file) : []
     }),
   )
-  return [...new Set(names.flat())]
+  return {
+    components: uniqueNames(calls.flat(), 'components'),
+    imports: uniqueNames(calls.flat(), 'imports'),
+  }
 }
 
-export function extractMockedNames(code: string, file: string): string[] {
-  return findMockCalls(code, file).map((call) => call.name)
+export function hasMockCall(code: string): boolean {
+  return KINDS.some((kind) => code.includes(MOCK_CALLS[kind]))
 }
 
 /**
@@ -95,13 +120,103 @@ export function resolveMockedImports(
     const entry = byName.get(as)
     // TypeScript already reports the name; the story file fails at runtime
     if (!entry) {
-      console.warn(
-        `[nuxt-storybook] ${MOCK_CALL}('${as}'): '${as}' is not a Nuxt auto-import`,
-      )
+      warnUnknown('imports', as, 'a Nuxt auto-import')
       return []
     }
     return [{ as, from: entry.from, name: entry.name }]
   })
+}
+
+export function resolveMockedComponents(
+  names: string[],
+  components: Component[],
+): MockedComponent[] {
+  return names.flatMap((pascalName) => {
+    const component = findComponent(components, pascalName)
+    if (!component) {
+      warnUnknown('components', pascalName, 'a Nuxt component')
+      return []
+    }
+    return [
+      {
+        filePath: component.filePath,
+        name: component.export,
+        pascalName,
+        server: component.mode === 'server',
+      },
+    ]
+  })
+}
+
+export function findMockCalls(code: string, file: string): MockCall[] {
+  const { program } = parseSync(file, code)
+  const topLevel = new Set(
+    program.body.flatMap(topLevelExpressions).filter(isMockCall),
+  )
+
+  new Visitor({
+    CallExpression(node) {
+      if (isMockCall(node) && !topLevel.has(node)) {
+        throw new Error(
+          `${file}: ${calleeName(node)}() must be called at the top level of the story file`,
+        )
+      }
+    },
+  }).visit(program)
+
+  const names = new Set<string>()
+  return [...topLevel].map((call) => {
+    const callee = calleeName(call)
+    const kind = kindOf(callee) ?? 'imports'
+    const [name, factory] = call.arguments
+    if (name?.type !== 'Literal' || typeof name.value !== 'string') {
+      throw new Error(
+        `${file}: ${callee}() needs a string literal as name, as it is read at build time`,
+      )
+    }
+    if (kind === 'components' && !factory) {
+      throw new Error(
+        `${file}: ${callee}('${name.value}') needs a factory returning the mock component`,
+      )
+    }
+    const key = `${kind}:${name.value}`
+    if (names.has(key)) {
+      throw new Error(
+        `${file}: '${name.value}' is mocked twice. Each name can only be mocked once per story file.`,
+      )
+    }
+    names.add(key)
+    return {
+      argumentsEnd: (call.arguments.at(-1) ?? name).end,
+      kind,
+      name: name.value,
+    }
+  })
+}
+
+// Nuxt's client loader prefers the client version of a component and falls
+// back to the server one, which it renders as an island
+function findComponent(
+  components: Component[],
+  pascalName: string,
+): Component | undefined {
+  const candidates = components.filter(
+    (component) => component.pascalName === pascalName && !component._raw,
+  )
+  return (
+    candidates.find((component) => component.mode !== 'server') ?? candidates[0]
+  )
+}
+
+function warnUnknown(kind: MockKind, name: string, expected: string) {
+  console.warn(
+    `[nuxt-storybook] ${MOCK_CALLS[kind]}('${name}'): '${name}' is not ${expected}`,
+  )
+}
+
+function uniqueNames(calls: MockCall[], kind: MockKind): string[] {
+  const names = calls.filter((call) => call.kind === kind).map((c) => c.name)
+  return [...new Set(names)]
 }
 
 async function listStoryFiles(options: ViteFinalOptions): Promise<string[]> {
@@ -136,43 +251,6 @@ function isDirectory(path: string): Promise<boolean> {
     (stats) => stats.isDirectory(),
     () => false,
   )
-}
-
-function findMockCalls(code: string, file: string): MockCall[] {
-  const { program } = parseSync(file, code)
-  const topLevel = new Set(
-    program.body.flatMap(topLevelExpressions).filter(isMockCall),
-  )
-
-  new Visitor({
-    CallExpression(node) {
-      if (isMockCall(node) && !topLevel.has(node)) {
-        throw new Error(
-          `${file}: ${MOCK_CALL}() must be called at the top level of the story file`,
-        )
-      }
-    },
-  }).visit(program)
-
-  const names = new Set<string>()
-  return [...topLevel].map((call) => {
-    const [name] = call.arguments
-    if (name?.type !== 'Literal' || typeof name.value !== 'string') {
-      throw new Error(
-        `${file}: ${MOCK_CALL}() needs a string literal as name, as it is read at build time`,
-      )
-    }
-    if (names.has(name.value)) {
-      throw new Error(
-        `${file}: '${name.value}' is mocked twice. Each auto-import can only be mocked once per story file.`,
-      )
-    }
-    names.add(name.value)
-    return {
-      argumentsEnd: (call.arguments.at(-1) ?? name).end,
-      name: name.value,
-    }
-  })
 }
 
 // MockNuxtImport('a')
@@ -214,9 +292,13 @@ function unwrap(expression: Expression): Expression {
 }
 
 function isMockCall(node: Expression): node is CallExpression {
-  return (
-    node.type === 'CallExpression' &&
-    node.callee.type === 'Identifier' &&
-    node.callee.name === MOCK_CALL
-  )
+  return node.type === 'CallExpression' && kindOf(calleeName(node)) !== null
+}
+
+function calleeName(call: CallExpression): string {
+  return call.callee.type === 'Identifier' ? call.callee.name : ''
+}
+
+function kindOf(callee: string): MockKind | null {
+  return KINDS.find((kind) => MOCK_CALLS[kind] === callee) ?? null
 }
