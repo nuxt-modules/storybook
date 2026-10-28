@@ -5,7 +5,7 @@ import { Visitor, parseSync } from 'oxc-parser'
 import { normalize, relative, resolve } from 'pathe'
 import type { Component } from '@nuxt/schema'
 import type { SourceMap } from 'magic-string'
-import type { CallExpression, Expression, Statement } from 'oxc-parser'
+import type { CallExpression, Expression, Program, Statement } from 'oxc-parser'
 import type { Import } from 'unimport'
 import type { StorybookConfig } from '../types.d'
 
@@ -32,8 +32,6 @@ export interface MockedNames {
 export type MockKind = keyof MockedNames
 
 export interface MockCall {
-  /** Where the last argument ends, to append the story file after it. */
-  argumentsEnd: number
   kind: MockKind
   name: string
 }
@@ -52,6 +50,11 @@ export const MOCK_CALLS: Record<MockKind, string> = {
 
 export const SCRIPT_FILE_RE = /\.[cm]?[jt]sx?$/
 
+const ENDPOINT_CALL = 'registerEndpoint'
+
+// The top-level calls told the story file they are in
+const FILE_CALLS = new Set([...Object.values(MOCK_CALLS), ENDPOINT_CALL])
+
 // Storybook's default for story entries without `files`
 const DEFAULT_STORY_FILES = '**/*.@(mdx|stories.@(js|jsx|mjs|ts|tsx))'
 
@@ -64,7 +67,7 @@ export async function readMockedNames(
   const calls = await Promise.all(
     files.map(async (file) => {
       const code = await readFile(file, 'utf8')
-      return hasMockCall(code) ? findMockCalls(code, file) : []
+      return hasFileCall(code) ? findMockCalls(code, file) : []
     }),
   )
   return {
@@ -73,16 +76,13 @@ export async function readMockedNames(
   }
 }
 
-export function hasMockCall(code: string): boolean {
-  return KINDS.some((kind) => code.includes(MOCK_CALLS[kind]))
+export function hasFileCall(code: string): boolean {
+  return [...FILE_CALLS].some((callee) => code.includes(callee))
 }
 
 /**
- * Appends the story's import path and the transform generation to each call,
- * so the runtime knows the file and tells a re-evaluation (HMR) from a first:
- *
- *   mockNuxtImport('useCounter', factory)
- *   mockNuxtImport('useCounter', factory, "./components/MyNuxtState.stories.ts", 1)
+ * Appends the story's import path and the transform generation to each
+ * top-level mock and `registerEndpoint` call.
  */
 export function injectStoryFile(
   code: string,
@@ -90,9 +90,12 @@ export function injectStoryFile(
   importPath: string,
   generation: number,
 ): { code: string; map: SourceMap } {
+  const { program } = parseSync(file, code)
+  validateMockCalls(program, file)
   const source = new MagicString(code)
-  for (const { argumentsEnd } of findMockCalls(code, file)) {
-    source.appendLeft(argumentsEnd, `, ${genString(importPath)}, ${generation}`)
+  const fileArguments = `, ${genString(importPath)}, ${generation}`
+  for (const call of findFileCalls(program.body, file)) {
+    source.appendLeft(call.arguments.at(-1)!.end, fileArguments)
   }
   return { code: source.toString(), map: source.generateMap({ hires: true }) }
 }
@@ -149,7 +152,21 @@ export function resolveMockedComponents(
 }
 
 export function findMockCalls(code: string, file: string): MockCall[] {
-  const { program } = parseSync(file, code)
+  return validateMockCalls(parseSync(file, code).program, file)
+}
+
+// Calls in story hooks are `registerEndpoint(context, ...)`, scoped by the context
+function findFileCalls(body: Statement[], file: string): CallExpression[] {
+  const calls = body.flatMap(topLevelExpressions).filter(isFileCall)
+  for (const call of calls) {
+    if (calleeName(call) === ENDPOINT_CALL && call.arguments.length < 2) {
+      throw new Error(`${file}: ${ENDPOINT_CALL}() needs a url and an endpoint`)
+    }
+  }
+  return calls
+}
+
+function validateMockCalls(program: Program, file: string): MockCall[] {
   const topLevel = new Set(
     program.body.flatMap(topLevelExpressions).filter(isMockCall),
   )
@@ -186,11 +203,7 @@ export function findMockCalls(code: string, file: string): MockCall[] {
       )
     }
     names.add(key)
-    return {
-      argumentsEnd: (call.arguments.at(-1) ?? name).end,
-      kind,
-      name: name.value,
-    }
+    return { kind, name: name.value }
   })
 }
 
@@ -289,6 +302,10 @@ function unwrap(expression: Expression): Expression {
       return expression
     }
   }
+}
+
+function isFileCall(node: Expression): node is CallExpression {
+  return node.type === 'CallExpression' && FILE_CALLS.has(calleeName(node))
 }
 
 function isMockCall(node: Expression): node is CallExpression {

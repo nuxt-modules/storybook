@@ -32,11 +32,11 @@ export function mockNuxtImport(
   name: string,
   factory?: () => Procedure,
   // Injected by vite plugin
-  file?: string,
+  importPath?: string,
   // Injected by vite plugin, incremented on each transform of the same file
   generation = 0,
 ): Mock {
-  if (file === undefined) {
+  if (importPath === undefined) {
     throw new Error(
       `mockNuxtImport('${name}') was not processed by the Nuxt Storybook build. Call it at the top level of a story file.`,
     )
@@ -48,7 +48,7 @@ export function mockNuxtImport(
     )
   }
   if (factory) {
-    registerFileMock(file, generation, name, factory)
+    registerFileMock(importPath, generation, name, factory)
   }
   return spy
 }

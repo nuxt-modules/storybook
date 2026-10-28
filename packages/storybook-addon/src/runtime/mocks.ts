@@ -12,7 +12,7 @@ export type ComponentFactory = () =>
 
 type Factory = () => Procedure
 
-interface FileMocks {
+interface ImportPathMocks {
   components: Map<string, ComponentFactory>
   factories: Map<string, Factory>
   /** The transform generation of the story module that registered them. */
@@ -25,28 +25,28 @@ interface AppMocks {
 }
 
 export function registerFileMock(
-  file: string,
+  importPath: string,
   generation: number,
   name: string,
   factory: Factory,
 ): void {
-  fileMocksOf(file, generation).factories.set(name, factory)
+  importPathMocksOf(importPath, generation).factories.set(name, factory)
 }
 
 export function registerFileComponentMock(
-  file: string,
+  importPath: string,
   generation: number,
   name: string,
   factory: ComponentFactory,
 ): void {
-  fileMocksOf(file, generation).components.set(name, factory)
+  importPathMocksOf(importPath, generation).components.set(name, factory)
 }
 
 export async function applyFileMocks(
   nuxt: NuxtApp,
-  file: string,
+  importPath: string,
 ): Promise<void> {
-  const mocks = fileMocks.get(file)
+  const mocks = importPathMocks.get(importPath)
   if (!mocks) {
     return
   }
@@ -80,16 +80,19 @@ export function resolveMockedComponent(
   return appMocks.get(nuxt)?.components[name]
 }
 
-const fileMocks = new Map<string, FileMocks>()
+const importPathMocks = new Map<string, ImportPathMocks>()
 
 const appMocks = new WeakMap<NuxtApp, AppMocks>()
 
-function fileMocksOf(file: string, generation: number): FileMocks {
-  let mocks = fileMocks.get(file)
+function importPathMocksOf(
+  importPath: string,
+  generation: number,
+): ImportPathMocks {
+  let mocks = importPathMocks.get(importPath)
   // A new generation is a re-evaluated story module (HMR): it starts over
   if (mocks?.generation !== generation) {
     mocks = { components: new Map(), factories: new Map(), generation }
-    fileMocks.set(file, mocks)
+    importPathMocks.set(importPath, mocks)
   }
   return mocks
 }
