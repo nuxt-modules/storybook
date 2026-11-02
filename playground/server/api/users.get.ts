@@ -1,1 +1,1 @@
-export default defineEventHandler(() => ['nuxt', 'storybook',])
+export default defineEventHandler(() => ['nuxt', 'storybook'])

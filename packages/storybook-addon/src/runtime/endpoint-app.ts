@@ -12,12 +12,12 @@ type H3v1 = Pick<
 
 interface H3v2 {
   H3: new () => {
-    use(handler: (event: never) => unknown): {
-      request(
+    use: (handler: (event: never) => unknown) => {
+      request: (
         request: Request,
         options: undefined,
         context: Record<string, unknown>,
-      ): Response | Promise<Response>
+      ) => Response | Promise<Response>
     }
   }
 }
@@ -38,7 +38,7 @@ function createH3v1App(h3: H3v1): EndpointApp {
 }
 
 function createH3v2App({ H3 }: H3v2): EndpointApp {
-  const app = new H3().use(dispatch as never)
+  const app = new H3().use(dispatch)
 
   return {
     fetch: (request, endpoint) =>

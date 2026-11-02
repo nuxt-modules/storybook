@@ -64,7 +64,7 @@ export function registerEndpoint(
   storyOrUrl: EndpointStory | string,
   urlOrEndpoint: string | Endpoint,
   endpointOrImportPath?: Endpoint | string,
-  // injected by vite plugin
+  // Injected by vite plugin
   generation = 0,
 ): () => void {
   if (typeof storyOrUrl !== 'string') {
@@ -193,8 +193,7 @@ function findEndpoint(registries: Registry[], keys: string[], method: string) {
 }
 
 function findIn(registry: Registry, keys: string[], method: string) {
-  const key = keys.find((candidate) => registry.has(candidate))
-  const handlers = (key && registry.get(key)) ?? []
+  const handlers = keys.map((key) => registry.get(key)).find(Boolean) ?? []
   return handlers.findLast(
     (handler) =>
       !handler.method || handler.method.toUpperCase() === method.toUpperCase(),
@@ -207,7 +206,7 @@ function requestKeys(input: RequestInfo | URL): string[] {
   const url = urlOf(input)
   const { origin, pathname, search } = new URL(url, location.origin)
   const urls = origin === location.origin ? [url, pathname + search] : [url]
-  return [...new Set([...urls, ...urls.map((key) => key.split('?')[0]!)])]
+  return [...new Set([...urls, ...urls.map((key) => key.split('?')[0])])]
 }
 
 function urlOf(input: RequestInfo | URL): string {

@@ -28,4 +28,4 @@ globalThis.$fetch = globalThis.$fetch.create({
   onRequest({ options }) {
     ;(options as AppRequestInit)[REQUEST_APP] ??= tryUseNuxtApp() ?? undefined
   },
-}) as typeof globalThis.$fetch
+})
