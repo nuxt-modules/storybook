@@ -3,7 +3,7 @@ import { resolvePath } from 'mlly'
 import { dirname, normalize } from 'pathe'
 import { mergeConfig, searchForWorkspaceRoot } from 'vite'
 import type { Nuxt } from '@nuxt/schema'
-import type { Plugin, UserConfig as ViteConfig } from 'vite'
+import type { Plugin, PluginOption, UserConfig as ViteConfig } from 'vite'
 import { browserIndex, servableDirs } from '../dirs'
 import { previewOptionsPlugin } from './plugins/preview-options'
 
@@ -11,12 +11,17 @@ const PACKAGE_NAME_RE = /^@storybook-vue\/nuxt$/
 
 const NITRO_PACKAGES = ['@nuxt/nitro-server', 'nitropack']
 
+const NUXT_SSR_PLUGINS = new Set(['nuxt:vite-node-server'])
+
 export async function mergeViteConfig(
   storybookConfig: ViteConfig,
   nuxtConfig: ViteConfig,
   nuxt: Nuxt,
 ): Promise<ViteConfig> {
-  const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
+  const extendedConfig: ViteConfig = mergeConfig(
+    { ...nuxtConfig, plugins: nuxtConfig.plugins?.filter(isClientPlugin) },
+    storybookConfig,
+  )
 
   const vueBundlerPath = await resolveVueBundlerPath(nuxt)
   const h3Path = await resolveH3Path(nuxt)
@@ -108,6 +113,10 @@ async function resolveThroughNitro(urls: string[]) {
   return nitroPackage
     ? tryResolve('h3/package.json', [dirname(nitroPackage)])
     : undefined
+}
+
+function isClientPlugin(plugin: PluginOption): boolean {
+  return !(plugin && 'name' in plugin && NUXT_SSR_PLUGINS.has(plugin.name))
 }
 
 function tryResolve(id: string, urls: string[]) {
