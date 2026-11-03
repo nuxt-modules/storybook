@@ -47,7 +47,10 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
 ) => {
   const storybookViteConfig = await vueViteFinal(config, options)
   const { components, imports, nuxt, serverComponentRuntime, viteConfig } =
-    await loadNuxtViteConfig(storybookViteConfig.root)
+    await loadNuxtViteConfig(
+      storybookViteConfig.root,
+      options.configType === 'DEVELOPMENT',
+    )
   const finalViteConfig = await mergeViteConfig(
     storybookViteConfig,
     viteConfig,
