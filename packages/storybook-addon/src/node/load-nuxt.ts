@@ -52,8 +52,8 @@ export async function loadNuxtViteConfig(
 
   nuxt.options.build.transpile.push(runtimeDir)
 
-  // remove nuxt test utils
-  // it injec t the mockNuxtImport transform, which breaks the stories calls
+  // Remove nuxt test utils
+  // It injec t the mockNuxtImport transform, which breaks the stories calls
   nuxt.hook('modules:before', () => {  
     for (const { config } of nuxt.options._layers) {
       config.modules = config.modules?.filter(
