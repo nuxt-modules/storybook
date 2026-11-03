@@ -1,4 +1,5 @@
 import { registerEndpoint } from '@storybook-vue/nuxt'
+import { createError } from 'h3'
 import { expect, userEvent, within } from 'storybook/test'
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
 
@@ -33,7 +34,8 @@ export const Registered: Story = {
     const canvas = within(canvasElement)
 
     await expect(await canvas.findByText('Eve')).toBeVisible()
-    await expect(canvas.getAllByRole('listitem')).toHaveLength(1)
+    await expect(await canvas.findByText('adam')).toBeVisible()
+    await expect(canvas.getAllByRole('listitem')).toHaveLength(2)
   },
 }
 
@@ -49,7 +51,10 @@ export const FromParameters: Story = {
 export const Failing: Story = {
   beforeEach(context) {
     registerEndpoint(context, '/api/users', () => {
-      throw new Error('users are unavailable')
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'users are unavailable',
+      })
     })
   },
   async play({ canvasElement }) {
