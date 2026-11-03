@@ -30,10 +30,11 @@
     "example:showcase:storybook:publish": "chromatic --exit-zero-on-changes --build-script-name example:showcase:storybook:build --project-token=chpt_a53adf402cb628c",
     "build": "pnpm run --recursive --filter=./packages/* build",
     "package": "cd ./packages/storybook-addon && pnpm pack && cd ../nuxt-module && pnpm pack",
-    "lint": "pnpm lint:oxlint && pnpm lint:prettier",
+    "lint": "pnpm lint:oxlint && pnpm format:check",
     "lint:oxlint": "oxlint .",
-    "lint:prettier": "prettier --check .",
-    "lint:fix": "pnpm lint:oxlint --fix && pnpm lint:prettier --write",
+    "lint:fix": "pnpm lint:oxlint --fix && pnpm format",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "release-notes": "pnpm changelogithub",
     "prepare": "pnpm run --recursive --filter=./packages/* --parallel dev:prepare && pnpm run --filter=./playground/** dev:prepare",
     "docs:dev": "pnpm run --filter=./docs/** dev",
@@ -59,11 +60,11 @@
     "happy-dom": "20.10.4",
     "jiti": "2.7.0",
     "nuxt": "catalog:",
+    "oxfmt": "0.75.0",
     "oxlint": "1.70.0",
     "oxlint-tsgolint": "7.0.2003",
     "pathe": "2.0.3",
     "pkg-pr-new": "0.0.75",
-    "prettier": "3.8.4",
     "release-it": "21.1.0",
     "semver": "7.8.4",
     "typescript": "catalog:",
@@ -83,9 +84,5 @@
     "hooks": {
       "after:bump": "npx changelogen@latest --no-commit --no-tag --output --r $(node -p \"require('./package.json').version\")"
     }
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
   }
 }

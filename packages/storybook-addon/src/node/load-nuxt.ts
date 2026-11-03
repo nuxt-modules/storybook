@@ -54,7 +54,7 @@ export async function loadNuxtViteConfig(
 
   // Remove nuxt test utils
   // It injec t the mockNuxtImport transform, which breaks the stories calls
-  nuxt.hook('modules:before', () => {  
+  nuxt.hook('modules:before', () => {
     // oxlint-disable-next-line eslint/no-underscore-dangle - Nuxt's own name for the resolved layers
     for (const { config } of nuxt.options._layers) {
       config.modules = config.modules?.filter(

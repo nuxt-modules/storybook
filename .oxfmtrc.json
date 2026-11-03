@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 80,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "**/pnpm-lock.yaml",
+    "**/.nuxt",
+    "**/.output",
+    "**/*.md",
+    ".claude",
+    ".omc"
+  ]
+}
