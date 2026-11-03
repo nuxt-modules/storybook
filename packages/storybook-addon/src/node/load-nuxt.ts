@@ -17,8 +17,11 @@ interface LoadedNuxt {
   viteConfig: ViteConfig
 }
 
+const TEST_UTILS_MODULE_RE = /^@nuxt\/test-utils(?:\/module)?$/
+
 export async function loadNuxtViteConfig(
   root: string | undefined,
+  dev = false,
 ): Promise<LoadedNuxt> {
   const { buildNuxt, createResolver, loadNuxt } = await import('@nuxt/kit')
 
@@ -26,10 +29,11 @@ export async function loadNuxtViteConfig(
 
   const nuxt = await loadNuxt({
     cwd: root,
-    dev: false,
+    dev,
     overrides: {
       appId: 'nuxt-app',
       buildId: 'storybook',
+      devtools: { enabled: false },
       experimental: {
         appManifest: false,
       },
@@ -47,6 +51,20 @@ export async function loadNuxtViteConfig(
   }
 
   nuxt.options.build.transpile.push(runtimeDir)
+
+  // Remove nuxt test utils
+  // It injec t the mockNuxtImport transform, which breaks the stories calls
+  nuxt.hook('modules:before', () => {  
+    // oxlint-disable-next-line eslint/no-underscore-dangle - Nuxt's own name for the resolved layers
+    for (const { config } of nuxt.options._layers) {
+      config.modules = config.modules?.filter(
+        (entry) => !isTestUtilsModule(entry),
+      )
+    }
+    nuxt.options.modules = nuxt.options.modules.filter(
+      (entry) => !isTestUtilsModule(entry),
+    )
+  })
 
   let unimport: Unimport | undefined
   nuxt.hook('imports:context', (context) => {
@@ -86,6 +104,11 @@ export async function loadNuxtViteConfig(
     ),
     viteConfig,
   }
+}
+
+function isTestUtilsModule(entry: unknown): boolean {
+  const name: unknown = Array.isArray(entry) ? entry[0] : entry
+  return typeof name === 'string' && TEST_UTILS_MODULE_RE.test(name)
 }
 
 function asViteConfig(config: Readonly<NuxtViteConfig>): ViteConfig {
