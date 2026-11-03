@@ -29,11 +29,11 @@ export function mockComponent(
   name: string,
   factory: ComponentFactory,
   // Injected by vite plugin
-  file?: string,
+  importPath?: string,
   // Injected by vite plugin, incremented on each transform of the same file
   generation = 0,
 ): void {
-  if (file === undefined) {
+  if (importPath === undefined) {
     throw new Error(
       `mockComponent('${name}') was not processed by the Nuxt Storybook build. Call it at the top level of a story file.`,
     )
@@ -43,5 +43,5 @@ export function mockComponent(
       `mockComponent('${name}'): '${name}' is not a mocked Nuxt component. Check the name, and restart Storybook if the mock was added after it started.`,
     )
   }
-  registerFileComponentMock(file, generation, name, factory)
+  registerFileComponentMock(importPath, generation, name, factory)
 }

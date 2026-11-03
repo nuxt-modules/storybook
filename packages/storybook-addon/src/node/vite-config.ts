@@ -1,6 +1,6 @@
 import replace from '@rollup/plugin-replace'
 import { resolvePath } from 'mlly'
-import { normalize } from 'pathe'
+import { dirname, normalize } from 'pathe'
 import { mergeConfig, searchForWorkspaceRoot } from 'vite'
 import type { Nuxt } from '@nuxt/schema'
 import type { Plugin, UserConfig as ViteConfig } from 'vite'
@@ -8,6 +8,8 @@ import { browserIndex, servableDirs } from '../dirs'
 import { previewOptionsPlugin } from './plugins/preview-options'
 
 const PACKAGE_NAME_RE = /^@storybook-vue\/nuxt$/
+
+const NITRO_PACKAGES = ['@nuxt/nitro-server', 'nitropack']
 
 export async function mergeViteConfig(
   storybookConfig: ViteConfig,
@@ -17,6 +19,7 @@ export async function mergeViteConfig(
   const extendedConfig: ViteConfig = mergeConfig(nuxtConfig, storybookConfig)
 
   const vueBundlerPath = await resolveVueBundlerPath(nuxt)
+  const h3Path = await resolveH3Path(nuxt)
   if (!vueBundlerPath) {
     console.warn(
       'Could not resolve `vue/dist/vue.esm-bundler.js`, keeping the bare Storybook alias for `vue`',
@@ -62,7 +65,11 @@ export async function mergeViteConfig(
       ...(vueBundlerPath ? [vueBundlerAliasPlugin(vueBundlerPath)] : []),
     ],
     resolve: {
-      alias: [{ find: PACKAGE_NAME_RE, replacement: browserIndex }],
+      alias: [
+        { find: PACKAGE_NAME_RE, replacement: browserIndex },
+        // Endpoint handlers and the stories share the project's h3, else the addon's
+        ...(h3Path ? [{ find: /^h3$/, replacement: h3Path }] : []),
+      ],
     },
     server: {
       cors: true,
@@ -76,6 +83,35 @@ async function resolveVueBundlerPath(nuxt: Nuxt): Promise<string | undefined> {
     url: [nuxt.options.rootDir, ...(nuxt.options.modulesDir ?? [])],
   }).catch(() => undefined)
   return path ? normalize(path) : undefined
+}
+
+// The project's h3, else the one of the nitro its Nuxt runs on
+async function resolveH3Path(nuxt: Nuxt): Promise<string | undefined> {
+  const urls = [nuxt.options.rootDir, ...(nuxt.options.modulesDir ?? [])]
+  const h3Package =
+    (await tryResolve('h3/package.json', urls)) ??
+    (await resolveThroughNitro(urls))
+  return h3Package ? normalize(dirname(h3Package)) : undefined
+}
+
+async function resolveThroughNitro(urls: string[]) {
+  const nuxtPackage = await tryResolve('nuxt/package.json', urls)
+  if (!nuxtPackage) {
+    return undefined
+  }
+  const nitroPackages = await Promise.all(
+    NITRO_PACKAGES.map((name) =>
+      tryResolve(`${name}/package.json`, [dirname(nuxtPackage)]),
+    ),
+  )
+  const nitroPackage = nitroPackages.find((path) => path !== undefined)
+  return nitroPackage
+    ? tryResolve('h3/package.json', [dirname(nitroPackage)])
+    : undefined
+}
+
+function tryResolve(id: string, urls: string[]) {
+  return resolvePath(id, { url: urls }).catch(() => undefined)
 }
 
 // #1049 alias vue to absolute esm-bundler path

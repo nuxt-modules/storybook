@@ -18,7 +18,6 @@ export const useState = mockNuxtImport('useState') as unknown
 mockComponent('MyAvatar', () => import('./MyAvatar.mock.vue'))
 `
 
-/** What unimport hands out once every module has registered its imports. */
 const IMPORTS: Import[] = [
   { from: '#app/composables/router', name: 'useRoute' },
   { from: '#app/composables/state', name: 'StateKey', type: true },
@@ -138,6 +137,35 @@ describe(injectStoryFile, () => {
       "
     `)
     expect(map.mappings).not.toBe('')
+  })
+
+  it('tells top-level registerEndpoint calls their file, not those of story hooks', () => {
+    const story = `import { registerEndpoint } from '@storybook-vue/nuxt'
+
+registerEndpoint('/api/users', () => ['Ada'])
+
+export default {
+  beforeEach: (context) => registerEndpoint(context, '/api/me', () => ({})),
+}
+`
+
+    expect(injectStoryFile(story, FILE, './a.stories.ts', 3).code)
+      .toMatchInlineSnapshot(`
+        "import { registerEndpoint } from '@storybook-vue/nuxt'
+
+        registerEndpoint('/api/users', () => ['Ada'], "./a.stories.ts", 3)
+
+        export default {
+          beforeEach: (context) => registerEndpoint(context, '/api/me', () => ({})),
+        }
+        "
+      `)
+  })
+
+  it('refuses a top-level registerEndpoint without url and endpoint', () => {
+    expect(() =>
+      injectStoryFile("registerEndpoint('/api/me')", FILE, './a.stories.ts', 1),
+    ).toThrow('a.stories.ts: registerEndpoint() needs a url and an endpoint')
   })
 })
 

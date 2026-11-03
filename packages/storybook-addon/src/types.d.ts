@@ -1,3 +1,4 @@
+import type { Endpoint } from './runtime/endpoints'
 import type { StorybookConfig as StorybookConfigBase } from 'storybook/internal/types'
 import type { FrameworkOptions as FrameworkOptionsVue } from '@storybook/vue3-vite'
 import type {
@@ -30,6 +31,11 @@ interface StorybookConfigFramework {
 }
 
 export interface NuxtParameters {
+  /**
+   * Endpoints answered from inside the preview for this story, keyed by URL.
+   */
+  endpoints?: Record<string, Endpoint>
+
   /**
    * Lets the story navigate away from its route, in the router or to another site.
    *

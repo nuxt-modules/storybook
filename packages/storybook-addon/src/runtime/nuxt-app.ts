@@ -20,8 +20,9 @@ type Payload = NuxtApp['payload']
 export interface StoryApp {
   appId: string
   canvasElement: HTMLElement
-  file: string
+  importPath: string
   parameters: NuxtParameters
+  storyId: string
 }
 
 export const STORY_APP = Symbol(
@@ -33,6 +34,8 @@ const DEFAULT_APP_ID = 'nuxt-app'
 const DEFAULT_RUNTIME_CONFIG = { app: { baseURL: '/' }, public: {} }
 
 const appIdMap = new WeakMap<HTMLElement, string>()
+
+const storyApps = new WeakMap<NuxtApp, StoryApp>()
 
 function getAppId(canvasElement: HTMLElement): string {
   let appId = appIdMap.get(canvasElement)
@@ -51,17 +54,23 @@ export function createStoryNuxtApp(
   vueApp: App,
   canvasElement: HTMLElement,
   parameters: NuxtParameters,
-  file: string,
+  importPath: string,
+  storyId: string,
 ): Promise<NuxtApp> {
   const story: StoryApp = {
     appId: getAppId(canvasElement),
     canvasElement,
-    file,
+    importPath,
     parameters,
+    storyId,
   }
   const booted = bootstrapping.then(() => bootstrapNuxtApp(vueApp, story))
   bootstrapping = booted.catch(() => undefined)
   return booted
+}
+
+export function storyOf(nuxt: NuxtApp | undefined): StoryApp | undefined {
+  return nuxt && storyApps.get(nuxt)
 }
 
 export function disposeStoryNuxtApp(nuxt: NuxtApp): void {
@@ -90,7 +99,8 @@ async function bootstrapNuxtApp(
     vueApp,
   } as CreateOptions)
   claimDefaultContext(nuxt)
-  await applyFileMocks(nuxt, story.file)
+  storyApps.set(nuxt, story)
+  await applyFileMocks(nuxt, story.importPath)
 
   vueApp.provide(STORY_APP, story)
   reportErrorsToNuxt(vueApp, nuxt)
