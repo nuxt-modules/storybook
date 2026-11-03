@@ -464,8 +464,8 @@ importers:
   packages/nuxt-module:
     dependencies:
       '@nuxt/devtools-kit':
-        specifier: ^3.0.0
-        version: 3.2.4(magicast@0.5.5)(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(yaml@2.9.0))
+        specifier: ^4.0.0
+        version: 4.1.0(@nuxt/kit@4.4.8(magicast@0.5.5))(nitropack@2.13.4(better-sqlite3@13.0.3)(oxc-parser@0.133.0)(rolldown@1.0.3)(srvx@0.11.15)(supports-color@10.2.2)(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(yaml@2.9.0)))(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(yaml@2.9.0))
       '@nuxt/kit':
         specifier: ^3.18.1 || ^4.0.0
         version: 4.4.8(magicast@0.5.5)
@@ -1977,6 +1977,19 @@ packages:
     resolution: {integrity: sha512-ymp4jqS3hFfwRw8uDkv8cpu4kWvhQrX+S4jnA/oOc76s4AXf2HCZZJgrncKxh+txqi1NJj8nsQNBbaqRAo3g4w==}
     peerDependencies:
       vite: '>=6.0'
+
+  '@nuxt/devtools-kit@4.1.0':
+    resolution: {integrity: sha512-+L/7UqsOJsdkERhAurOq3ZOsrR8v3h5e2TrMo9KDLZa9imouGl9Nzu/vpmM0sL7Bv72ZiBjopU4EEgmzCZqwMg==}
+    peerDependencies:
+      '@nuxt/kit': ^4.0.0-0 || ^5.0.0-0
+      nitro: '*'
+      nitropack: ^2.0.0
+      vite: '>=6.0'
+    peerDependenciesMeta:
+      nitro:
+        optional: true
+      nitropack:
+        optional: true
 
   '@nuxt/devtools-wizard@3.2.4':
     resolution: {integrity: sha512-5tu2+Quu9XTxwtpzM8CUN0UKn/bzZIfJcoGd+at5Yy1RiUQJ4E52tRK0idW1rMSUDkbkvX3dSnu8Tpj7SAtWdQ==}
@@ -11483,6 +11496,15 @@ snapshots:
       vite: 8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(yaml@2.9.0)
     transitivePeerDependencies:
       - magicast
+
+  '@nuxt/devtools-kit@4.1.0(@nuxt/kit@4.4.8(magicast@0.5.5))(nitropack@2.13.4(better-sqlite3@13.0.3)(oxc-parser@0.133.0)(rolldown@1.0.3)(srvx@0.11.15)(supports-color@10.2.2)(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(yaml@2.9.0)))(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(yaml@2.9.0))':
+    dependencies:
+      '@nuxt/kit': 4.4.8(magicast@0.5.5)
+      nostics: 1.3.0
+      tinyexec: 1.3.1
+      vite: 8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(yaml@2.9.0)
+    optionalDependencies:
+      nitropack: 2.13.4(better-sqlite3@13.0.3)(oxc-parser@0.133.0)(rolldown@1.0.3)(srvx@0.11.15)(supports-color@10.2.2)(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.46.0)(yaml@2.9.0))
 
   '@nuxt/devtools-wizard@3.2.4':
     dependencies:
