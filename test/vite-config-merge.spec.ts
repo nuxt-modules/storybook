@@ -71,4 +71,15 @@ describe(mergeViteConfig, () => {
     )
     expect(vuePlugins).toHaveLength(1)
   })
+
+  it('drops the vite-node plugin that drives the host Nuxt SSR', async () => {
+    const nuxtConfig = appConfig()
+    nuxtConfig.plugins?.push({ name: 'nuxt:vite-node-server' })
+    const merged = await mergeViteConfig({}, nuxtConfig, mockNuxt())
+
+    const names = (merged.plugins ?? []).map(
+      (plugin) => plugin && 'name' in plugin && plugin.name,
+    )
+    expect(names).not.toContain('nuxt:vite-node-server')
+  })
 })
