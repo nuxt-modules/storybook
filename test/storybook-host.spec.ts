@@ -17,6 +17,10 @@ describe(resolveStorybookHost, () => {
     expect(resolveStorybookHost('http://[::1]')).toBe('::1')
   })
 
+  it('leaves a value that is not a valid url as it is', () => {
+    expect(resolveStorybookHost('http://')).toBe('http://')
+  })
+
   it('keeps the storybook default for the default host', () => {
     expect(resolveStorybookHost('http://localhost')).toBeUndefined()
     expect(resolveStorybookHost('')).toBeUndefined()
