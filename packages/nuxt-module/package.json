@@ -32,6 +32,10 @@
       "types": "./dist/preset.d.mts",
       "import": "./dist/preset.mjs"
     },
+    "./node": {
+      "types": "./dist/node.d.mts",
+      "import": "./dist/node.mjs"
+    },
     "./preview": {
       "types": "./dist/preview.d.mts",
       "import": "./dist/preview.mjs"
@@ -47,6 +51,9 @@
       ],
       "preset": [
         "./dist/preset.d.mts"
+      ],
+      "node": [
+        "./dist/node.d.mts"
       ],
       "preview": [
         "./dist/preview.d.mts"

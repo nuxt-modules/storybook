@@ -1,3 +1,2 @@
-// Stands in for the `#components` module Nuxt generates in each project, so the
-// package compiles on its own. Not published: consumers resolve the real one.
+// oxlint-disable-next-line unicorn/require-module-specifiers -- must stay a module for the `#components` path mapping
 export {}

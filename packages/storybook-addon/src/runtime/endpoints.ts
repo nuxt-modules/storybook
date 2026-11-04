@@ -1,4 +1,4 @@
-import type { EventHandler } from 'h3'
+import type { EventHandler, HTTPMethod } from 'h3'
 
 export type EndpointHandler = EventHandler
 
@@ -10,7 +10,7 @@ export interface EndpointOptions {
    *
    * @default undefined
    */
-  method?: string
+  method?: HTTPMethod | Lowercase<HTTPMethod>
 
   /**
    * Unregisters the handler after its first call.
@@ -51,7 +51,7 @@ interface EndpointScope {
 }
 
 // Captures the calling story's app when `$fetch` is called: fetch and retries
-// run later, when another story's app may be current
+// Run later, when another story's app may be current
 export const REQUEST_APP = Symbol('nuxt-storybook:request-app')
 
 export function registerEndpoint(
@@ -117,7 +117,7 @@ export function createEndpointFetch(
     const keys = requestKeys(input)
     const scoped = registries(init)
     // Unlike @nuxt/test-utils, unregistered same-origin urls reach the dev
-    // server instead of a 404, as Storybook has no Nitro
+    // Server instead of a 404, as Storybook has no Nitro
     if (!scoped.some((registry) => keys.some((key) => registry.has(key)))) {
       return baseFetch(input, init)
     }
@@ -201,7 +201,7 @@ function findIn(registry: Registry, keys: string[], method: string) {
 }
 
 // 'https://api.example.com/users?page=2' is registered with or without its
-// query; '/api/users?page=2' too, also when fetched by its absolute url
+// Query; '/api/users?page=2' too, also when fetched by its absolute url
 function requestKeys(input: RequestInfo | URL): string[] {
   const url = urlOf(input)
   const { origin, pathname, search } = new URL(url, location.origin)

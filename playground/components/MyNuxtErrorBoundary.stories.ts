@@ -1,20 +1,17 @@
 import { expect, userEvent, within } from 'storybook/test'
-import type { Meta, StoryObj } from '@nuxtjs/storybook'
 
+import preview from '../.storybook/preview'
 import MyNuxtErrorBoundary from './MyNuxtErrorBoundary.vue'
 
-const meta = {
+const meta = preview.meta({
   component: MyNuxtErrorBoundary,
   tags: ['autodocs'],
   title: 'Nuxt/ErrorBoundary',
-} satisfies Meta<typeof MyNuxtErrorBoundary>
+})
 
-export default meta
-type Story = StoryObj<typeof meta>
+export const Healthy = meta.story()
 
-export const Healthy: Story = {}
-
-export const Caught: Story = {
+export const Caught = meta.story({
   async play({ canvasElement }) {
     const canvas = within(canvasElement)
 
@@ -24,9 +21,9 @@ export const Caught: Story = {
       'caught: Boom',
     )
   },
-}
+})
 
-export const Recovered: Story = {
+export const Recovered = meta.story({
   async play({ canvasElement }) {
     const canvas = within(canvasElement)
 
@@ -35,4 +32,4 @@ export const Recovered: Story = {
 
     await expect(await canvas.findByText('throw an error')).toBeVisible()
   },
-}
+})

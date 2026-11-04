@@ -1,4 +1,6 @@
 export * from '@storybook/vue3-vite'
+export { definePreview } from './define-preview'
+export type { NuxtTypes } from './define-preview'
 export { mockComponent } from './runtime/mock-component'
 export type { MockableComponent } from './runtime/mock-component'
 export { mockNuxtImport } from './runtime/mock-nuxt-import'
@@ -11,4 +13,11 @@ export type {
   EndpointStory,
 } from './runtime/endpoints'
 export { navigation } from './runtime/navigation'
-export type { NuxtParameters, StorybookConfig } from './types.d'
+export type {
+  Meta,
+  NuxtParameters,
+  Preview,
+  StoryFn,
+  StoryObj,
+  StorybookConfig,
+} from './types.d'

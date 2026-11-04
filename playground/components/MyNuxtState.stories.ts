@@ -1,20 +1,17 @@
 import { expect, userEvent, within } from 'storybook/test'
-import type { Meta, StoryObj } from '@nuxtjs/storybook'
 
+import preview from '../.storybook/preview'
 import MyNuxtState from './MyNuxtState.vue'
 
-const meta = {
+const meta = preview.meta({
   component: MyNuxtState,
   tags: ['autodocs'],
   title: 'Nuxt/State',
-} satisfies Meta<typeof MyNuxtState>
+})
 
-export default meta
-type Story = StoryObj<typeof meta>
+export const Initial = meta.story()
 
-export const Initial: Story = {}
-
-export const Incremented: Story = {
+export const Incremented = meta.story({
   async play({ canvasElement }) {
     const canvas = within(canvasElement)
 
@@ -23,13 +20,13 @@ export const Incremented: Story = {
 
     await expect(canvas.getByText(/^count: /)).toHaveTextContent('count: 2')
   },
-}
+})
 
 // Each story owns its Nuxt app: the clicks of `Incremented` must not leak here
-export const IsolatedFromOtherStories: Story = {
+export const IsolatedFromOtherStories = meta.story({
   async play({ canvasElement }) {
     await expect(within(canvasElement).getByText(/^count: /)).toHaveTextContent(
       'count: 0',
     )
   },
-}
+})

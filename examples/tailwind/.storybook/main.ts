@@ -1,13 +1,11 @@
-/** @type { import('storybook-vue').StorybookConfig } */
-const config = {
+import { defineMain } from '@storybook-vue/nuxt/node'
+
+export default defineMain({
   addons: [
     '@storybook/addon-docs',
     '@storybook/addon-links',
     '@chromatic-com/storybook',
   ],
-  docs: {
-    autodocs: 'tag',
-  },
   framework: {
     name: '@storybook-vue/nuxt',
     options: {},
@@ -15,7 +13,5 @@ const config = {
   stories: [
     '../components/**/*.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-    '../pages/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
-}
-export default config
+})

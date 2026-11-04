@@ -24,6 +24,10 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
+    "./node": {
+      "types": "./dist/node.d.mts",
+      "import": "./dist/node.mjs"
+    },
     "./preset": {
       "types": "./dist/preset.d.mts",
       "import": "./dist/preset.mjs"

@@ -4,6 +4,7 @@ export default defineBuildConfig({
   declaration: true,
   entries: [
     { input: 'src/index' },
+    { input: 'src/node/index', name: 'node' },
     { input: 'src/preset' },
     { input: 'src/preview' },
     { ext: 'js', format: 'esm', input: 'src/runtime/', outDir: 'dist/runtime' },
@@ -15,6 +16,7 @@ export default defineBuildConfig({
     '#build/css',
     '#build/plugins',
     'nuxt/app',
+    'storybook/internal/csf',
     'storybook/internal/types',
     'storybook/test',
     'virtual:nuxt-storybook/mocked-imports',

@@ -22,11 +22,11 @@ const IMPORTS: Import[] = [
   { from: '#app/composables/router', name: 'useRoute' },
   { from: '#app/composables/state', name: 'StateKey', type: true },
   {
+    as: 'useGreeting',
     from: '/app/composables/useGreeting.ts',
     name: 'default',
-    as: 'useGreeting',
   },
-  { from: '/app/utils/old.ts', name: 'oldHelper', disabled: true },
+  { disabled: true, from: '/app/utils/old.ts', name: 'oldHelper' },
 ]
 
 const COMPONENTS = [

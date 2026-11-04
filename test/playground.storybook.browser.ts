@@ -46,3 +46,16 @@ test('renders the story example', async ({ page }) => {
     }),
   ).toBeVisible()
 })
+
+test('renders a CSF Factories story inside the Nuxt app', async ({ page }) => {
+  await page.goto(
+    'http://localhost:6006/iframe.html?viewMode=story&id=nuxt-runtimeconfig--overridden-by-story',
+  )
+  await page.locator('#storybook-root').waitFor()
+  await page.locator('.sb-preparing-story').waitFor({ state: 'hidden' })
+
+  await expect(page.getByTestId('api-base')).toHaveText(
+    'https://staging.example.com',
+  )
+  await expect(page.locator('#error-message')).toBeEmpty()
+})

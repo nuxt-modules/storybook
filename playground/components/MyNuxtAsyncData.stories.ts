@@ -1,36 +1,33 @@
 import { expect, userEvent, within } from 'storybook/test'
-import type { Meta, StoryObj } from '@nuxtjs/storybook'
 
+import preview from '../.storybook/preview'
 import MyNuxtAsyncData from './MyNuxtAsyncData.vue'
 
-const meta = {
+const meta = preview.meta({
   component: MyNuxtAsyncData,
   tags: ['autodocs'],
   title: 'Nuxt/AsyncData',
-} satisfies Meta<typeof MyNuxtAsyncData>
+})
 
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Resolved: Story = {
+export const Resolved = meta.story({
   async play({ canvasElement }) {
     const canvas = within(canvasElement)
 
     await expect(await canvas.findByText('status: success')).toBeVisible()
     await expect(canvas.getAllByRole('listitem')).toHaveLength(3)
   },
-}
+})
 
-export const Slow: Story = {
+export const Slow = meta.story({
   args: { delay: 500 },
   async play({ canvasElement }) {
     const canvas = within(canvasElement)
 
     await expect(await canvas.findByText('Grace')).toBeVisible()
   },
-}
+})
 
-export const Failed: Story = {
+export const Failed = meta.story({
   args: { fail: true },
   async play({ canvasElement }) {
     const canvas = within(canvasElement)
@@ -39,9 +36,9 @@ export const Failed: Story = {
       'Request failed',
     )
   },
-}
+})
 
-export const Refreshed: Story = {
+export const Refreshed = meta.story({
   async play({ canvasElement }) {
     const canvas = within(canvasElement)
 
@@ -49,4 +46,4 @@ export const Refreshed: Story = {
 
     await expect(await canvas.findByText('status: success')).toBeVisible()
   },
-}
+})

@@ -1,6 +1,8 @@
-import type { Preview } from '@nuxtjs/storybook'
+import addonDocs from '@storybook/addon-docs'
+import { definePreview } from '@storybook-vue/nuxt'
 
-const preview: Preview = {
+export default definePreview({
+  addons: [addonDocs()],
   parameters: {
     controls: {
       matchers: {
@@ -9,6 +11,4 @@ const preview: Preview = {
       },
     },
   },
-}
-
-export default preview
+})

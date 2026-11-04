@@ -1,13 +1,12 @@
+import preview from '../.storybook/preview'
 import CSSStyling from './CSSStyling.vue'
 
-const meta = {
+const meta = preview.meta({
   component: CSSStyling,
   tags: ['autodocs'],
   title: 'Example/CSS Styling',
-}
+})
 
-export default meta
-
-export const CSSStylingStory = {
+export const CSSStylingStory = meta.story({
   args: {},
-}
+})
