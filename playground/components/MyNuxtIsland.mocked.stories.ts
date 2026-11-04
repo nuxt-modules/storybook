@@ -1,8 +1,8 @@
 import { mockComponent } from '@storybook-vue/nuxt'
 import { expect, within } from 'storybook/test'
 import { defineComponent, h } from 'vue'
-import type { Meta, StoryObj } from '@nuxtjs/storybook'
 
+import preview from '../.storybook/preview'
 import MyNuxtIslandHost from './MyNuxtIslandHost.vue'
 
 // A server component renders as an island, which Storybook cannot fetch:
@@ -15,20 +15,17 @@ mockComponent('MyNuxtIsland', () =>
   }),
 )
 
-const meta = {
+const meta = preview.meta({
   args: { label: 'Server time' },
   component: MyNuxtIslandHost,
   tags: ['autodocs'],
   title: 'Nuxt/Island Mocked',
-} satisfies Meta<typeof MyNuxtIslandHost>
+})
 
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Mocked: Story = {
+export const Mocked = meta.story({
   async play({ canvasElement }) {
     await expect(
       within(canvasElement).getByText('Server time: mocked island'),
     ).toBeVisible()
   },
-}
+})

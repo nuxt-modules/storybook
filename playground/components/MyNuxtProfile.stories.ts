@@ -1,20 +1,17 @@
 import { expect, within } from 'storybook/test'
-import type { Meta, StoryObj } from '@nuxtjs/storybook'
 
+import preview from '../.storybook/preview'
 import MyNuxtProfile from './MyNuxtProfile.vue'
 
-const meta = {
+const meta = preview.meta({
   args: { name: 'Ada Lovelace' },
   component: MyNuxtProfile,
   tags: ['autodocs'],
   title: 'Nuxt/Profile',
-} satisfies Meta<typeof MyNuxtProfile>
+})
 
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
+export const Default = meta.story({
   async play({ canvasElement }) {
     await expect(within(canvasElement).getByText('AL')).toBeVisible()
   },
-}
+})

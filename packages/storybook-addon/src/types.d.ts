@@ -1,6 +1,14 @@
 import type { Endpoint } from './runtime/endpoints'
 import type { StorybookConfig as StorybookConfigBase } from 'storybook/internal/types'
-import type { FrameworkOptions as FrameworkOptionsVue } from '@storybook/vue3-vite'
+import type {
+  Args,
+  FrameworkOptions as FrameworkOptionsVue,
+  Meta as MetaVue,
+  Preview as PreviewVue,
+  StoryFn as StoryFnVue,
+  StoryObj as StoryObjVue,
+} from '@storybook/vue3-vite'
+import type { NuxtPayload } from 'nuxt/app'
 import type {
   BuilderOptions as BuilderOptionsVite,
   StorybookConfigVite,
@@ -54,7 +62,25 @@ export interface NuxtParameters {
   /**
    * Values merged into the app's runtime config before the story's Nuxt app is created.
    */
-  runtimeConfig?: Record<string, unknown>
+  runtimeConfig?: DeepPartial<NonNullable<NuxtPayload['config']>>
+}
+
+export type Meta<TCmpOrArgs = Args> = MetaVue<TCmpOrArgs> & WithNuxtParameters
+
+export type Preview = PreviewVue & WithNuxtParameters
+
+export type StoryFn<TCmpOrArgs = Args> = StoryFnVue<TCmpOrArgs> &
+  WithNuxtParameters
+
+export type StoryObj<TMetaOrCmpOrArgs = Args> = StoryObjVue<TMetaOrCmpOrArgs> &
+  WithNuxtParameters
+
+type DeepPartial<T> =
+  T extends Record<string, unknown> ? { [K in keyof T]?: DeepPartial<T[K]> } : T
+
+/** Adds `parameters.nuxt` to the CSF3 annotations of `@storybook/vue3-vite`. */
+interface WithNuxtParameters {
+  parameters?: { nuxt?: NuxtParameters }
 }
 
 /**

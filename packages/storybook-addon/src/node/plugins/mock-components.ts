@@ -6,7 +6,7 @@ import type { MockedComponent } from '../mock-calls'
 import { cleanId, stemsOf } from './module-ids'
 
 // The original id goes in the query: an id ending in `.vue` would be taken
-// for a single-file component by the Vue plugin
+// For a single-file component by the Vue plugin
 export const COMPONENT_MODULE_PREFIX = '\0nuxt-storybook-component?original='
 const RUNTIME = resolve(runtimeDir, 'mockable-component')
 

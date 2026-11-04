@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from '@nuxtjs/storybook'
-
+import preview from '../.storybook/preview'
 import MyComponent from './MyI18n.vue'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 
-const meta = {
+const meta = preview.meta({
   title: 'Plugins/I18n',
   component: MyComponent,
   argTypes: {
@@ -13,24 +12,22 @@ const meta = {
 
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
   tags: ['autodocs'],
-} satisfies Meta<typeof MyComponent>
+})
 
-export default meta
-type Story = StoryObj<typeof meta>
 /*
  *👇 Render functions are a framework specific feature to allow you control on how the component renders.
  * See https://storybook.js.org/docs/vue/api/csf
  * to learn how to use render functions.
  */
 
-export const FrenchStory: Story = {
+export const FrenchStory = meta.story({
   args: { lang: 'fr' },
-}
+})
 
-export const EnglishStory: Story = {
+export const EnglishStory = meta.story({
   args: { lang: 'en' },
-}
+})
 
-export const ArabicStory: Story = {
+export const ArabicStory = meta.story({
   args: { lang: 'ar' },
-}
+})

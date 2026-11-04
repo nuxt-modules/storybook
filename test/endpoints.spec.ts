@@ -6,9 +6,9 @@ import * as h3v2 from 'h3-next'
 import { createEndpointApp } from '../packages/storybook-addon/src/runtime/endpoint-app'
 import type { H3Module } from '../packages/storybook-addon/src/runtime/endpoint-app'
 import {
+  REQUEST_APP,
   beginStoryEndpoints,
   createEndpointFetch,
-  REQUEST_APP,
   endpointRegistries,
   registerEndpoint,
 } from '../packages/storybook-addon/src/runtime/endpoints'
@@ -100,7 +100,7 @@ describe.each<[number, H3Module]>([
 
     const response = await endpointFetch('/api/users')
 
-    expect(await response.json()).toEqual(['Ada'])
+    await expect(response.json()).resolves.toStrictEqual(['Ada'])
     expect(baseFetch).not.toHaveBeenCalled()
   })
 
@@ -111,7 +111,7 @@ describe.each<[number, H3Module]>([
 
     const response = await endpointFetch('/api/other')
 
-    expect(await response.text()).toBe('from the network')
+    await expect(response.text()).resolves.toBe('from the network')
     expect(baseFetch).toHaveBeenCalledWith('/api/other', undefined)
   })
 
@@ -122,7 +122,7 @@ describe.each<[number, H3Module]>([
 
     const response = await endpointFetch('https://api.example.com/users')
 
-    expect(await response.json()).toEqual(['Ada'])
+    await expect(response.json()).resolves.toStrictEqual(['Ada'])
     expect(baseFetch).not.toHaveBeenCalled()
   })
 
@@ -139,7 +139,7 @@ describe.each<[number, H3Module]>([
       new URL('https://api.example.com/users?page=2'),
     )
 
-    expect(await response.text()).toBe('/users?page=2')
+    await expect(response.text()).resolves.toBe('/users?page=2')
     expect(baseFetch).not.toHaveBeenCalled()
   })
 
@@ -163,7 +163,7 @@ describe.each<[number, H3Module]>([
 
     const response = await endpointFetch('/api/users?page=2')
 
-    expect(await response.text()).toBe('/api/users?page=2')
+    await expect(response.text()).resolves.toBe('/api/users?page=2')
   })
 
   it('answers a Request input', async () => {
@@ -175,7 +175,7 @@ describe.each<[number, H3Module]>([
       new Request(new URL('/api/users', location.origin)),
     )
 
-    expect(await response.json()).toEqual(['Ada'])
+    await expect(response.json()).resolves.toStrictEqual(['Ada'])
   })
 
   it('picks the handler of the request method, latest first', async () => {
@@ -191,8 +191,8 @@ describe.each<[number, H3Module]>([
     const got = await endpointFetch('/api/users')
     const posted = await endpointFetch('/api/users', { method: 'POST' })
 
-    expect(await got.text()).toBe('last')
-    expect(await posted.text()).toBe('created')
+    await expect(got.text()).resolves.toBe('last')
+    await expect(posted.text()).resolves.toBe('created')
   })
 
   it('refuses a method no handler answers', async () => {
@@ -221,8 +221,8 @@ describe.each<[number, H3Module]>([
     const first = await endpointFetch('/api/users')
     const second = await endpointFetch('/api/users')
 
-    expect(await first.text()).toBe('once')
-    expect(await second.text()).toBe('always')
+    await expect(first.text()).resolves.toBe('once')
+    await expect(second.text()).resolves.toBe('always')
   })
 
   it('unregisters a handler', async () => {
@@ -262,8 +262,8 @@ describe.each<[number, H3Module]>([
     runStory('c')
     await endpointFetch('/api/users')
 
-    expect(await ofFirst.json()).toEqual(['Ada'])
-    expect(await ofSecond.json()).toEqual(['Grace'])
+    await expect(ofFirst.json()).resolves.toStrictEqual(['Ada'])
+    await expect(ofSecond.json()).resolves.toStrictEqual(['Grace'])
     expect(baseFetch).toHaveBeenCalledOnce()
   })
 
@@ -285,9 +285,9 @@ describe.each<[number, H3Module]>([
     const users = await endpointFetch('/api/users')
     const posted = await endpointFetch('/api/users', { method: 'POST' })
 
-    expect(await me.json()).toEqual({ name: 'Ada' })
-    expect(await users.json()).toEqual(['story'])
-    expect(await posted.text()).toBe('created')
+    await expect(me.json()).resolves.toStrictEqual({ name: 'Ada' })
+    await expect(users.json()).resolves.toStrictEqual(['story'])
+    await expect(posted.text()).resolves.toBe('created')
   })
 
   it('answers the endpoints of the story parameters, after its registered ones', async () => {
@@ -304,8 +304,8 @@ describe.each<[number, H3Module]>([
     const me = await endpointFetch('/api/me')
     const users = await endpointFetch('/api/users')
 
-    expect(await me.json()).toEqual({ name: 'Ada' })
-    expect(await users.json()).toEqual(['registered'])
+    await expect(me.json()).resolves.toStrictEqual({ name: 'Ada' })
+    await expect(users.json()).resolves.toStrictEqual(['registered'])
   })
 
   it('keeps the endpoints of stories registered interleaved apart', async () => {
@@ -325,9 +325,9 @@ describe.each<[number, H3Module]>([
     const usersOfB = await endpointFetch('/api/users')
     await endpointFetch('/api/me')
 
-    expect(await usersOfA.json()).toEqual(['Ada'])
-    expect(await meOfA.json()).toEqual({ name: 'Ada' })
-    expect(await usersOfB.json()).toEqual(['Grace'])
+    await expect(usersOfA.json()).resolves.toStrictEqual(['Ada'])
+    await expect(meOfA.json()).resolves.toStrictEqual({ name: 'Ada' })
+    await expect(usersOfB.json()).resolves.toStrictEqual(['Grace'])
     expect(baseFetch).toHaveBeenCalledExactlyOnceWith('/api/me', undefined)
   })
 
@@ -343,7 +343,7 @@ describe.each<[number, H3Module]>([
       [REQUEST_APP]: first,
     } as RequestInit)
 
-    expect(await response.json()).toEqual(['Ada'])
+    await expect(response.json()).resolves.toStrictEqual(['Ada'])
   })
 
   it('starts the story over on each run', async () => {

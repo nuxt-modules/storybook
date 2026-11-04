@@ -1,6 +1,6 @@
-import type { StorybookConfig } from '@nuxtjs/storybook'
+import { defineMain } from '@storybook-vue/nuxt/node'
 
-const config: StorybookConfig = {
+export default defineMain({
   addons: ['@chromatic-com/storybook', '@storybook/addon-docs'],
   framework: {
     name: '@storybook-vue/nuxt',
@@ -10,5 +10,4 @@ const config: StorybookConfig = {
     '../components/**/*.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
-}
-export default config
+})

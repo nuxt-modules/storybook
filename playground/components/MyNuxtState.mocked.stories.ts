@@ -1,8 +1,8 @@
 import { mockNuxtImport } from '@storybook-vue/nuxt'
 import { expect, userEvent, within } from 'storybook/test'
 import { ref } from 'vue'
-import type { Meta, StoryObj } from '@nuxtjs/storybook'
 
+import preview from '../.storybook/preview'
 import MyNuxtState from './MyNuxtState.vue'
 
 // Applies to every story of this file; the factory runs once per story
@@ -11,25 +11,22 @@ const useCounter = mockNuxtImport('useCounter', () => () => {
   return { count, increment: () => count.value++ }
 })
 
-const meta = {
+const meta = preview.meta({
   component: MyNuxtState,
   tags: ['autodocs'],
   title: 'Nuxt/State Mocked',
-} satisfies Meta<typeof MyNuxtState>
+})
 
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Initial: Story = {
+export const Initial = meta.story({
   async play({ canvasElement }) {
     await expect(within(canvasElement).getByText(/^count: /)).toHaveTextContent(
       'count: 40',
     )
     await expect(useCounter).toHaveBeenCalledOnce()
   },
-}
+})
 
-export const Incremented: Story = {
+export const Incremented = meta.story({
   async play({ canvasElement }) {
     const canvas = within(canvasElement)
 
@@ -37,4 +34,4 @@ export const Incremented: Story = {
 
     await expect(canvas.getByText(/^count: /)).toHaveTextContent('count: 41')
   },
-}
+})

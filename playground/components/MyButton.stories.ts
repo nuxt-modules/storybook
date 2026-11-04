@@ -1,9 +1,9 @@
 import { expect, fn, userEvent, within } from 'storybook/test'
-import type { Meta, StoryObj } from '@nuxtjs/storybook'
 
+import preview from '../.storybook/preview'
 import MyButton from './MyButton.vue'
 
-const meta = {
+const meta = preview.meta({
   argTypes: {
     size: { control: 'select', options: ['small', 'medium', 'large'] },
   },
@@ -11,29 +11,26 @@ const meta = {
   component: MyButton,
   tags: ['autodocs'],
   title: 'Example/Button',
-} satisfies Meta<typeof MyButton>
+})
 
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Primary: Story = {
+export const Primary = meta.story({
   args: { primary: true },
-}
+})
 
-export const Secondary: Story = {}
+export const Secondary = meta.story()
 
-export const Large: Story = {
+export const Large = meta.story({
   args: { size: 'large' },
-}
+})
 
-export const Small: Story = {
+export const Small = meta.story({
   args: { size: 'small' },
-}
+})
 
-export const Clicked: Story = {
+export const Clicked = meta.story({
   async play({ args, canvasElement }) {
     await userEvent.click(within(canvasElement).getByRole('button'))
 
     await expect(args.onClick).toHaveBeenCalledOnce()
   },
-}
+})

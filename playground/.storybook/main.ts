@@ -1,7 +1,7 @@
-import type { StorybookConfig } from '@nuxtjs/storybook'
+import { defineMain } from '@storybook-vue/nuxt/node'
 import Inspect from 'vite-plugin-inspect'
 
-const config: StorybookConfig = {
+export default defineMain({
   addons: ['@storybook/addon-docs', '@chromatic-com/storybook'],
   framework: {
     name: '@storybook-vue/nuxt',
@@ -22,5 +22,4 @@ const config: StorybookConfig = {
     )
     return config
   },
-}
-export default config
+})

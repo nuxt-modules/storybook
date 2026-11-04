@@ -208,7 +208,7 @@ function validateMockCalls(program: Program, file: string): MockCall[] {
 }
 
 // Nuxt's client loader prefers the client version of a component and falls
-// back to the server one, which it renders as an island
+// Back to the server one, which it renders as an island
 function findComponent(
   components: Component[],
   pascalName: string,
