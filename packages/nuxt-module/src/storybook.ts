@@ -4,6 +4,7 @@ import type { Nuxt } from '@nuxt/schema'
 import { getPort } from 'get-port-please'
 import type { ModuleOptions } from './module'
 import { withTrailingSlash } from 'ufo'
+import { resolveStorybookHost } from './host'
 import { colors, logger } from './logger'
 import { cache as storybookCache } from 'storybook/internal/common'
 import {
@@ -61,6 +62,7 @@ export async function setupStorybook(options: ModuleOptions, nuxt: Nuxt) {
 
   const storybookOptions = {
     port: storybookServerPort,
+    host: resolveStorybookHost(options.host),
     configDir,
     configType: 'DEVELOPMENT',
     // Ignore prompts
