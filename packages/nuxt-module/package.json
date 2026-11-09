@@ -75,10 +75,10 @@
     "@nuxt/devtools-kit": "^4.0.0",
     "@nuxt/kit": "^3.18.1 || ^4.0.0",
     "@storybook-vue/nuxt": "workspace:*",
-    "chalk": "^6.0.0",
+    "@storybook/vite-plugin": "^0.1.0",
     "consola": "^3.4.2",
     "defu": "^6.1.4",
-    "get-port-please": "^3.2.0",
+    "pathe": "^2.0.3",
     "ufo": "^1.6.1"
   },
   "devDependencies": {
@@ -88,6 +88,6 @@
     "vite": "8.0.16"
   },
   "peerDependencies": {
-    "storybook": "^11.0.0-beta.0"
+    "storybook": "^11.0.0-beta.1 || >=11.1.0-0 <12.0.0-0"
   }
 }
