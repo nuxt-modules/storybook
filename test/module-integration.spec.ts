@@ -30,6 +30,7 @@ function createStubNuxt(dev = true) {
       typescript: {},
     },
     registeredHooks: () => [...handlers.keys()].toSorted(),
+    plugins: [],
   }
 }
 
