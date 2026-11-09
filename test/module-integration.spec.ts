@@ -30,7 +30,6 @@ function createStubNuxt(dev = true) {
       typescript: {},
     },
     registeredHooks: () => [...handlers.keys()].toSorted(),
-    plugins: [],
   }
 }
 
@@ -46,7 +45,7 @@ async function runModuleSetup(
 }
 
 async function extendViteConfig(nuxt: StubNuxt, isClient: boolean) {
-  const config: { plugins?: PluginOption[] } = {}
+  const config: { plugins: PluginOption[] } = { plugins: [] }
   await nuxt.callHook('vite:extendConfig', config, { isClient })
   return config.plugins
 }
@@ -60,9 +59,9 @@ describe('storybook module setup', () => {
     const nuxt = createStubNuxt()
     await runModuleSetup(nuxt)
 
-    expect(await extendViteConfig(nuxt, false)).toBeUndefined()
+    expect(await extendViteConfig(nuxt, false)).toStrictEqual([])
     const plugins = await extendViteConfig(nuxt, true)
-    expect(plugins?.map(pluginName)).toMatchInlineSnapshot(`
+    expect(plugins.map(pluginName)).toMatchInlineSnapshot(`
       [
         "storybook:vite-plugin",
       ]
