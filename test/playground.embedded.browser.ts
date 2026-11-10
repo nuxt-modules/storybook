@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test'
 
 /**
- * Embedded mode: the module starts Storybook from inside `nuxt dev` (see the
- * second webServer entry in playwright.config.ts). Both servers must stay
- * responsive — starting Storybook used to deadlock Nuxt's boot pipeline (#993).
+ * Embedded mode: `nuxt dev` serves Storybook under /_storybook/ on its own
+ * port (see the second webServer entry in playwright.config.ts). The app must
+ * stay responsive while Storybook runs inside it (#993).
  */
 
 test('nuxt app responds while storybook runs embedded', async ({ page }) => {
@@ -15,7 +15,7 @@ test('nuxt app responds while storybook runs embedded', async ({ page }) => {
 
 test('embedded storybook renders the story example', async ({ page }) => {
   await page.goto(
-    'http://localhost:6016/iframe.html?viewMode=story&id=example-nuxtwelcome--nuxt-welcome-story',
+    'http://localhost:3100/_storybook/iframe.html?viewMode=story&id=example-nuxtwelcome--nuxt-welcome-story',
   )
   await page.locator('#storybook-root').waitFor()
   await page.locator('.sb-preparing-story').waitFor({ state: 'hidden' })
@@ -28,5 +28,27 @@ test('embedded storybook renders the story example', async ({ page }) => {
   ).toBeVisible()
 })
 
-// The docs example is not covered here: the embedded story index is missing
-// Its addon-docs entries (autodocs and MDX), a separate bug from #993.
+test('embedded storybook renders the docs example', async ({ page }) => {
+  await page.goto(
+    'http://localhost:3100/_storybook/iframe.html?viewMode=docs&id=example-nuxtwelcome--docs',
+  )
+  await page.locator('#storybook-docs').waitFor()
+  await page.locator('.sb-preparing-docs').waitFor({ state: 'hidden' })
+
+  await expect(
+    page.locator('#storybook-docs').getByRole('heading', {
+      exact: true,
+      name: 'Welcome Nuxt to Storybook',
+    }),
+  ).toBeVisible()
+})
+
+test('embedded storybook serves the manager on the nuxt port', async ({
+  page,
+}) => {
+  await page.goto('http://localhost:3100/_storybook/')
+
+  await expect(
+    page.getByRole('button', { name: 'NuxtWelcome' }).first(),
+  ).toBeVisible()
+})

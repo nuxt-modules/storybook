@@ -11,7 +11,7 @@ const PACKAGE_NAME_RE = /^@storybook-vue\/nuxt$/
 
 const NITRO_PACKAGES = ['@nuxt/nitro-server', 'nitropack']
 
-const NUXT_SSR_PLUGINS = new Set(['nuxt:vite-node-server'])
+const HOST_ONLY_PLUGINS = new Set(['nuxt:dev-server', 'nuxt:vite-node-server'])
 
 export async function mergeViteConfig(
   storybookConfig: ViteConfig,
@@ -19,7 +19,7 @@ export async function mergeViteConfig(
   nuxt: Nuxt,
 ): Promise<ViteConfig> {
   const extendedConfig: ViteConfig = mergeConfig(
-    { ...nuxtConfig, plugins: nuxtConfig.plugins?.filter(isClientPlugin) },
+    { ...nuxtConfig, plugins: nuxtConfig.plugins?.filter(isPreviewPlugin) },
     storybookConfig,
   )
 
@@ -115,8 +115,8 @@ async function resolveThroughNitro(urls: string[]) {
     : undefined
 }
 
-function isClientPlugin(plugin: PluginOption): boolean {
-  return !(plugin && 'name' in plugin && NUXT_SSR_PLUGINS.has(plugin.name))
+function isPreviewPlugin(plugin: PluginOption): boolean {
+  return !(plugin && 'name' in plugin && HOST_ONLY_PLUGINS.has(plugin.name))
 }
 
 function tryResolve(id: string, urls: string[]) {

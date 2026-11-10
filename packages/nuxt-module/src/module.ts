@@ -1,42 +1,20 @@
 import { defineNuxtModule } from '@nuxt/kit'
-import type { ViteConfig } from '@nuxt/schema'
+import { experimental_vitePlugin } from '@storybook/vite-plugin'
+import defu from 'defu'
+import { relative, resolve } from 'pathe'
+import { joinURL, withTrailingSlash } from 'ufo'
 import type { LogLevel } from './logger'
-import { logger } from './logger'
-
-import { setupStorybook } from './storybook'
+import { colors, logger } from './logger'
 
 export type * from '@storybook-vue/nuxt'
 
-/**
- * Well-known key used to hand the client Vite config to
- * `@storybook-vue/nuxt`, which runs in this same process.
- */
-const VITE_CONFIG_PROMISE = Symbol.for(
-  '@storybook-vue/nuxt:vite-config-promise',
-)
-
 export interface ModuleOptions {
   /**
-   * The route where the Storybook application will be available in development mode.
+   * The route where the Storybook application is served by the Nuxt dev server.
    *
    * @default '/_storybook'
    */
   route: string
-
-  /**
-   * The port where the Storybook application server will be started.
-   *
-   * @default 6006
-   */
-  port: number
-
-  /**
-   * The host where the Storybook application server will be started.
-   *
-   * @default Environment variable 'STORYBOOK_HOST' or 'http://localhost'
-   * @example 'http://localhost'
-   */
-  host: string
 
   /**
    * Log level for the terminal output.
@@ -50,30 +28,12 @@ export interface ModuleOptions {
    * @default true
    */
   enabled: boolean
-
-  /**
-   * Whether to enable HTTPS.
-   *
-   * @default false
-   *
-   * @example
-   * ```
-   * https: {
-   *   key: './server.key',
-   *   cert: './server.crt'
-   * }
-   * ```
-   */
-  https: boolean | { key: string; cert: string }
 }
 
 export default defineNuxtModule<ModuleOptions>({
   defaults: (nuxt) => ({
     enabled: true,
-    host: import.meta.env?.STORYBOOK_HOST || 'http://localhost',
-    https: false,
     logLevel: nuxt.options.logLevel === 'silent' ? 0 : 3,
-    port: 6006,
     route: '/_storybook',
   }),
   meta: {
@@ -87,29 +47,49 @@ export default defineNuxtModule<ModuleOptions>({
     configKey: 'storybook',
     name: '@nuxtjs/storybook',
   },
-  async setup(options, nuxt) {
-    if (import.meta.env?.__STORYBOOK__ || !options.enabled) {
+  setup(options, nuxt) {
+    if (!options.enabled) {
       return
     }
 
     logger.level = options.logLevel
 
+    const configDir = resolve(nuxt.options.rootDir, '.storybook')
+    nuxt.options.typescript = defu(nuxt.options.typescript, {
+      tsConfig: {
+        include: [relative(nuxt.options.buildDir, resolve(configDir, '**/*'))],
+      },
+    })
+
+    if (!nuxt.options.dev) {
+      return
+    }
+
     logger.verbose('🔌  Storybook Module Setup')
 
-    const viteConfigPromise = new Promise<Readonly<ViteConfig>>((resolve) => {
-      nuxt.hook('vite:configResolved', (config, { isClient }) => {
-        if (isClient) {
-          resolve(config)
-        }
-      })
+    nuxt.hook('vite:extendConfig', (config, { isClient }) => {
+      if (isClient) {
+        config.plugins!.push(
+          experimental_vitePlugin({ base: options.route, configDir }),
+        )
+      }
     })
-    ;(nuxt as unknown as Record<symbol, Promise<Readonly<ViteConfig>>>)[
-      VITE_CONFIG_PROMISE
-    ] = viteConfigPromise
 
-    nuxt.hook('listen', () => {
-      setupStorybook(options, nuxt).catch((error: unknown) => {
-        logger.error('Failed to start Storybook', error)
+    nuxt.hook('listen', (_server, listener) => {
+      logger.log(
+        `  ➜ Storybook: ${colors.underline(withTrailingSlash(joinURL(listener.url, options.route)))}`,
+      )
+    })
+
+    nuxt.hook('devtools:customTabs', (tabs) => {
+      tabs.push({
+        icon: 'devicon:storybook',
+        name: 'nuxt-storybook',
+        title: 'Storybook',
+        view: {
+          src: withTrailingSlash(options.route),
+          type: 'iframe',
+        },
       })
     })
   },

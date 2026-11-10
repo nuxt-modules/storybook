@@ -35,17 +35,11 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
       url: 'http://127.0.0.1:6006',
     },
-    // Embedded mode: `nuxt dev` starts Storybook itself, so readiness is
-    // Checked on the embedded Storybook port. Nuxt's port is passed as a flag
-    // Rather than PORT, which Storybook's dev server would also try to bind.
     {
       command: 'pnpm --filter=./playground exec nuxt dev --port 3100',
-      env: {
-        STORYBOOK_PORT: '6016',
-      },
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
-      url: 'http://127.0.0.1:6016',
+      url: 'http://localhost:3100/_storybook/',
     },
   ],
   workers: process.env.CI ? 1 : undefined,

@@ -19,10 +19,5 @@ export default defineNuxtConfig({
   storybook: {
     // Very verbose logs for debugging
     logLevel: Number.POSITIVE_INFINITY,
-    // Lets the e2e setup pin the port so it cannot collide with the
-    // Standalone instance (see playwright.config.ts)
-    ...(process.env.STORYBOOK_PORT
-      ? { port: Number(process.env.STORYBOOK_PORT) }
-      : {}),
   },
 })
