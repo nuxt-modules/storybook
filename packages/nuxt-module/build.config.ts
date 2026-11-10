@@ -7,7 +7,6 @@ export default defineBuildConfig({
     // Re-export preset and preview from @storybook-vue/nuxt
     { input: 'src/preset', name: 'preset' },
     { input: 'src/preview', name: 'preview' },
-    { input: 'src/node', name: 'node' },
   ],
   declaration: true,
   externals: [
@@ -19,7 +18,6 @@ export default defineBuildConfig({
     '@storybook-vue/nuxt',
     '@storybook-vue/nuxt/preset',
     '@storybook-vue/nuxt/preview',
-    '@storybook-vue/nuxt/node',
     '@nuxt/schema',
   ],
   // Ignore warnings
