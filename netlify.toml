@@ -16,6 +16,8 @@ publish = "docs/dist"
 [build.environment]
 # https://docs.netlify.com/configure-builds/environment-variables/
 
-# Use relatively new Node.js version
+# Netlify installs pnpm (from `packageManager`) through Corepack, which needs to
+# be at least 0.34.5 to run pnpm 11+. Older Node.js releases (e.g. 22.17.1)
+# bundle an older Corepack and fail with `Cannot find module '.../bin/pnpm.cjs'`.
 # https://docs.netlify.com/configure-builds/manage-dependencies/#node-js-and-javascript
-NODE_VERSION = "22.17.1"
+NODE_VERSION = "26"
