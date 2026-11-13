@@ -117,10 +117,11 @@ describe(mockImportsPlugin, () => {
     ).toMatchInlineSnapshot(`
       "import { fn } from "storybook/test";
       import { resolveMock } from "${resolve(runtimeDir, 'mocks')}";
+      import { trackConfiguration } from "${resolve(runtimeDir, 'docs-setup')}";
       import * as original from "/app/node_modules/nuxt/dist/app/composables/router.js?v=abc";
       export * from "/app/node_modules/nuxt/dist/app/composables/router.js?v=abc";
       export default original.default
-      export const useRoute = fn((...args) => resolveMock("useRoute", original["useRoute"])(...args)).mockName("useRoute")
+      export const useRoute = trackConfiguration(fn((...args) => resolveMock("useRoute", original["useRoute"])(...args)).mockName("useRoute"))
       "
     `)
   })
@@ -136,9 +137,10 @@ describe(mockImportsPlugin, () => {
     ).toMatchInlineSnapshot(`
       "import { fn } from "storybook/test";
       import { resolveMock } from "${resolve(runtimeDir, 'mocks')}";
+      import { trackConfiguration } from "${resolve(runtimeDir, 'docs-setup')}";
       import * as original from "/app/composables/greeting.ts";
       export * from "/app/composables/greeting.ts";
-      export default fn((...args) => resolveMock("useGreeting", original["default"])(...args)).mockName("useGreeting")
+      export default trackConfiguration(fn((...args) => resolveMock("useGreeting", original["default"])(...args)).mockName("useGreeting"))
       "
     `)
   })

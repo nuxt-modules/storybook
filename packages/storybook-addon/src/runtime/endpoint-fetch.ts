@@ -1,13 +1,13 @@
-import { tryUseNuxtApp } from 'nuxt/app'
 import type { NuxtApp } from 'nuxt/app'
 import { createEndpointApp } from './endpoint-app'
 import type { EndpointApp } from './endpoints'
 import {
   REQUEST_APP,
   createEndpointFetch,
-  endpointRegistries,
+  requestRegistries,
 } from './endpoints'
 import { storyOf } from './nuxt-app'
+import { isStoryContextAmbiguous, resolveStoryNuxtApp } from './story-context'
 
 type AppRequestInit = RequestInit & { [REQUEST_APP]?: NuxtApp }
 
@@ -17,15 +17,17 @@ globalThis.fetch = createEndpointFetch(
   globalThis.fetch.bind(globalThis),
   // The project's h3, aliased by the preview config
   () => (endpointApp ??= import('h3').then(createEndpointApp)),
-  (init?: AppRequestInit) =>
-    endpointRegistries(
-      storyOf(init?.[REQUEST_APP] ?? tryUseNuxtApp() ?? undefined),
+  (input, init?: AppRequestInit) =>
+    requestRegistries(input, (call) =>
+      storyOf(init?.[REQUEST_APP] ?? resolveStoryNuxtApp(call)),
     ),
 )
 
 // `$fetch` runs it synchronously, while the calling story's Nuxt context is current
 globalThis.$fetch = globalThis.$fetch.create({
   onRequest({ options }) {
-    ;(options as AppRequestInit)[REQUEST_APP] ??= tryUseNuxtApp() ?? undefined
+    if (!(REQUEST_APP in options) && !isStoryContextAmbiguous()) {
+      Object.assign(options, { [REQUEST_APP]: resolveStoryNuxtApp('$fetch') })
+    }
   },
 })

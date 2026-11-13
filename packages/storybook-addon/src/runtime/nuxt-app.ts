@@ -9,8 +9,15 @@ import type { App, InjectionKey } from 'vue'
 import { runtimeConfig } from 'virtual:nuxt-storybook/options'
 import plugins from '#build/plugins'
 import '#build/css'
+import { endDocsSetup } from './docs-setup'
 import { applyFileMocks } from './mocks'
 import { blockRouterNavigation } from './navigation'
+import {
+  bootStory,
+  mountStory,
+  runInStoryContext,
+  unmountStory,
+} from './story-context'
 import type { NuxtParameters } from '../types'
 
 type CreateOptions = Parameters<typeof createNuxtApp>[0]
@@ -64,7 +71,9 @@ export function createStoryNuxtApp(
     parameters,
     storyId,
   }
-  const booted = bootstrapping.then(() => bootstrapNuxtApp(vueApp, story))
+  const booted = bootstrapping.then(() =>
+    bootStory(() => bootstrapNuxtApp(vueApp, story)),
+  )
   bootstrapping = booted.catch(() => undefined)
   return booted
 }
@@ -74,6 +83,10 @@ export function storyOf(nuxt: NuxtApp | undefined): StoryApp | undefined {
 }
 
 export function disposeStoryNuxtApp(nuxt: NuxtApp): void {
+  const story = storyOf(nuxt)
+  if (story) {
+    unmountStory(story)
+  }
   for (const id of [nuxt._id, DEFAULT_APP_ID]) {
     const context = getNuxtAppCtx(id)
     // Stories rendered in the same canvas share an id: a newer one may own it
@@ -119,6 +132,8 @@ async function bootstrapNuxtApp(
     )
   }
   await nuxt.hooks.callHook('app:beforeMount', nuxt.vueApp)
+  mountStory(story, nuxt)
+  endDocsSetup(story.canvasElement)
 
   return nuxt
 }
@@ -145,7 +160,7 @@ function claimDefaultContext(nuxt: NuxtApp) {
   const { runWithContext } = nuxt
   nuxt.runWithContext = (fn) => {
     getNuxtAppCtx(DEFAULT_APP_ID).set(nuxt, true)
-    return runWithContext(fn)
+    return runInStoryContext(() => runWithContext(fn))
   }
 }
 
