@@ -22,8 +22,6 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     env:
-      # renovate: datasource=npm depName=storybook
-      STORYBOOK_VERSION: '^11.0.0-alpha.5'
       pnpm_config_strict_dep_builds: 'false'
       NODE_OPTIONS: --max-old-space-size=4096
     steps:
@@ -57,6 +55,13 @@ jobs:
           pnpm config set //localhost:4873/:_authToken $TOKEN
           # record Verdaccio registry URL for targeted use later
           echo "VERDACCIO_REGISTRY=http://localhost:4873/" >> $GITHUB_ENV
+
+      - name: Read Storybook version from the pnpm catalog
+        shell: bash
+        run: |
+          STORYBOOK_VERSION="$(sed -n "s/^  storybook: //p" pnpm-workspace.yaml | tr -d '\r')"
+          test -n "$STORYBOOK_VERSION"
+          echo "STORYBOOK_VERSION=$STORYBOOK_VERSION" >> $GITHUB_ENV
 
       - name: Install dependencies
         shell: bash
