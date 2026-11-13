@@ -1,19 +1,14 @@
-import type { Meta, StoryObj } from '@nuxtjs/storybook'
-
+import preview from '../.storybook/preview'
 import MyNuxtWelcome from './MyWelcome.vue'
 
-// More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
-
-const meta = {
+// More on how to set up stories at: https://storybook.js.org/docs/writing-stories
+const meta = preview.meta({
   title: 'Example/NuxtWelcome',
   component: MyNuxtWelcome,
-  // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/vue/writing-docs/autodocs
+  // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
-} satisfies Meta<typeof MyNuxtWelcome>
+})
 
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const NuxtWelcomeStory: Story = {
+export const NuxtWelcomeStory = meta.story({
   args: {},
-}
+})
