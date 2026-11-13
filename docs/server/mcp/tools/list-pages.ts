@@ -28,9 +28,15 @@ OUTPUT: Returns a structured list with:
       : url.origin
 
     try {
-      const pages = await queryCollection(event, 'docs')
-        .select('title', 'path', 'description')
-        .all()
+      const pages = (
+        await Promise.all(
+          DOCS_VERSIONS.map(({ collection }) =>
+            queryCollection(event, collection)
+              .select('title', 'path', 'description')
+              .all(),
+          ),
+        )
+      ).flat()
 
       const result = pages.map((page) => ({
         description: page.description,

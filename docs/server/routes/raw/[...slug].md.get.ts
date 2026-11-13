@@ -14,7 +14,9 @@ export default eventHandler(async (event) => {
 
   const path = withLeadingSlash(slug.replace('.md', ''))
 
-  const page = await queryCollection(event, 'docs').path(path).first()
+  const page = await queryCollection(event, docsVersionOf(path).collection)
+    .path(path)
+    .first()
   if (!page) {
     throw createError({
       fatal: true,
