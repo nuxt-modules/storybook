@@ -174,23 +174,23 @@ catalogs:
       specifier: 10.4.0
       version: 10.4.0
     '@storybook/addon-docs':
-      specifier: ^11.0.0-beta.1
-      version: 11.0.0-beta.1
+      specifier: ^11.0.0-beta.3
+      version: 11.0.0-beta.3
     '@storybook/addon-links':
-      specifier: ^11.0.0-beta.1
-      version: 11.0.0-beta.1
+      specifier: ^11.0.0-beta.3
+      version: 11.0.0-beta.3
     '@storybook/builder-vite':
-      specifier: ^11.0.0-beta.1
-      version: 11.0.0-beta.1
+      specifier: ^11.0.0-beta.3
+      version: 11.0.0-beta.3
     '@storybook/react-vite':
-      specifier: ^11.0.0-beta.1
-      version: 11.0.0-beta.1
+      specifier: ^11.0.0-beta.3
+      version: 11.0.0-beta.3
     '@storybook/vue3':
-      specifier: ^11.0.0-beta.1
-      version: 11.0.0-beta.1
+      specifier: ^11.0.0-beta.3
+      version: 11.0.0-beta.3
     '@storybook/vue3-vite':
-      specifier: ^11.0.0-beta.1
-      version: 11.0.0-beta.1
+      specifier: ^11.0.0-beta.3
+      version: 11.0.0-beta.3
     changelogen:
       specifier: 0.6.2
       version: 0.6.2
@@ -198,8 +198,8 @@ catalogs:
       specifier: 4.4.8
       version: 4.4.8
     storybook:
-      specifier: ^11.0.0-beta.1
-      version: 11.0.0-beta.1
+      specifier: ^11.0.0-beta.3
+      version: 11.0.0-beta.3
     typescript:
       specifier: 6.0.3
       version: 6.0.3
@@ -389,7 +389,7 @@ importers:
     devDependencies:
       '@chromatic-com/storybook':
         specifier: 'catalog:'
-        version: 5.6.0(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))
+        version: 5.6.0(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
       '@nuxtjs/storybook':
         specifier: workspace:*
         version: link:../../packages/nuxt-module
@@ -398,13 +398,13 @@ importers:
         version: link:../../packages/storybook-addon
       '@storybook/addon-docs':
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))
+        version: 11.0.0-beta.3(@types/react@19.3.0)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
       '@storybook/addon-links':
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))
+        version: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
       storybook:
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+        version: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
 
   examples/starter:
     dependencies:
@@ -420,7 +420,7 @@ importers:
     devDependencies:
       '@chromatic-com/storybook':
         specifier: 'catalog:'
-        version: 5.6.0(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))
+        version: 5.6.0(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
       '@nuxtjs/storybook':
         specifier: workspace:*
         version: link:../../packages/nuxt-module
@@ -429,10 +429,10 @@ importers:
         version: link:../../packages/storybook-addon
       '@storybook/addon-docs':
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))
+        version: 11.0.0-beta.3(@types/react@19.3.0)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
       storybook:
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+        version: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
 
   examples/tailwind:
     dependencies:
@@ -451,7 +451,7 @@ importers:
     devDependencies:
       '@chromatic-com/storybook':
         specifier: 'catalog:'
-        version: 5.6.0(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))
+        version: 5.6.0(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
       '@nuxtjs/storybook':
         specifier: workspace:*
         version: link:../../packages/nuxt-module
@@ -460,13 +460,13 @@ importers:
         version: link:../../packages/storybook-addon
       '@storybook/addon-docs':
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))
+        version: 11.0.0-beta.3(@types/react@19.3.0)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
       '@storybook/addon-links':
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))
+        version: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
       storybook:
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+        version: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       tailwindcss:
         specifier: 3.4.19
         version: 3.4.19(yaml@2.9.1)
@@ -483,8 +483,8 @@ importers:
         specifier: workspace:*
         version: link:../storybook-addon
       '@storybook/vite-plugin':
-        specifier: ^0.1.0
-        version: 0.1.0(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
+        specifier: ^0.2.0
+        version: 0.2.0(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
       consola:
         specifier: ^3.4.2
         version: 3.4.2
@@ -503,7 +503,7 @@ importers:
         version: 1.0.2(@nuxt/cli@3.37.0(@nuxt/schema@4.6.4)(cac@6.7.14)(magicast@0.5.5)(supports-color@10.2.2))(@vue/compiler-core@3.5.44)(esbuild@0.28.2)(typescript@6.0.3)(vue-tsc@3.3.5(typescript@6.0.3))(vue@3.5.38(typescript@6.0.3))
       storybook:
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+        version: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       unbuild:
         specifier: 'catalog:'
         version: 3.6.1(typescript@6.0.3)(vue-sfc-transformer@0.1.17(@vue/compiler-core@3.5.44)(esbuild@0.28.2)(vue@3.5.38(typescript@6.0.3)))(vue-tsc@3.3.5(typescript@6.0.3))(vue@3.5.38(typescript@6.0.3))
@@ -527,13 +527,13 @@ importers:
         version: 6.0.3(rollup@4.67.4)
       '@storybook/builder-vite':
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
+        version: 11.0.0-beta.3(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
       '@storybook/vue3':
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3))
+        version: 11.0.0-beta.3(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3))
       '@storybook/vue3-vite':
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.38(typescript@6.0.3))
+        version: 11.0.0-beta.3(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.38(typescript@6.0.3))
       defu:
         specifier: ^6.1.4
         version: 6.1.7
@@ -573,7 +573,7 @@ importers:
     devDependencies:
       '@storybook/react-vite':
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@joshwooding/vite-plugin-react-docgen-typescript@0.7.0(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)))(@types/react@19.3.0)(react-docgen-typescript@2.4.0(typescript@6.0.3))(react-docgen@8.0.4(supports-color@10.2.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
+        version: 11.0.0-beta.3(@joshwooding/vite-plugin-react-docgen-typescript@0.7.0(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)))(@types/react@19.3.0)(react-docgen-typescript@2.4.0(typescript@6.0.3))(react-docgen@8.0.4(supports-color@10.2.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
       '@vitejs/plugin-vue':
         specifier: 6.0.7
         version: 6.0.7(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.38(typescript@6.0.3))
@@ -585,7 +585,7 @@ importers:
         version: 4.4.8(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7(supports-color@10.2.2)))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7(supports-color@10.2.2)))(@oxc-project/types@0.156.0)(@types/node@26.6.6)(@vue/compiler-sfc@3.5.44)(better-sqlite3@13.0.3)(cac@6.7.14)(confbox@0.3.2)(db0@0.3.4(better-sqlite3@13.0.3))(dotenv@17.4.2)(esbuild@0.28.2)(eslint@10.14.0(jiti@2.7.0)(supports-color@10.2.2))(giget@3.3.1)(ioredis@5.11.1(supports-color@10.2.2))(lightningcss@1.33.0)(magicast@0.5.5)(optionator@0.9.4)(oxlint@1.70.0(oxlint-tsgolint@7.0.2003))(rolldown@1.2.16)(rollup-plugin-visualizer@7.1.1(rolldown@1.2.16)(rollup@4.67.4))(rollup@4.67.4)(srvx@1.0.8)(supports-color@10.2.2)(terser@5.51.2)(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue-tsc@3.3.5(typescript@6.0.3))(yaml@2.9.1)
       storybook:
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+        version: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -613,7 +613,7 @@ importers:
     devDependencies:
       '@chromatic-com/storybook':
         specifier: 'catalog:'
-        version: 5.6.0(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))
+        version: 5.6.0(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
       '@nuxtjs/i18n':
         specifier: 'catalog:'
         version: 10.4.0(@nuxt/schema@4.6.4)(confbox@0.3.2)(db0@0.3.4(better-sqlite3@13.0.3))(dotenv@17.4.2)(esbuild@0.28.2)(giget@3.3.1)(ioredis@5.11.1(supports-color@10.2.2))(jiti@2.7.0)(pinia@4.0.3(@vue/devtools-api@8.2.1)(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3)))(rolldown@1.2.16)(rollup@4.67.4)(supports-color@10.2.2)(typescript@6.0.3)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.38(typescript@6.0.3))
@@ -625,10 +625,10 @@ importers:
         version: link:../packages/storybook-addon
       '@storybook/addon-docs':
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))
+        version: 11.0.0-beta.3(@types/react@19.3.0)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
       storybook:
         specifier: 'catalog:'
-        version: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+        version: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       vite-plugin-inspect:
         specifier: 12.0.2
         version: 12.0.2(@nuxt/kit@4.6.4(@nuxt/schema@4.6.4)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.155.0)(rolldown@1.2.16)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.16)(rollup@4.67.4)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))))(cac@6.7.14)(srvx@1.0.8)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
@@ -4150,31 +4150,31 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
-  '@storybook/addon-docs@11.0.0-beta.1':
-    resolution: {integrity: sha512-bdx/bFTC2UzhI0NXX9ul3BikMHkXid2QO9ntyrYYb46ZMOXolGZf6stvRs5cjx0r1o6h/n7Dan/mufd95vHBdg==}
+  '@storybook/addon-docs@11.0.0-beta.3':
+    resolution: {integrity: sha512-OJZIL+LimBW2uK5W981guMTUvDB/EqOvFAm2n8CAD/3fRe0eVvKnejf5hO4OU2yxnnzAuR7kXJhvP+mSh9WKcg==}
     peerDependencies:
       '@types/react': ^18.0.0 || ^19.0.0
-      storybook: ^11.0.0-beta.1
+      storybook: ^11.0.0-beta.3
     peerDependenciesMeta:
       '@types/react':
         optional: true
 
-  '@storybook/addon-links@11.0.0-beta.1':
-    resolution: {integrity: sha512-EM0HQVOPN/T+bNMbTVSZWlXSr12Set9IYKbowOhAGtmVmw8BtcIGV5lTqj/LFYDi2VTh5HCh5fuD35OHspuWcQ==}
+  '@storybook/addon-links@11.0.0-beta.3':
+    resolution: {integrity: sha512-4SbCQtFGc0z0kY+XbwclgVH4OAz2Mvf7urbFyiwdbMgEyGmTBpetDoWEr3KckB33JtDsI5UQ/YOalT7BTZC+eg==}
     peerDependencies:
       '@types/react': ^18.0.0 || ^19.0.0
       react: ^18.0.0 || ^19.0.0
-      storybook: ^11.0.0-beta.1
+      storybook: ^11.0.0-beta.3
     peerDependenciesMeta:
       '@types/react':
         optional: true
       react:
         optional: true
 
-  '@storybook/builder-vite@11.0.0-beta.1':
-    resolution: {integrity: sha512-fxJCwBv+dvLHoJT50Y3kDV+W0rgDUhevOqYmd+rB5Nt3j2BfEsXXtbWws2apkudrcWUsZySOEQHKSkHCrj+7mQ==}
+  '@storybook/builder-vite@11.0.0-beta.3':
+    resolution: {integrity: sha512-TQ6f5QPYaYj90Vkq1y3k8VGwwPd2UkcwnX2CzA3jw6OlLN2SGs98d8qQD/l7BELC0OiYg9I9KzetT8Elfgw/9g==}
     peerDependencies:
-      storybook: ^11.0.0-beta.1
+      storybook: ^11.0.0-beta.3
       vite: ^6.3.0 || ^7.0.0 || ^8.0.0
 
   '@storybook/global@5.0.0':
@@ -4185,15 +4185,15 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  '@storybook/react-vite@11.0.0-beta.1':
-    resolution: {integrity: sha512-129Qj/IGwpNdAT5w5mNNuDlEFULMWFurNXSrGVPR4zdrKiwCC1eITbo4/H5CcfYtG5W4u/MTGGyS9tTOYdD2Zw==}
+  '@storybook/react-vite@11.0.0-beta.3':
+    resolution: {integrity: sha512-yeNn8jalZW55ojIegZxxj8RUF2eRKc4EkOp0ZUoN9Sf7rkrz8Qye7cg/9M2kB3pghl6P/7z2tsvS3qNdHgsNcA==}
     peerDependencies:
-      '@joshwooding/vite-plugin-react-docgen-typescript': ^0.7.0 || ^0.8.0 || ^0.9.0
+      '@joshwooding/vite-plugin-react-docgen-typescript': ^0.7.0
       react: ^18.0.0 || ^19.0.0
       react-docgen: ^8.0.2
       react-docgen-typescript: ^2.2.2
       react-dom: ^18.0.0 || ^19.0.0
-      storybook: ^11.0.0-beta.1
+      storybook: ^11.0.0-beta.3
       typescript: ^5.9.0 || ^6.0.0 || ^7.0.0
       vite: ^6.3.0 || ^7.0.0 || ^8.0.0
     peerDependenciesMeta:
@@ -4204,8 +4204,8 @@ packages:
       react-docgen-typescript:
         optional: true
 
-  '@storybook/react@11.0.0-beta.1':
-    resolution: {integrity: sha512-KiopsVURYS4hPtyr7XMivOFPKTo4EWDTWJ+AoYNWc3ArvLfi53GQLFLP2FEUVRWUp0TmoElePn82/izNVfATbQ==}
+  '@storybook/react@11.0.0-beta.3':
+    resolution: {integrity: sha512-lfT0xecxpgTNnz8bkhdF/+4+6zhUItILJP6zBgEuibOJidbi7bsg/GlZmPndFLfrJTrU/ILSZsgiJ4R9ylyADQ==}
     peerDependencies:
       '@types/react': ^18.0.0 || ^19.0.0
       '@types/react-dom': ^18.0.0 || ^19.0.0
@@ -4213,7 +4213,7 @@ packages:
       react-docgen: ^8.0.2
       react-docgen-typescript: ^2.2.2
       react-dom: ^18.0.0 || ^19.0.0
-      storybook: ^11.0.0-beta.1
+      storybook: ^11.0.0-beta.3
       typescript: ^5.9.0 || ^6.0.0 || ^7.0.0
     peerDependenciesMeta:
       '@types/react':
@@ -4225,24 +4225,34 @@ packages:
       react-docgen-typescript:
         optional: true
 
-  '@storybook/vite-plugin@0.1.0':
-    resolution: {integrity: sha512-Xj+VrHtZgOzgCvhy1W1HWKd4URh91HGY71HMXRLQPT5TzFQpqv23JYQsOkCnvnhkPu27T4C50ICqehqJZLH3Hg==}
+  '@storybook/vite-plugin@0.2.0':
+    resolution: {integrity: sha512-7Yg4E/Iy9PdRPpZxOeYBmiW4nD6jDT8L4W7LY70i5hkZj+jSyMO1KwcfxELmeB+AWCwIzuaAcmfqaQ2Q3eHVKw==}
     engines: {node: '>=22.19.0'}
     peerDependencies:
+      '@angular-devkit/architect': '>=0.2100.0 <0.2300.0'
+      '@angular/build': '>=21.0.0 <23.0.0'
+      next: ^16.0.0
       storybook: ^11.0.0-beta.1 || >=11.1.0-0 <12.0.0-0
       vite: ^6.3.0 || ^7.0.0 || ^8.0.0
+    peerDependenciesMeta:
+      '@angular-devkit/architect':
+        optional: true
+      '@angular/build':
+        optional: true
+      next:
+        optional: true
 
-  '@storybook/vue3-vite@11.0.0-beta.1':
-    resolution: {integrity: sha512-hVoUqGI2aA5l8iqgO+JbIY/gHVgAGxUrp7QknySxVhQHgkc3CfMr42+yJ6q1g+qg/Dpi5zajMnXBNk4H+jYr2Q==}
+  '@storybook/vue3-vite@11.0.0-beta.3':
+    resolution: {integrity: sha512-H9HE8Mr1qrn3F6dDvMTmtHVUrzKl7jwwKlZxfXhSn0mJ7aabRdOH0pFf0lAQRXUGMoIho2jX860wqxS/1WWY5Q==}
     peerDependencies:
-      storybook: ^11.0.0-beta.1
+      storybook: ^11.0.0-beta.3
       typescript: ^5.9.0 || ^6.0.0 || ^7.0.0
       vite: ^6.3.0 || ^7.0.0 || ^8.0.0
 
-  '@storybook/vue3@11.0.0-beta.1':
-    resolution: {integrity: sha512-ZPR/JTXnYHs4TCU4ObWKetQbMFQJSq7VCqHMdyDdFOxMgDcuALuSWPE6JnjTGtD+aEozYmLJLKQAcmKbKX9ZYA==}
+  '@storybook/vue3@11.0.0-beta.3':
+    resolution: {integrity: sha512-kSk8kVntMMKtI3CLxX+7bYXH+iyfOaUudp8B29RDmFto48zKuBxSFGrteHr93984Wo6sdQhvr6NDAQHbAAosyw==}
     peerDependencies:
-      storybook: ^11.0.0-beta.1
+      storybook: ^11.0.0-beta.3
       typescript: ^5.9.0 || ^6.0.0 || ^7.0.0
       vue: ^3.0.0
 
@@ -9150,8 +9160,8 @@ packages:
     resolution: {integrity: sha512-eCPu1qRxPVkl5605OTWF8Wz40b4Mf45NY5LQmVPQ599knfs5QhASUm9GbJ5BDMDOXgrnh0wyEdvzmL//YMlw0A==}
     engines: {node: '>=18'}
 
-  storybook@11.0.0-beta.1:
-    resolution: {integrity: sha512-O+VKV2Ne8Z8vCO4+1KWOnAw5fJ91A48ew+bH2zPtVTAKlxGlcK99xsd//9oSqxOLyc3b7Wmv6XLdTLeR9io6jw==}
+  storybook@11.0.0-beta.3:
+    resolution: {integrity: sha512-efP9iQ3bdYgcH4TicdeESfaX+CXpUq8VhXWUVtDV7HVHEhjU5JSxKlAfR9109LBljvIPQpE+a9PXjfPVV6JKuQ==}
     hasBin: true
     peerDependencies:
       '@types/react': ^18.0.0 || ^19.0.0
@@ -10583,12 +10593,12 @@ snapshots:
     dependencies:
       fontkitten: 1.0.3
 
-  '@chromatic-com/storybook@5.6.0(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))':
+  '@chromatic-com/storybook@5.6.0(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))':
     dependencies:
       '@neoconfetti/react': 1.0.0
       chromatic: 18.13.9
       jsonfile: 6.2.1
-      storybook: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+      storybook: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       strip-ansi: 7.2.0
     transitivePeerDependencies:
       - '@chromatic-com/cypress'
@@ -14678,28 +14688,28 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@storybook/addon-docs@11.0.0-beta.1(@types/react@19.3.0)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))':
+  '@storybook/addon-docs@11.0.0-beta.3(@types/react@19.3.0)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))':
     dependencies:
       '@mdx-js/react': 3.1.1(@types/react@19.3.0)(react@19.3.1)
       '@storybook/icons': 2.2.0(react@19.3.1)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
-      storybook: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+      storybook: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       unplugin: 2.3.11
     optionalDependencies:
       '@types/react': 19.3.0
 
-  '@storybook/addon-links@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))':
+  '@storybook/addon-links@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))':
     dependencies:
       '@storybook/global': 5.0.0
-      storybook: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+      storybook: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
     optionalDependencies:
       '@types/react': 19.3.0
       react: 19.3.1
 
-  '@storybook/builder-vite@11.0.0-beta.1(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))':
+  '@storybook/builder-vite@11.0.0-beta.3(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))':
     dependencies:
-      storybook: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+      storybook: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       vite: 8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)
 
   '@storybook/global@5.0.0': {}
@@ -14708,13 +14718,13 @@ snapshots:
     dependencies:
       react: 19.3.1
 
-  '@storybook/react-vite@11.0.0-beta.1(@joshwooding/vite-plugin-react-docgen-typescript@0.7.0(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)))(@types/react@19.3.0)(react-docgen-typescript@2.4.0(typescript@6.0.3))(react-docgen@8.0.4(supports-color@10.2.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))':
+  '@storybook/react-vite@11.0.0-beta.3(@joshwooding/vite-plugin-react-docgen-typescript@0.7.0(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)))(@types/react@19.3.0)(react-docgen-typescript@2.4.0(typescript@6.0.3))(react-docgen@8.0.4(supports-color@10.2.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))':
     dependencies:
-      '@storybook/builder-vite': 11.0.0-beta.1(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
-      '@storybook/react': 11.0.0-beta.1(@types/react@19.3.0)(react-docgen-typescript@2.4.0(typescript@6.0.3))(react-docgen@8.0.4(supports-color@10.2.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)
+      '@storybook/builder-vite': 11.0.0-beta.3(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
+      '@storybook/react': 11.0.0-beta.3(@types/react@19.3.0)(react-docgen-typescript@2.4.0(typescript@6.0.3))(react-docgen@8.0.4(supports-color@10.2.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
-      storybook: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+      storybook: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       typescript: 6.0.3
       vite: 8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)
     optionalDependencies:
@@ -14725,43 +14735,43 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
 
-  '@storybook/react@11.0.0-beta.1(@types/react@19.3.0)(react-docgen-typescript@2.4.0(typescript@6.0.3))(react-docgen@8.0.4(supports-color@10.2.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)':
+  '@storybook/react@11.0.0-beta.3(@types/react@19.3.0)(react-docgen-typescript@2.4.0(typescript@6.0.3))(react-docgen@8.0.4(supports-color@10.2.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)':
     dependencies:
       '@storybook/global': 5.0.0
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
-      storybook: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+      storybook: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       typescript: 6.0.3
     optionalDependencies:
       '@types/react': 19.3.0
       react-docgen: 8.0.4(supports-color@10.2.2)
       react-docgen-typescript: 2.4.0(typescript@6.0.3)
 
-  '@storybook/vite-plugin@0.1.0(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))':
+  '@storybook/vite-plugin@0.2.0(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))':
     dependencies:
       pathe: 1.1.2
       polka: 1.0.0-next.28
-      storybook: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+      storybook: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       vite: 8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)
 
-  '@storybook/vue3-vite@11.0.0-beta.1(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.38(typescript@6.0.3))':
+  '@storybook/vue3-vite@11.0.0-beta.3(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.38(typescript@6.0.3))':
     dependencies:
-      '@storybook/builder-vite': 11.0.0-beta.1(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
-      '@storybook/vue3': 11.0.0-beta.1(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3))
+      '@storybook/builder-vite': 11.0.0-beta.3(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(vite@8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
+      '@storybook/vue3': 11.0.0-beta.3(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3))
       magic-string: 1.4.5
-      storybook: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+      storybook: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       typescript: 6.0.3
       vite: 8.0.16(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)
     transitivePeerDependencies:
       - vue
 
-  '@storybook/vue3@11.0.0-beta.1(storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3))':
+  '@storybook/vue3@11.0.0-beta.3(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3))':
     dependencies:
       '@storybook/global': 5.0.0
       '@types/pug': 2.0.10
       '@vue/compiler-dom': 3.5.44
       '@vue/language-core': 3.3.14
-      storybook: 11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1)
+      storybook: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
       type-fest: 5.10.0
       typescript: 6.0.3
       vue: 3.5.38(typescript@6.0.3)
@@ -22031,7 +22041,7 @@ snapshots:
 
   stdin-discarder@0.3.2: {}
 
-  storybook@11.0.0-beta.1(@types/react@19.3.0)(react@19.3.1):
+  storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1):
     dependencies:
       '@storybook/global': 5.0.0
       '@storybook/icons': 2.2.0(react@19.3.1)
