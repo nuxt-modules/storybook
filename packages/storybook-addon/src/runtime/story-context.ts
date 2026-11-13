@@ -56,6 +56,26 @@ export function unmountStory(story: MountedStory): void {
   }
 }
 
+/** Tells which canvas the story of a Nuxt app renders in. */
+export function trackStoryApp(nuxt: NuxtApp, canvas: EventTarget): void {
+  appCanvases.set(nuxt, canvas)
+}
+
+export function contextCanvas(options: {
+  booting: boolean
+}): EventTarget | undefined {
+  const inContext = contextDepth > 0 || getCurrentInstance() !== null
+  if (!inContext && !(options.booting && booting > 0)) {
+    return undefined
+  }
+  const nuxt = tryUseNuxtApp()
+  return nuxt ? appCanvases.get(nuxt) : undefined
+}
+
+export function lastInteractedCanvas(): EventTarget | undefined {
+  return lastInteracted?.canvasElement
+}
+
 /** Runs `fn`, telling that the Nuxt context is set until it returns. */
 export function runInStoryContext<T>(fn: () => T): T {
   contextDepth++
@@ -98,6 +118,8 @@ const mountedStories = new Map<
   MountedStory,
   { nuxt: NuxtApp; unlisten: () => void }
 >()
+
+const appCanvases = new WeakMap<NuxtApp, EventTarget>()
 
 let lastInteracted: MountedStory | undefined
 

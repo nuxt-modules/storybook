@@ -24,10 +24,19 @@ type BuilderOptions = BuilderOptionsVite & {
   outputDir?: string
 }
 
+export interface FrameworkOptions extends FrameworkOptionsVue {
+  /**
+   * The annotations of a story or a meta running story code, in the story
+   * files calling `mockNuxtImport`. They run in the context of their story,
+   * so the spies they use are the ones of their story.
+   *
+   * @default ['afterEach', 'beforeEach', 'loaders', 'play']
+   */
+  storyHooks?: string[]
+}
+
 interface StorybookConfigFramework {
-  framework:
-    | FrameworkName
-    | { name: FrameworkName; options: FrameworkOptionsVue }
+  framework: FrameworkName | { name: FrameworkName; options: FrameworkOptions }
   core?: Omit<StorybookConfigBase['core'], 'builder'> & {
     builder?:
       | BuilderName

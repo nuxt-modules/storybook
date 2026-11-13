@@ -115,13 +115,12 @@ describe(mockImportsPlugin, () => {
     expect(
       load.call({}, `${SPY_MODULE_PREFIX}${ROUTER_ID}?v=abc&spies=useRoute`),
     ).toMatchInlineSnapshot(`
-      "import { fn } from "storybook/test";
-      import { resolveMock } from "${resolve(runtimeDir, 'mocks')}";
-      import { trackConfiguration } from "${resolve(runtimeDir, 'docs-setup')}";
+      "import { resolveMock } from "${resolve(runtimeDir, 'mocks')}";
+      import { storySpy } from "${resolve(runtimeDir, 'story-spies')}";
       import * as original from "/app/node_modules/nuxt/dist/app/composables/router.js?v=abc";
       export * from "/app/node_modules/nuxt/dist/app/composables/router.js?v=abc";
       export default original.default
-      export const useRoute = trackConfiguration(fn((...args) => resolveMock("useRoute", original["useRoute"])(...args)).mockName("useRoute"))
+      export const useRoute = storySpy("useRoute", (...args) => resolveMock("useRoute", original["useRoute"])(...args))
       "
     `)
   })
@@ -135,12 +134,11 @@ describe(mockImportsPlugin, () => {
         `${SPY_MODULE_PREFIX}/app/composables/greeting.ts?spies=useGreeting`,
       ),
     ).toMatchInlineSnapshot(`
-      "import { fn } from "storybook/test";
-      import { resolveMock } from "${resolve(runtimeDir, 'mocks')}";
-      import { trackConfiguration } from "${resolve(runtimeDir, 'docs-setup')}";
+      "import { resolveMock } from "${resolve(runtimeDir, 'mocks')}";
+      import { storySpy } from "${resolve(runtimeDir, 'story-spies')}";
       import * as original from "/app/composables/greeting.ts";
       export * from "/app/composables/greeting.ts";
-      export default trackConfiguration(fn((...args) => resolveMock("useGreeting", original["default"])(...args)).mockName("useGreeting"))
+      export default storySpy("useGreeting", (...args) => resolveMock("useGreeting", original["default"])(...args))
       "
     `)
   })

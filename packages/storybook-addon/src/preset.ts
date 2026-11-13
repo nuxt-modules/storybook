@@ -12,6 +12,7 @@ import {
 import { mockComponentsPlugin } from './node/plugins/mock-components'
 import { mockImportsPlugin } from './node/plugins/mock-imports'
 import { storyFilesPlugin } from './node/plugins/story-files'
+import { storyHooksPlugins } from './node/plugins/story-hooks'
 import { mergeViteConfig } from './node/vite-config'
 import type { StorybookConfig } from './types.d'
 
@@ -63,8 +64,29 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   return mergeConfig(finalViteConfig, {
     plugins: [
       storyFilesPlugin(),
+      ...storyHooksPlugins(await storyHooks(options)),
       mockImportsPlugin(mockedImports, mockedComponents),
       mockComponentsPlugin(mockedComponents, serverComponentRuntime),
     ],
   })
+}
+
+type Options = Parameters<NonNullable<StorybookConfig['viteFinal']>>[1]
+
+async function storyHooks(options: Options): Promise<string[] | undefined> {
+  const framework = await options.presets.apply('framework')
+  const hooks: unknown =
+    typeof framework === 'string' ? undefined : framework.options?.storyHooks
+  if (hooks === undefined) {
+    return undefined
+  }
+  if (
+    !Array.isArray(hooks) ||
+    !hooks.every((hook) => typeof hook === 'string')
+  ) {
+    throw new TypeError(
+      '[nuxt-storybook] The `storyHooks` option of the framework must be an array of annotation names',
+    )
+  }
+  return hooks
 }

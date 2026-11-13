@@ -5,11 +5,11 @@ import './runtime/endpoint-fetch'
 import { setup } from '@storybook/vue3-vite'
 import { h, resolveComponent } from 'vue'
 import type { Decorator, StoryContext } from '@storybook/vue3'
-import { startDocSetup } from './runtime/docs-setup'
 import { beginStoryEndpoints } from './runtime/endpoints'
 import { navigation } from './runtime/navigation'
 import { createStoryNuxtApp } from './runtime/nuxt-app'
 import { NuxtStorybookRoot } from './runtime/nuxt-root'
+import { beginStorySpies } from './runtime/story-spies'
 import type { NuxtParameters } from './types'
 
 setup(async (vueApp, storyContext) => {
@@ -40,9 +40,7 @@ export const decorators: Decorator[] = [
 export const beforeEach = (context: StoryContext) => {
   navigation.mockClear()
   beginStoryEndpoints(context)
-  if (context.viewMode === 'docs') {
-    return startDocSetup(context.id, context.canvasElement)
-  }
+  return beginStorySpies(context.canvasElement)
 }
 
 function nuxtParameters(context: StoryContext): NuxtParameters {

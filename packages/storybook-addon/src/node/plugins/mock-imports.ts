@@ -15,7 +15,7 @@ export const MOCKED_IMPORTS_ID = 'virtual:nuxt-storybook/mocked-imports'
 export const SPY_MODULE_PREFIX = '\0nuxt-storybook-spy:'
 const SPIES_QUERY = 'spies'
 const MOCKS_RUNTIME = resolve(runtimeDir, 'mocks')
-const DOCS_SETUP_RUNTIME = resolve(runtimeDir, 'docs-setup')
+const SPIES_RUNTIME = resolve(runtimeDir, 'story-spies')
 
 export function mockImportsPlugin(
   mocked: MockedImport[],
@@ -83,25 +83,23 @@ export function mockImportsPlugin(
   }
 }
 
-// Import { fn } from "storybook/test"
 // Import { resolveMock } from "<runtime>/mocks"
-// Import { trackConfiguration } from "<runtime>/docs-setup"
+// Import { storySpy } from "<runtime>/story-spies"
 // Import * as original from "/app/composables/useCounter.ts"
 // Export * from "/app/composables/useCounter.ts"
 // Export default original.default
-// Export const useCounter = trackConfiguration(fn((...args) => resolveMock("useCounter", original["useCounter"])(...args)).mockName("useCounter"))
+// Export const useCounter = storySpy("useCounter", (...args) => resolveMock("useCounter", original["useCounter"])(...args))
 function spyModule(original: string, mocked: MockedImport[]): string {
   const spy = ({ as, name }: MockedImport) => {
     const target = `resolveMock(${genString(as)}, original[${genString(name)}])`
-    return `trackConfiguration(fn((...args) => ${target}(...args)).mockName(${genString(as)}))`
+    return `storySpy(${genString(as)}, (...args) => ${target}(...args))`
   }
   const defaultEntry = mocked.find((entry) => entry.name === 'default')
   const named = mocked.filter((entry) => entry.name !== 'default')
 
   return [
-    genImport('storybook/test', ['fn']),
     genImport(MOCKS_RUNTIME, ['resolveMock']),
-    genImport(DOCS_SETUP_RUNTIME, ['trackConfiguration']),
+    genImport(SPIES_RUNTIME, ['storySpy']),
     genImport(original, { as: 'original', name: '*' }),
     genExport(original, '*'),
     // Modules without a default export give `undefined`, which passes through
