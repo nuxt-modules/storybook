@@ -141,7 +141,12 @@ export function storySpy<T extends Procedure>(
 
   // Not the global spy itself: a proxy has to give the own read-only
   // Properties of its target as they are, and `mock` is one of them
-  const facade: Mock<T> = Object.setPrototypeOf(() => undefined, global)
+  // Its own key keeps the interactions panel from taking it for a callback,
+  // Which it replaces with a function of its own
+  const facade: Mock<T> = Object.setPrototypeOf(
+    Object.assign(() => undefined, { _isMockFunction: true }),
+    global,
+  )
 
   const spy: Mock<T> = new Proxy(facade, {
     apply(_facade, self, args) {

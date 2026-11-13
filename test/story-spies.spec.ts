@@ -209,6 +209,11 @@ describe(storySpy, () => {
     useGreeting.mockClear()
   })
 
+  it('has a key of its own, as the interactions panel replaces functions without', () => {
+    expect(Object.keys(useGreeting)).not.toHaveLength(0)
+    expect(vi.isMockFunction(useGreeting)).toBe(true)
+  })
+
   it('starts each story anew, in the same canvas', () => {
     const story = begin()
     runHook(story, () => useGreeting.mockReturnValue('a'))
