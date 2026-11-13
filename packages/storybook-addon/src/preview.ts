@@ -9,6 +9,7 @@ import { beginStoryEndpoints } from './runtime/endpoints'
 import { navigation } from './runtime/navigation'
 import { createStoryNuxtApp } from './runtime/nuxt-app'
 import { NuxtStorybookRoot } from './runtime/nuxt-root'
+import { beginStorySpies } from './runtime/story-spies'
 import type { NuxtParameters } from './types'
 
 setup(async (vueApp, storyContext) => {
@@ -39,6 +40,7 @@ export const decorators: Decorator[] = [
 export const beforeEach = (context: StoryContext) => {
   navigation.mockClear()
   beginStoryEndpoints(context)
+  return beginStorySpies(context.canvasElement)
 }
 
 function nuxtParameters(context: StoryContext): NuxtParameters {

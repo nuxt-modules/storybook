@@ -9,9 +9,16 @@ import {
   REQUEST_APP,
   beginStoryEndpoints,
   createEndpointFetch,
-  endpointRegistries,
   registerEndpoint,
+  requestRegistries,
 } from '../packages/storybook-addon/src/runtime/endpoints'
+import {
+  NuxtMocksSharedOnDocsPageError,
+  mountStory,
+  resolveStoryNuxtApp,
+  runInStoryContext,
+  unmountStory,
+} from '../packages/storybook-addon/src/runtime/story-context'
 import type {
   Endpoint,
   EndpointStory,
@@ -32,6 +39,19 @@ const storyApps = new WeakMap<
 >()
 
 let currentApp: NuxtApp | undefined
+
+// The addon resolves its own `nuxt`, not the one of the tests
+const nuxtApp = await vi.hoisted(async () => {
+  const { createRequire } = await import('node:module')
+  const addon = createRequire(
+    new URL('../packages/storybook-addon/package.json', import.meta.url),
+  )
+  return addon
+    .resolve('nuxt/package.json')
+    .replace(/package.json$/, 'dist/app/index.js')
+})
+
+vi.mock(nuxtApp, () => ({ tryUseNuxtApp: () => currentApp ?? null }))
 let generation = 0
 
 /** Runs a story the way the preview does: its hooks, then its Nuxt app. */
@@ -58,6 +78,17 @@ function bindApp(id: string): NuxtApp {
   const app = {} as NuxtApp
   storyApps.set(app, { importPath: IMPORT_PATH, storyId: id })
   return app
+}
+
+// What `endpoint-fetch` does in the preview
+function appRegistries(
+  input: RequestInfo | URL,
+  init?: RequestInit & { [REQUEST_APP]?: NuxtApp },
+) {
+  return requestRegistries(input, (call) => {
+    const app = init?.[REQUEST_APP] ?? resolveStoryNuxtApp(call)
+    return app && storyApps.get(app)
+  })
 }
 
 function registerFileEndpoint(url: string, endpoint: Endpoint) {
@@ -87,10 +118,7 @@ describe.each<[number, H3Module]>([
   const endpointFetch = createEndpointFetch(
     baseFetch,
     async () => createEndpointApp(h3),
-    (init?: RequestInit & { [REQUEST_APP]?: NuxtApp }) => {
-      const app = init?.[REQUEST_APP] ?? currentApp
-      return endpointRegistries(app && storyApps.get(app))
-    },
+    appRegistries,
   )
 
   it('answers a url registered by the story', async () => {
@@ -366,6 +394,93 @@ describe.each<[number, H3Module]>([
     await endpointFetch('/api/users')
 
     expect(baseFetch).toHaveBeenCalledOnce()
+  })
+})
+
+describe('endpoints on a docs page mixing story files', () => {
+  const endpointFetch = createEndpointFetch(
+    baseFetch,
+    async () => createEndpointApp(h3v1),
+    appRegistries,
+  )
+  const storyA = { canvasElement: new EventTarget(), importPath: IMPORT_PATH }
+  const storyB = {
+    canvasElement: new EventTarget(),
+    importPath: './b.stories.ts',
+  }
+
+  afterEach(() => {
+    unmountStory(storyA)
+    unmountStory(storyB)
+  })
+
+  /** Mounts story 'a' and story 'b' of another file, each answering its id. */
+  function mountBoth() {
+    const appA = runStory('a', (context) =>
+      registerEndpoint(context, '/api/story', () => 'a'),
+    )
+    const appB = runStory('b', (context) =>
+      registerEndpoint(context, '/api/story', () => 'b'),
+    )
+    storyApps.set(appB, { importPath: storyB.importPath, storyId: 'b' })
+    mountStory(storyA, appA)
+    mountStory(storyB, appB)
+    return { appA, appB }
+  }
+
+  it('throws for an untagged request outside of the Nuxt context, before any interaction', async () => {
+    const { appA } = mountBoth()
+    currentApp = undefined
+
+    await expect(endpointFetch('/api/story')).rejects.toThrow(
+      NuxtMocksSharedOnDocsPageError,
+    )
+    await expect(endpointFetch('/api/story')).rejects.toThrow(
+      'parameters: { docs: { story: { inline: false } } }',
+    )
+    const init: RequestInit & { [REQUEST_APP]?: NuxtApp } = {
+      [REQUEST_APP]: appA,
+    }
+    const tagged = await endpointFetch('/api/story', init)
+    expect(await tagged.text()).toBe('a')
+  })
+
+  it('answers from the story last interacted with', async () => {
+    mountBoth()
+
+    storyA.canvasElement.dispatchEvent(new Event('pointerdown'))
+    const fromA = await endpointFetch('/api/story')
+    storyB.canvasElement.dispatchEvent(new Event('focusin'))
+    const fromB = await endpointFetch('/api/story')
+
+    expect(await fromA.text()).toBe('a')
+    expect(await fromB.text()).toBe('b')
+  })
+
+  it('answers when a single story file is mounted', async () => {
+    const app = runStory('a', (context) =>
+      registerEndpoint(context, '/api/users', () => ['Ada']),
+    )
+    const otherA = { ...storyA, canvasElement: new EventTarget() }
+    mountStory(storyA, app)
+    mountStory(otherA, app)
+
+    const response = await endpointFetch('/api/users')
+
+    expect(await response.json()).toEqual(['Ada'])
+    unmountStory(otherA)
+  })
+
+  it('answers inside the Nuxt context, and passes unregistered urls through', async () => {
+    const { appA } = mountBoth()
+    currentApp = appA
+    storyB.canvasElement.dispatchEvent(new Event('pointerdown'))
+
+    const response = await runInStoryContext(() => endpointFetch('/api/story'))
+    await endpointFetch('/api/other')
+
+    expect(await response.text()).toBe('a')
+    expect(baseFetch).toHaveBeenCalledWith('/api/other', undefined)
   })
 })
 

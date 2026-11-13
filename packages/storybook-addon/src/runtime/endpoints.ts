@@ -111,11 +111,11 @@ export function endpointRegistries(
 export function createEndpointFetch(
   baseFetch: typeof fetch,
   app: () => Promise<EndpointApp>,
-  registries: (init?: RequestInit) => Registry[],
+  registries: (input: RequestInfo | URL, init?: RequestInit) => Registry[],
 ): typeof fetch {
   return async (input, init) => {
     const keys = requestKeys(input)
-    const scoped = registries(init)
+    const scoped = registries(input, init)
     // Unlike @nuxt/test-utils, unregistered same-origin urls reach the dev
     // Server instead of a 404, as Storybook has no Nitro
     if (!scoped.some((registry) => keys.some((key) => registry.has(key)))) {
@@ -128,6 +128,19 @@ export function createEndpointFetch(
     }
     return (await app()).fetch(request, endpoint.handler)
   }
+}
+
+/**
+ * The registries a request is answered from. Its story is resolved, from the
+ * call it makes, only when its url is registered.
+ */
+export function requestRegistries(
+  input: RequestInfo | URL,
+  story: (call: string) => EndpointScope | undefined,
+): Registry[] {
+  return isEndpointUrl(input)
+    ? endpointRegistries(story(`fetch('${urlOf(input)}')`))
+    : []
 }
 
 const storyRegistries = new Map<string, Registry>()
@@ -198,6 +211,15 @@ function findIn(registry: Registry, keys: string[], method: string) {
     (handler) =>
       !handler.method || handler.method.toUpperCase() === method.toUpperCase(),
   )
+}
+
+function isEndpointUrl(input: RequestInfo | URL): boolean {
+  const keys = requestKeys(input)
+  const registries = [
+    ...storyRegistries.values(),
+    ...[...importPathRegistries.values()].map((entry) => entry.registry),
+  ]
+  return registries.some((registry) => keys.some((key) => registry.has(key)))
 }
 
 // 'https://api.example.com/users?page=2' is registered with or without its

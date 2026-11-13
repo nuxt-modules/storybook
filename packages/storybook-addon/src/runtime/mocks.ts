@@ -1,6 +1,6 @@
-import { tryUseNuxtApp } from 'nuxt/app'
 import type { NuxtApp } from 'nuxt/app'
 import type { Component } from 'vue'
+import { resolveStoryNuxtApp } from './story-context'
 
 // oxlint-disable-next-line typescript/no-explicit-any -- same as the Procedure of `storybook/test`
 export type Procedure = (...args: any[]) => any
@@ -68,7 +68,7 @@ export async function applyFileMocks(
 
 /** Picks the implementation of an auto-import for the calling story's app. */
 export function resolveMock<T extends Procedure>(name: string, original: T): T {
-  const nuxt = tryUseNuxtApp()
+  const nuxt = resolveStoryNuxtApp(`${name}()`)
   const mock = nuxt ? appMocks.get(nuxt)?.imports[name] : undefined
   return (mock as T | undefined) ?? original
 }
