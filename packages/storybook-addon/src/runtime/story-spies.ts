@@ -139,8 +139,12 @@ export function storySpy<T extends Procedure>(
     return spyOf(canvas)
   }
 
-  const spy: Mock<T> = new Proxy(global, {
-    apply(_global, self, args) {
+  // Not the global spy itself: a proxy has to give the own read-only
+  // Properties of its target as they are, and `mock` is one of them
+  const facade: Mock<T> = Object.setPrototypeOf(() => undefined, global)
+
+  const spy: Mock<T> = new Proxy(facade, {
+    apply(_facade, self, args) {
       const canvas = currentCanvas('call')
       // The stories all have the same spy, unless one configured it
       if (!canvas && isConfigured(name)) {
@@ -148,7 +152,7 @@ export function storySpy<T extends Procedure>(
       }
       return Reflect.apply(spyOf(canvas), self, args)
     },
-    get(_global, key) {
+    get(_facade, key) {
       const value: unknown = Reflect.get(spyOf(currentCanvas('access')), key)
       if (typeof value !== 'function') {
         return value

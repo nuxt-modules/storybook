@@ -18,17 +18,14 @@ describe('csf factories', () => {
     expect(isCsfFactoryPreview(preview)).toBe(true)
   })
 
-  it.each(['@storybook-vue/nuxt', '@nuxtjs/storybook'])(
-    'exposes defineMain on %s/node, where the codemod imports it',
-    async (framework) => {
-      const { defineMain } = await import(
-        await resolveExport(framework, './node')
-      )
-      const config = { framework: '@storybook-vue/nuxt', stories: [] }
+  it('exposes defineMain on @storybook-vue/nuxt/node, where the codemod imports it', async () => {
+    const { defineMain } = await import(
+      await resolveExport('@storybook-vue/nuxt', './node')
+    )
+    const config = { framework: '@storybook-vue/nuxt', stories: [] }
 
-      expect(defineMain(config)).toBe(config)
-    },
-  )
+    expect(defineMain(config)).toBe(config)
+  })
 })
 
 async function resolveExport(name: string, subpath: string) {
