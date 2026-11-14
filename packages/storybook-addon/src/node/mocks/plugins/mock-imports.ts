@@ -6,16 +6,17 @@ import {
   genString,
 } from 'knitwork'
 import { resolve } from 'pathe'
+import { filterQuery, withQuery } from 'ufo'
 import type { Plugin } from 'vite'
-import { runtimeDir } from '../../dirs'
-import type { MockedComponent, MockedImport } from '../mock-calls'
-import { cleanId, originalId, stemsOf, withQuery } from './module-ids'
+import { runtimeDir } from '../../../dirs'
+import type { MockedComponent, MockedImport } from '../calls'
+import { cleanId, stemsOf } from './module-ids'
 
 export const MOCKED_IMPORTS_ID = 'virtual:nuxt-storybook/mocked-imports'
 export const SPY_MODULE_PREFIX = '\0nuxt-storybook-spy:'
 const SPIES_QUERY = 'spies'
-const MOCKS_RUNTIME = resolve(runtimeDir, 'mocks')
-const SPIES_RUNTIME = resolve(runtimeDir, 'story-spies')
+const MOCKS_RUNTIME = resolve(runtimeDir, 'mocks/registry')
+const SPIES_RUNTIME = resolve(runtimeDir, 'mocks/story-spies')
 
 export function mockImportsPlugin(
   mocked: MockedImport[],
@@ -53,7 +54,11 @@ export function mockImportsPlugin(
         return mockedImportsModule(mocked, mockedComponents)
       }
       if (id.startsWith(SPY_MODULE_PREFIX)) {
-        const original = originalId(id, SPY_MODULE_PREFIX, SPIES_QUERY)
+        // `<prefix>/app/a.ts?v=abc&spies=x` → `/app/a.ts?v=abc`
+        const original = filterQuery(
+          id.slice(SPY_MODULE_PREFIX.length),
+          (key) => key !== SPIES_QUERY,
+        )
         return spyModule(original, modules.get(cleanId(original)) ?? [])
       }
     },
@@ -83,8 +88,8 @@ export function mockImportsPlugin(
   }
 }
 
-// Import { resolveMock } from "<runtime>/mocks"
-// Import { storySpy } from "<runtime>/story-spies"
+// Import { resolveMock } from "<runtime>/mocks/registry"
+// Import { storySpy } from "<runtime>/mocks/story-spies"
 // Import * as original from "/app/composables/useCounter.ts"
 // Export * from "/app/composables/useCounter.ts"
 // Export default original.default
@@ -150,5 +155,5 @@ function mockedImportsModule(
 // Versioned files as immutable
 function spyModuleId(id: string, mocked: MockedImport[]): string {
   const names = mocked.map((entry) => entry.as).join(',')
-  return `${SPY_MODULE_PREFIX}${withQuery(id, `${SPIES_QUERY}=${names}`)}`
+  return `${SPY_MODULE_PREFIX}${withQuery(id, { [SPIES_QUERY]: names })}`
 }

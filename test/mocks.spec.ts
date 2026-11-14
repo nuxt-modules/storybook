@@ -2,16 +2,22 @@
 
 import type { NuxtApp } from '#app/nuxt'
 import {
-  applyFileMocks,
+  applyStoryMocks,
+  beginStoryMocks,
+  mockStoryComponent,
+  mockStoryImport,
+  registerFileComponentMock,
   registerFileMock,
   resolveMock,
-} from '../packages/storybook-addon/src/runtime/mocks'
+  resolveMockedComponent,
+} from '../packages/storybook-addon/src/runtime/mocks/registry'
+import { inStoryContext } from '../packages/storybook-addon/src/runtime/mocks/story-spies'
 import {
   NuxtMocksSharedOnDocsPageError,
   mountStory,
   runInStoryContext,
   unmountStory,
-} from '../packages/storybook-addon/src/runtime/story-context'
+} from '../packages/storybook-addon/src/runtime/story/context'
 
 // The addon resolves its own `nuxt`, not the one of the tests
 const nuxtApp = await vi.hoisted(async () => {
@@ -46,11 +52,23 @@ const storyB = {
 
 const useGreeting = () => 'original'
 
+/** Begins a story and creates its app, like the preview does. */
+async function boot(story: typeof storyA, app: NuxtApp, guards = {}) {
+  await beginStoryMocks(story.canvasElement, story.importPath, guards)
+  await applyStoryMocks(app, story.canvasElement)
+}
+
+/** Runs `run` like a hook written in the story file of `story`. */
+function inHook<T>(story: typeof storyA, run: () => T): Promise<T> {
+  const hook = inStoryContext(run) as (context: object) => Promise<T>
+  return hook(story)
+}
+
 beforeAll(async () => {
   registerFileMock(storyA.importPath, 1, 'useGreeting', () => () => 'a')
   registerFileMock(storyB.importPath, 1, 'useGreeting', () => () => 'b')
-  await applyFileMocks(appA, storyA.importPath)
-  await applyFileMocks(appB, storyB.importPath)
+  await boot(storyA, appA)
+  await boot(storyB, appB)
 })
 
 beforeEach(() => {
@@ -116,5 +134,69 @@ describe(resolveMock, () => {
     expect(
       runInStoryContext(() => resolveMock('useGreeting', useGreeting))(),
     ).toBe('b')
+  })
+})
+
+describe('mocks of a story', () => {
+  const story = {
+    canvasElement: new EventTarget(),
+    importPath: './c.stories.ts',
+  }
+
+  it('runs a factory once, when the story file loads, and awaits it', async () => {
+    const factory = vi.fn<() => Promise<() => string>>(async () => () => 'file')
+    registerFileMock(story.importPath, 1, 'useGreeting', factory)
+    await beginStoryMocks(story.canvasElement, story.importPath)
+    await beginStoryMocks(new EventTarget(), story.importPath)
+
+    expect(factory).toHaveBeenCalledOnce()
+    // Before the app of the story exists
+    await expect(
+      inHook(story, () => resolveMock('useGreeting', useGreeting)()),
+    ).resolves.toBe('file')
+  })
+
+  it('mocks an import and a component in a hook, for its story only', async () => {
+    registerFileComponentMock(story.importPath, 1, 'MyAvatar', { name: 'File' })
+    await beginStoryMocks(story.canvasElement, story.importPath)
+    await inHook(story, () => {
+      mockStoryImport('useGreeting', () => () => 'hook')
+      mockStoryComponent('MyAvatar', async () => ({ name: 'Hook' }))
+    })
+    const app = {} as NuxtApp
+    await applyStoryMocks(app, story.canvasElement)
+
+    await expect(
+      inHook(story, () => resolveMock('useGreeting', useGreeting)()),
+    ).resolves.toBe('hook')
+    expect(resolveMockedComponent(app, 'MyAvatar')).toStrictEqual({
+      name: 'Hook',
+    })
+    await expect(
+      inHook(story, () => mockStoryComponent('MyAvatar', { name: 'Late' })),
+    ).rejects.toThrow('was called after its story rendered')
+
+    await boot(story, app)
+
+    expect(resolveMockedComponent(app, 'MyAvatar')).toStrictEqual({
+      name: 'File',
+    })
+  })
+
+  it('refuses a mock outside of a story hook', () => {
+    expect(() => mockStoryImport('useGreeting', () => () => 'lost')).toThrow(
+      "The story of mockNuxtImport('useGreeting') is unknown",
+    )
+  })
+
+  it('guards the original of an import no factory mocks', async () => {
+    const guarded = { ...story, importPath: './d.stories.ts' }
+    await beginStoryMocks(guarded.canvasElement, guarded.importPath, {
+      useGreeting: (original: () => string) => () => `guarded ${original()}`,
+    })
+
+    await expect(
+      inHook(guarded, () => resolveMock('useGreeting', useGreeting)()),
+    ).resolves.toBe('guarded original')
   })
 })

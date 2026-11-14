@@ -1,10 +1,10 @@
 import { resolve } from 'pathe'
 import { runtimeDir } from '../packages/storybook-addon/src/dirs'
-import type { MockedComponent } from '../packages/storybook-addon/src/node/mock-calls'
+import type { MockedComponent } from '../packages/storybook-addon/src/node/mocks/calls'
 import {
   COMPONENT_MODULE_PREFIX,
   mockComponentsPlugin,
-} from '../packages/storybook-addon/src/node/plugins/mock-components'
+} from '../packages/storybook-addon/src/node/mocks/plugins/mock-components'
 
 type ResolveId = (
   this: unknown,
@@ -106,7 +106,7 @@ describe(mockComponentsPlugin, () => {
     const { load } = await startedPlugin()
 
     expect(load.call({}, wrapperId(AVATAR))).toMatchInlineSnapshot(`
-      "import { mockableComponent } from "${resolve(runtimeDir, 'mockable-component')}";
+      "import { mockableComponent } from "${resolve(runtimeDir, 'mocks/mockable-component')}";
       import * as original from "/app/components/MyAvatar.vue";
       export * from "/app/components/MyAvatar.vue";
       export default mockableComponent("MyAvatar", original["default"])
@@ -119,7 +119,7 @@ describe(mockComponentsPlugin, () => {
 
     expect(load.call({}, wrapperId(`${SERVER_SOURCE}.js`)))
       .toMatchInlineSnapshot(`
-      "import { mockableComponent } from "${resolve(runtimeDir, 'mockable-component')}";
+      "import { mockableComponent } from "${resolve(runtimeDir, 'mocks/mockable-component')}";
       import * as original from "/app/node_modules/nuxt/dist/components/runtime/server-component.js";
       export * from "/app/node_modules/nuxt/dist/components/runtime/server-component.js";
       export const createServerComponent = (name) => mockableComponent(name, original.createServerComponent(name))

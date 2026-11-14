@@ -1,6 +1,6 @@
 import type * as H3v1Module from 'h3'
 import type { H3Event } from 'h3'
-import type { EndpointApp, EndpointHandler } from './endpoints'
+import type { EndpointApp, EndpointHandler } from './registry'
 
 /** The `h3` module of either major, as the preview resolves it. */
 export type H3Module = H3v1 | H3v2

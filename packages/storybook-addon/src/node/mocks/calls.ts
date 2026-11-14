@@ -2,12 +2,13 @@ import { readFile, stat } from 'node:fs/promises'
 import { genString } from 'knitwork'
 import MagicString from 'magic-string'
 import { Visitor, parseSync } from 'oxc-parser'
-import { normalize, relative, resolve } from 'pathe'
+import { dirname, normalize, relative, resolve } from 'pathe'
+import { resolveAlias } from 'pathe/utils'
 import type { Component } from '@nuxt/schema'
 import type { SourceMap } from 'magic-string'
 import type { CallExpression, Expression, Program, Statement } from 'oxc-parser'
 import type { Import } from 'unimport'
-import type { StorybookConfig } from '../types.d'
+import type { StorybookConfig } from '../../types.d'
 
 /** A runtime auto-import: the export `name` of `from`, used as `as`. */
 export interface MockedImport {
@@ -24,8 +25,21 @@ export interface MockedComponent {
   server: boolean
 }
 
+/**
+ * A component as a story file names it: by its PascalCase or kebab-case
+ * name, or by its path, relative to the story file or with an alias.
+ */
+export interface ComponentReference {
+  file: string
+  name: string
+}
+
+export type ComponentResolver = (
+  reference: ComponentReference,
+) => Component | undefined
+
 export interface MockedNames {
-  components: string[]
+  components: ComponentReference[]
   imports: string[]
 }
 
@@ -50,6 +64,9 @@ export const MOCK_CALLS: Record<MockKind, string> = {
 
 export const SCRIPT_FILE_RE = /\.[cm]?[jt]sx?$/
 
+/** Auto-imports always mocked: the preview keeps `navigateTo` in the story. */
+export const BUILT_IN_MOCKS = ['navigateTo']
+
 const ENDPOINT_CALL = 'registerEndpoint'
 
 // The top-level calls told the story file they are in
@@ -67,11 +84,18 @@ export async function readMockedNames(
   const calls = await Promise.all(
     files.map(async (file) => {
       const code = await readFile(file, 'utf8')
-      return hasFileCall(code) ? findMockCalls(code, file) : []
+      return hasFileCall(code)
+        ? findMockCalls(code, file).map(({ kind, name }) => ({
+            file,
+            kind,
+            name,
+          }))
+        : []
     }),
   )
+  const components = calls.flat().filter((call) => call.kind === 'components')
   return {
-    components: uniqueNames(calls.flat(), 'components'),
+    components: components.map(({ file, name }) => ({ file, name })),
     imports: uniqueNames(calls.flat(), 'imports'),
   }
 }
@@ -82,22 +106,54 @@ export function hasFileCall(code: string): boolean {
 
 /**
  * Appends the story's import path and the transform generation to each
- * top-level mock and `registerEndpoint` call.
+ * top-level mock and `registerEndpoint` call: without them, a call applies
+ * to the story whose hook is running. Names each mock as the runtime does.
  */
 export function injectStoryFile(
   code: string,
   file: string,
   importPath: string,
   generation: number,
+  resolveComponent?: ComponentResolver,
 ): { code: string; map: SourceMap } {
   const { program } = parseSync(file, code)
   validateMockCalls(program, file)
   const source = new MagicString(code)
   const fileArguments = `, ${genString(importPath)}, ${generation}`
   for (const call of findFileCalls(program.body, file)) {
-    source.appendLeft(call.arguments.at(-1)!.end, fileArguments)
+    // `mockNuxtImport('useState')` has no factory
+    const factory = call.arguments.length === 1 ? ', undefined' : ''
+    source.appendLeft(call.arguments.at(-1)!.end, factory + fileArguments)
+  }
+  for (const call of findMockCallNodes(program)) {
+    const [target] = call.arguments
+    const name = runtimeName(call, file, resolveComponent)
+    if (target && name !== undefined) {
+      source.update(target.start, target.end, genString(name))
+    }
   }
   return { code: source.toString(), map: source.generateMap({ hires: true }) }
+}
+
+/** Finds the Nuxt component a story file names, as `@nuxt/test-utils` does. */
+export function createComponentResolver(
+  components: Component[],
+  alias: Record<string, string>,
+): ComponentResolver {
+  return ({ file, name }) => {
+    const path = withoutExtension(
+      name.startsWith('.')
+        ? resolve(dirname(file), name)
+        : normalize(resolveAlias(name, alias)),
+    )
+    return findComponent(
+      components,
+      (component) =>
+        component.pascalName === name ||
+        component.kebabName === name ||
+        withoutExtension(normalize(component.filePath)) === path,
+    )
+  }
 }
 
 export function storyImportPath(
@@ -121,9 +177,11 @@ export function resolveMockedImports(
 
   return names.flatMap((as) => {
     const entry = byName.get(as)
-    // TypeScript already reports the name; the story file fails at runtime
+
     if (!entry) {
-      warnUnknown('imports', as, 'a Nuxt auto-import')
+      if (!BUILT_IN_MOCKS.includes(as)) {
+        warnUnknown('imports', as, 'a Nuxt auto-import')
+      }
       return []
     }
     return [{ as, from: entry.from, name: entry.name }]
@@ -131,24 +189,24 @@ export function resolveMockedImports(
 }
 
 export function resolveMockedComponents(
-  names: string[],
-  components: Component[],
+  references: ComponentReference[],
+  resolveComponent: ComponentResolver,
 ): MockedComponent[] {
-  return names.flatMap((pascalName) => {
-    const component = findComponent(components, pascalName)
-    if (!component) {
-      warnUnknown('components', pascalName, 'a Nuxt component')
-      return []
-    }
-    return [
-      {
+  const mocked = new Map<string, MockedComponent>()
+  for (const reference of references) {
+    const component = resolveComponent(reference)
+    if (component) {
+      mocked.set(component.pascalName, {
         filePath: component.filePath,
         name: component.export,
-        pascalName,
+        pascalName: component.pascalName,
         server: component.mode === 'server',
-      },
-    ]
-  })
+      })
+    } else {
+      warnUnknown('components', reference.name, 'a Nuxt component')
+    }
+  }
+  return [...mocked.values()]
 }
 
 export function findMockCalls(code: string, file: string): MockCall[] {
@@ -166,59 +224,92 @@ function findFileCalls(body: Statement[], file: string): CallExpression[] {
   return calls
 }
 
+// The mock calls of the top level and those of the story hooks
+function findMockCallNodes(program: Program): CallExpression[] {
+  const calls: CallExpression[] = []
+  new Visitor({
+    CallExpression(node) {
+      if (isMockCall(node)) {
+        calls.push(node)
+      }
+    },
+  }).visit(program)
+  return calls
+}
+
 function validateMockCalls(program: Program, file: string): MockCall[] {
   const topLevel = new Set(
     program.body.flatMap(topLevelExpressions).filter(isMockCall),
   )
 
-  new Visitor({
-    CallExpression(node) {
-      if (isMockCall(node) && !topLevel.has(node)) {
-        throw new Error(
-          `${file}: ${calleeName(node)}() must be called at the top level of the story file`,
-        )
-      }
-    },
-  }).visit(program)
-
   const names = new Set<string>()
-  return [...topLevel].map((call) => {
+  return findMockCallNodes(program).map((call) => {
     const callee = calleeName(call)
     const kind = kindOf(callee) ?? 'imports'
-    const [name, factory] = call.arguments
-    if (name?.type !== 'Literal' || typeof name.value !== 'string') {
+    const [target, factory] = call.arguments
+    // Like `@nuxt/test-utils`, an import is also named by itself
+    const name =
+      kind === 'imports' && target?.type === 'Identifier'
+        ? target.name
+        : target?.type === 'Literal' && target.value
+    if (typeof name !== 'string') {
       throw new Error(
         `${file}: ${callee}() needs a string literal as name, as it is read at build time`,
       )
     }
     if (kind === 'components' && !factory) {
       throw new Error(
-        `${file}: ${callee}('${name.value}') needs a factory returning the mock component`,
+        `${file}: ${callee}('${name}') needs the mock component, or a factory returning it`,
       )
     }
-    const key = `${kind}:${name.value}`
-    if (names.has(key)) {
+    const key = `${kind}:${name}`
+    // Each story may mock a name again in its hooks
+    if (topLevel.has(call) && names.has(key)) {
       throw new Error(
-        `${file}: '${name.value}' is mocked twice. Each name can only be mocked once per story file.`,
+        `${file}: '${name}' is mocked twice. Each name can only be mocked once per story file.`,
       )
     }
     names.add(key)
-    return { kind, name: name.value }
+    return { kind, name }
   })
+}
+
+// `mockNuxtImport(useRoute, ...)` and `mockComponent('my-avatar', ...)` name
+// The import and the component as the runtime registers them
+function runtimeName(
+  call: CallExpression,
+  file: string,
+  resolveComponent?: ComponentResolver,
+): string | undefined {
+  const [target] = call.arguments
+  if (target?.type === 'Identifier') {
+    return target.name
+  }
+  if (
+    kindOf(calleeName(call)) === 'components' &&
+    target?.type === 'Literal' &&
+    typeof target.value === 'string'
+  ) {
+    return resolveComponent?.({ file, name: target.value })?.pascalName
+  }
 }
 
 // Nuxt's client loader prefers the client version of a component and falls
 // Back to the server one, which it renders as an island
 function findComponent(
   components: Component[],
-  pascalName: string,
+  matches: (component: Component) => boolean,
 ): Component | undefined {
   const candidates = components.filter(
-    (component) => component.pascalName === pascalName && !component._raw,
+    (component) => matches(component) && !component._raw,
   )
   return (
     candidates.find((component) => component.mode !== 'server') ?? candidates[0]
   )
+}
+
+function withoutExtension(path: string): string {
+  return path.replace(/\.[^./]+$/, '')
 }
 
 function warnUnknown(kind: MockKind, name: string, expected: string) {

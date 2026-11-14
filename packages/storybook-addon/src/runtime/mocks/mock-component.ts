@@ -1,7 +1,7 @@
 import { mockedComponents } from 'virtual:nuxt-storybook/mocked-imports'
 import type { Component } from 'vue'
-import { registerFileComponentMock } from './mocks'
-import type { ComponentFactory } from './mocks'
+import { mockStoryComponent, registerFileComponentMock } from './registry'
+import type { ComponentMock } from './registry'
 
 type NuxtComponents = typeof import('#components')
 
@@ -18,30 +18,30 @@ export type MockableComponent = [ComponentName] extends [never]
   : ComponentName
 
 /**
- * Mock a Nuxt component in every story of the file.
- * The factory may return a component, or import a `.vue` file.
+ * Mock a Nuxt component, named by its name or its path: in every story of the
+ * file, or in the story of the hook calling it, before it renders.
+ * Takes the mock component, or a factory returning or importing it.
  */
 export function mockComponent(
-  name: MockableComponent,
-  factory: ComponentFactory,
+  name: MockableComponent | (string & Record<never, never>),
+  component: ComponentMock,
 ): void
 export function mockComponent(
   name: string,
-  factory: ComponentFactory,
-  // Injected by vite plugin
+  component: ComponentMock,
+  // Injected by vite plugin, at the top level of a story file
   importPath?: string,
   // Injected by vite plugin, incremented on each transform of the same file
   generation = 0,
 ): void {
-  if (importPath === undefined) {
-    throw new Error(
-      `mockComponent('${name}') was not processed by the Nuxt Storybook build. Call it at the top level of a story file.`,
-    )
-  }
   if (!mockedComponents.includes(name)) {
     throw new Error(
       `mockComponent('${name}'): '${name}' is not a mocked Nuxt component. Check the name, and restart Storybook if the mock was added after it started.`,
     )
   }
-  registerFileComponentMock(importPath, generation, name, factory)
+  if (importPath === undefined) {
+    mockStoryComponent(name, component)
+  } else {
+    registerFileComponentMock(importPath, generation, name, component)
+  }
 }

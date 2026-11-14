@@ -83,3 +83,16 @@ export const Added = meta.story({
     await expect(canvas.getAllByRole('listitem')).toHaveLength(2)
   },
 })
+
+// In a story hook, the story context is optional
+export const RegisteredInHook = meta.story({
+  beforeEach() {
+    registerEndpoint('/api/users', () => ['Grace'])
+  },
+  async play({ canvasElement }) {
+    const canvas = within(canvasElement)
+
+    await expect(await canvas.findByText('Grace')).toBeVisible()
+    await expect(canvas.getAllByRole('listitem')).toHaveLength(1)
+  },
+})

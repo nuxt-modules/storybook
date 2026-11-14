@@ -1,4 +1,5 @@
 import type { EventHandler, HTTPMethod } from 'h3'
+import { hookCanvas } from '../story/hook-context'
 
 export type EndpointHandler = EventHandler
 
@@ -28,6 +29,7 @@ export interface EndpointApp {
 
 /** The parts of a story context the endpoints need. */
 export interface EndpointStory {
+  canvasElement?: EventTarget
   id: string
   parameters: { nuxt?: { endpoints?: Record<string, Endpoint> } }
 }
@@ -50,8 +52,6 @@ interface EndpointScope {
   storyId: string
 }
 
-// Captures the calling story's app when `$fetch` is called: fetch and retries
-// Run later, when another story's app may be current
 export const REQUEST_APP = Symbol('nuxt-storybook:request-app')
 
 export function registerEndpoint(
@@ -75,8 +75,11 @@ export function registerEndpoint(
     )
   }
   if (typeof endpointOrImportPath !== 'string') {
-    throw new Error(
-      `registerEndpoint('${storyOrUrl}') was not processed by the Nuxt Storybook build. Call it at the top level of a story file, or pass the story context as first argument in a story hook.`,
+    // Not a top-level call, which the build tells its file: one of a story hook
+    return register(
+      hookRegistry(storyOrUrl),
+      storyOrUrl,
+      urlOrEndpoint as Endpoint,
     )
   }
   return register(
@@ -94,6 +97,9 @@ export function beginStoryEndpoints(story: EndpointStory): void {
     register(registry, url, endpoint)
   }
   storyRegistries.set(story.id, registry)
+  if (story.canvasElement) {
+    canvasStories.set(story.canvasElement, story.id)
+  }
 }
 
 export function endpointRegistries(
@@ -116,8 +122,7 @@ export function createEndpointFetch(
   return async (input, init) => {
     const keys = requestKeys(input)
     const scoped = registries(input, init)
-    // Unlike @nuxt/test-utils, unregistered same-origin urls reach the dev
-    // Server instead of a 404, as Storybook has no Nitro
+    // unregistered same-origin urls reach the dev Server instead of a 404, as Storybook has no Nitro
     if (!scoped.some((registry) => keys.some((key) => registry.has(key)))) {
       return baseFetch(input, init)
     }
@@ -130,10 +135,6 @@ export function createEndpointFetch(
   }
 }
 
-/**
- * The registries a request is answered from. Its story is resolved, from the
- * call it makes, only when its url is registered.
- */
 export function requestRegistries(
   input: RequestInfo | URL,
   story: (call: string) => EndpointScope | undefined,
@@ -145,7 +146,21 @@ export function requestRegistries(
 
 const storyRegistries = new Map<string, Registry>()
 
+// The story of each canvas, to scope the calls of its hooks
+const canvasStories = new WeakMap<EventTarget, string>()
+
 const importPathRegistries = new Map<string, ImportPathRegistry>()
+
+function hookRegistry(url: string): Registry {
+  const canvas = hookCanvas()
+  const id = canvas && canvasStories.get(canvas)
+  if (id === undefined) {
+    throw new Error(
+      `registerEndpoint('${url}') was not processed by the Nuxt Storybook build, and its story is unknown. Call it at the top level of a story file, in a hook written in the story file, or pass the story context as first argument.`,
+    )
+  }
+  return storyRegistryOf(id)
+}
 
 function storyRegistryOf(id: string): Registry {
   let registry = storyRegistries.get(id)
@@ -222,8 +237,7 @@ function isEndpointUrl(input: RequestInfo | URL): boolean {
   return registries.some((registry) => keys.some((key) => registry.has(key)))
 }
 
-// 'https://api.example.com/users?page=2' is registered with or without its
-// Query; '/api/users?page=2' too, also when fetched by its absolute url
+// 'https://api.example.com/users?page=2' is registered with or without its Query; '/api/users?page=2' too, also when fetched by its absolute url
 function requestKeys(input: RequestInfo | URL): string[] {
   const url = urlOf(input)
   const { origin, pathname, search } = new URL(url, location.origin)

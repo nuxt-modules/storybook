@@ -1,4 +1,4 @@
-import { storyFilesPlugin } from '../packages/storybook-addon/src/node/plugins/story-files'
+import { storyFilesPlugin } from '../packages/storybook-addon/src/node/mocks/plugins/story-files'
 
 type Transform = (
   this: unknown,

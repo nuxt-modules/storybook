@@ -1,21 +1,5 @@
 import { basename, dirname, extname, normalize } from 'pathe'
 
-/** `<prefix>/app/a.ts?v=abc&wraps=x` → `/app/a.ts?v=abc` */
-export function originalId(
-  wrapperId: string,
-  prefix: string,
-  query: string,
-): string {
-  const [file = '', search] = wrapperId.slice(prefix.length).split('?')
-  const params = new URLSearchParams(search)
-  params.delete(query)
-  return params.size > 0 ? `${file}?${params.toString()}` : file
-}
-
-export function withQuery(id: string, query: string): string {
-  return `${id}${id.includes('?') ? '&' : '?'}${query}`
-}
-
 export function cleanId(id: string): string {
   return normalize(id.split('?')[0] ?? id)
 }
