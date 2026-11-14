@@ -35,6 +35,7 @@ const { header } = useAppConfig()
       <NuxtLink :to="header?.to || '/'">
         <AppLogo class="w-auto h-6 shrink-0" />
       </NuxtLink>
+      <AppVersionSwitch class="ms-2" />
     </template>
 
     <template #right>

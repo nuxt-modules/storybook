@@ -37,18 +37,22 @@ export default defineNuxtConfig({
     },
     sections: [
       {
-        contentCollection: 'docs',
+        contentCollection: 'docsV10',
         contentFilters: [
           { field: 'path', operator: 'LIKE', value: '/getting-started%' },
         ],
         title: 'Getting Started',
       },
       {
-        contentCollection: 'docs',
+        contentCollection: 'docsV10',
         contentFilters: [
           { field: 'path', operator: 'LIKE', value: '/storybook%' },
         ],
         title: 'Storybook',
+      },
+      {
+        contentCollection: 'docsV11',
+        title: 'Next version (v11)',
       },
     ],
     title: 'Storybook Nuxt Module - Documentation',
@@ -72,7 +76,8 @@ export default defineNuxtConfig({
     prerender: {
       autoSubfolderIndex: false,
       crawlLinks: true,
-      routes: ['/'],
+      // The next version is only linked from the version switch menu
+      routes: ['/', '/11.x/getting-started/setup'],
     },
   },
 

@@ -9,10 +9,11 @@ definePageMeta({
 
 const route = useRoute()
 const { toc } = useAppConfig()
+const version = useDocsVersion()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
 const { data: page } = await useAsyncData(route.path, () =>
-  queryCollection('docs').path(route.path).first(),
+  queryCollection(version.value.collection).path(route.path).first(),
 )
 if (!page.value) {
   throw createError({
@@ -23,7 +24,7 @@ if (!page.value) {
 }
 
 const { data: surround } = await useAsyncData(`${route.path}-surround`, () =>
-  queryCollectionItemSurroundings('docs', route.path, {
+  queryCollectionItemSurroundings(version.value.collection, route.path, {
     fields: ['description'],
   }),
 )
@@ -50,12 +51,12 @@ defineOgImage('Docs', {
 
 const links = computed(() => {
   const links = []
-  if (toc?.bottom?.edit) {
+  if (page.value?.stem) {
     links.push({
       icon: 'i-lucide-external-link',
       label: 'Edit this page',
       target: '_blank',
-      to: `${toc.bottom.edit}/${page?.value?.stem}.${page?.value?.extension}`,
+      to: docsEditUrl(version.value, page.value.stem, page.value.extension),
     })
   }
 

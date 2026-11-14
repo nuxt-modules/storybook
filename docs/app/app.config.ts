@@ -41,7 +41,6 @@ export default defineAppConfig({
   },
   toc: {
     bottom: {
-      edit: 'https://github.com/nuxt-modules/storybook/edit/main/docs/content',
       links: [
         {
           icon: 'i-lucide-star',

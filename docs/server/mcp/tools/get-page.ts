@@ -22,7 +22,7 @@ WORKFLOW: This tool returns the complete page content including title, descripti
       : url.origin
 
     try {
-      const page = await queryCollection(event, 'docs')
+      const page = await queryCollection(event, docsVersionOf(path).collection)
         .where('path', '=', path)
         .select('title', 'path', 'description')
         .first()

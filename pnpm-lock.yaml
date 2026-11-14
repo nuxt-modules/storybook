@@ -214,8 +214,6 @@ catalogs:
       version: 5.1.0
 
 overrides:
-  h3: 1.15.11
-  h3-next: npm:h3@2.0.2
   '@nuxtjs/storybook': workspace:*
   '@storybook-vue/nuxt': workspace:*
 
@@ -538,7 +536,7 @@ importers:
         specifier: ^6.1.4
         version: 6.1.7
       h3:
-        specifier: 1.15.11
+        specifier: ^1.15.11
         version: 1.15.11
       knitwork:
         specifier: ^1.3.0
@@ -2260,7 +2258,7 @@ packages:
     peerDependencies:
       '@vue/compiler-sfc': ^3.5.34
       agents: '>=0.12.4'
-      h3: 1.15.11
+      h3: '>=1.15.11'
       secure-exec: '>=0.2.1'
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
       vue: ^3.5.34
@@ -6610,8 +6608,31 @@ packages:
   h3@1.15.11:
     resolution: {integrity: sha512-L3THSe2MPeBwgIZVSH5zLdBBU90TOxarvhK9d04IDY2AmVS8j2Jz2LIWtwsGOU3lu2I5jCN7FNvVfY2+XyF+mg==}
 
+  h3@2.0.1-rc.20:
+    resolution: {integrity: sha512-28ljodXuUp0fZovdiSRq4G9OgrxCztrJe5VdYzXAB7ueRvI7pIUqLU14Xi3XqdYJ/khXjfpUOOD2EQa6CmBgsg==}
+    engines: {node: '>=20.11.1'}
+    hasBin: true
+    peerDependencies:
+      crossws: ^0.4.1
+    peerDependenciesMeta:
+      crossws:
+        optional: true
+
   h3@2.0.2:
     resolution: {integrity: sha512-+/zvHSNldYpNURuUUG+y1KzdASUhNnSd1VpqxYFVY40ov3YzuBnCETaUQaT+QbKkoxhh9LRa6AEQdB14LALwdA==}
+    engines: {node: '>=20.19.0'}
+    hasBin: true
+    peerDependencies:
+      crossws: ^0.4.12
+      ocache: '>=0.3.0'
+    peerDependenciesMeta:
+      crossws:
+        optional: true
+      ocache:
+        optional: true
+
+  h3@2.0.8:
+    resolution: {integrity: sha512-ENuKlF9kC6E6PrvY1PUyE0qkrnnPTIt2/v48uyEEfTVfgoiqBCE0uwwf++2XrWwT1gxjQBDLQ8PAsmZVniKvTw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -12107,6 +12128,7 @@ snapshots:
       - jiti
       - magic-string
       - mlly
+      - ocache
       - oxc-parser
       - postcss
       - rolldown
@@ -12940,7 +12962,7 @@ snapshots:
       fake-indexeddb: 6.2.7
       get-port-please: 3.2.0
       h3: 1.15.11
-      h3-next: h3@2.0.2(crossws@0.4.17(srvx@0.11.22))
+      h3-next: h3@2.0.1-rc.20(crossws@0.4.17(srvx@0.11.22))
       local-pkg: 1.2.1
       magic-string: 0.30.21
       node-fetch-native: 1.6.7
@@ -12971,7 +12993,6 @@ snapshots:
       - crossws
       - esbuild
       - magicast
-      - ocache
       - rolldown
       - rollup
       - typescript
@@ -15344,6 +15365,7 @@ snapshots:
       - '@modelcontextprotocol/client'
       - '@modelcontextprotocol/server'
       - cac
+      - ocache
       - srvx
 
   '@vitejs/plugin-vue-jsx@5.1.6(supports-color@10.2.2)(vite@7.3.7(@types/node@26.6.6)(jiti@2.7.0)(lightningcss@1.33.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.38(typescript@6.0.3))':
@@ -16554,7 +16576,7 @@ snapshots:
       birpc: 4.2.0
       crossws: 0.4.17(srvx@1.0.8)
       destr: 2.0.5
-      h3: 1.15.11
+      h3: 2.0.8(crossws@0.4.17(srvx@0.11.22))
       mrmime: 2.0.1
       nostics: 1.3.0
       pathe: 2.0.3
@@ -16562,17 +16584,19 @@ snapshots:
     optionalDependencies:
       cac: 6.7.14
     transitivePeerDependencies:
+      - ocache
       - srvx
 
   devframe@1.3.2(cac@6.7.14)(srvx@1.0.8):
     dependencies:
       crossws: 0.4.17(srvx@1.0.8)
-      h3: 1.15.11
+      h3: 2.0.8(crossws@0.4.17(srvx@1.0.8))
       nostics: 1.3.0
       pathe: 2.0.3
     optionalDependencies:
       cac: 6.7.14
     transitivePeerDependencies:
+      - ocache
       - srvx
 
   devlop@1.1.0:
@@ -17416,12 +17440,33 @@ snapshots:
       ufo: 1.6.4
       uncrypto: 0.1.3
 
+  h3@2.0.1-rc.20(crossws@0.4.17(srvx@0.11.22)):
+    dependencies:
+      rou3: 0.8.1
+      srvx: 0.11.22
+    optionalDependencies:
+      crossws: 0.4.17(srvx@0.11.22)
+
   h3@2.0.2(crossws@0.4.17(srvx@0.11.22)):
     dependencies:
       rou3: 1.0.0
       srvx: 1.0.8
     optionalDependencies:
       crossws: 0.4.17(srvx@0.11.22)
+
+  h3@2.0.8(crossws@0.4.17(srvx@0.11.22)):
+    dependencies:
+      rou3: 1.0.0
+      srvx: 1.0.8
+    optionalDependencies:
+      crossws: 0.4.17(srvx@0.11.22)
+
+  h3@2.0.8(crossws@0.4.17(srvx@1.0.8)):
+    dependencies:
+      rou3: 1.0.0
+      srvx: 1.0.8
+    optionalDependencies:
+      crossws: 0.4.17(srvx@1.0.8)
 
   happy-dom@21.0.4:
     dependencies:
@@ -23115,6 +23160,7 @@ snapshots:
       - '@modelcontextprotocol/client'
       - '@modelcontextprotocol/server'
       - cac
+      - ocache
       - srvx
 
   vite-plugin-singlefile@2.3.4(rollup@4.67.4)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)):
