@@ -1,11 +1,11 @@
 import { resolve } from 'pathe'
 import { runtimeDir } from '../packages/storybook-addon/src/dirs'
-import type { MockedImport } from '../packages/storybook-addon/src/node/mock-calls'
+import type { MockedImport } from '../packages/storybook-addon/src/node/mocks/calls'
 import {
   MOCKED_IMPORTS_ID,
   SPY_MODULE_PREFIX,
   mockImportsPlugin,
-} from '../packages/storybook-addon/src/node/plugins/mock-imports'
+} from '../packages/storybook-addon/src/node/mocks/plugins/mock-imports'
 
 type ResolveId = (
   this: unknown,
@@ -115,8 +115,8 @@ describe(mockImportsPlugin, () => {
     expect(
       load.call({}, `${SPY_MODULE_PREFIX}${ROUTER_ID}?v=abc&spies=useRoute`),
     ).toMatchInlineSnapshot(`
-      "import { resolveMock } from "${resolve(runtimeDir, 'mocks')}";
-      import { storySpy } from "${resolve(runtimeDir, 'story-spies')}";
+      "import { resolveMock } from "${resolve(runtimeDir, 'mocks/registry')}";
+      import { storySpy } from "${resolve(runtimeDir, 'mocks/story-spies')}";
       import * as original from "/app/node_modules/nuxt/dist/app/composables/router.js?v=abc";
       export * from "/app/node_modules/nuxt/dist/app/composables/router.js?v=abc";
       export default original.default
@@ -134,8 +134,8 @@ describe(mockImportsPlugin, () => {
         `${SPY_MODULE_PREFIX}/app/composables/greeting.ts?spies=useGreeting`,
       ),
     ).toMatchInlineSnapshot(`
-      "import { resolveMock } from "${resolve(runtimeDir, 'mocks')}";
-      import { storySpy } from "${resolve(runtimeDir, 'story-spies')}";
+      "import { resolveMock } from "${resolve(runtimeDir, 'mocks/registry')}";
+      import { storySpy } from "${resolve(runtimeDir, 'mocks/story-spies')}";
       import * as original from "/app/composables/greeting.ts";
       export * from "/app/composables/greeting.ts";
       export default storySpy("useGreeting", (...args) => resolveMock("useGreeting", original["default"])(...args))

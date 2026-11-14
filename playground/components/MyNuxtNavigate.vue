@@ -1,13 +1,24 @@
 <script lang="ts" setup>
 const props = withDefaults(
   defineProps<{
-    /** Route the button navigates to. */
+    /** Route or URL the button navigates to. */
     to?: string
+    /** Navigates with `external: true`, leaving the app. */
+    external?: boolean
+    /** Opens the target in a new window instead. */
+    open?: boolean
   }>(),
-  { to: '/about' },
+  { external: false, open: false, to: '/about' },
 )
 
 const route = useRoute()
+
+function navigate() {
+  return navigateTo(props.to, {
+    external: props.external,
+    open: props.open ? { target: '_blank' } : undefined,
+  })
+}
 </script>
 
 <template>
@@ -16,7 +27,7 @@ const route = useRoute()
     <MyButton
       :label="`navigateTo('${props.to}')`"
       size="small"
-      @click="navigateTo(props.to)"
+      @click="navigate"
     />
   </div>
 </template>

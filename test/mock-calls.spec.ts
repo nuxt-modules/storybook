@@ -1,12 +1,13 @@
 import type { Import } from 'unimport'
 import type { Component } from '@nuxt/schema'
 import {
+  createComponentResolver,
   findMockCalls,
   injectStoryFile,
   resolveMockedComponents,
   resolveMockedImports,
   storyImportPath,
-} from '../packages/storybook-addon/src/node/mock-calls'
+} from '../packages/storybook-addon/src/node/mocks/calls'
 
 const FILE = 'a.stories.ts'
 
@@ -33,6 +34,7 @@ const COMPONENTS = [
   {
     export: 'default',
     filePath: '/app/components/MyAvatar.vue',
+    kebabName: 'my-avatar',
     mode: 'all',
     pascalName: 'MyAvatar',
   },
@@ -62,6 +64,12 @@ const COMPONENTS = [
   },
 ] as Component[]
 
+const resolveComponent = createComponentResolver(COMPONENTS, { '~': '/app' })
+
+function references(...names: string[]) {
+  return names.map((name) => ({ file: `/app/components/${FILE}`, name }))
+}
+
 describe(findMockCalls, () => {
   it('collects the names of the top-level calls, by kind', () => {
     expect(
@@ -74,27 +82,35 @@ describe(findMockCalls, () => {
     ])
   })
 
-  it('requires a factory for a component', () => {
+  it('requires the mock of a component', () => {
     expect(() => findMockCalls("mockComponent('MyAvatar')", FILE)).toThrow(
-      "a.stories.ts: mockComponent('MyAvatar') needs a factory",
+      "a.stories.ts: mockComponent('MyAvatar') needs the mock component",
     )
   })
 
-  it('refuses calls that are not at the top level', () => {
-    const code = `export const Mocked = {
+  it('collects the names of the calls of story hooks, which may repeat', () => {
+    const code = `mockNuxtImport(useCounter)
+export const A = {
   beforeEach() {
     mockNuxtImport('useCounter', () => () => ({ count: 40 }))
+    mockComponent('MyAvatar', () => ({}))
   },
 }
+export const B = { play: () => mockNuxtImport('useCounter', factory) }
 `
 
-    expect(() => findMockCalls(code, FILE)).toThrow(
-      'a.stories.ts: mockNuxtImport() must be called at the top level',
-    )
+    expect(
+      findMockCalls(code, FILE).map(({ kind, name }) => [kind, name]),
+    ).toStrictEqual([
+      ['imports', 'useCounter'],
+      ['imports', 'useCounter'],
+      ['components', 'MyAvatar'],
+      ['imports', 'useCounter'],
+    ])
   })
 
   it('refuses names that are not string literals', () => {
-    expect(() => findMockCalls('mockNuxtImport(name)', FILE)).toThrow(
+    expect(() => findMockCalls('mockNuxtImport(names[0])', FILE)).toThrow(
       'a.stories.ts: mockNuxtImport() needs a string literal',
     )
   })
@@ -109,16 +125,9 @@ mockNuxtImport('useCounter', b)
     )
   })
 
-  it('refuses nested component mocks too', () => {
-    const code = `export const Mocked = {
-  beforeEach() {
-    mockComponent('MyAvatar', () => ({}))
-  },
-}
-`
-
-    expect(() => findMockCalls(code, FILE)).toThrow(
-      'a.stories.ts: mockComponent() must be called at the top level',
+  it('refuses a component named by an identifier', () => {
+    expect(() => findMockCalls('mockComponent(MyAvatar, mock)', FILE)).toThrow(
+      'a.stories.ts: mockComponent() needs a string literal',
     )
   })
 })
@@ -132,11 +141,37 @@ describe(injectStoryFile, () => {
 
       mockNuxtImport('useCounter', () => () => ({ count: 40 }), "./a.stories.ts", 3)
       const useRoute = mockNuxtImport('useRoute', () => () => ({ fullPath: '/' }), "./a.stories.ts", 3)
-      export const useState = mockNuxtImport('useState', "./a.stories.ts", 3) as unknown
+      export const useState = mockNuxtImport('useState', undefined, "./a.stories.ts", 3) as unknown
       mockComponent('MyAvatar', () => import('./MyAvatar.mock.vue'), "./a.stories.ts", 3)
       "
     `)
     expect(map.mappings).not.toBe('')
+  })
+
+  it('names the mocks as the runtime does, and leaves those of story hooks to their story', () => {
+    const story = `mockNuxtImport(useRoute)
+mockComponent('~/components/MyAvatar.vue', MockAvatar)
+export const A = {
+  beforeEach() {
+    mockNuxtImport(useRoute, () => useMockedRoute)
+    mockComponent('my-avatar', MockAvatar)
+  },
+}
+`
+
+    expect(
+      injectStoryFile(story, FILE, './a.stories.ts', 1, resolveComponent).code,
+    ).toMatchInlineSnapshot(`
+      "mockNuxtImport("useRoute", undefined, "./a.stories.ts", 1)
+      mockComponent("MyAvatar", MockAvatar, "./a.stories.ts", 1)
+      export const A = {
+        beforeEach() {
+          mockNuxtImport("useRoute", () => useMockedRoute)
+          mockComponent("MyAvatar", MockAvatar)
+        },
+      }
+      "
+    `)
   })
 
   it('tells top-level registerEndpoint calls their file, not those of story hooks', () => {
@@ -212,7 +247,10 @@ describe(resolveMockedImports, () => {
 describe(resolveMockedComponents, () => {
   it('maps the names to the component files, preferring the client version', () => {
     expect(
-      resolveMockedComponents(['MyAvatar', 'NuxtLink', 'MyMap'], COMPONENTS),
+      resolveMockedComponents(
+        references('my-avatar', 'NuxtLink', './MyMap.client.vue'),
+        resolveComponent,
+      ),
     ).toStrictEqual([
       {
         filePath: '/app/components/MyAvatar.vue',
@@ -236,7 +274,9 @@ describe(resolveMockedComponents, () => {
   })
 
   it('marks server-only components, which Nuxt renders as islands', () => {
-    expect(resolveMockedComponents(['MyChart'], COMPONENTS)).toStrictEqual([
+    expect(
+      resolveMockedComponents(references('MyChart'), resolveComponent),
+    ).toStrictEqual([
       {
         filePath: '/app/components/MyChart.server.vue',
         name: 'default',
@@ -249,7 +289,9 @@ describe(resolveMockedComponents, () => {
   it('warns about unknown names and skips them', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
-    expect(resolveMockedComponents(['MyNope'], COMPONENTS)).toStrictEqual([])
+    expect(
+      resolveMockedComponents(references('MyNope'), resolveComponent),
+    ).toStrictEqual([])
     expect(warn).toHaveBeenCalledWith(
       "[nuxt-storybook] mockComponent('MyNope'): 'MyNope' is not a Nuxt component",
     )

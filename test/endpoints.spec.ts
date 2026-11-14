@@ -3,26 +3,27 @@
 import type { NuxtApp } from '#app/nuxt'
 import * as h3v1 from 'h3'
 import * as h3v2 from 'h3-next'
-import { createEndpointApp } from '../packages/storybook-addon/src/runtime/endpoint-app'
-import type { H3Module } from '../packages/storybook-addon/src/runtime/endpoint-app'
+import { createEndpointApp } from '../packages/storybook-addon/src/runtime/endpoints/app'
+import type { H3Module } from '../packages/storybook-addon/src/runtime/endpoints/app'
 import {
   REQUEST_APP,
   beginStoryEndpoints,
   createEndpointFetch,
   registerEndpoint,
   requestRegistries,
-} from '../packages/storybook-addon/src/runtime/endpoints'
+} from '../packages/storybook-addon/src/runtime/endpoints/registry'
 import {
   NuxtMocksSharedOnDocsPageError,
   mountStory,
   resolveStoryNuxtApp,
   runInStoryContext,
   unmountStory,
-} from '../packages/storybook-addon/src/runtime/story-context'
+} from '../packages/storybook-addon/src/runtime/story/context'
+import { inStoryContext } from '../packages/storybook-addon/src/runtime/mocks/story-spies'
 import type {
   Endpoint,
   EndpointStory,
-} from '../packages/storybook-addon/src/runtime/endpoints'
+} from '../packages/storybook-addon/src/runtime/endpoints/registry'
 
 const IMPORT_PATH = './a.stories.ts'
 
@@ -485,6 +486,31 @@ describe('endpoints on a docs page mixing story files', () => {
 })
 
 describe(registerEndpoint, () => {
+  it('scopes a call of a story hook to its story, without its context', async () => {
+    const endpointFetch = createEndpointFetch(
+      baseFetch,
+      async () => createEndpointApp(h3v1),
+      appRegistries,
+    )
+    const story = {
+      ...storyContext('hooked'),
+      canvasElement: new EventTarget(),
+    }
+    beginStoryEndpoints(story)
+    const beforeEach = inStoryContext(() =>
+      registerEndpoint('/api/users', () => ['Ada']),
+    ) as (context: object) => Promise<unknown>
+    await beforeEach(story)
+    currentApp = bindApp('hooked')
+
+    const response = await endpointFetch('/api/users')
+    currentApp = bindApp('other')
+    await endpointFetch('/api/users')
+
+    await expect(response.json()).resolves.toStrictEqual(['Ada'])
+    expect(baseFetch).toHaveBeenCalledOnce()
+  })
+
   it('throws for an untransformed top-level call', () => {
     expect(() => registerEndpoint('/api/users', () => [])).toThrow(
       "registerEndpoint('/api/users') was not processed by the Nuxt Storybook build",

@@ -77,12 +77,14 @@ export async function loadNuxtViteConfig(
   })
 
   nuxt.hook('pages:routerOptions', ({ files }) => {
-    files.push({ path: resolve(runtimeDir, 'router.options') })
+    files.push({ path: resolve(runtimeDir, 'app/router.options') })
   })
 
   nuxt.hook('pages:extend', async (pages) => {
     pages.push({
-      file: await resolver.resolvePath(resolve(runtimeDir, 'fallback-page')),
+      file: await resolver.resolvePath(
+        resolve(runtimeDir, 'app/fallback-page'),
+      ),
       name: 'storybook-fallback',
       path: '/:pathMatch(.*)*',
     })

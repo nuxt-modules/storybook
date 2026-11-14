@@ -20,7 +20,7 @@ describe('loadNuxtViteConfig (standalone)', () => {
         ) ?? []
       const imports = routerOptions?.match(/^import .*$/gm) ?? []
       expect(imports.at(-1)).toContain('storybook-addon')
-      expect(imports.at(-1)).toContain('runtime/router.options')
+      expect(imports.at(-1)).toContain('runtime/app/router.options')
     },
   )
 })

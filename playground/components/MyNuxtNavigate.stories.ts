@@ -42,3 +42,25 @@ export const Allowed = meta.story({
     await expect(navigation).not.toHaveBeenCalled()
   },
 })
+
+// `navigateTo(url, { external: true })` would load another page in the preview
+export const BlockedExternal = meta.story({
+  args: { external: true, to: 'https://nuxt.com/docs' },
+  async play({ canvasElement }) {
+    const canvas = within(canvasElement)
+
+    await userEvent.click(canvas.getByRole('button'))
+
+    await expect(navigation).toHaveBeenCalledWith('https://nuxt.com/docs')
+    await expect(canvas.getByText(/^route: /)).toBeVisible()
+  },
+})
+
+export const BlockedOpen = meta.story({
+  args: { open: true, to: '/about' },
+  async play({ canvasElement }) {
+    await userEvent.click(within(canvasElement).getByRole('button'))
+
+    await expect(navigation).toHaveBeenCalledWith('/about')
+  },
+})

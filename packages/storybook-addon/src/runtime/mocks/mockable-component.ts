@@ -1,7 +1,7 @@
 import { tryUseNuxtApp } from 'nuxt/app'
 import { defineComponent, h } from 'vue'
 import type { Component } from 'vue'
-import { resolveMockedComponent } from './mocks'
+import { resolveMockedComponent } from './registry'
 
 export function mockableComponent(
   name: string,

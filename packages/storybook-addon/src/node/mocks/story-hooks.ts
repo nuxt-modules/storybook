@@ -5,12 +5,15 @@ import { resolve } from 'pathe'
 import { createTransformer } from 'unctx/transform'
 import type { SourceMap } from 'magic-string'
 import type { ObjectPropertyKind } from 'oxc-parser'
-import { runtimeDir } from '../dirs'
+import { runtimeDir } from '../../dirs'
 
-export const SPIES_RUNTIME = resolve(runtimeDir, 'story-spies')
+export const SPIES_RUNTIME = resolve(runtimeDir, 'mocks/story-spies')
 
 /** The local name of `inStoryContext`, which the `await`s are transformed in. */
 export const IN_STORY_CONTEXT = '__nuxtStorybookInStoryContext'
+
+// The local name `unctx/transform` gives its helper
+const EXECUTE_ASYNC = '__executeAsync'
 
 const awaits = createTransformer({
   asyncFunctions: [IN_STORY_CONTEXT],
@@ -69,7 +72,6 @@ export function wrapStoryHooks(
         `${name}: ${IN_STORY_CONTEXT}(${name})`,
       )
     } else if (node.method && value.type === 'FunctionExpression') {
-      // The method becomes a function expression, keeping its `this`
       const keyword = value.async ? 'async function' : 'function'
       const star = value.generator ? '*' : ''
       const parameters = code.indexOf('(', node.key.end)
@@ -126,4 +128,56 @@ export function keepStoryContext(
         .toString(),
     }
   )
+}
+
+/**
+ * Lets an awaited expression have an `await` of its own, which
+ * `unctx/transform` leaves in a function that is not async:
+ *
+ *     __executeAsync(()=>expect(await find()))
+ *     // becomes
+ *     __executeAsync(async ()=>expect(await find()))
+ */
+export function allowNestedAwaits(
+  code: string,
+  file: string,
+): { code: string; map: SourceMap } | undefined {
+  if (!code.includes(EXECUTE_ASYNC)) {
+    return undefined
+  }
+  const source = new MagicString(code)
+  const executed = new Set<object>()
+  const functions: object[] = []
+  const enter = (node: object) => functions.push(node)
+  const exit = () => functions.pop()
+
+  new Visitor({
+    ArrowFunctionExpression: enter,
+    'ArrowFunctionExpression:exit': exit,
+    AwaitExpression() {
+      const current = functions.at(-1)
+      if (current && executed.delete(current) && 'start' in current) {
+        source.appendLeft(Number(current.start), 'async ')
+      }
+    },
+    CallExpression(node) {
+      const [run] = node.arguments
+      if (
+        node.callee.type === 'Identifier' &&
+        node.callee.name === EXECUTE_ASYNC &&
+        run?.type === 'ArrowFunctionExpression' &&
+        !run.async
+      ) {
+        executed.add(run)
+      }
+    },
+    FunctionDeclaration: enter,
+    'FunctionDeclaration:exit': exit,
+    FunctionExpression: enter,
+    'FunctionExpression:exit': exit,
+  }).visit(parseSync(file, code).program)
+
+  return source.hasChanged()
+    ? { code: source.toString(), map: source.generateMap({ hires: true }) }
+    : undefined
 }

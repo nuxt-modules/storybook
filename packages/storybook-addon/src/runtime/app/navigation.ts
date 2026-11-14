@@ -2,7 +2,28 @@ import { fn } from 'storybook/test'
 import type { Mock } from 'storybook/test'
 import type { RouteLocationNormalized } from 'vue-router'
 
+interface NavigateToOptions {
+  external?: boolean
+  open?: unknown
+}
+
+type NavigateTo = (to: unknown, options?: NavigateToOptions) => unknown
+
 const PREVIEW_PROTOCOLS = new Set(['http:', 'https:'])
+
+/**
+ * The `navigateTo` of a story blocking navigation: an external or `open`
+ * navigation is reported instead of leaving the story, the router blocks the rest.
+ */
+export function guardNavigateTo(navigateTo: NavigateTo): NavigateTo {
+  return (to, options) => {
+    if (options?.external || options?.open) {
+      navigation(to || '/')
+      return Promise.resolve()
+    }
+    return navigateTo(to, options)
+  }
+}
 
 export function blockRouterNavigation(to: RouteLocationNormalized): false {
   navigation(to.fullPath)
