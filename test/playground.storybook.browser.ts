@@ -47,6 +47,51 @@ test('renders the story example', async ({ page }) => {
   ).toBeVisible()
 })
 
+test('throws on a docs page mixing story files, out of the Nuxt context', async ({
+  page,
+}) => {
+  await page.goto(
+    'http://localhost:6006/iframe.html?viewMode=docs&id=nuxt-docs-page-errors-mixed-story-files--docs',
+  )
+  await page.locator('#storybook-docs').waitFor()
+  await page.locator('.sb-preparing-docs').waitFor({ state: 'hidden' })
+
+  const docs = page.locator('#storybook-docs')
+  await expect(page.getByTestId('formatted')).toHaveText([
+    'Mocked 10 €',
+    'Mocked total: 20 €',
+  ])
+  // NuxtMocksSharedOnDocsPageError
+  await expect(docs).toContainText(
+    '[nuxt-storybook] formatPrice() ran outside of the Nuxt context',
+    { timeout: 10_000 },
+  )
+  // NuxtSpySharedOnDocsPageError
+  await expect(docs).toContainText(
+    '[nuxt-storybook] The story of formatTotal.mockReturnValue() is unknown',
+    { timeout: 10_000 },
+  )
+})
+
+for (const [id, text] of [
+  ['nuxt-docs-page-errors-price--price', 'Mocked 10 €'],
+  ['nuxt-docs-page-errors-price--formatted-in-helper', 'Mocked 10 €'],
+  ['nuxt-docs-page-errors-total--total', 'Mocked total: 20 €'],
+  ['nuxt-docs-page-errors-total--configured-in-helper', 'Configured total'],
+]) {
+  test(`resolves the mocks of the only story of the page: ${id}`, async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:6006/iframe.html?viewMode=story&id=${id}`)
+    await page.locator('#storybook-root').waitFor()
+    await page.locator('.sb-preparing-story').waitFor({ state: 'hidden' })
+
+    await expect(page.getByTestId('formatted')).toHaveText(text, {
+      timeout: 10_000,
+    })
+  })
+}
+
 test('renders a CSF Factories story inside the Nuxt app', async ({ page }) => {
   await page.goto(
     'http://localhost:6006/iframe.html?viewMode=story&id=nuxt-runtimeconfig--overridden-by-story',

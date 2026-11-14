@@ -171,6 +171,7 @@ function reportErrorsToNuxt(vueApp: App, nuxt: NuxtApp) {
       (hookError: unknown) =>
         console.error('[nuxt] Error in `app:error` hook', hookError),
     )
-    showException?.(error, instance, info)
+    // Storybook shows the story right after mounting it, which hides the error display of an error thrown while mounting
+    queueMicrotask(() => showException?.(error, instance, info))
   }
 }
