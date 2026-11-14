@@ -21,9 +21,10 @@ type ImportOf<Name> = Extract<
 >
 
 /**
- * Mock an auto import, named by a string or by the import itself: in every
- * story of the file, or in the story of the hook calling it.
- * Returns a `storybook/test` spy for the import.
+ * Mock an auto import
+ * @param name The name of the auto import to mock.
+ * @param factory The factory function to create the mock.
+ * @returns A `storybook/test` spy for the mocked import.
  */
 export function mockNuxtImport<Name extends MockableImport>(
   name: Name,
@@ -34,22 +35,41 @@ export function mockNuxtImport<T extends Procedure>(
   factory?: ImportFactory<T>,
 ): Mock<T>
 export function mockNuxtImport(
+  name: string | Procedure,
+  factory?: ImportFactory,
+): Mock {
+  if (typeof name !== 'string') {
+    throw new TypeError(
+      `mockNuxtImport(${name.name}) was not processed by the Nuxt Storybook build. Call it in a story file.`,
+    )
+  }
+  const spy = spyOf(name)
+  if (factory) {
+    mockStoryImport(name, factory)
+  }
+  return spy
+}
+
+export function mockFileImport(
+  importPath: string,
+  // Incremented on each transform of the same file
+  generation: number,
   name: string,
   factory?: ImportFactory,
-  importPath?: string,
-  // Injected by vite plugin, incremented on each transform of the same file
-  generation = 0,
 ): Mock {
+  const spy = spyOf(name)
+  if (factory) {
+    registerFileMock(importPath, generation, name, factory)
+  }
+  return spy
+}
+
+function spyOf(name: string): Mock {
   const spy = mockedImports[name]
   if (!spy) {
     throw new Error(
-      `mockNuxtImport('${name}'): '${name}' is not a mocked Nuxt auto-import. Check the name, and restart Storybook if the mock was added after it started.`,
+      `mockNuxtImport('${name}'): '${name}' is not a mocked Nuxt auto-import.`,
     )
-  }
-  if (factory && importPath === undefined) {
-    mockStoryImport(name, factory)
-  } else if (factory && importPath !== undefined) {
-    registerFileMock(importPath, generation, name, factory)
   }
   return spy
 }

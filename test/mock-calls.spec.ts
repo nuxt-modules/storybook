@@ -1,6 +1,7 @@
 import type { Import } from 'unimport'
 import type { Component } from '@nuxt/schema'
 import {
+  FILE_CALLS_RUNTIME,
   createComponentResolver,
   findMockCalls,
   injectStoryFile,
@@ -65,6 +66,11 @@ const COMPONENTS = [
 ] as Component[]
 
 const resolveComponent = createComponentResolver(COMPONENTS, { '~': '/app' })
+
+/** Names the runtime of the file calls, an absolute path, the same everywhere. */
+function portable(code: string) {
+  return code.replace(FILE_CALLS_RUNTIME, '<runtime>/file-calls')
+}
 
 function references(...names: string[]) {
   return names.map((name) => ({ file: `/app/components/${FILE}`, name }))
@@ -133,16 +139,17 @@ mockNuxtImport('useCounter', b)
 })
 
 describe(injectStoryFile, () => {
-  it('appends the import path and the generation to each call', () => {
+  it('sends each top-level call to its file-scoped version, with the import path and the generation', () => {
     const { code, map } = injectStoryFile(STORY, FILE, './a.stories.ts', 3)
 
-    expect(code).toMatchInlineSnapshot(`
-      "import { mockNuxtImport } from '@storybook-vue/nuxt'
+    expect(portable(code)).toMatchInlineSnapshot(`
+      "import * as __nuxtStorybookFile from "<runtime>/file-calls";
+      import { mockNuxtImport } from '@storybook-vue/nuxt'
 
-      mockNuxtImport('useCounter', () => () => ({ count: 40 }), "./a.stories.ts", 3)
-      const useRoute = mockNuxtImport('useRoute', () => () => ({ fullPath: '/' }), "./a.stories.ts", 3)
-      export const useState = mockNuxtImport('useState', undefined, "./a.stories.ts", 3) as unknown
-      mockComponent('MyAvatar', () => import('./MyAvatar.mock.vue'), "./a.stories.ts", 3)
+      __nuxtStorybookFile.mockNuxtImport("./a.stories.ts", 3, 'useCounter', () => () => ({ count: 40 }))
+      const useRoute = __nuxtStorybookFile.mockNuxtImport("./a.stories.ts", 3, 'useRoute', () => () => ({ fullPath: '/' }))
+      export const useState = __nuxtStorybookFile.mockNuxtImport("./a.stories.ts", 3, 'useState') as unknown
+      __nuxtStorybookFile.mockComponent("./a.stories.ts", 3, 'MyAvatar', () => import('./MyAvatar.mock.vue'))
       "
     `)
     expect(map.mappings).not.toBe('')
@@ -160,10 +167,14 @@ export const A = {
 `
 
     expect(
-      injectStoryFile(story, FILE, './a.stories.ts', 1, resolveComponent).code,
+      portable(
+        injectStoryFile(story, FILE, './a.stories.ts', 1, resolveComponent)
+          .code,
+      ),
     ).toMatchInlineSnapshot(`
-      "mockNuxtImport("useRoute", undefined, "./a.stories.ts", 1)
-      mockComponent("MyAvatar", MockAvatar, "./a.stories.ts", 1)
+      "import * as __nuxtStorybookFile from "<runtime>/file-calls";
+      __nuxtStorybookFile.mockNuxtImport("./a.stories.ts", 1, "useRoute")
+      __nuxtStorybookFile.mockComponent("./a.stories.ts", 1, "MyAvatar", MockAvatar)
       export const A = {
         beforeEach() {
           mockNuxtImport("useRoute", () => useMockedRoute)
@@ -184,17 +195,18 @@ export default {
 }
 `
 
-    expect(injectStoryFile(story, FILE, './a.stories.ts', 3).code)
+    expect(portable(injectStoryFile(story, FILE, './a.stories.ts', 3).code))
       .toMatchInlineSnapshot(`
-        "import { registerEndpoint } from '@storybook-vue/nuxt'
+      "import * as __nuxtStorybookFile from "<runtime>/file-calls";
+      import { registerEndpoint } from '@storybook-vue/nuxt'
 
-        registerEndpoint('/api/users', () => ['Ada'], "./a.stories.ts", 3)
+      __nuxtStorybookFile.registerEndpoint("./a.stories.ts", 3, '/api/users', () => ['Ada'])
 
-        export default {
-          beforeEach: (context) => registerEndpoint(context, '/api/me', () => ({})),
-        }
-        "
-      `)
+      export default {
+        beforeEach: (context) => registerEndpoint(context, '/api/me', () => ({})),
+      }
+      "
+    `)
   })
 
   it('refuses a top-level registerEndpoint without url and endpoint', () => {

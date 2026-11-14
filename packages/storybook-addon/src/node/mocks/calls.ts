@@ -1,5 +1,5 @@
 import { readFile, stat } from 'node:fs/promises'
-import { genString } from 'knitwork'
+import { genImport, genString } from 'knitwork'
 import MagicString from 'magic-string'
 import { Visitor, parseSync } from 'oxc-parser'
 import { dirname, normalize, relative, resolve } from 'pathe'
@@ -8,6 +8,7 @@ import type { Component } from '@nuxt/schema'
 import type { SourceMap } from 'magic-string'
 import type { CallExpression, Expression, Program, Statement } from 'oxc-parser'
 import type { Import } from 'unimport'
+import { runtimeDir } from '../../dirs'
 import type { StorybookConfig } from '../../types.d'
 
 /** A runtime auto-import: the export `name` of `from`, used as `as`. */
@@ -64,6 +65,10 @@ export const MOCK_CALLS: Record<MockKind, string> = {
 
 export const SCRIPT_FILE_RE = /\.[cm]?[jt]sx?$/
 
+export const FILE_CALLS_RUNTIME = resolve(runtimeDir, 'file-calls')
+
+const FILE_CALLS_NAMESPACE = '__nuxtStorybookFile'
+
 /** Auto-imports always mocked: the preview keeps `navigateTo` in the story. */
 export const BUILT_IN_MOCKS = ['navigateTo']
 
@@ -105,9 +110,10 @@ export function hasFileCall(code: string): boolean {
 }
 
 /**
- * Appends the story's import path and the transform generation to each
- * top-level mock and `registerEndpoint` call: without them, a call applies
- * to the story whose hook is running. Names each mock as the runtime does.
+ * Sends each top-level mock and `registerEndpoint` call to its file-scoped
+ * version, with the story's import path and the transform generation. The
+ * other calls apply to the story whose hook is running.
+ * Names each mock as the runtime does.
  */
 export function injectStoryFile(
   code: string,
@@ -119,11 +125,18 @@ export function injectStoryFile(
   const { program } = parseSync(file, code)
   validateMockCalls(program, file)
   const source = new MagicString(code)
-  const fileArguments = `, ${genString(importPath)}, ${generation}`
-  for (const call of findFileCalls(program.body, file)) {
-    // `mockNuxtImport('useState')` has no factory
-    const factory = call.arguments.length === 1 ? ', undefined' : ''
-    source.appendLeft(call.arguments.at(-1)!.end, factory + fileArguments)
+  const fileCalls = findFileCalls(program.body, file)
+  for (const call of fileCalls) {
+    source.appendLeft(call.callee.start, `${FILE_CALLS_NAMESPACE}.`)
+    source.appendRight(
+      call.arguments[0]!.start,
+      `${genString(importPath)}, ${generation}, `,
+    )
+  }
+  if (fileCalls.length > 0) {
+    source.prepend(
+      `${genImport(FILE_CALLS_RUNTIME, { name: '*', as: FILE_CALLS_NAMESPACE })}\n`,
+    )
   }
   for (const call of findMockCallNodes(program)) {
     const [target] = call.arguments

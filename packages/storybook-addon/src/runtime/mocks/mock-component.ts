@@ -18,30 +18,34 @@ export type MockableComponent = [ComponentName] extends [never]
   : ComponentName
 
 /**
- * Mock a Nuxt component, named by its name or its path: in every story of the
- * file, or in the story of the hook calling it, before it renders.
- * Takes the mock component, or a factory returning or importing it.
+ * Mock a Nuxt component
+ * @param name The name of the component to mock.
+ * @param component The mock component, or a factory returning or importing it.
  */
 export function mockComponent(
   name: MockableComponent | (string & Record<never, never>),
   component: ComponentMock,
 ): void
-export function mockComponent(
+export function mockComponent(name: string, component: ComponentMock): void {
+  assertMocked(name)
+  mockStoryComponent(name, component)
+}
+
+export function mockFileComponent(
+  importPath: string,
+  // Incremented on each transform of the same file
+  generation: number,
   name: string,
   component: ComponentMock,
-  // Injected by vite plugin, at the top level of a story file
-  importPath?: string,
-  // Injected by vite plugin, incremented on each transform of the same file
-  generation = 0,
 ): void {
+  assertMocked(name)
+  registerFileComponentMock(importPath, generation, name, component)
+}
+
+function assertMocked(name: string): void {
   if (!mockedComponents.includes(name)) {
     throw new Error(
       `mockComponent('${name}'): '${name}' is not a mocked Nuxt component. Check the name, and restart Storybook if the mock was added after it started.`,
     )
-  }
-  if (importPath === undefined) {
-    mockStoryComponent(name, component)
-  } else {
-    registerFileComponentMock(importPath, generation, name, component)
   }
 }

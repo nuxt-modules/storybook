@@ -63,30 +63,30 @@ export function registerEndpoint(url: string, endpoint: Endpoint): () => void
 export function registerEndpoint(
   storyOrUrl: EndpointStory | string,
   urlOrEndpoint: string | Endpoint,
-  endpointOrImportPath?: Endpoint | string,
-  // Injected by vite plugin
-  generation = 0,
+  endpoint?: Endpoint,
 ): () => void {
-  if (typeof storyOrUrl !== 'string') {
-    return register(
-      storyRegistryOf(storyOrUrl.id),
-      urlOrEndpoint as string,
-      endpointOrImportPath as Endpoint,
-    )
+  // Without story context, this is a top-level call or from a story hook
+  if (typeof storyOrUrl === 'string' && typeof urlOrEndpoint !== 'string') {
+    return register(hookRegistry(storyOrUrl), storyOrUrl, urlOrEndpoint)
   }
-  if (typeof endpointOrImportPath !== 'string') {
-    // Not a top-level call, which the build tells its file: one of a story hook
-    return register(
-      hookRegistry(storyOrUrl),
-      storyOrUrl,
-      urlOrEndpoint as Endpoint,
-    )
+  if (
+    typeof storyOrUrl === 'string' ||
+    typeof urlOrEndpoint !== 'string' ||
+    !endpoint
+  ) {
+    throw new TypeError('registerEndpoint() needs a url and an endpoint')
   }
-  return register(
-    importPathRegistryOf(endpointOrImportPath, generation),
-    storyOrUrl,
-    urlOrEndpoint as Endpoint,
-  )
+  return register(storyRegistryOf(storyOrUrl.id), urlOrEndpoint, endpoint)
+}
+
+export function registerFileEndpoint(
+  importPath: string,
+  // Incremented on each transform of the same file
+  generation: number,
+  url: string,
+  endpoint: Endpoint,
+): () => void {
+  return register(importPathRegistryOf(importPath, generation), url, endpoint)
 }
 
 export function beginStoryEndpoints(story: EndpointStory): void {

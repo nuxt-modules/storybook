@@ -10,6 +10,7 @@ import {
   beginStoryEndpoints,
   createEndpointFetch,
   registerEndpoint,
+  registerFileEndpoint as registerEndpointOfFile,
   requestRegistries,
 } from '../packages/storybook-addon/src/runtime/endpoints/registry'
 import {
@@ -92,16 +93,9 @@ function appRegistries(
   })
 }
 
+// What the story files transform makes of a top-level call
 function registerFileEndpoint(url: string, endpoint: Endpoint) {
-  // What the story files transform makes of a top-level call
-  return (
-    registerEndpoint as (
-      url: string,
-      endpoint: Endpoint,
-      importPath: string,
-      generation: number,
-    ) => () => void
-  )(url, endpoint, IMPORT_PATH, generation)
+  return registerEndpointOfFile(IMPORT_PATH, generation, url, endpoint)
 }
 
 beforeEach(() => {
