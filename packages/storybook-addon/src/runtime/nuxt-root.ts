@@ -1,4 +1,4 @@
-import { isNuxtError, useNuxtApp, useRoute } from 'nuxt/app'
+import { useNuxtApp, useRoute } from 'nuxt/app'
 import {
   Suspense,
   defineComponent,
@@ -29,9 +29,6 @@ export const NuxtStorybookRoot = defineComponent({
       ).catch((hookError: unknown) =>
         console.error('[nuxt] Error in `vue:error` hook', hookError),
       )
-      if (isNuxtError(error) && (error.fatal || error.unhandled)) {
-        return false
-      }
     })
 
     let removeLinkGuard: (() => void) | undefined
