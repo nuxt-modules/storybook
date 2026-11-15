@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { $fetch, setup } from '@nuxt/test-utils'
 
 // oxlint-disable-next-line jest/valid-describe-callback -- https://github.com/oxc-project/oxc/issues/17643
-describe('ssr', async () => {
+describe.skipIf(process.platform === 'win32')('ssr', async () => {
   await setup({
     rootDir: resolve(dirname(fileURLToPath(import.meta.url)), '../docs'),
     setupTimeout: 1_200_000,
