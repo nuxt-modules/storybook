@@ -237,9 +237,9 @@ catalogs:
     '@nuxtjs/mdc':
       specifier: 0.23.3
       version: 0.23.3
-    '@resvg/resvg-js':
-      specifier: 2.6.2
-      version: 2.6.2
+    '@takumi-rs/core':
+      specifier: 2.20.0
+      version: 2.20.0
     '@vueuse/core':
       specifier: 15.0.0
       version: 15.0.0
@@ -264,9 +264,6 @@ catalogs:
     remark-emoji:
       specifier: 5.0.2
       version: 5.0.2
-    satori:
-      specifier: 0.47.1
-      version: 0.47.1
     tailwindcss:
       specifier: 4.3.5
       version: 4.3.5
@@ -390,9 +387,9 @@ importers:
       '@nuxtjs/mdc':
         specifier: catalog:docs
         version: 0.23.3(@nuxt/schema@4.6.4)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.153.0)(rolldown@1.2.19)(supports-color@10.2.2)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.67.4)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)))
-      '@resvg/resvg-js':
+      '@takumi-rs/core':
         specifier: catalog:docs
-        version: 2.6.2
+        version: 2.20.0(csstype@3.2.3)(react@19.3.1)
       '@vueuse/core':
         specifier: catalog:docs
         version: 15.0.0(vue@3.5.45(typescript@6.0.3))
@@ -416,13 +413,10 @@ importers:
         version: 0.3.2(@nuxt/schema@4.6.4)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.153.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.67.4)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)))
       nuxt-og-image:
         specifier: catalog:docs
-        version: 7.0.7(0da696ed27fc3946e475cdfe9fc578f5)
+        version: 7.0.7(4921dd750ed9554e0c12b1276b9e54b6)
       remark-emoji:
         specifier: catalog:docs
         version: 5.0.2
-      satori:
-        specifier: catalog:docs
-        version: 0.47.1
       tailwindcss:
         specifier: catalog:docs
         version: 4.3.5
@@ -5160,6 +5154,15 @@ packages:
       preact:
         optional: true
       react:
+        optional: true
+
+  '@takumi-rs/wasm@2.20.0':
+    resolution: {integrity: sha512-2Xfu55Ye8gmJMXQEDun/5zl/78LyCXKUjP503alH1tG0OyotkkWpZbgW8iWGuxxf4IJvp9kIaO+NLGbq4B6J8A==}
+    engines: {node: '>=20.19'}
+    peerDependencies:
+      csstype: '*'
+    peerDependenciesMeta:
+      csstype:
         optional: true
 
   '@tanstack/table-core@8.21.3':
@@ -16084,6 +16087,7 @@ snapshots:
       '@resvg/resvg-js-win32-arm64-msvc': 2.6.2
       '@resvg/resvg-js-win32-ia32-msvc': 2.6.2
       '@resvg/resvg-js-win32-x64-msvc': 2.6.2
+    optional: true
 
   '@resvg/resvg-wasm@2.6.2':
     optional: true
@@ -16450,6 +16454,7 @@ snapshots:
     dependencies:
       fflate: 0.7.3
       string.prototype.codepointat: 0.2.1
+    optional: true
 
   '@sindresorhus/is@4.6.0': {}
 
@@ -16676,11 +16681,19 @@ snapshots:
     transitivePeerDependencies:
       - preact
       - react
-    optional: true
 
   '@takumi-rs/helpers@2.20.0(react@19.3.1)':
     optionalDependencies:
       react: 19.3.1
+
+  '@takumi-rs/wasm@2.20.0(csstype@3.2.3)(react@19.3.1)':
+    dependencies:
+      '@takumi-rs/helpers': 2.20.0(react@19.3.1)
+    optionalDependencies:
+      csstype: 3.2.3
+    transitivePeerDependencies:
+      - preact
+      - react
     optional: true
 
   '@tanstack/table-core@8.21.3': {}
@@ -17802,7 +17815,8 @@ snapshots:
     dependencies:
       bare-path: 3.1.2
 
-  base64-js@0.0.8: {}
+  base64-js@0.0.8:
+    optional: true
 
   base64-js@1.5.1: {}
 
@@ -17956,7 +17970,8 @@ snapshots:
 
   camelcase-css@2.0.1: {}
 
-  camelize@1.0.1: {}
+  camelize@1.0.1:
+    optional: true
 
   caniuse-api@3.0.0:
     dependencies:
@@ -18247,17 +18262,21 @@ snapshots:
     optionalDependencies:
       srvx: 1.0.8
 
-  css-background-parser@0.1.0: {}
+  css-background-parser@0.1.0:
+    optional: true
 
-  css-box-shadow@1.0.0-3: {}
+  css-box-shadow@1.0.0-3:
+    optional: true
 
-  css-color-keywords@1.0.0: {}
+  css-color-keywords@1.0.0:
+    optional: true
 
   css-declaration-sorter@7.4.0(postcss@8.5.32):
     dependencies:
       postcss: 8.5.32
 
-  css-gradient-parser@0.0.17: {}
+  css-gradient-parser@0.0.17:
+    optional: true
 
   css-select@6.0.0:
     dependencies:
@@ -18272,6 +18291,7 @@ snapshots:
       camelize: 1.0.1
       css-color-keywords: 1.0.0
       postcss-value-parser: 4.2.0
+    optional: true
 
   css-tree@2.2.1:
     dependencies:
@@ -18604,7 +18624,8 @@ snapshots:
 
   embla-carousel@8.6.0: {}
 
-  emoji-regex-xs@2.0.1: {}
+  emoji-regex-xs@2.0.1:
+    optional: true
 
   emoji-regex@10.6.0: {}
 
@@ -19028,7 +19049,8 @@ snapshots:
 
   fetchdts@0.2.0: {}
 
-  fflate@0.7.3: {}
+  fflate@0.7.3:
+    optional: true
 
   file-entry-cache@11.1.5:
     dependencies:
@@ -19401,7 +19423,8 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  harfbuzzjs@0.10.0: {}
+  harfbuzzjs@0.10.0:
+    optional: true
 
   has-flag@4.0.0: {}
 
@@ -19564,7 +19587,8 @@ snapshots:
       property-information: 7.2.0
       space-separated-tokens: 2.0.2
 
-  hex-rgb@4.3.0: {}
+  hex-rgb@4.3.0:
+    optional: true
 
   hey-listen@1.0.8: {}
 
@@ -20163,6 +20187,7 @@ snapshots:
     dependencies:
       base64-js: 0.0.8
       unicode-trie: 2.0.0
+    optional: true
 
   lines-and-columns@1.2.4: {}
 
@@ -21730,7 +21755,7 @@ snapshots:
       - webpack
       - yaml
 
-  nuxt-og-image@7.0.7(0da696ed27fc3946e475cdfe9fc578f5):
+  nuxt-og-image@7.0.7(4921dd750ed9554e0c12b1276b9e54b6):
     dependencies:
       '@clack/prompts': 1.8.1
       '@nuxt/kit': 4.6.4(@nuxt/schema@4.6.4)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.153.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.67.4)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)))
@@ -21768,6 +21793,7 @@ snapshots:
       '@resvg/resvg-js': 2.6.2
       '@resvg/resvg-wasm': 2.6.2
       '@takumi-rs/core': 2.20.0(csstype@3.2.3)(react@19.3.1)
+      '@takumi-rs/wasm': 2.20.0(csstype@3.2.3)(react@19.3.1)
       '@unocss/config': 66.12.0
       '@unocss/core': 66.12.0
       chrome-launcher: 1.2.2(supports-color@10.2.2)
@@ -22866,7 +22892,8 @@ snapshots:
 
   package-manager-detector@1.9.0: {}
 
-  pako@0.2.9: {}
+  pako@0.2.9:
+    optional: true
 
   pako@1.0.11: {}
 
@@ -22874,6 +22901,7 @@ snapshots:
     dependencies:
       color-name: 1.1.4
       hex-rgb: 4.3.0
+    optional: true
 
   parse-entities@4.0.2:
     dependencies:
@@ -24055,6 +24083,7 @@ snapshots:
       linebreak: 1.1.0
       parse-css-color: 0.2.1
       postcss-value-parser: 4.2.0
+    optional: true
 
   sax@1.6.1: {}
 
@@ -24378,7 +24407,8 @@ snapshots:
       get-east-asian-width: 1.7.0
       strip-ansi: 7.2.0
 
-  string.prototype.codepointat@0.2.1: {}
+  string.prototype.codepointat@0.2.1:
+    optional: true
 
   string_decoder@1.1.1:
     dependencies:
@@ -24863,6 +24893,7 @@ snapshots:
     dependencies:
       pako: 0.2.9
       tiny-inflate: 1.0.3
+    optional: true
 
   unicorn-magic@0.3.0: {}
 
