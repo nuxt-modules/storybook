@@ -43,9 +43,8 @@ const headline = computed(() =>
   findPageHeadline(navigation?.value, page.value?.path),
 )
 
-defineOgImage('Docs', {
+defineOgImage('DocsSatori', {
   description: page.value.description,
-  headline: headline.value,
   title: page.value.title,
 })
 

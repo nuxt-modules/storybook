@@ -35,7 +35,7 @@ const themeColor = '255, 71, 133' // #ff4785
 
     <div class="relative flex flex-col items-center text-center gap-5 lg:gap-8">
       <!-- Logo -->
-      <Logo />
+      <AppLogo :width="290" :height="40" />
 
       <div class="items-center justify-center w-full">
         <!-- Title -->

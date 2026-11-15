@@ -31,7 +31,7 @@ defineProps({
         backgroundImage: `radial-gradient(at 100% 100%, rgba(255, 71, 133, 0.15), transparent)`,
       }"
     />
-    <div class="flex flex-col w-full h-full p-[60px] relative justify-between">
+    <div class="flex flex-col flex-1 p-[60px] relative justify-between">
       <div class="flex flex-col gap-8 mb-10" style="text-wrap: pretty">
         <span
           class="text-[72px] font-extrabold"
@@ -54,34 +54,37 @@ defineProps({
         </span>
       </div>
 
-      <div class="flex items-center gap-7">
-        <img
-          v-if="icon"
-          :src="icon"
-          alt="Icon"
-          class="w-16 h-16"
-          style="object-fit: contain"
-        />
-        <Logo />
-        <div style="flex-grow: 1" />
-        <div
-          :style="{
-            height: '4px',
-            width: '60px',
-            backgroundColor: primaryColor,
-            borderRadius: '2px',
-          }"
-        />
-        <span
-          class="text-[22px] font-bold uppercase"
-          :style="{
-            letterSpacing: '0.2em',
-            color: primaryTextColor,
-            opacity: 0.8,
-          }"
-        >
-          Documentation
-        </span>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-7">
+          <img
+            v-if="icon"
+            :src="icon"
+            alt="Icon"
+            class="w-16 h-16"
+            style="object-fit: contain"
+          />
+          <AppLogo :width="290" :height="40" />
+        </div>
+        <div class="flex items-center gap-7">
+          <div
+            :style="{
+              height: '4px',
+              width: '60px',
+              backgroundColor: primaryColor,
+              borderRadius: '2px',
+            }"
+          />
+          <span
+            class="text-[22px] font-bold uppercase"
+            :style="{
+              letterSpacing: '0.2em',
+              color: primaryTextColor,
+              opacity: 0.8,
+            }"
+          >
+            Documentation
+          </span>
+        </div>
       </div>
     </div>
   </div>
