@@ -90,14 +90,14 @@ Features
 
   :::u-page-feature
   ---
-  icon: i-lucide-settings
-  to: /storybook/config
+  icon: i-lucide-flask-conical
+  to: /11.x/storybook/mocking
   ---
   #title
-  Customizable
+  Mocks built for Nuxt
   
   #description
-  Customize Storybook to fit your needs in your App Config.
+  Mock auto-imports, components and server endpoints per file or per story with `mockNuxtImport`, `mockComponent` and `registerEndpoint` (v11).
   :::
 
   :::u-page-feature
