@@ -1,6 +1,8 @@
+import { describe, expect, it } from 'vitest'
+
 import { resolveStorybookHost } from '../packages/nuxt-module/src/host'
 
-describe(resolveStorybookHost, () => {
+describe('resolveStorybookHost', () => {
   it('passes a host name through', () => {
     expect(resolveStorybookHost('0.0.0.0')).toBe('0.0.0.0')
     expect(resolveStorybookHost('storybook.test')).toBe('storybook.test')
