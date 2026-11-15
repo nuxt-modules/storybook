@@ -1,13 +1,9 @@
 import type { NuxtApp } from 'nuxt/app'
-import { createEndpointApp } from './endpoint-app'
-import type { EndpointApp } from './endpoints'
-import {
-  REQUEST_APP,
-  createEndpointFetch,
-  requestRegistries,
-} from './endpoints'
-import { storyOf } from './nuxt-app'
-import { isStoryContextAmbiguous, resolveStoryNuxtApp } from './story-context'
+import { createEndpointApp } from './app'
+import type { EndpointApp } from './registry'
+import { REQUEST_APP, createEndpointFetch, requestRegistries } from './registry'
+import { storyOf } from '../app/nuxt-app'
+import { isStoryContextAmbiguous, resolveStoryNuxtApp } from '../story/context'
 
 type AppRequestInit = RequestInit & { [REQUEST_APP]?: NuxtApp }
 
@@ -15,7 +11,6 @@ let endpointApp: Promise<EndpointApp> | undefined
 
 globalThis.fetch = createEndpointFetch(
   globalThis.fetch.bind(globalThis),
-  // The project's h3, aliased by the preview config
   () => (endpointApp ??= import('h3').then(createEndpointApp)),
   (input, init?: AppRequestInit) =>
     requestRegistries(input, (call) =>

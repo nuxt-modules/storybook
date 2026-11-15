@@ -4,11 +4,12 @@ import {
   hasFileCall,
   injectStoryFile,
   storyImportPath,
-} from '../mock-calls'
+} from '../calls'
+import type { ComponentResolver } from '../calls'
 import { cleanId } from './module-ids'
 
 /** Tells the mock and endpoint calls of a story file which file and story they are in. */
-export function storyFilesPlugin(): Plugin {
+export function storyFilesPlugin(resolveComponent?: ComponentResolver): Plugin {
   // Counts the transforms, so the runtime tells a re-evaluated story file apart
   let generation = 0
 
@@ -20,7 +21,13 @@ export function storyFilesPlugin(): Plugin {
       if (!SCRIPT_FILE_RE.test(file) || !hasFileCall(code)) {
         return
       }
-      return injectStoryFile(code, file, storyImportPath(file), ++generation)
+      return injectStoryFile(
+        code,
+        file,
+        storyImportPath(file),
+        ++generation,
+        resolveComponent,
+      )
     },
   }
 }

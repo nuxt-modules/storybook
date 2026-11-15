@@ -4,9 +4,10 @@ import type { RouteLocationNormalized } from 'vue-router'
 import {
   blockRouterNavigation,
   guardExternalLinks,
+  guardNavigateTo,
   isExternalUrl,
   navigation,
-} from '../packages/storybook-addon/src/runtime/navigation'
+} from '../packages/storybook-addon/src/runtime/app/navigation'
 
 function renderCanvas(html: string): HTMLElement {
   const canvasElement = document.createElement('div')
@@ -85,6 +86,35 @@ describe(guardExternalLinks, () => {
     guardExternalLinks(canvasElement)()
 
     expect(clickLink(canvasElement).defaultPrevented).toBe(false)
+    expect(navigation).not.toHaveBeenCalled()
+  })
+})
+
+describe(guardNavigateTo, () => {
+  const navigateTo = vi.fn<(to: unknown) => string>(
+    (to) => `navigated to ${String(to)}`,
+  )
+  const guarded = guardNavigateTo(navigateTo)
+
+  beforeEach(() => {
+    navigateTo.mockClear()
+  })
+
+  it('reports an external or open navigation instead of leaving', async () => {
+    await expect(
+      guarded('https://nuxt.com', { external: true }),
+    ).resolves.toBeUndefined()
+    await guarded('/about', { open: { target: '_blank' } })
+
+    expect(navigateTo).not.toHaveBeenCalled()
+    expect(navigation.mock.calls).toStrictEqual([
+      ['https://nuxt.com'],
+      ['/about'],
+    ])
+  })
+
+  it('leaves router navigations to the route middleware', () => {
+    expect(guarded('/about')).toBe('navigated to /about')
     expect(navigation).not.toHaveBeenCalled()
   })
 })

@@ -9,7 +9,7 @@ import type { App, InjectionKey } from 'vue'
 import { runtimeConfig } from 'virtual:nuxt-storybook/options'
 import plugins from '#build/plugins'
 import '#build/css'
-import { applyFileMocks } from './mocks'
+import { applyStoryMocks } from '../mocks/registry'
 import { blockRouterNavigation } from './navigation'
 import {
   bootStory,
@@ -17,8 +17,8 @@ import {
   runInStoryContext,
   trackStoryApp,
   unmountStory,
-} from './story-context'
-import type { NuxtParameters } from '../types'
+} from '../story/context'
+import type { NuxtParameters } from '../../types'
 
 type CreateOptions = Parameters<typeof createNuxtApp>[0]
 
@@ -114,7 +114,7 @@ async function bootstrapNuxtApp(
   claimDefaultContext(nuxt)
   storyApps.set(nuxt, story)
   trackStoryApp(nuxt, story.canvasElement)
-  await applyFileMocks(nuxt, story.importPath)
+  await applyStoryMocks(nuxt, story.canvasElement)
 
   vueApp.provide(STORY_APP, story)
   reportErrorsToNuxt(vueApp, nuxt)

@@ -1,10 +1,11 @@
-import { storyHooksPlugins } from '../packages/storybook-addon/src/node/plugins/story-hooks'
+import { storyHooksPlugins } from '../packages/storybook-addon/src/node/mocks/plugins/story-hooks'
 import {
   IN_STORY_CONTEXT,
   SPIES_RUNTIME,
+  allowNestedAwaits,
   keepStoryContext,
   wrapStoryHooks,
-} from '../packages/storybook-addon/src/node/story-hooks'
+} from '../packages/storybook-addon/src/node/mocks/story-hooks'
 
 const FILE = '/app/components/A.stories.ts'
 
@@ -88,6 +89,27 @@ describe(keepStoryContext, () => {
   it('leaves alone the awaits of the other functions', () => {
     expect(
       keepStoryContext(`async function setUp() { await load() }`, FILE),
+    ).toBeUndefined()
+  })
+})
+
+describe(allowNestedAwaits, () => {
+  it('makes async the function of an awaited expression with an await of its own', () => {
+    const hooks = wrapStoryHooks(
+      `export const A = { async play() { await expect(await find()).toBe(1); await load() } }`,
+      FILE,
+    )
+    const awaits = keepStoryContext(hooks?.code ?? '', FILE)?.code ?? ''
+    const code = allowNestedAwaits(awaits, FILE)?.code
+
+    expect(code).toContain('__executeAsync(async ()=>expect(')
+    expect(code).toContain('__executeAsync(()=>find())')
+    expect(code).toContain('__executeAsync(()=>load())')
+  })
+
+  it('leaves alone a file without nested await', () => {
+    expect(
+      allowNestedAwaits('__executeAsync(()=>load())', FILE),
     ).toBeUndefined()
   })
 })

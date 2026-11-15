@@ -5,14 +5,16 @@ import { mergeConfig } from 'vite'
 import type { PresetProperty } from 'storybook/internal/types'
 import { loadNuxtViteConfig } from './node/load-nuxt'
 import {
+  BUILT_IN_MOCKS,
+  createComponentResolver,
   readMockedNames,
   resolveMockedComponents,
   resolveMockedImports,
-} from './node/mock-calls'
-import { mockComponentsPlugin } from './node/plugins/mock-components'
-import { mockImportsPlugin } from './node/plugins/mock-imports'
-import { storyFilesPlugin } from './node/plugins/story-files'
-import { storyHooksPlugins } from './node/plugins/story-hooks'
+} from './node/mocks/calls'
+import { mockComponentsPlugin } from './node/mocks/plugins/mock-components'
+import { mockImportsPlugin } from './node/mocks/plugins/mock-imports'
+import { storyFilesPlugin } from './node/mocks/plugins/story-files'
+import { storyHooksPlugins } from './node/mocks/plugins/story-hooks'
 import { mergeViteConfig } from './node/vite-config'
 import type { StorybookConfig } from './types.d'
 
@@ -59,13 +61,27 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
   )
 
   const names = await readMockedNames(options)
-  const mockedImports = resolveMockedImports(names.imports, imports)
-  const mockedComponents = resolveMockedComponents(names.components, components)
+  const resolveComponent = createComponentResolver(
+    components,
+    nuxt.options.alias,
+  )
+  const mockedImports = resolveMockedImports(
+    [...new Set([...BUILT_IN_MOCKS, ...names.imports])],
+    imports,
+  )
+  const mockedComponents = resolveMockedComponents(
+    names.components,
+    resolveComponent,
+  )
   return mergeConfig(finalViteConfig, {
     plugins: [
-      storyFilesPlugin(),
+      // Story files plugin to handle story-specific logic and hooks.
+      storyFilesPlugin(resolveComponent),
+      // Story hooks plugin to handle story-specific hooks.
       ...storyHooksPlugins(await storyHooks(options)),
+      // Mock imports plugin to handle mocked imports.
       mockImportsPlugin(mockedImports, mockedComponents),
+      // Mock components plugin to handle mocked components.
       mockComponentsPlugin(mockedComponents, serverComponentRuntime),
     ],
   })

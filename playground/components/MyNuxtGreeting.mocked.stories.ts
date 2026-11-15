@@ -23,3 +23,25 @@ export const Mocked = meta.story({
     await expect(useGreeting).toHaveBeenCalledWith('Nuxt')
   },
 })
+
+let greetingInHook = ''
+
+// The mocks are in place before the hooks of the story run
+export const CalledInHook = meta.story({
+  beforeEach() {
+    greetingInHook = useGreeting('hook')
+  },
+  async play() {
+    await expect(greetingInHook).toBe('Bonjour hook')
+  },
+})
+
+// A story hook mocks the import for its story only
+export const MockedInHook = meta.story({
+  beforeEach() {
+    mockNuxtImport('useGreeting', () => (name: string) => `Hallo ${name}`)
+  },
+  async play({ canvasElement }) {
+    await expect(within(canvasElement).getByText('Hallo Nuxt')).toBeVisible()
+  },
+})

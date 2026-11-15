@@ -1,8 +1,9 @@
 import { fn, mocks } from 'storybook/test'
-import { createContext, executeAsync } from 'unctx'
+import { executeAsync } from 'unctx'
 import type { Mock } from 'storybook/test'
-import type { Procedure } from './mocks'
-import { contextCanvas, lastInteractedCanvas } from './story-context'
+import type { Procedure } from './registry'
+import { hookContext } from '../story/hook-context'
+import { contextCanvas, lastInteractedCanvas } from '../story/context'
 
 /*
  * A mocked auto-import is one module for the whole preview, but each story
@@ -98,10 +99,19 @@ export function inStoryContext(hooks: unknown): unknown {
 export function executeStoryAsync<T>(
   run: () => Promise<T>,
 ): [Promise<T>, () => void] {
-  const execution = executeAsync(run)
+  const canvas = hookContext.tryUse()
+  const [awaited, restore] = executeAsync(run)
   // Other stories run during the `await`
   hookContext.unset()
-  return execution
+  // An expression with an `await` of its own restored the context to go on.
+  // A rejection keeps the one `unctx` restores for the `catch` of the hook
+  const settled = Promise.resolve(awaited).then((value) => {
+    if (hookContext.tryUse() === canvas) {
+      hookContext.unset()
+    }
+    return value
+  })
+  return [settled, restore]
 }
 
 /** The spy of a mocked auto-import: a proxy over one spy per story. */
@@ -139,15 +149,13 @@ export function storySpy<T extends Procedure>(
     return spyOf(canvas)
   }
 
-  // Not the global spy itself: a proxy has to give the own read-only
-  // Properties of its target as they are, and `mock` is one of them
-  // Its own key keeps the interactions panel from taking it for a callback,
-  // Which it replaces with a function of its own
   const facade: Mock<T> = Object.setPrototypeOf(
     Object.assign(() => undefined, { _isMockFunction: true }),
     global,
   )
 
+  // this proxy wraps the global spy and delegates calls to the story-specific spy if available
+  // It ensures that each story has its own spy, while the global spy is used when no story is active.
   const spy: Mock<T> = new Proxy(facade, {
     apply(_facade, self, args) {
       const canvas = currentCanvas('call')
@@ -178,8 +186,6 @@ export function storySpy<T extends Procedure>(
   })
   return spy
 }
-
-const hookContext = createContext<EventTarget>()
 
 // The stories of the page, by canvas: the primary story of a docs page and
 // Its copy in the list of stories are two of them

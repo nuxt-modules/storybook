@@ -1,20 +1,19 @@
 import { genExport, genImport, genString } from 'knitwork'
 import { resolve } from 'pathe'
 import type { Plugin } from 'vite'
-import { runtimeDir } from '../../dirs'
-import type { MockedComponent } from '../mock-calls'
+import { runtimeDir } from '../../../dirs'
+import type { MockedComponent } from '../calls'
 import { cleanId, stemsOf } from './module-ids'
 
 // The original id goes in the query: an id ending in `.vue` would be taken
 // For a single-file component by the Vue plugin
 export const COMPONENT_MODULE_PREFIX = '\0nuxt-storybook-component?original='
-const RUNTIME = resolve(runtimeDir, 'mockable-component')
+const RUNTIME = resolve(runtimeDir, 'mocks/mockable-component')
 
 export function mockComponentsPlugin(
   mocked: MockedComponent[],
   serverComponentRuntime: string,
 ): Plugin {
-  // Mocked components of each module, keyed by the resolved module id
   const modules = new Map<string, MockedComponent[]>()
   const stems = new Set<string>()
   const servers = mocked.filter((entry) => entry.server)
@@ -88,7 +87,7 @@ export function mockComponentsPlugin(
   }
 }
 
-// Import { mockableComponent } from "<runtime>/mockable-component"
+// Import { mockableComponent } from "<runtime>/mocks/mockable-component"
 // Import * as original from "/app/components/MyNuxtAvatar.vue"
 // Export * from "/app/components/MyNuxtAvatar.vue"
 // Export default mockableComponent("MyNuxtAvatar", original.default)
@@ -111,7 +110,7 @@ function componentsModule(original: string, mocked: MockedComponent[]): string {
   ].join('\n')
 }
 
-// Import { mockableComponent } from "<runtime>/mockable-component"
+// Import { mockableComponent } from "<runtime>/mocks/mockable-component"
 // Import * as original from "<nuxt>/components/runtime/server-component.js"
 // Export * from "<nuxt>/components/runtime/server-component.js"
 // Export const createServerComponent = (name) => mockableComponent(name, original.createServerComponent(name))

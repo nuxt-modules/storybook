@@ -1,4 +1,4 @@
-import type { Endpoint } from './runtime/endpoints'
+import type { Endpoint } from './runtime/endpoints/registry'
 import type { StorybookConfig as StorybookConfigBase } from 'storybook/internal/types'
 import type {
   Args,
@@ -27,8 +27,8 @@ type BuilderOptions = BuilderOptionsVite & {
 export interface FrameworkOptions extends FrameworkOptionsVue {
   /**
    * The annotations of a story or a meta running story code, in the story
-   * files calling `mockNuxtImport`. They run in the context of their story,
-   * so the spies they use are the ones of their story.
+   * files calling a mock function. They run in the context of their story,
+   * so the spies they use and the mocks they register are the ones of their story.
    *
    * @default ['afterEach', 'beforeEach', 'loaders', 'play']
    */

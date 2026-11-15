@@ -96,8 +96,9 @@ export async function bootStory<T>(boot: () => Promise<T>): Promise<T> {
 }
 
 /**
- * The Nuxt app of the calling story. Outside of the Nuxt context on a docs
- * page mixing story files, it is the app of the story last interacted with.
+ * The Nuxt app of the calling story.
+ *
+ * @throws {NuxtMocksSharedOnDocsPageError} When the story context is ambiguous and no last interacted story is available.
  */
 export function resolveStoryNuxtApp(call: string): NuxtApp | undefined {
   if (!spansFilesOutOfContext()) {

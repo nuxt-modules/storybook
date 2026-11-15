@@ -7,14 +7,14 @@ import {
   runInStoryContext,
   trackStoryApp,
   unmountStory,
-} from '../packages/storybook-addon/src/runtime/story-context'
+} from '../packages/storybook-addon/src/runtime/story/context'
 import {
   NuxtSpySharedOnDocsPageError,
   beginStorySpies,
   executeStoryAsync,
   inStoryContext,
   storySpy,
-} from '../packages/storybook-addon/src/runtime/story-spies'
+} from '../packages/storybook-addon/src/runtime/mocks/story-spies'
 
 // The addon resolves its own `nuxt`, not the one of the tests
 const nuxtApp = await vi.hoisted(async () => {

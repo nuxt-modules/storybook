@@ -104,3 +104,42 @@ test('renders a CSF Factories story inside the Nuxt app', async ({ page }) => {
   )
   await expect(page.locator('#error-message')).toBeEmpty()
 })
+
+for (const [id, text] of [
+  ['nuxt-profile-mocked--mocked', '🧪 Ada Lovelace'],
+  ['nuxt-routing-mocked--mocked-route', 'route: /mocked?from=story'],
+  ['nuxt-greeting-mocked--mocked-in-hook', 'Hallo Nuxt'],
+  ['nuxt-profile-mocked--mocked-in-hook', '🪝 Ada Lovelace'],
+  ['nuxt-users--registered-in-hook', 'Grace'],
+]) {
+  test(`renders the mocks like @nuxt/test-utils: ${id}`, async ({ page }) => {
+    await page.goto(`http://localhost:6006/iframe.html?viewMode=story&id=${id}`)
+    await page.locator('#storybook-root').waitFor()
+    await page.locator('.sb-preparing-story').waitFor({ state: 'hidden' })
+
+    await expect(page.locator('#storybook-root')).toContainText(text, {
+      timeout: 10_000,
+    })
+    await expect(page.locator('#error-message')).toBeEmpty()
+  })
+}
+
+for (const id of [
+  'nuxt-navigateto--blocked-external',
+  'nuxt-navigateto--blocked-open',
+]) {
+  test(`keeps navigateTo in the story: ${id}`, async ({ page }) => {
+    const url = `http://localhost:6006/iframe.html?viewMode=story&id=${id}`
+    await page.goto(url)
+    await page.locator('#storybook-root').waitFor()
+    await page.locator('.sb-preparing-story').waitFor({ state: 'hidden' })
+    const popups: unknown[] = []
+    page.on('popup', (popup) => popups.push(popup))
+
+    await page.getByRole('button').click()
+
+    await expect(page.getByText(/^route: /)).toBeVisible()
+    expect(page.url()).toBe(url)
+    expect(popups).toStrictEqual([])
+  })
+}
