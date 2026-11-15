@@ -35,7 +35,16 @@
     "zod": "catalog:docs"
   },
   "devDependencies": {
+    "@nuxt/devtools": "catalog:docs",
+    "@storybook-vue/nuxt": "workspace:*",
+    "@storybook/addon-docs": "catalog:",
+    "nuxt-content-twoslash": "catalog:docs",
+    "picomatch": "catalog:docs",
+    "shiki": "catalog:docs",
+    "storybook": "catalog:",
+    "twoslash": "catalog:docs",
     "typescript": "catalog:",
+    "unist-util-visit": "catalog:docs",
     "vue-tsc": "catalog:docs"
   }
 }
