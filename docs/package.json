@@ -10,29 +10,32 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@iconify-json/lucide": "1.2.112",
-    "@iconify-json/simple-icons": "1.2.86",
-    "@iconify-json/vscode-icons": "1.2.57",
-    "@nuxt/content": "3.14.0",
-    "@nuxt/fonts": "1.2.0",
-    "@nuxt/image": "catalog:",
-    "@nuxt/ui": "4.8.2",
-    "@takumi-rs/core": "2.20.0",
-    "@nuxtjs/mcp-toolkit": "0.17.2",
-    "@nuxtjs/mdc": "0.22.0",
-    "@vueuse/core": "15.0.0",
-    "better-sqlite3": "13.0.3",
-    "minimark": "0.2.0",
-    "nuxt": "catalog:",
-    "nuxt-llms": "0.2.0",
-    "nuxt-og-image": "6.10.4",
-    "tailwindcss": "4.3.1",
-    "ufo": "1.6.4",
-    "unist-util-visit": "5.1.0",
-    "zod": "4.4.3"
+    "@iconify-json/lucide": "catalog:docs",
+    "@iconify-json/simple-icons": "catalog:docs",
+    "@iconify-json/vscode-icons": "catalog:docs",
+    "@nuxt/content": "catalog:docs",
+    "@nuxt/fonts": "catalog:docs",
+    "@nuxt/ui": "catalog:docs",
+    "@nuxtjs/mcp-toolkit": "catalog:docs",
+    "@nuxtjs/mdc": "catalog:docs",
+    "@resvg/resvg-js": "catalog:docs",
+    "@vueuse/core": "catalog:docs",
+    "better-sqlite3": "catalog:docs",
+    "h3": "catalog:docs",
+    "lru-cache": "^11.5.3",
+    "minimark": "catalog:docs",
+    "nuxt": "catalog:docs",
+    "nuxt-llms": "catalog:docs",
+    "nuxt-og-image": "catalog:docs",
+    "satori": "catalog:docs",
+    "tailwindcss": "catalog:docs",
+    "ufo": "catalog:docs",
+    "vue": "catalog:docs",
+    "vue-router": "catalog:docs",
+    "zod": "catalog:docs"
   },
   "devDependencies": {
     "typescript": "catalog:",
-    "vue-tsc": "3.3.5"
+    "vue-tsc": "catalog:docs"
   }
 }

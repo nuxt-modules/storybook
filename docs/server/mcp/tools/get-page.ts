@@ -34,9 +34,7 @@ WORKFLOW: This tool returns the complete page content including title, descripti
         }
       }
 
-      const content = await $fetch<string>(`/raw${path}.md`, {
-        baseURL: siteUrl,
-      })
+      const content = await pageMarkdown(event, path)
 
       const result = {
         content,
