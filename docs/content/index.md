@@ -1,25 +1,39 @@
 ---
 seo:
-  title: Storybook Integration for Nuxt
-  description: Add Storybook to your Nuxt application in seconds.
+  title: Storybook for Nuxt
+  description: The Storybook framework for Nuxt. Build, document and test your components with everything your Nuxt app provides.
 ---
 
 ::u-page-hero
 ---
 orientation: horizontal
 ---
-  :::prose-pre
-  ---
-  code: npx storybook@next init
-  filename: Terminal
-  ---
-  ```bash
-  npx storybook@next init
-  ```
+  :::prose-code-group
+    ::::prose-pre
+    ---
+    code: npx storybook@latest init
+    filename: latest
+    language: bash
+    ---
+    ```bash
+    npx storybook@latest init
+    ```
+    ::::
+
+    ::::prose-pre
+    ---
+    code: npx storybook@next init
+    filename: v11 (next)
+    language: bash
+    ---
+    ```bash
+    npx storybook@next init
+    ```
+    ::::
   :::
 
 #title
-Add [Storybook]{.text-primary} to your Nuxt application
+[Storybook]{.text-primary} for Nuxt
 
 #description
 Easily integrate Storybook in your Nuxt application to build, document and test your components.
