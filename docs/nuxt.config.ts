@@ -109,6 +109,10 @@ export default defineNuxtConfig({
     },
   },
 
+  routeRules: {
+    '/11.x/getting-started/migration': { redirect: '/11.x/migration/v11' },
+  },
+
   site: {
     url: 'https://storybook.nuxtjs.org/',
   },
