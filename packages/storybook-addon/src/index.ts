@@ -21,3 +21,14 @@ export type {
   StoryObj,
   StorybookConfig,
 } from './types.d'
+
+declare module 'nuxt/app' {
+  interface PluginEnvContext {
+    /**
+     * Runs the plugin when rendering stories in Storybook.
+     *
+     * @default true
+     */
+    storybook?: boolean
+  }
+}
