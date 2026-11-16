@@ -119,7 +119,12 @@ async function bootstrapNuxtApp(
   vueApp.provide(STORY_APP, story)
   reportErrorsToNuxt(vueApp, nuxt)
 
-  await nuxt.runWithContext(() => applyPlugins(nuxt, plugins))
+  await nuxt.runWithContext(() =>
+    applyPlugins(
+      nuxt,
+      plugins.filter((plugin) => plugin.env?.storybook !== false),
+    ),
+  )
 
   // @ts-expect-error $router is injected by the router plugin
   nuxt.$router.afterEach(() => nuxt._route.sync?.())

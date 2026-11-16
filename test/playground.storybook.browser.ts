@@ -143,3 +143,17 @@ for (const id of [
     expect(popups).toStrictEqual([])
   })
 }
+
+test('skips the Nuxt plugins with env.storybook set to false', async ({
+  page,
+}) => {
+  await page.goto(
+    'http://localhost:6006/iframe.html?viewMode=story&id=nuxt-pluginenv--skipped-in-storybook',
+  )
+  await page.locator('#storybook-root').waitFor()
+  await page.locator('.sb-preparing-story').waitFor({ state: 'hidden' })
+
+  await expect(page.getByTestId('env-default')).toHaveText('ran')
+  await expect(page.getByTestId('env-no-storybook')).toHaveText('skipped')
+  await expect(page.locator('#error-message')).toBeEmpty()
+})
