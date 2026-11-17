@@ -36,46 +36,46 @@ https://github.com/storybook-vue/nuxt/assets/711292/63cc1fb3-ec6b-4df2-ad61-d87e
 
 ## Requirements
 
-- [Nuxt](https://nuxt.com/) >= 3.x
-- [Storybook](https://storybook.js.org/) >= 7.x
-
-## Demo
-
-Checkout the demo repo [storybook7-nuxt3-demo](https://github.com/storybook-vue/storybook-nuxt-demo)
-or try it on [Stackblitz](https://stackblitz.com/~/github.com/storybook-vue/storybook-nuxt-demo)
+- Node.js 22+
+- [Nuxt](https://nuxt.com/) 3.18.1+ or 4.x
+- [Storybook](https://storybook.js.org/) 11.x
 
 ## Getting Started
 
-### In a project without Storybook
-
-Follow the prompts after running this command in your Nuxt project's root directory:
+Install `@storybook-vue/nuxt` next to Storybook 11, published under the `next` tag until its release:
 
 ```bash
-npx storybook-nuxt init
+npm install -D @storybook-vue/nuxt storybook@next @storybook/addon-docs@next
 ```
 
-[More on getting started with Storybook](https://storybook.js.org/docs/vue3/get-started/install)
+Then point `.storybook/main.ts` to the framework with [CSF Factories](https://storybook.js.org/docs/api/csf/csf-next):
 
-#### Automatic migration
+```ts
+// .storybook/main.ts
+import { defineMain } from '@storybook-vue/nuxt/node'
 
-When running the `upgrade` command above, you should get a prompt asking you to migrate to `@storybook-vue/nuxt`, which should handle everything for you. In case auto-migration does not work for your project, refer to the manual migration below.
-
-Update your `main.js` to change the framework property:
-
-```js
-// .storybook/main.js
-export default {
-  // ...
-  framework: {
-    name: '@storybook-vue/nuxt', // Add this
-    options: {},
-  },
-}
+export default defineMain({
+  stories: ['../components/**/*.stories.ts'],
+  addons: ['@storybook/addon-docs'],
+  framework: '@storybook-vue/nuxt',
+})
 ```
+
+```ts
+// .storybook/preview.ts
+import addonDocs from '@storybook/addon-docs'
+import { definePreview } from '@storybook-vue/nuxt'
+
+export default definePreview({
+  addons: [addonDocs()],
+})
+```
+
+Run `storybook dev` to start Storybook on its own port, or add the [`@nuxtjs/storybook`](https://www.npmjs.com/package/@nuxtjs/storybook) module to serve it from `nuxt dev`.
 
 ## Documentation
 
-In progress
+Read the [Nuxt Storybook documentation](https://storybook.nuxtjs.org) for the configuration, `parameters.nuxt`, and the `mockNuxtImport`, `mockComponent` and `registerEndpoint` helpers.
 
 ## License
 

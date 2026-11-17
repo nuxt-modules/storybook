@@ -18,6 +18,8 @@ export async function pageMarkdown(
     page.body.value.unshift(['h1', {}, page.title])
   }
 
+  stripTwoslashSetup(page.body)
+
   return stringify(
     { ...page.body, type: 'minimark' },
     { format: 'markdown/html' },

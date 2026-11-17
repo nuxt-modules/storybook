@@ -1,6 +1,21 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import ts from 'typescript'
+import { DOCS_VERSIONS } from './shared/utils/docs-versions.ts'
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-07-11',
+
+  hooks: {
+    // The pages of a prefixed version link to their own version
+    'content:file:afterParse'({ collection, content }) {
+      const version = DOCS_VERSIONS.find(
+        (candidate) => candidate.collection === collection.name,
+      )
+      if (version && version.prefix !== '/') {
+        prefixLinks(content.body, version.prefix)
+      }
+    },
+  },
 
   content: {
     build: {
@@ -76,6 +91,8 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxt/ui',
+    // Before Nuxt Content, so code blocks marked `twoslash` show their types
+    'nuxt-content-twoslash',
     '@nuxt/content',
     '@nuxt/fonts',
     'nuxt-og-image',
@@ -92,8 +109,22 @@ export default defineNuxtConfig({
     },
   },
 
+  routeRules: {
+    '/11.x/getting-started/migration': { redirect: '/11.x/migration/v11' },
+  },
+
   site: {
     url: 'https://storybook.nuxtjs.org/',
+  },
+
+  twoslash: {
+    // The module does not read the tsconfig Nuxt 5 generates, so set what the snippets need
+    compilerOptions: {
+      module: ts.ModuleKind.ESNext,
+      moduleResolution: ts.ModuleResolutionKind.Bundler,
+      strict: true,
+      target: ts.ScriptTarget.ESNext,
+    },
   },
 
   typescript: {
@@ -102,4 +133,37 @@ export default defineNuxtConfig({
       include: ['./content/types.d.ts'],
     },
   },
+
+  vue: {
+    // Nuxt 5 turns it off, and the Twoslash popups (floating-vue) are written with the Options API
+    optionsApi: true,
+  },
 })
+
+// Walks the minimark body, where a node is `[tag, props, ...children]`: `['a', { href: '/storybook/config' }, 'Configuration']`
+function prefixLinks(node: unknown, prefix: string): void {
+  if (typeof node !== 'object' || node === null) {
+    return
+  }
+  if (!Array.isArray(node)) {
+    if ('value' in node) {
+      prefixLinks(node.value, prefix)
+    }
+    return
+  }
+  const [tag, props] = node
+  if (
+    tag === 'a' &&
+    typeof props === 'object' &&
+    props !== null &&
+    'href' in props &&
+    typeof props.href === 'string' &&
+    props.href.startsWith('/') &&
+    !props.href.startsWith(`${prefix}/`)
+  ) {
+    props.href = `${prefix}${props.href}`
+  }
+  for (const child of node) {
+    prefixLinks(child, prefix)
+  }
+}

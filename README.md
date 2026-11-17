@@ -6,48 +6,44 @@ Integrate [Storybook](http://storybook.js.org) into your [Nuxt](https://nuxt.com
 
 ## Installing
 
-```
+```bash
 npx nuxi@latest module add storybook
+npm install -D storybook@next
 ```
 
-Update your `nuxt.config`:
+Storybook 11 is published under the `next` tag until its release. The first command adds `@nuxtjs/storybook` to the `modules` of your `nuxt.config`:
 
 ```ts
-  modules: [
-    '@nuxtjs/storybook',
-  ],
-  storybook: {
-    host: 'http://localhost',
-    route: '/_storybook',
-    port: 6006,
-  },
+export default defineNuxtConfig({
+  modules: ['@nuxtjs/storybook'],
+})
 ```
 
-Then run `pnpm dev` to start your Nuxt server.
+Then run `nuxt dev`: Storybook is served by the Nuxt dev server under `/_storybook/` (`http://localhost:3000/_storybook/` by default).
 
-## Demo
-
-https://github.com/storybook-vue/nuxt-storybook-module-demo
+Read the [documentation](https://storybook.nuxtjs.org) to set up `.storybook/main.ts` and write your first stories.
 
 ## Features
 
-👌 Zero configuration to start (see video)
+👌 Zero configuration to start
 
-🪄 Access Storybook Terminal
+🔌 Served by `nuxt dev`, on the same host and port as your app
 
-🎨 Devtools tab with Storybook app
+🎨 Devtools tab with the Storybook app
 
-⚙️ Reference your Storybook config in your app
+🏭 [CSF Factories](https://storybook.js.org/docs/api/csf/csf-next) with typed `parameters.nuxt`
+
+🧪 Mock auto-imports, components and server endpoints in your stories
 
 📦 Extendable by Nuxt modules
 
-🚀 Supports Nuxt 3 and Nuxt 4 with Storybook 10
+🚀 Supports Nuxt 3 and Nuxt 4 with Storybook 11
 
 ## Requirements
 
-- Node.js 20.19+, 22.12+, or 24+
-- Nuxt 3.x or Nuxt 4.x
-- Storybook 10.x
+- Node.js 22+
+- Nuxt 3.18.1+ or Nuxt 4.x
+- Storybook 11.x
 
 ## Contributing
 
