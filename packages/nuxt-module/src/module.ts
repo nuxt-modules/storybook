@@ -34,8 +34,13 @@ export interface ModuleOptions {
    * The host where the Storybook application server will be started.
    * A URL is accepted too; only its host name is used.
    *
+   * Binding to `'0.0.0.0'` exposes the dev server on the network (for
+   * example for Docker or LAN access). When doing so, set Storybook's
+   * `core.allowedHosts`; without it, Host-header validation
+   * (DNS-rebinding protection) is skipped.
+   *
    * @default Environment variable 'STORYBOOK_HOST' or 'http://localhost'
-   * @example '0.0.0.0'
+   * @example 'http://localhost'
    */
   host: string
 
