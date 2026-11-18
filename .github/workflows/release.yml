@@ -74,7 +74,13 @@ jobs:
         run: pnpm install
 
       - name: Publish packages
-        run: pnpm publish --recursive --access public --no-git-checks --provenance --tag latest
+        run: |
+          if [[ "$GITHUB_REF_NAME" =~ -(alpha|beta) ]]; then
+            DIST_TAG=next
+          else
+            DIST_TAG=latest
+          fi
+          pnpm publish --recursive --access public --no-git-checks --provenance --tag "$DIST_TAG"
 
       - name: Create GitHub Release
         run: pnpm release-notes
