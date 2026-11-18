@@ -37,12 +37,12 @@ Read the [documentation](https://storybook.nuxtjs.org) to set up `.storybook/mai
 
 📦 Extendable by Nuxt modules
 
-🚀 Supports Nuxt 3 and Nuxt 4 with Storybook 11
+🚀 Supports Nuxt 4 and Nuxt 5 with Storybook 11
 
 ## Requirements
 
 - Node.js 22+
-- Nuxt 3.18.1+ or Nuxt 4.x
+- Nuxt 4.x or Nuxt 5.x
 - Storybook 11.x
 
 ## Contributing
