@@ -37,7 +37,7 @@ https://github.com/storybook-vue/nuxt/assets/711292/63cc1fb3-ec6b-4df2-ad61-d87e
 ## Requirements
 
 - Node.js 22+
-- [Nuxt](https://nuxt.com/) 3.18.1+ or 4.x
+- [Nuxt](https://nuxt.com/) 4.x or 5.x
 - [Storybook](https://storybook.js.org/) 11.x
 
 ## Getting Started

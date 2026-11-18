@@ -42,7 +42,7 @@ export default defineNuxtModule<ModuleOptions>({
         // Not compatible with webpack
         webpack: false,
       },
-      nuxt: '^3.18.1 || ^4.0.0',
+      nuxt: '^4.0.0 || ^5.0.0',
     },
     configKey: 'storybook',
     name: '@nuxtjs/storybook',
