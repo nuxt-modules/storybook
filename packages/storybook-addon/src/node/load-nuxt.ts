@@ -14,6 +14,7 @@ interface LoadedNuxt {
   imports: Import[]
   nuxt: Nuxt
   serverComponentRuntime: string
+  unimport: Unimport
   viteConfig: ViteConfig
 }
 
@@ -104,6 +105,7 @@ export async function loadNuxtViteConfig(
       nuxt.options.appDir,
       '../components/runtime/server-component',
     ),
+    unimport,
     viteConfig,
   }
 }
