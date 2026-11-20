@@ -8,7 +8,7 @@ type NuxtComponents = typeof import('#components')
 type ComponentName = {
   [Name in keyof NuxtComponents]: Name extends `Lazy${string}`
     ? never
-    : NuxtComponents[Name] extends Component
+    : [NuxtComponents[Name]] extends [Component]
       ? Name
       : never
 }[keyof NuxtComponents]
