@@ -1,8 +1,10 @@
 import { fileURLToPath } from 'node:url'
-import { normalize } from 'pathe'
+import { normalize, resolve } from 'pathe'
 import { viteFinal as vueViteFinal } from '@storybook/vue3-vite/preset'
 import { mergeConfig } from 'vite'
+import type { ImportParser } from 'storybook/internal/core-server'
 import type { PresetProperty } from 'storybook/internal/types'
+import { nuxtImportParsers } from './node/import-parsers'
 import { loadNuxtViteConfig } from './node/load-nuxt'
 import {
   BUILT_IN_MOCKS,
@@ -43,17 +45,21 @@ export const previewAnnotations: PresetProperty<'previewAnnotations'> = (
   entry = [],
 ) => [...entry, PREVIEW_ENTRY]
 
+// load nuxt before the import parser
+let loadedNuxt: ReturnType<typeof loadNuxtViteConfig> | undefined
+
 /** Merges the Nuxt app's Vite config into the one @storybook/vue3-vite built. */
 export const viteFinal: StorybookConfig['viteFinal'] = async (
   config,
   options,
 ) => {
   const storybookViteConfig = await vueViteFinal(config, options)
+  loadedNuxt = loadNuxtViteConfig(
+    storybookViteConfig.root,
+    options.configType === 'DEVELOPMENT',
+  )
   const { components, imports, nuxt, serverComponentRuntime, viteConfig } =
-    await loadNuxtViteConfig(
-      storybookViteConfig.root,
-      options.configType === 'DEVELOPMENT',
-    )
+    await loadedNuxt
   const finalViteConfig = await mergeViteConfig(
     storybookViteConfig,
     viteConfig,
@@ -85,6 +91,18 @@ export const viteFinal: StorybookConfig['viteFinal'] = async (
       mockComponentsPlugin(mockedComponents, serverComponentRuntime),
     ],
   })
+}
+
+export const experimental_importParsers = async (
+  parsers: ImportParser[],
+  options: Options,
+): Promise<ImportParser[]> => {
+  const { components, unimport } = await (loadedNuxt ??
+    loadNuxtViteConfig(
+      resolve(options.configDir, '..'),
+      options.configType === 'DEVELOPMENT',
+    ))
+  return nuxtImportParsers(parsers, components, unimport)
 }
 
 type Options = Parameters<NonNullable<StorybookConfig['viteFinal']>>[1]
