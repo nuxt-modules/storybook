@@ -90,7 +90,7 @@ function onSubmit() {
   max-width: 420px;
   padding: 24px;
   border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  border-radius: 20px;
   background: #ffffff;
   color: #1e293b;
   font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -114,7 +114,7 @@ function onSubmit() {
 
 .newsletter__title {
   margin: 0 0 8px;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .newsletter__description {
@@ -140,10 +140,10 @@ function onSubmit() {
 }
 
 .newsletter__submit {
-  padding: 10px 18px;
+  padding: 10px 24px;
   border: 0;
-  border-radius: 8px;
-  background: #00714a;
+  border-radius: 999px;
+  background: #5b21b6;
   color: #ffffff;
   font-weight: 700;
   font-size: 14px;
