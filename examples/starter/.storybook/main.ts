@@ -1,7 +1,11 @@
 import { defineMain } from '@storybook-vue/nuxt/node'
 
 export default defineMain({
-  addons: ['@chromatic-com/storybook', '@storybook/addon-docs'],
+  addons: [
+    '@chromatic-com/storybook',
+    '@storybook/addon-docs',
+    '@storybook/addon-a11y',
+  ],
   framework: {
     name: '@storybook-vue/nuxt',
     options: {},

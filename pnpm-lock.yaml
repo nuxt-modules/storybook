@@ -173,6 +173,9 @@ catalogs:
     '@nuxtjs/i18n':
       specifier: 10.4.0
       version: 10.4.0
+    '@storybook/addon-a11y':
+      specifier: ^11.0.0-beta.3
+      version: 11.0.0-beta.5
     '@storybook/addon-docs':
       specifier: ^11.0.0-beta.3
       version: 11.0.0-beta.3
@@ -549,6 +552,9 @@ importers:
       '@storybook-vue/nuxt':
         specifier: workspace:*
         version: link:../../packages/storybook-addon
+      '@storybook/addon-a11y':
+        specifier: 'catalog:'
+        version: 11.0.0-beta.5(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
       '@storybook/addon-docs':
         specifier: 'catalog:'
         version: 11.0.0-beta.3(@types/react@19.3.0)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))
@@ -961,11 +967,19 @@ packages:
     resolution: {integrity: sha512-iHTrHA8MtVuLl2TfZySmcKv1qO2PoyC9Z7pfSDozEuV5vtY3/wcOPKJXlqJ5Oq2Cx5DDGQGAMVx6HZfRRoVEbQ==}
     engines: {node: '>= 20.12.0'}
 
+  '@clack/core@1.6.0':
+    resolution: {integrity: sha512-4GZynIB2IIe431odxesswvWTCP6orvqd6e2b07b3VFWBQRqUqIHc/EPIZwFoKS692QBp+ooPuXKaJV8g4kXuYA==}
+    engines: {node: '>= 20.12.0'}
+
   '@clack/prompts@1.2.0':
     resolution: {integrity: sha512-4jmztR9fMqPMjz6H/UZXj0zEmE43ha1euENwkckKKel4XpSfokExPo5AiVStdHSAlHekz4d0CA/r45Ok1E4D3w==}
 
   '@clack/prompts@1.8.1':
     resolution: {integrity: sha512-dlT1m5e/0yUL0kRNcQn7yGLVThkgbB0Ga/1AmfDDC/8ik6AIiSf2QLQO2zPYvefsHP0aFgxO93cVLCCfDp7kzQ==}
+    engines: {node: '>= 20.12.0'}
+
+  '@clack/prompts@1.9.0':
+    resolution: {integrity: sha512-tEj8X2No2A1c9NDnZECxiiJ8TP3vmFlN9tLlLeSaMqVW4tUmVG2R4qpv/eP4zymWxnymYLkLcIYVV0VcWj3RCQ==}
     engines: {node: '>= 20.12.0'}
 
   '@cloudflare/kv-asset-handler@0.4.2':
@@ -2450,8 +2464,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@nuxt/cli-nightly@4.1.0-2611170624-c33f0cf':
-    resolution: {integrity: sha512-4Z3g3+Mq2vdvMdrzs8vXZCJlNOx6iXloieSlQznSVJZd1wwYcLlupJ8SyZKcdi+foLz912BWMVACvza01CadWw==}
+  '@nuxt/cli-nightly@4.1.0-2611231510-9453e8e':
+    resolution: {integrity: sha512-f+O/AT/KWEcUaxH/OyB/wpPWCO/Y8KSFF/MVJvKkCbt9rWgcCoYCaqQjJpnXulR+FiSNHmC3c4c3bk/2fJVwew==}
     engines: {node: ^22.21.0 || ^24.11.0 || >=26.0.0}
     hasBin: true
     peerDependencies:
@@ -5131,6 +5145,11 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
+  '@storybook/addon-a11y@11.0.0-beta.5':
+    resolution: {integrity: sha512-JxlcWiqRLdqWuBgjTwjDLj8dB4ElbVUEZVqetXJUEskVMBVwTiG3DMs3egdUHETG3teopIqIhsplh9WUL7eqcg==}
+    peerDependencies:
+      storybook: ^11.0.0-beta.5
+
   '@storybook/addon-docs@11.0.0-beta.3':
     resolution: {integrity: sha512-OJZIL+LimBW2uK5W981guMTUvDB/EqOvFAm2n8CAD/3fRe0eVvKnejf5hO4OU2yxnnzAuR7kXJhvP+mSh9WKcg==}
     peerDependencies:
@@ -6336,6 +6355,10 @@ packages:
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
+
+  axe-core@4.14.1:
+    resolution: {integrity: sha512-FHfa+lmNjQZfJz1q8wKqIDwC6DExcHt/pkjNQb09a3NPjCKg2rhu5qb2S4r76ASyFNNtuFooJpZe37OgudVGtQ==}
+    engines: {node: '>=4'}
 
   b4a@1.9.0:
     resolution: {integrity: sha512-dpfcF9fDNR6++cthXR67iyhgqWy9CBouAvIWhIntzBG6cvK/cnIPiZQjBwi/ZqjjBEDGfoNDtmB0kTjroOJ3pQ==}
@@ -8841,6 +8864,15 @@ packages:
       vite:
         optional: true
 
+  my-bad@1.3.1:
+    resolution: {integrity: sha512-fXJrmk58jNXr2jMqNFwwEkAJcAnLFO/6xnDsu9E4/vA3YZL5bdIsuXKSxvNZpxQU7pYI4nTTvN7k4pPMv51u9A==}
+    engines: {node: '>=22.12.0'}
+    peerDependencies:
+      vite: '>=6'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
@@ -10381,6 +10413,10 @@ packages:
 
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
+
+  sisteransi@2.0.0:
+    resolution: {integrity: sha512-2WCqLdt12eN6ehLI50S2/ZxoowXU3DD1KVPRyVP0WEsFahrGZZmCdq1K59qjJljMRIDTwx1D9YaRK+hDneBUMg==}
+    engines: {node: '>=20'}
 
   site-config-stack@5.0.3:
     resolution: {integrity: sha512-AE5Hg4DiwpK11s+0gKYV6C2/0GNxhig3BiPwc9OBXfeYmY5O6B69l9ga0uIeNgW4NHL7KFyAjSnI3PUNyL89IA==}
@@ -12105,6 +12141,12 @@ snapshots:
       fast-wrap-ansi: 0.2.2
       sisteransi: 1.0.5
 
+  '@clack/core@1.6.0':
+    dependencies:
+      fast-string-width: 3.0.2
+      fast-wrap-ansi: 0.2.2
+      sisteransi: 2.0.0
+
   '@clack/prompts@1.2.0':
     dependencies:
       '@clack/core': 1.2.0
@@ -12118,6 +12160,13 @@ snapshots:
       fast-string-width: 3.0.2
       fast-wrap-ansi: 0.2.2
       sisteransi: 1.0.5
+
+  '@clack/prompts@1.9.0':
+    dependencies:
+      '@clack/core': 1.6.0
+      fast-string-width: 3.0.2
+      fast-wrap-ansi: 0.2.2
+      sisteransi: 2.0.0
 
   '@cloudflare/kv-asset-handler@0.4.2': {}
 
@@ -13450,9 +13499,9 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.3
 
-  '@nuxt/cli-nightly@4.1.0-2611170624-c33f0cf(@nuxt/schema-nightly@5.0.0-2611132210-2c5d147)(jiti@2.7.0)(oxc-parser@0.153.0)(rolldown@1.2.19)(vite@8.3.8)':
+  '@nuxt/cli-nightly@4.1.0-2611231510-9453e8e(@nuxt/schema-nightly@5.0.0-2611132210-2c5d147)(jiti@2.7.0)(oxc-parser@0.153.0)(rolldown@1.2.19)(vite@8.3.8)':
     dependencies:
-      '@clack/prompts': 1.8.1
+      '@clack/prompts': 1.9.0
       args-tokenizer: 0.3.0
       clickable-path: 0.1.1
       confbox: 0.3.2
@@ -13461,7 +13510,7 @@ snapshots:
       exsolve: 1.2.0
       fuzzysort: 4.0.2
       get-port-please: 3.2.0
-      my-bad: 1.2.0(vite@8.3.8)
+      my-bad: 1.3.1(vite@8.3.8)
       obug: 3.0.0
       package-manager-detector: 1.9.0
       pathe: 2.0.3
@@ -17323,6 +17372,12 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
+  '@storybook/addon-a11y@11.0.0-beta.5(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))':
+    dependencies:
+      '@storybook/global': 5.0.0
+      axe-core: 4.14.1
+      storybook: 11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1)
+
   '@storybook/addon-docs@11.0.0-beta.3(@types/react@19.3.0)(storybook@11.0.0-beta.3(@types/react@19.3.0)(react@19.3.1))':
     dependencies:
       '@mdx-js/react': 3.1.1(@types/react@19.3.0)(react@19.3.1)
@@ -18822,6 +18877,8 @@ snapshots:
   available-typed-arrays@1.0.7:
     dependencies:
       possible-typed-array-names: 1.1.0
+
+  axe-core@4.14.1: {}
 
   b4a@1.9.0: {}
 
@@ -21929,6 +21986,14 @@ snapshots:
     optionalDependencies:
       vite: 8.3.8(@types/node@26.6.6)(@vitejs/devtools@0.8.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)
 
+  my-bad@1.3.1(vite@8.3.8):
+    dependencies:
+      clickable-path: 0.1.1
+      errx: 0.2.2
+      fnv1a-64: 0.1.2
+    optionalDependencies:
+      vite: 8.3.8(@types/node@26.6.6)(@vitejs/devtools@0.8.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)
+
   mz@2.7.0:
     dependencies:
       any-promise: 1.3.0
@@ -22766,7 +22831,7 @@ snapshots:
     dependencies:
       '@dxup/nuxt': 0.5.11(@nuxt/schema-nightly@5.0.0-2611132210-2c5d147)(confbox@0.3.2)(dotenv@17.4.2)(esbuild@0.28.2)(giget@3.3.1)(jiti@2.7.0)(mlly@1.8.2)(oxc-parser@0.153.0)(rolldown@1.2.19)(rollup@4.67.4)(vite@8.3.8)
       '@jridgewell/trace-mapping': 0.3.31
-      '@nuxt/cli': '@nuxt/cli-nightly@4.1.0-2611170624-c33f0cf(@nuxt/schema-nightly@5.0.0-2611132210-2c5d147)(jiti@2.7.0)(oxc-parser@0.153.0)(rolldown@1.2.19)(vite@8.3.8)'
+      '@nuxt/cli': '@nuxt/cli-nightly@4.1.0-2611231510-9453e8e(@nuxt/schema-nightly@5.0.0-2611132210-2c5d147)(jiti@2.7.0)(oxc-parser@0.153.0)(rolldown@1.2.19)(vite@8.3.8)'
       '@nuxt/devtools-onboard': 4.1.0(52a0355c9e8b4be918e24b8e4117afb5)
       '@nuxt/kit': '@nuxt/kit-nightly@5.0.0-2611132210-2c5d147(@nuxt/schema-nightly@5.0.0-2611132210-2c5d147)(confbox@0.3.2)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.153.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.67.4)(vite@8.3.8))'
       '@nuxt/nitro-server': '@nuxt/nitro-server-nightly@5.0.0-2611132210-2c5d147(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7(supports-color@10.2.2)))(@nuxt/schema-nightly@5.0.0-2611132210-2c5d147)(@oxc-project/types@0.156.0)(acorn@8.19.0)(confbox@0.3.2)(dotenv@17.4.2)(esbuild@0.28.2)(giget@3.3.1)(jiti@2.7.0)(lightningcss@1.33.0)(mlly@1.8.2)(nuxt-nightly@5.0.0-2611132210-2c5d147(555e87353483eed3020cd1c719835eb2))(oxc-parser@0.153.0)(rollup@4.67.4)(vite@8.3.8)(vue@3.5.45(typescript@6.0.3))'
@@ -25552,6 +25617,8 @@ snapshots:
       totalist: 3.0.1
 
   sisteransi@1.0.5: {}
+
+  sisteransi@2.0.0: {}
 
   site-config-stack@5.0.3(vue@3.5.45(typescript@6.0.3)):
     dependencies:

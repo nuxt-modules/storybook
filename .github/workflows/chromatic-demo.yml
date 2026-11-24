@@ -1,0 +1,40 @@
+name: chromatic-demo
+
+on:
+  push:
+    branches:
+      - 'demo/chromatic-**'
+
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    name: Starter (Chromatic demo)
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 26
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Build example
+        run: pnpm example:starter:build
+
+      - name: Publish and test example
+        uses: chromaui/action@259eda5f0e44c0c1eab38b672f1c4c967cc969b7 # v18.8.1
+        with:
+          projectToken: chpt_dc04103f8a32bfa
+          buildScriptName: example:starter:storybook:build
+          exitZeroOnChanges: false
