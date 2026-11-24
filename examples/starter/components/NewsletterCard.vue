@@ -37,6 +37,7 @@ function onSubmit() {
     <button
       type="button"
       class="newsletter__dismiss"
+      aria-label="Dismiss"
       @click="emit('dismiss')"
     >
       <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
@@ -60,6 +61,7 @@ function onSubmit() {
       Thanks, you're subscribed!
     </p>
     <form v-else class="newsletter__form" novalidate @submit.prevent="onSubmit">
+      <label for="newsletter-email" class="sr-only">Email address</label>
       <input
         id="newsletter-email"
         v-model="email"
@@ -117,7 +119,7 @@ function onSubmit() {
 
 .newsletter__description {
   margin: 0 0 16px;
-  color: #475569;
+  color: #a0aec0;
   font-size: 14px;
   line-height: 1.5;
 }
@@ -141,7 +143,7 @@ function onSubmit() {
   padding: 10px 18px;
   border: 0;
   border-radius: 8px;
-  background: #00714a;
+  background: #34d399;
   color: #ffffff;
   font-weight: 700;
   font-size: 14px;
