@@ -37,7 +37,6 @@ function onSubmit() {
     <button
       type="button"
       class="newsletter__dismiss"
-      aria-label="Dismiss"
       @click="emit('dismiss')"
     >
       <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
@@ -61,7 +60,6 @@ function onSubmit() {
       Thanks, you're subscribed!
     </p>
     <form v-else class="newsletter__form" novalidate @submit.prevent="onSubmit">
-      <label for="newsletter-email" class="sr-only">Email address</label>
       <input
         id="newsletter-email"
         v-model="email"
