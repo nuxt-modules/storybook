@@ -14,7 +14,7 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  subscribe: [email: string]
+  subscribed: [email: string]
   dismiss: []
 }>()
 
@@ -28,7 +28,7 @@ function onSubmit() {
     return
   }
   status.value = 'success'
-  emit('subscribe', value)
+  emit('subscribed', value)
 }
 </script>
 
