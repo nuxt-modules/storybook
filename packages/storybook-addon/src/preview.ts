@@ -11,7 +11,7 @@
 
 // Must be imported first
 // @ts-expect-error virtual file
-import { createNuxtPayload } from 'virtual:nuxt-runtime-config'
+import { createNuxtPayload, ensureGlobalFetch } from 'virtual:nuxt-runtime-config'
 // ----
 import { setup } from '@storybook/vue3-vite'
 import type { NuxtApp, ObjectPlugin, Plugin } from 'nuxt/app'
@@ -74,14 +74,9 @@ setup(async (_vueApp, storyContext) => {
 
   // Provide the config of the Nuxt app
   window.__NUXT__ = createNuxtPayload()
-  // Set $fetch
-  // Based on https://github.com/nuxt/nuxt/blob/356173134280b66c5902e5129d2f5ee73b799352/packages/nuxt/src/core/templates.ts#L390-L403
-  if (!globalThis.$fetch) {
-    globalThis.$fetch = $fetch.create({
-      baseURL: '/',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }) as any
-  }
+  // Nuxt 4.7 prepends `#build/fetch-global` to modules reading the global `$fetch`,
+  // which would run before the payload seed, so that read lives in the virtual module
+  ensureGlobalFetch($fetch)
 
   const nuxt = createNuxtApp({
     id: storyNuxtAppId,

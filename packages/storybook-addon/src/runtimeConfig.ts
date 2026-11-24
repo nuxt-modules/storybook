@@ -19,6 +19,10 @@ export default function nuxtRuntimeConfigPlugin(runtimeConfig: RuntimeConfig) {
           `  state: {},`,
           `})`,
           `window.__NUXT__ ||= createNuxtPayload()`,
+          // Based on https://github.com/nuxt/nuxt/blob/356173134280b66c5902e5129d2f5ee73b799352/packages/nuxt/src/core/templates.ts#L390-L403
+          `export const ensureGlobalFetch = (ofetch) => {`,
+          `  globalThis.$fetch ||= ofetch.create({ baseURL: '/' })`,
+          `}`,
         ].join('\n')
       }
     },
